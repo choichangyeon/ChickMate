@@ -1,8 +1,10 @@
+import { QUERY_KEY } from '@/constants/query-key';
+import { GC_TIME, STALE_TIME } from '@/constants/time';
 import { useQuery } from '@tanstack/react-query';
 
 const getSampleData = async ({ prop }: { prop: any }) => {
   const res = await fetch(`/api/home/${prop}`);
-  const _res = await res.json();
+  const data = await res.json();
 
   return data;
 };
@@ -16,7 +18,7 @@ export const useSampleQuery = ({ prop }: { prop: any }) => {
   return useQuery({
     queryKey: [QUERY_KEY.SAMPLE, prop],
     queryFn: () => getSampleData(prop),
-    staleTime: STALE_TIME.1MIN,
+    staleTime: STALE_TIME.MIN,
     gcTime: GC_TIME.SAMPLE,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,

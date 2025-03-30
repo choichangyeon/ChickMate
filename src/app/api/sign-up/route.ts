@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma';
+import bcrypt from 'bcryptjs';
 
 interface RequestBody {
   name: string;
@@ -14,12 +15,12 @@ export async function POST(request: Request) {
     data: {
       name: body.name,
       email: body.email,
-      password: body.password,
+      password: await bcrypt.hash(body.password, 10),
     },
   });
 
   // user 객체에서 password 부분을 제외하고 나머지 부분만 최종적으로 response 해주기
   const { password, ...result } = user;
-  console.log(user);
+  console.log('sign-up-route-handler-user:', user);
   return new Response(JSON.stringify(result));
 }

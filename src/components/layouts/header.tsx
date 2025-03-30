@@ -6,9 +6,10 @@ import Image from 'next/image';
 
 export default function Header() {
   const { data: session, status } = useSession();
+
   const isLoading = status === 'loading';
 
-  console.log(session, status);
+  console.log('component: ', session, status);
 
   return (
     <header className='bg-white shadow-sm'>

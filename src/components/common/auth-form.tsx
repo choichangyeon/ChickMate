@@ -2,7 +2,6 @@
 
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
-import bcrypt from 'bcryptjs';
 
 const AuthForm = () => {
   const [loading, setLoading] = useState(false);
@@ -16,25 +15,23 @@ const AuthForm = () => {
       //회원가입
       const userData = {
         email,
-        password: await bcrypt.hash(password, 10),
+        password: password,
         name: username,
       };
-      const res = await fetch('/api/sign-up', {
+      await fetch('/api/sign-up', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData),
       });
-      const data = await res.json();
     } else {
       //로그인
       const userData = {
         email,
-        password: await bcrypt.hash(password, 10),
-        redirect: true,
-        callbackUrl: '/',
+        password: password,
       };
 
-      await signIn('Credentials', userData);
+      const data = await signIn('credentials', userData);
+      console.log(data);
     }
   };
 

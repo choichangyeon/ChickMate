@@ -16,6 +16,8 @@ interface RouteParams {
  */
 export async function GET(request: Request, { params }: RouteParams) {
   try {
+    // const { searchParams } = new URL(request.url);
+    // const id = searchParams.get('id');
     const { id } = params;
     const data = await prisma.todo.findUnique({
       where: { id },

@@ -1,7 +1,7 @@
-import { useMutation } from "@tanstack/react-query"
+// import { useMutation } from '@tanstack/react-query';
 
-export const useSampleMutation = () => {
-  return useMutation({
-    mutationFn;()=>{},
-  })
-};
+// export const useSampleMutation = () => {
+//   return useMutation({
+//     mutationFn: () => {},
+//   });
+// };

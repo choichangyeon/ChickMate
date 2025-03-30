@@ -2,6 +2,8 @@
 
 import { prisma } from '@/lib/prisma';
 
+const url = 'https://jsonplaceholder.typicode.com/todos/1';
+
 const getSample = async () => {
   try {
     const res = await fetch(url, {

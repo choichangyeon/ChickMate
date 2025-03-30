@@ -8,6 +8,8 @@ export default function Header() {
   const { data: session, status } = useSession();
   const isLoading = status === 'loading';
 
+  console.log(session, status);
+
   return (
     <header className='bg-white shadow-sm'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
@@ -49,12 +51,20 @@ export default function Header() {
                 </button>
               </div>
             ) : (
-              <button
-                onClick={() => signIn('google')}
-                className='inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700'
-              >
-                구글 로그인
-              </button>
+              <div>
+                <button
+                  onClick={() => signIn('google')}
+                  className='inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700'
+                >
+                  구글 로그인
+                </button>
+                <button
+                  onClick={() => signIn('naver')}
+                  className='inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700'
+                >
+                  네이버
+                </button>
+              </div>
             )}
           </div>
         </div>

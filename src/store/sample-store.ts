@@ -21,4 +21,7 @@ const useSampleStore = create<SampleState>()(
   )
 );
 
+
+//persist 제외
+
 export default useSampleStore;

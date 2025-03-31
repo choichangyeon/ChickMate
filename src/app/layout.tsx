@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 import './global-style.css';
 import { RQProvider } from '@/provider/react-query-provider';
-import Header from '@/components/layouts/header';
+import Header from '@/features/layout/header';
 import AuthProvider from '@/provider/auth-provider';
 
 export const metadata: Metadata = {

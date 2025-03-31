@@ -1,4 +1,4 @@
-import ClientComponent from '@/components/sample/sample-client-component';
+import ClientComponent from "../../../features/sample/client-component";
 
 type Params = {
   params: {

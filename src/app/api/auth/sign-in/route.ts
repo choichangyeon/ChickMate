@@ -23,6 +23,7 @@ export async function POST(request: Request) {
   // 틀리면 null 리턴
   if (user && (await bcrypt.compare(body.password, user.password))) {
     const { password, ...userWithoutPass } = user;
+    console.log('userWithout', userWithoutPass);
     return new Response(JSON.stringify(userWithoutPass));
   } else return new Response(JSON.stringify(null));
 }

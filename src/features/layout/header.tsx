@@ -29,7 +29,7 @@ export default function Header() {
             ) : session ? (
               <div className='flex items-center space-x-4'>
                 <div className='flex items-center space-x-2'>
-                  {session.user.image ? (
+                  {session?.user?.image ? (
                     <Image
                       src={session.user.image}
                       alt={session.user.name || '프로필 이미지'}

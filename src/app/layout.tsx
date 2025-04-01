@@ -1,9 +1,14 @@
 import type { Metadata } from 'next';
-
+import localFont from 'next/font/local';
 import './global-style.css';
 import { RQProvider } from '@/provider/react-query-provider';
 import Header from '@/features/layout/header';
 import AuthProvider from '@/provider/auth-provider';
+
+const suit = localFont({
+  src: '../../public/fonts/SUIT-Variable.woff2',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,8 +25,10 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <RQProvider>
-            <Header />
-            {children}
+            <div className={suit.className}>
+              <Header />
+              {children}
+            </div>
           </RQProvider>
         </AuthProvider>
       </body>

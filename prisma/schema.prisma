@@ -16,17 +16,17 @@ datasource db {
 model Sample {
   id        String   @id @default(cuid())
   title     String
-  userId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  user_id    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 // NextAuth 모델 정의
 model Account {
   id                String  @id @default(cuid())
-  userId            String
+  user_id            String
   type              String
   provider          String
   providerAccountId String
@@ -38,7 +38,7 @@ model Account {
   id_token          String? @db.Text
   session_state     String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -46,9 +46,9 @@ model Account {
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
-  userId       String
+  user_id       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model User {
@@ -58,13 +58,14 @@ model User {
   emailVerified DateTime?
   password      String?
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  user_meta_data Json?
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
   characters    Character[]
   personalStatements PersonalStatement[]
-  interviewRecords InterviewRecord[]
+  interviewHistorys InterviewHistory[]
   userSelectedJobs UserSelectedJob[]
   samples Sample[]
 }
@@ -79,56 +80,55 @@ model VerificationToken {
 
 model Character {
   id           String   @id @default(cuid())
-  userId      String
-  characterId String
+  user_id      String
+  character_id String
   level        Int
   experience   Int
-  createdAt   DateTime @default(now())
-  user         User     @relation(fields: [userId], references: [id])
+  created_at   DateTime @default(now())
+  user         User     @relation(fields: [user_id], references: [id])
 }
 
 model PersonalStatement {
   id         String   @id @default(cuid())
-  userId     String
+  user_id     String
   content    Json
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  user       User     @relation(fields: [userId], references: [id])
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  user       User     @relation(fields: [user_id], references: [id])
 }
 
-model InterviewRecord {
+model InterviewHistory {
   id                    String   @id @default(cuid())
-  userId               String
-  personalStatementId String?
-  interviewDate        DateTime
+  user_id               String
+  personal_statement_id String?
   feedback             String
-  questionContent      Json
-  answerContent        Json
-  createdAt            DateTime @default(now())
-  interviewType        String
-  user                  User     @relation(fields: [userId], references: [id])
+  question_content      Json
+  answer_content        Json
+  created_at            DateTime @default(now())
+  interview_type        String
+  user                  User     @relation(fields: [user_id], references: [id])
 }
 
 model JobPosting {
-  id                String              @id
+  id                String               @id @default(cuid())
   title             String
   company           String
   location          String
-  employmentType    String
-  salaryType        String
-  salaryAmount      Int
-  postedAt          DateTime
+  employment_type    String
+  salary_type        String
+  salary_amount      Int
+  posted_at          DateTime
   deadline          DateTime
-  createdAt        DateTime            @default(now())
+  created_at        DateTime            @default(now())
   userSelectedJobs  UserSelectedJob[]
 }
 
 model UserSelectedJob {
-  id             String      @id
-  userId        String
-  jobPostingId  String
-  selectedAt    DateTime
-  createdAt     DateTime    @default(now())
-  jobPosting    JobPosting  @relation(fields: [jobPostingId], references: [id])
-  user          User        @relation(fields: [userId], references: [id])
+  id             String       @id @default(cuid())
+  user_id        String
+  job_posting_id  String
+  selected_at    DateTime
+  created_at     DateTime    @default(now())
+  jobPosting    JobPosting  @relation(fields: [job_posting_id], references: [id])
+  user          User        @relation(fields: [user_id], references: [id])
 }

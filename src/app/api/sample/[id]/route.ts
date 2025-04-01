@@ -37,7 +37,6 @@ export async function GET(request: Request, { params }: RouteParams) {
  */
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
-  console.log('session', session);
 
   if (!session || !session.user) {
     return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 403 });
@@ -53,7 +52,7 @@ export async function POST(request: Request) {
     const newSample = await prisma.sample.create({
       data: {
         title,
-        userId: session.user.id,
+        user_id: session.user.id,
       },
     });
 
@@ -86,7 +85,7 @@ export async function PATCH(request: Request, { params }: RouteParams) {
       return NextResponse.json({ error: 'Todo 항목을 찾을 수 없습니다.' }, { status: 404 });
     }
 
-    if (sample.userId && sample.userId !== session.user.id) {
+    if (sample.user_id && sample.user_id !== session.user.id) {
       return NextResponse.json({ error: '이 Todo 항목을 수정할 권한이 없습니다.' }, { status: 403 });
     }
 
@@ -128,7 +127,7 @@ export async function DELETE(request: Request, { params }: RouteParams) {
       return NextResponse.json({ error: 'Todo 항목을 찾을 수 없습니다.' }, { status: 404 });
     }
 
-    if (sample.userId && sample.userId !== session.user.id) {
+    if (sample.user_id && sample.user_id !== session.user.id) {
       return NextResponse.json({ error: '이 Todo 항목을 삭제할 권한이 없습니다.' }, { status: 403 });
     }
 

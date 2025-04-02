@@ -1,4 +1,4 @@
-import { ROUTE_HANDLER_PATH } from "@/constants/path-constant";
+import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 
 type SignUpProps = {
   name: string;
@@ -8,17 +8,18 @@ type SignUpProps = {
 
 export const postSignUp = async (sign_up_data: SignUpProps) => {
   try {
-    const response = await fetch(ROUTE_HANDLER_PATH.AUTH.SIGN_UP, {
+    const res = await fetch(ROUTE_HANDLER_PATH.AUTH.SIGN_UP, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(sign_up_data),
     });
 
-    if (!response.ok) {
-      throw new Error('회원가입 요청에 실패했습니다');
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error);
     }
 
-    const data = await response.json();
     return data;
   } catch (error) {
     throw error;

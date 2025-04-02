@@ -1,7 +1,7 @@
 import { FormData } from '@/features/auth/sign-up/sign-up-auth-form';
 import { UseFormRegister } from 'react-hook-form';
 
-type AuthInputProps = {
+type Props = {
   label: string;
   id: keyof FormData;
   register: UseFormRegister<FormData>;
@@ -9,7 +9,7 @@ type AuthInputProps = {
   type: string;
 };
 
-const AuthInput = ({ label, id, register, error, type }: AuthInputProps) => (
+const AuthInput = ({ label, id, register, error, type }: Props) => (
   <div className='flex w-full flex-col px-3 py-2'>
     <label>{label}</label>
     <input {...register(id)} type={type} className='border-b border-gray-300' />

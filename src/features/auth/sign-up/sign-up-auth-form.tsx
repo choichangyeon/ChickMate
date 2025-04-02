@@ -1,13 +1,15 @@
 'use client';
 
 import { PATH } from '@/constants/path-constant';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { postSignUp } from './api/client-services';
 import { AUTH_MESSAGE } from '@/constants/message-constants';
 import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import AuthInput from '@/components/common/auth-input';
 
-const schema = z.object({
+export const schema = z.object({
   name: z
     .string()
     .trim()
@@ -22,23 +24,25 @@ const schema = z.object({
     .regex(/[^a-zA-Z0-9]/, AUTH_MESSAGE.VALIDATION.PASSWORD_SPECIAL_CHAR),
 });
 
+export type FormData = z.infer<typeof schema>;
+
 const SignUpAuthForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+    mode: 'onBlur',
+    defaultValues: { name: '', email: '', password: '' } as FormData,
+  });
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.target as HTMLFormElement);
-
-    const sign_up_data = {
-      email: String(formData.get('email')),
-      password: String(formData.get('password')),
-      name: String(formData.get('name')),
-    };
+  const onSubmit = async (data: FormData) => {
     try {
-      await postSignUp(sign_up_data);
+      await postSignUp(data as Required<FormData>);
       router.push(PATH.AUTH.SIGN_IN);
-      alert('회원 가입에 성공하셨습니다.');
+      alert(AUTH_MESSAGE.RESULT.SIGN_UP_SUCCESS);
     } catch (error) {
       alert(error);
     }
@@ -46,58 +50,22 @@ const SignUpAuthForm = () => {
 
   return (
     <div className='mx-auto w-full max-w-md rounded-lg bg-white p-6 shadow-md'>
-      <h2 className='mb-6 text-center text-2xl font-bold'>회원가입</h2>
-      <form className='space-y-4' onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor='username' className='mb-1 block text-sm font-medium text-gray-700'>
-            사용자 이름
-          </label>
-          <input
-            id='name'
-            name='name'
-            type='text'
-            className='w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor='email' className='mb-1 block text-sm font-medium text-gray-700'>
-            이메일
-          </label>
-          <input
-            id='email'
-            name='email'
-            type='email'
-            className='w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor='password' className='mb-1 block text-sm font-medium text-gray-700'>
-            비밀번호
-          </label>
-          <input
-            id='password'
-            name='password'
-            type='password'
-            className='w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
-            required
-          />
-        </div>
+      <h1 className='mb-1 text-center text-2xl font-light'>
+        만나서 반가워요.<span className='font-normal'>병아리</span>씨!
+      </h1>
+      <h2 className='mb-4 text-center font-extralight'>우리 같이 취업을 향한 여정을 떠나볼까요?</h2>
+      <h3 className='text-center font-extralight text-black/30 mb-10'>원할한 서비스 이용을 위해 회원가입 해주세요.</h3>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <AuthInput label='NAME' id='name' register={register} error={errors.name} type='text' />
+        <AuthInput label='EMAIL' id='email' register={register} error={errors.email} type='email' />
+        <AuthInput label='PASSWORD' id='password' register={register} error={errors.password} type='password' />
         <button
           type='submit'
-          className='w-full rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-300'
+          className='w-full rounded-md border border-gray-400 bg-blue-white px-4 py-2 text-sm font-medium text-black shadow-sm mt-2'
         >
-          가입하기
-        </button>
-        <button className='w-full rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-300'>
-          <Link href={PATH.AUTH.CHARACTER}>캐릭터 생성하러 가기</Link>
+          회원가입
         </button>
       </form>
-      <div className='mt-4 flex flex-col gap-2 text-center'>
-        <Link href={PATH.AUTH.SIGN_IN}>이미 계정이 있으신가요?</Link>
-      </div>
     </div>
   );
 };

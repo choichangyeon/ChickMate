@@ -4,6 +4,23 @@ import { PATH } from '@/constants/path-constant';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { postSignUp } from './api/client-services';
+import { AUTH_MESSAGE } from '@/constants/message-constants';
+import { z } from 'zod';
+
+const schema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(2, AUTH_MESSAGE.VALIDATION.NAME_LENGTH)
+    .max(8, AUTH_MESSAGE.VALIDATION.NAME_LENGTH)
+    .regex(/^[a-zA-Z0-9가-힣]+$/, AUTH_MESSAGE.VALIDATION.NAME_SPECIAL_CHAR),
+  email: z.string().trim().email(AUTH_MESSAGE.VALIDATION.EMAIL_INVALID),
+  password: z
+    .string()
+    .trim()
+    .min(6, AUTH_MESSAGE.VALIDATION.PASSWORD_LENGTH)
+    .regex(/[^a-zA-Z0-9]/, AUTH_MESSAGE.VALIDATION.PASSWORD_SPECIAL_CHAR),
+});
 
 const SignUpAuthForm = () => {
   const router = useRouter();

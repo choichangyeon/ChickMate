@@ -1,54 +1,72 @@
 'use client';
 
+import { PATH } from '@/constants/path-constant';
+import { postSignUp } from '@/features/sign-up/api/client-services';
 import { signIn } from 'next-auth/react';
-import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+
+const callback_url = `${process.env.NEXT_PUBLIC_BASE_URL}/${PATH.ON_BOARDING}`;
 
 const AuthForm = () => {
-  const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
-  const [isSignUp, setIsSignUp] = useState(true);
+  const path_name = usePathname();
+  const router = useRouter();
+
+  const is_sign_up = path_name === PATH.SIGN_UP;
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (isSignUp) {
-      //회원가입
-      const userData = {
-        email,
-        password: password,
-        name: username,
-      };
-      await fetch('/api/sign-up', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData),
-      });
-    } else {
-      //로그인
-      const userData = {
-        email,
-        password: password,
-      };
 
-      const data = await signIn('credentials', userData);
-      console.log(data);
+    const formData = new FormData(e.target as HTMLFormElement);
+
+    if (path_name === PATH.SIGN_UP) {
+      const sign_up_data = {
+        email: String(formData.get('email')),
+        password: String(formData.get('password')),
+        name: String(formData.get('name')),
+      };
+      try {
+        await postSignUp(sign_up_data);
+        router.push(PATH.SIGN_IN);
+        alert('회원 가입에 성공하셨습니다.');
+      } catch (error) {
+        alert(error);
+      }
+    } else if (path_name === PATH.SIGN_IN) {
+      const sign_in_data = {
+        email: String(formData.get('email')),
+        password: String(formData.get('password')),
+      };
+      try {
+        const res = await signIn('credentials', {
+          ...sign_in_data,
+          redirect: false,
+        });
+        if (!res.ok) {
+          throw new Error('로그인에 실패했습니다.');
+        } else {
+          alert('로그인에 성공했습니다.');
+          router.replace(PATH.ON_BOARDING);
+        }
+      } catch (error) {
+        alert(error.message);
+      }
     }
   };
 
   return (
     <div className='mx-auto w-full max-w-md rounded-lg bg-white p-6 shadow-md'>
-      <h2 className='mb-6 text-center text-2xl font-bold'>{isSignUp ? '회원가입' : '로그인'}</h2>
+      <h2 className='mb-6 text-center text-2xl font-bold'>{is_sign_up ? '회원가입' : '로그인'}</h2>
       <form className='space-y-4' onSubmit={handleSubmit}>
-        {isSignUp && (
+        {is_sign_up && (
           <div>
             <label htmlFor='username' className='mb-1 block text-sm font-medium text-gray-700'>
               사용자 이름
             </label>
             <input
-              id='username'
+              id='name'
+              name='name'
               type='text'
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
               className='w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
               required
             />
@@ -60,9 +78,8 @@ const AuthForm = () => {
           </label>
           <input
             id='email'
+            name='email'
             type='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
             className='w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
             required
           />
@@ -73,40 +90,39 @@ const AuthForm = () => {
           </label>
           <input
             id='password'
+            name='password'
             type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
             className='w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
             required
           />
         </div>
         <button
           type='submit'
-          disabled={loading}
           className='w-full rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-300'
         >
-          {loading ? '처리 중...' : isSignUp ? '가입하기' : '로그인'}
+          {is_sign_up ? '가입하기' : '로그인'}
         </button>
       </form>
-      <div className='mt-4 text-center'>
-        <button
-          onClick={() => setIsSignUp(!isSignUp)}
-          className='text-sm font-medium text-blue-600 hover:text-blue-500'
-        >
-          {isSignUp ? '이미 계정이 있으신가요? 로그인' : '계정이 없으신가요? 가입하기'}
-        </button>
-        <button
-          onClick={() => signIn('google')}
-          className='inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700'
-        >
-          구글 로그인
-        </button>
-        <button
-          onClick={() => signIn('naver')}
-          className='inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700'
-        >
-          네이버
-        </button>
+      <div className='mt-4 flex flex-col gap-2 text-center'>
+        <Link href={is_sign_up ? PATH.SIGN_IN : PATH.SIGN_UP}>
+          {is_sign_up ? '이미 계정이 있으신가요? ' : '계정이 없으신가요? '}
+        </Link>
+        {!is_sign_up && (
+          <>
+            <button
+              onClick={() => signIn('google', { callbackUrl: callback_url })}
+              className='w-full rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-300'
+            >
+              구글 로그인
+            </button>
+            <button
+              onClick={() => signIn('naver', { callbackUrl: callback_url })}
+              className='w-full rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-300'
+            >
+              네이버
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
-export default function MyPage() {
-  return <div>마이페이지 아무나 못들어옴</div>;
-}
+export const MyPage = () => {
+  return <div>아무나 못 들어옴 my page</div>;
+};
+
+export default MyPage;

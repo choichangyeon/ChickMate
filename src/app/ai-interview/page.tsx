@@ -1,5 +1,4 @@
-'use client';
-import { getOpenAIResponse } from '@/features/ai-interview/api/client-services';
+import ClientComponent from '@/features/ai-interview/client-component';
 
 type Params = {
   params: {
@@ -9,14 +8,8 @@ type Params = {
 
 const page = async ({ params }: Params) => {
   const id = params.id;
-  const handleOnclick = async () => {
-    await getOpenAIResponse();
-  };
-  return (
-    <div>
-      <button onClick={handleOnclick}>TEST</button>
-    </div>
-  );
+
+  return <ClientComponent />;
 };
 
 export default page;

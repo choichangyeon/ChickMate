@@ -1,3 +1,4 @@
+import { AUTH_MESSAGE } from '@/constants/message-constants';
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
@@ -13,7 +14,15 @@ export async function POST(request: Request) {
     const body: RequestBody = await request.json();
 
     if (!body.name || !body.email || !body.password) {
-      return NextResponse.json({ error: '모든 값을 입력해주세요.' }, { status: 400 });
+      return NextResponse.json({ error: AUTH_MESSAGE.RESULT.SIGN_UP_EMPTY_FIELD }, { status: 400 });
+    }
+
+    const existingUser = await prisma.user.findUnique({
+      where: { email: body.email },
+    });
+
+    if (existingUser) {
+      return NextResponse.json({ error: AUTH_MESSAGE.RESULT.SIGN_UP_EXIST_ERROR }, { status: 400 });
     }
 
     const user = await prisma.user.create({
@@ -25,9 +34,9 @@ export async function POST(request: Request) {
     });
 
     const { password, ...result } = user;
-
     return NextResponse.json(result, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: '회원가입에 실패했습니다.' }, { status: 500 });
+    console.error('회원가입 오류:', error);
+    return NextResponse.json({ error: AUTH_MESSAGE.RESULT.SIGN_UP_FAILED }, { status: 500 });
   }
 }

@@ -7,7 +7,7 @@ export type NavItems = {
   icons?: string;
 };
 
-const { ON_BOARDING, SIGN_IN, SIGN_UP, MY_PAGE } = PATH;
+const { ON_BOARDING, AUTH, MY_PAGE } = PATH;
 export const Private_Nav_Items: NavItems[] = [
   {
     path: '/채용공고',
@@ -43,13 +43,13 @@ export const Private_Nav_Items: NavItems[] = [
 
 export const Public_Nav_Items: NavItems[] = [
   {
-    path: SIGN_IN,
+    path: AUTH.SIGN_IN,
     name: '로그인',
     type: 'link',
     icons: '',
   },
   {
-    path: SIGN_UP,
+    path: AUTH.SIGN_UP,
     name: '회원가입',
     type: 'link',
     icons: '',

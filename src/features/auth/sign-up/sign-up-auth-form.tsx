@@ -7,23 +7,23 @@ import { AUTH_MESSAGE } from '@/constants/message-constants';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import AuthInput from '@/features/auth/auth-input';
-import { FormData, schema } from './data/schema';
+import { SignUpFormData, schema } from './data/schema';
 
 const SignUpAuthForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<SignUpFormData>({
     resolver: zodResolver(schema),
     mode: 'onBlur',
-    defaultValues: { name: '', email: '', password: '' } as FormData,
+    defaultValues: { name: '', email: '', password: '' } as SignUpFormData,
   });
   const router = useRouter();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: SignUpFormData) => {
     try {
-      await postSignUp(data as Required<FormData>);
+      await postSignUp(data as Required<SignUpFormData>);
       router.push(PATH.AUTH.SIGN_IN);
       alert(AUTH_MESSAGE.RESULT.SIGN_UP_SUCCESS);
     } catch (error) {
@@ -38,7 +38,7 @@ const SignUpAuthForm = () => {
       </p>
       <p className='mb-4 text-center font-extralight'>우리 같이 취업을 향한 여정을 떠나볼까요?</p>
       <p className='mb-10 text-center font-extralight text-black/30'>원할한 서비스 이용을 위해 회원가입 해주세요.</p>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <AuthInput label='NAME' id='name' register={register} error={errors.name} type='text' />
         <AuthInput label='EMAIL' id='email' register={register} error={errors.email} type='email' />
         <AuthInput label='PASSWORD' id='password' register={register} error={errors.password} type='password' />

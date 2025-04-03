@@ -19,7 +19,7 @@ export const useWebcamStream = () => {
   };
 
   useEffect(() => {
-    getWebcam((stream: MediaStream) => {
+    getWebcam((stream) => {
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }

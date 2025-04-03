@@ -1,5 +1,5 @@
-import { FormData } from '@/features/auth/sign-up/sign-up-auth-form';
 import { UseFormRegister } from 'react-hook-form';
+import { FormData } from './sign-up/data/schema';
 
 type Props = {
   label: string;

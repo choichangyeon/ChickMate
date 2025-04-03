@@ -5,14 +5,12 @@ type StreamCallback = (stream: MediaStream) => void;
 export const useWebcamStream = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  const getWebcam = (callback: StreamCallback) => {
+  const getWebcam = async (onStreamReady: StreamCallback) => {
     try {
       const constraints = { video: { width: { ideal: 1280 }, height: { ideal: 720 } }, audio: false };
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
-      navigator.mediaDevices
-        .getUserMedia(constraints)
-        .then(callback)
-        .catch((error) => console.error(error));
+      onStreamReady(stream);
     } catch (error) {
       console.error(error);
     }

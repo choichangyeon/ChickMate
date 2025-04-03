@@ -13,5 +13,7 @@ export const AUTH_MESSAGE = {
     SIGN_UP_FAILED: '회원 가입에 실패했습니다.',
     SIGN_UP_EXIST_ERROR: '이미 존재하는 이메일입니다.',
     SIGN_UP_EMPTY_FIELD: '모든 값을 입력해주세요.',
+    SIGN_IN_SUCCESS: '로그인에 성공했습니다.',
+    SIGN_IN_FAILED: '이메일 혹은 비밀번호를 확인해주세요.'
   },
 };

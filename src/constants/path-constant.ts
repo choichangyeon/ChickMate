@@ -6,6 +6,7 @@ export const PATH = {
     CHARACTER: '/auth/character',
   },
   ON_BOARDING: '/on-boarding',
+  MY_PAGE: '/my-page',
 };
 
 export const ROUTE_HANDLER_PATH = {

@@ -61,7 +61,7 @@ export const speakText = async ({ text, type }: Props) => {
     }
 
     const audio = new Audio(data.audio_url);
-    audio.play();
+    await audio.play();
   } catch (error) {
     throw new Error('TTS 서버 에러');
   }

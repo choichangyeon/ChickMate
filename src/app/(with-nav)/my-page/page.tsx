@@ -1,4 +1,4 @@
-export const MyPage = () => {
+const MyPage = () => {
   return <div>아무나 못 들어옴 my page</div>;
 };
 

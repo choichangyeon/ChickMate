@@ -5,6 +5,8 @@ export const AUTH_MESSAGE = {
     EMAIL_INVALID: '올바른 이메일 형식이어야 합니다.',
     PASSWORD_LENGTH: '비밀번호는 6자 이상이어야 합니다.',
     PASSWORD_SPECIAL_CHAR: '비밀번호는 최소 하나의 특수 문자를 포함해야 합니다.',
+    EMAIL_EMPTY_FIELD: '이메일을 입력해주세요.',
+    PASSWORD_EMPTY_FIELD: '비밀번호를 입력해주세요.'
   },
   RESULT: {
     SIGN_UP_SUCCESS: '회원 가입에 성공했습니다.',

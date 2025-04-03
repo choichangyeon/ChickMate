@@ -1,7 +1,8 @@
 'use client';
 import { useSession } from 'next-auth/react';
 import { useMemo } from 'react';
-import { NavItems, Private_Nav_Items, Public_Nav_Items } from './data/nav-items';
+import { Private_Nav_Items, Public_Nav_Items } from './data/nav-items';
+import type { NavItems } from './data/nav-items';
 import LinkNav from './link-nav';
 import ButtonNav from './button-nav';
 

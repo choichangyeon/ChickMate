@@ -33,11 +33,11 @@ const SignUpAuthForm = () => {
 
   return (
     <div className='mx-auto w-full max-w-md rounded-lg bg-white p-6 shadow-md'>
-      <h1 className='mb-1 text-center text-2xl font-light'>
+      <p className='mb-1 text-center text-2xl font-light'>
         만나서 반가워요.<span className='font-normal'>병아리</span>씨!
-      </h1>
-      <h2 className='mb-4 text-center font-extralight'>우리 같이 취업을 향한 여정을 떠나볼까요?</h2>
-      <h3 className='mb-10 text-center font-extralight text-black/30'>원할한 서비스 이용을 위해 회원가입 해주세요.</h3>
+      </p>
+      <p className='mb-4 text-center font-extralight'>우리 같이 취업을 향한 여정을 떠나볼까요?</p>
+      <p className='mb-10 text-center font-extralight text-black/30'>원할한 서비스 이용을 위해 회원가입 해주세요.</p>
       <form onSubmit={handleSubmit(onSubmit)}>
         <AuthInput label='NAME' id='name' register={register} error={errors.name} type='text' />
         <AuthInput label='EMAIL' id='email' register={register} error={errors.email} type='email' />

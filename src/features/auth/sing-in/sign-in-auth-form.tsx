@@ -4,10 +4,10 @@ import { PATH } from '@/constants/path-constant';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import AuthInput from '../auth-input';
+import AuthInput from '@/features/auth/auth-input';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { schema, SignInFormData } from './data/schema';
+import { schema, SignInFormData } from '@/features/auth/sing-in/data/schema';
 import Image from 'next/image';
 import { AUTH_MESSAGE } from '@/constants/message-constants';
 

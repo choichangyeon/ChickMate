@@ -2,12 +2,12 @@
 
 import { PATH } from '@/constants/path-constant';
 import { useRouter } from 'next/navigation';
-import { postSignUp } from './api/client-services';
+import { postSignUp } from '@/features/auth/sign-up/api/client-services';
 import { AUTH_MESSAGE } from '@/constants/message-constants';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import AuthInput from '@/features/auth/auth-input';
-import { SignUpFormData, schema } from './data/schema';
+import { SignUpFormData, schema } from '@/features/auth/sign-up/data/schema';
 
 const SignUpAuthForm = () => {
   const {

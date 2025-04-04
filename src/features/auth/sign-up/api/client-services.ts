@@ -1,17 +1,20 @@
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 
-type SignUpProps = {
+type Props = {
   name: string;
   email: string;
   password: string;
 };
 
-export const postSignUp = async (sign_up_data: SignUpProps) => {
+const { AUTH } = ROUTE_HANDLER_PATH;
+const { SIGN_UP } = AUTH;
+
+export const postSignUp = async (signUpData: Props) => {
   try {
-    const res = await fetch(ROUTE_HANDLER_PATH.AUTH.SIGN_UP, {
+    const res = await fetch(SIGN_UP, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(sign_up_data),
+      body: JSON.stringify(signUpData),
     });
 
     const data = await res.json();

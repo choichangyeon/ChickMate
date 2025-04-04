@@ -2,7 +2,7 @@ import { ENV } from '@/constants/env-constants';
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-const open_ai = new OpenAI({
+const openAi = new OpenAI({
   apiKey: ENV.OPENAI_API_KEY,
   dangerouslyAllowBrowser: true,
 });
@@ -13,7 +13,7 @@ const open_ai = new OpenAI({
 export const POST = async (req: NextRequest) => {
   const { text, model, voice, speed, response_format, instructions } = await req.json();
   try {
-    const res = await open_ai.audio.speech.create({
+    const res = await openAi.audio.speech.create({
       input: text,
       model,
       response_format,
@@ -29,9 +29,9 @@ export const POST = async (req: NextRequest) => {
 
     const arrayBuffer = await res.arrayBuffer();
     const base64Audio = Buffer.from(arrayBuffer).toString('base64');
-    const audio_url = `data:audio/${response_format};base64,${base64Audio}`;
+    const audioUrl = `data:audio/${response_format};base64,${base64Audio}`;
 
-    return NextResponse.json({ status: 200, audio_url });
+    return NextResponse.json({ status: 200, audioUrl });
   } catch (error) {
     const error_message = (error as Error).message;
     return NextResponse.json({ message: error_message, status: 503 });

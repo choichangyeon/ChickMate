@@ -1,5 +1,5 @@
-import TTSComponent from '@/features/ai-interview/tts-component';
-import STTComponent from '@/features/ai-interview/stt-component';
+import TTSComponent from '@/features/interview/tts-component';
+import STTComponent from '@/features/interview/stt-component';
 
 const AiInterviewPage = () => {
   return (

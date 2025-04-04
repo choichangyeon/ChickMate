@@ -1,6 +1,6 @@
 'use client';
 
-import { textToSpeech } from '@/features/ai-interview/api/client-services';
+import { textToSpeech } from '@/features/interview/api/client-services';
 
 const TTSComponent = () => {
   const handleClick = async () => {

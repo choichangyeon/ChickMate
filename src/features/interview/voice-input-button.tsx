@@ -1,7 +1,7 @@
 'use client';
 
 import { useAudioRecorder } from '@/features/interview/hooks/use-audio-recorder';
-import STTComponent from '@/features/ai-interview/stt-component';
+import STTComponent from '@/features/interview/stt-component';
 
 const VoiceInputButton = () => {
   const { isRecording, audioBlob, startRecording, stopRecording } = useAudioRecorder();

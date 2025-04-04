@@ -1,4 +1,4 @@
-import { speechToText } from '@/features/ai-interview/api/client-services';
+import { speechToText } from '@/features/interview/api/client-services';
 import { useState } from 'react';
 
 type Props = {

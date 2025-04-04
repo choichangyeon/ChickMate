@@ -9,12 +9,12 @@ type Props = {
 const { AUTH } = ROUTE_HANDLER_PATH;
 const { SIGN_UP } = AUTH;
 
-export const postSignUp = async (sign_up_data: Props) => {
+export const postSignUp = async (signUpData: Props) => {
   try {
     const res = await fetch(SIGN_UP, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(sign_up_data),
+      body: JSON.stringify(signUpData),
     });
 
     const data = await res.json();

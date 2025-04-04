@@ -4,7 +4,7 @@ export const useAudioRecorder = () => {
   // 창연님을 위한 주석이니 PR 하시는 분들은 자세히 안 읽으셔도 됩니다.
 
   // MediaRecorder 인스턴스를 저장할 곳, 녹음 시작/중지 때 사용됨
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioRecorderRef = useRef<MediaRecorder | null>(null);
   // 녹음 중인지 아닌지의 상태
   const [isRecording, setIsRecording] = useState(false);
   // 녹음이 끝난 뒤, 재생하거나 다운로드할 수 있도록 오디오 URL을 저장함
@@ -22,7 +22,7 @@ export const useAudioRecorder = () => {
       const mediaRecorder = new MediaRecorder(stream, {
         mimeType: 'audio/webm;codecs=opus',
       });
-      mediaRecorderRef.current = mediaRecorder;
+      audioRecorderRef.current = mediaRecorder;
       audioChunksRef.current = [];
 
       // 녹음 중 MediaRecorder가 데이터를 제공할 때마다 조각(chunk)을 audioChunksRef에 추가함
@@ -49,7 +49,7 @@ export const useAudioRecorder = () => {
 
   // 녹음 중단
   const stopRecording = () => {
-    mediaRecorderRef.current?.stop();
+    audioRecorderRef.current?.stop();
     setIsRecording(false);
   };
 

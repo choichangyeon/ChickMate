@@ -1,3 +1,5 @@
+import { API_METHOD } from '@/constants/api-method-constants';
+
 type TTS_Props = {
   text: string;
   type: 'PRESSURE' | 'CALM';
@@ -9,7 +11,7 @@ const TTS_DEFAULT_OPTIONS = {
 };
 
 const STT_DEFAULT_OPTIONS = {
-  MODEL: 'whisper-1',
+  MODEL: 'gpt-4o-transcribe',
   FORMAT: 'webm',
   LANGUAGE: 'ko',
 };
@@ -91,8 +93,8 @@ export const speechToText = async ({ blob }: STT_Props): Promise<string> => {
   try {
     const formData = new FormData();
 
-    // file 필드에 Blob과 파일 이름, MIME 타입 지정 (브라우저는 blob 객체를 File 객체처럼 처리)
-    formData.append('file', blob);
+    const file = new File([blob], 'recording.webm', { type: `audio/${FORMAT}` });
+    formData.append('file', file);
     formData.append('model', MODEL);
     formData.append('language', LANGUAGE);
     formData.append('format', FORMAT);
@@ -111,7 +113,7 @@ export const speechToText = async ({ blob }: STT_Props): Promise<string> => {
       throw new Error(data.error || data.message);
     }
 
-    return data;
+    return data.text;
   } catch (error) {
     console.error(error);
     throw new Error('STT 서버 에러');

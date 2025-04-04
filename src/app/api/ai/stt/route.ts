@@ -13,25 +13,22 @@ const openAi = new OpenAI({
 export const POST = async (req: NextRequest) => {
   try {
     const formData = await req.formData();
-    // multipart/form-data의 경우 req.formData()를 사용하여 데이터를 파싱합니다.
     const file = formData.get('file') as File;
     const model = formData.get('model') as string;
     const language = formData.get('language') as string;
+
     console.log(file);
     if (!file) {
-      console.log('here');
       return NextResponse.json({ message: '파일이 제공되지 않았습니다.', status: 400 });
     }
-    // OpenAI STT API 호출
-    const res = await openAi.audio.transcriptions.create({
+
+    const { text } = await openAi.audio.transcriptions.create({
       file,
       model,
       language,
     });
-    console.log('here');
-    console.log(res);
 
-    return NextResponse.json({ status: 200, res });
+    return NextResponse.json({ status: 200, text });
   } catch (error) {
     const error_message = (error as Error).message;
     return NextResponse.json({ message: error_message, status: 503 });

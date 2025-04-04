@@ -7,8 +7,8 @@ export const useAudioRecorder = () => {
   const audioRecorderRef = useRef<MediaRecorder | null>(null);
   // 녹음 중인지 아닌지의 상태
   const [isRecording, setIsRecording] = useState(false);
-  // 녹음이 끝난 뒤, 재생하거나 다운로드할 수 있도록 오디오 URL을 저장함
-  const [audioURL, setAudioURL] = useState<string | null>(null);
+  // 녹음이 끝난 뒤, 재생하거나 다운로드할 수 있도록 오디오 Blob을 저장함
+  const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   // MediaRecorder가 전달하는 오디오 데이터를 작은 조각(blob) 단위로 모아두는 곳
   const audioChunksRef = useRef<Blob[]>([]);
 
@@ -34,9 +34,8 @@ export const useAudioRecorder = () => {
       // 녹음이 종료되면 지금까지 모은 오디오 조각들을 하나로 하벼서 Blob으로 만듦
       // Blob을 브라우저가 이해할 수 있는 가상 URL로 변환
       mediaRecorder.onstop = () => {
-        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
-        const url = URL.createObjectURL(audioBlob);
-        setAudioURL(url);
+        const blob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+        setAudioBlob(blob);
       };
 
       // 실제 녹음을 시작함
@@ -53,5 +52,5 @@ export const useAudioRecorder = () => {
     setIsRecording(false);
   };
 
-  return { isRecording, audioURL, startRecording, stopRecording };
+  return { isRecording, audioBlob, startRecording, stopRecording };
 };

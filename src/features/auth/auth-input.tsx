@@ -11,7 +11,7 @@ type Props<T> = {
 const AuthInput = <T,>({ label, id, register, error, type }: Props<T>) => (
   <div className='flex w-full flex-col px-3 py-2'>
     <label>{label}</label>
-    <input {...register(id)} type={type} className='border-b border-gray-300' />
+    <input {...register(id)} type={type} className='border-b border-gray-300 focus:outline-0' />
     <div className='h-6 text-sm'>{error && <p className='text-primary'>{error.message}</p>}</div>
   </div>
 );

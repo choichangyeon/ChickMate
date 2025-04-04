@@ -1,4 +1,5 @@
 import { API_METHOD } from '@/constants/api-method-constants';
+import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 
 type TTS_Props = {
   text: string;
@@ -45,9 +46,8 @@ export const textToSpeech = async ({ text, type }: TTS_Props): Promise<void> => 
   const { MODEL, FORMAT } = TTS_DEFAULT_OPTIONS;
   const { VOICE, SPEED, INSTRUCTION } = type === 'PRESSURE' ? PRESSURE_OPTIONS : CALM_OPTIONS;
   try {
-    // TODO : Path명 상수화 진행
-    const res = await fetch('/api/ai/tts', {
-      method: 'POST',
+    const res = await fetch(ROUTE_HANDLER_PATH.AI.TTS, {
+      method: API_METHOD.POST,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         text,
@@ -99,9 +99,8 @@ export const speechToText = async ({ blob }: STT_Props): Promise<string> => {
     formData.append('language', LANGUAGE);
     formData.append('format', FORMAT);
 
-    // TODO : Path명 상수화 진행
-    const res = await fetch('/api/ai/stt', {
-      method: 'POST',
+    const res = await fetch(ROUTE_HANDLER_PATH.AI.STT, {
+      method: API_METHOD.POST,
       body: formData,
     });
 

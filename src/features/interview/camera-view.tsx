@@ -1,7 +1,7 @@
 'use client';
 
-import { useAudioRecorder } from './hooks/useAudioRecorder';
-import { useWebcamStream } from './hooks/useWebcamStream';
+import { useAudioRecorder } from '@/features/interview/hooks/useAudioRecorder';
+import { useWebcamStream } from '@/features/interview/hooks/useWebcamStream';
 
 const CameraView = () => {
   const videoRef = useWebcamStream();

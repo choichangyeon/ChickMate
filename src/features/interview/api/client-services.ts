@@ -1,9 +1,15 @@
 import { API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
+import { INTERVIEW_TYPE } from '@/constants/interview-constants';
 
-type TTS_Props = {
-  text: string;
-  type: 'PRESSURE' | 'CALM';
+const { TTS, STT } = ROUTE_HANDLER_PATH.AI;
+const { POST } = API_METHOD;
+
+const ERROR_MESSAGE = {
+  TTS_REQUEST_FAILURE: 'TTS 요청 실패',
+  TTS_SERVER_ERROR: 'TTS 서버 에러',
+  STT_REQUEST_FAILURE: 'STT 요청 실패',
+  STT_SERVER_ERROR: 'STT 서버 에러',
 };
 
 const TTS_DEFAULT_OPTIONS = {
@@ -42,12 +48,20 @@ Avoids showing emotional empathy or positive reactions to the candidate's respon
  * @returns {void}
  */
 
+type TTS_Props = {
+  text: string;
+  type: string;
+};
+
 export const textToSpeech = async ({ text, type }: TTS_Props): Promise<void> => {
   const { MODEL, FORMAT } = TTS_DEFAULT_OPTIONS;
-  const { VOICE, SPEED, INSTRUCTION } = type === 'PRESSURE' ? PRESSURE_OPTIONS : CALM_OPTIONS;
+  const { PRESSURE } = INTERVIEW_TYPE;
+  const { VOICE, SPEED, INSTRUCTION } = type === PRESSURE ? PRESSURE_OPTIONS : CALM_OPTIONS;
+  const { TTS_REQUEST_FAILURE, TTS_SERVER_ERROR } = ERROR_MESSAGE;
+
   try {
-    const res = await fetch(ROUTE_HANDLER_PATH.AI.TTS, {
-      method: API_METHOD.POST,
+    const res = await fetch(TTS, {
+      method: POST,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         text,
@@ -63,19 +77,15 @@ export const textToSpeech = async ({ text, type }: TTS_Props): Promise<void> => 
 
     if (res.status !== 200) {
       // TODO : ERROR 처리
-      console.error('TTS 요청 실패', data.error || data.message);
+      console.error(TTS_REQUEST_FAILURE, data.error || data.message);
       throw new Error(data.error || data.message);
     }
 
     const audio = new Audio(data.audioUrl);
     await audio.play();
   } catch (error) {
-    throw new Error('TTS 서버 에러');
+    throw new Error(TTS_SERVER_ERROR);
   }
-};
-
-type STT_Props = {
-  blob: Blob;
 };
 
 /**
@@ -87,8 +97,13 @@ type STT_Props = {
  * @returns {text}
  */
 
+type STT_Props = {
+  blob: Blob;
+};
+
 export const speechToText = async ({ blob }: STT_Props): Promise<string> => {
   const { MODEL, FORMAT, LANGUAGE } = STT_DEFAULT_OPTIONS;
+  const { STT_REQUEST_FAILURE, STT_SERVER_ERROR } = ERROR_MESSAGE;
 
   try {
     const formData = new FormData();
@@ -99,8 +114,8 @@ export const speechToText = async ({ blob }: STT_Props): Promise<string> => {
     formData.append('language', LANGUAGE);
     formData.append('format', FORMAT);
 
-    const res = await fetch(ROUTE_HANDLER_PATH.AI.STT, {
-      method: API_METHOD.POST,
+    const res = await fetch(STT, {
+      method: POST,
       body: formData,
     });
 
@@ -108,13 +123,13 @@ export const speechToText = async ({ blob }: STT_Props): Promise<string> => {
 
     if (data.status !== 200) {
       // TODO : ERROR 처리
-      console.error('STT 요청 실패', data.error || data.message);
+      console.error(STT_REQUEST_FAILURE, data.error || data.message);
       throw new Error(data.error || data.message);
     }
 
     return data.text;
   } catch (error) {
     console.error(error);
-    throw new Error('STT 서버 에러');
+    throw new Error(STT_SERVER_ERROR);
   }
 };

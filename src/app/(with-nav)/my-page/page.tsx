@@ -1,5 +1,11 @@
+import UserMetaData from '@/features/my-page/user-meta-data';
+
 const MyPage = () => {
-  return <div>아무나 못 들어옴 my page</div>;
+  return (
+    <div className='pl-28'>
+      <UserMetaData />
+    </div>
+  );
 };
 
 export default MyPage;

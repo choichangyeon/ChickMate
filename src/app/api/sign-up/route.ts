@@ -9,8 +9,8 @@ type RequestBody = {
   password: string;
 };
 
-const {RESULT} = AUTH_MESSAGE;
-const {SIGN_UP_EMPTY_FIELD, SIGN_UP_EXIST_ERROR, SIGN_UP_FAILED} = RESULT;
+const { RESULT } = AUTH_MESSAGE;
+const { SIGN_UP_EMPTY_FIELD, SIGN_UP_EXIST_ERROR, SIGN_UP_FAILED } = RESULT;
 
 export async function POST(request: Request) {
   try {
@@ -38,7 +38,6 @@ export async function POST(request: Request) {
 
     const { password, ...result } = user;
     return NextResponse.json({ result }, { status: 200 });
-    throw new Error;
   } catch (error) {
     return NextResponse.json({ message: SIGN_UP_FAILED }, { status: 500 });
   }

@@ -7,19 +7,30 @@ const openAi = new OpenAI({
   dangerouslyAllowBrowser: true,
 });
 
+const FORMAT_FORMDATA = {
+  FILE: 'file',
+  MODEL: 'model',
+  LANGUAGE: 'language',
+};
+
+const ERROR_MESSAGE = {
+  NOT_FILE: '파일이 제공되지 않았습니다.',
+};
+
 /**
  * POST 요청 함수
  */
 export const POST = async (req: NextRequest) => {
+  const { FILE, MODEL, LANGUAGE } = FORMAT_FORMDATA;
+  const { NOT_FILE } = ERROR_MESSAGE;
   try {
     const formData = await req.formData();
-    const file = formData.get('file') as File;
-    const model = formData.get('model') as string;
-    const language = formData.get('language') as string;
+    const file = formData.get(FILE) as File;
+    const model = formData.get(MODEL) as string;
+    const language = formData.get(LANGUAGE) as string;
 
-    console.log(file);
     if (!file) {
-      return NextResponse.json({ message: '파일이 제공되지 않았습니다.', status: 400 });
+      return NextResponse.json({ message: NOT_FILE, status: 400 });
     }
 
     const { text } = await openAi.audio.transcriptions.create({

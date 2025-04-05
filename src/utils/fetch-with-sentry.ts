@@ -2,23 +2,34 @@ import { captureException } from '@sentry/nextjs';
 
 type FetchOptions = Omit<RequestInit, 'body'> & {
   body?: string | FormData | URLSearchParams | Blob | null;
+  headers?: HeadersInit;
 };
 
 /**
  * 공통 fetch 요청 래퍼입니다. 에러 처리 및 Sentry 로깅을 포함합니다.
  *
  * @param {string} url - 요청을 보낼 URL
- * @param {RequestInit & { body?: any }} options - fetch 설정 객체
+ * @param {FetchOptions} options - fetch 설정 객체
  * @returns {Promise<any>} JSON으로 파싱된 응답 데이터
  * @throws {Error} 요청이 실패하면 에러를 throw합니다.
  */
 export const fetchWithSentry = async (url: string, options: FetchOptions = {}) => {
   const { method, body, headers, ...rest } = options;
 
+  let resolvedHeaders = headers;
+
+  if (!headers) {
+    const isMultipart = body instanceof FormData || body instanceof URLSearchParams || body instanceof Blob;
+
+    if (!isMultipart) {
+      resolvedHeaders = { 'Content-Type': 'application/json' };
+    }
+  }
+
   const res = await fetch(url, {
     ...rest,
     method: method,
-    headers: headers,
+    headers: resolvedHeaders,
     body: body,
   });
 

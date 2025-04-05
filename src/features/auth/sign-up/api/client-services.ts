@@ -29,7 +29,6 @@ const { POST } = API_METHOD;
 export const postSignUp = async (data: Props) => {
   await fetchWithSentry(SIGN_UP, {
     method: POST,
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
 };

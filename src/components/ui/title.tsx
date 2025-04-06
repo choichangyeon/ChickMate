@@ -27,6 +27,13 @@ const colorClassName = {
   gray: 'text-gray-400',
 };
 
+/**
+ * Title 컴포넌트
+ * @param as heading 태그
+ * @param size 폰트 크기
+ * @param color 폰트 컬러
+ * @returns JSX
+ */
 const Title = ({ as = 'h1', size = 'xl', color = 'default', children }: Props) => {
   const Component = as;
   const titleClassName = clsx('font-bold', sizeClassName[size], colorClassName[color]);

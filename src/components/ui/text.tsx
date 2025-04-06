@@ -23,6 +23,12 @@ const colorClassName = {
   gray: 'text-gray-400',
 };
 
+/**
+ * Text 컴포넌트
+ * @param size 폰트 크기
+ * @param color 폰트 컬러
+ * @returns JSX
+ */
 const Text = ({ size = 'md', color = 'default', children }: Props) => {
   const textClassName = clsx('font-normal', sizeClassName[size], colorClassName[color]);
 

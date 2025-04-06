@@ -10,7 +10,7 @@ const STTComponent = ({ blob }: Props) => {
   const handleClick = async () => {
     try {
       const text = await speechToText({ blob });
-      setVoiceText(voiceText);
+      setVoiceText(text);
     } catch (error) {
       // TODO : ERROR 처리
       alert(error.message);

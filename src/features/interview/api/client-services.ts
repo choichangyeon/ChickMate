@@ -65,9 +65,7 @@ export const textToSpeech = async ({ text, type }: TTS_Props): Promise<void> => 
     }),
   });
 
-  const data = await res.json();
-
-  const audio = new Audio(data.audioUrl);
+  const audio = new Audio(res.audioUrl);
   await audio.play();
 };
 
@@ -100,7 +98,5 @@ export const speechToText = async ({ blob }: STT_Props): Promise<string> => {
     body: formData,
   });
 
-  const data = await res.json();
-
-  return data.text;
+  return res.text;
 };

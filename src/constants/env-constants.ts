@@ -15,4 +15,6 @@ export const ENV = {
   NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
 
   OPENAI_API_KEY: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+
+  SENTRY_DSN: process.env.SENTRY_DSN
 };

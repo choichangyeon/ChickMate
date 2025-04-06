@@ -60,8 +60,6 @@ const ClientComponent = () => {
     // const response = [];
     if (response) {
       setMessageList(response);
-      console.log(response);
-      console.log(response.at(-1));
     } else {
       console.log('Error!');
     }

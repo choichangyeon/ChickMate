@@ -1,16 +1,10 @@
 import { API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { INTERVIEW_TYPE } from '@/constants/interview-constants';
+import { AI_MESSAGE } from '@/constants/message-constants';
 
 const { TTS, STT } = ROUTE_HANDLER_PATH.AI;
 const { POST } = API_METHOD;
-
-const ERROR_MESSAGE = {
-  TTS_REQUEST_FAILURE: 'TTS 요청 실패',
-  TTS_SERVER_ERROR: 'TTS 서버 에러',
-  STT_REQUEST_FAILURE: 'STT 요청 실패',
-  STT_SERVER_ERROR: 'STT 서버 에러',
-};
 
 const TTS_DEFAULT_OPTIONS = {
   MODEL: 'gpt-4o-mini-tts',
@@ -57,7 +51,7 @@ export const textToSpeech = async ({ text, type }: TTS_Props): Promise<void> => 
   const { MODEL, FORMAT } = TTS_DEFAULT_OPTIONS;
   const { PRESSURE } = INTERVIEW_TYPE;
   const { VOICE, SPEED, INSTRUCTION } = type === PRESSURE ? PRESSURE_OPTIONS : CALM_OPTIONS;
-  const { TTS_REQUEST_FAILURE, TTS_SERVER_ERROR } = ERROR_MESSAGE;
+  const { REQUEST_FAILURE, SERVER_ERROR } = AI_MESSAGE.TTS;
 
   try {
     const res = await fetch(TTS, {
@@ -77,14 +71,14 @@ export const textToSpeech = async ({ text, type }: TTS_Props): Promise<void> => 
 
     if (res.status !== 200) {
       // TODO : ERROR 처리
-      console.error(TTS_REQUEST_FAILURE, data.error || data.message);
+      console.error(REQUEST_FAILURE, data.error || data.message);
       throw new Error(data.error || data.message);
     }
 
     const audio = new Audio(data.audioUrl);
     await audio.play();
   } catch (error) {
-    throw new Error(TTS_SERVER_ERROR);
+    throw new Error(SERVER_ERROR);
   }
 };
 
@@ -103,7 +97,7 @@ type STT_Props = {
 
 export const speechToText = async ({ blob }: STT_Props): Promise<string> => {
   const { MODEL, FORMAT, LANGUAGE } = STT_DEFAULT_OPTIONS;
-  const { STT_REQUEST_FAILURE, STT_SERVER_ERROR } = ERROR_MESSAGE;
+  const { REQUEST_FAILURE, SERVER_ERROR } = AI_MESSAGE.STT;
 
   try {
     const formData = new FormData();
@@ -123,13 +117,13 @@ export const speechToText = async ({ blob }: STT_Props): Promise<string> => {
 
     if (res.status !== 200) {
       // TODO : ERROR 처리
-      console.error(STT_REQUEST_FAILURE, data.error || data.message);
+      console.error(REQUEST_FAILURE, data.error || data.message);
       throw new Error(data.error || data.message);
     }
 
     return data.text;
   } catch (error) {
     console.error(error);
-    throw new Error(STT_SERVER_ERROR);
+    throw new Error(SERVER_ERROR);
   }
 };

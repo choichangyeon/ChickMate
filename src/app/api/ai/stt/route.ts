@@ -1,4 +1,5 @@
 import { ENV } from '@/constants/env-constants';
+import { AI_MESSAGE } from '@/constants/message-constants';
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
@@ -13,16 +14,12 @@ const FORMAT_FORMDATA = {
   LANGUAGE: 'language',
 };
 
-const ERROR_MESSAGE = {
-  NOT_FILE: '파일이 제공되지 않았습니다.',
-};
-
 /**
  * POST 요청 함수
  */
 export const POST = async (req: NextRequest) => {
+  const { NOT_FILE } = AI_MESSAGE.STT;
   const { FILE, MODEL, LANGUAGE } = FORMAT_FORMDATA;
-  const { NOT_FILE } = ERROR_MESSAGE;
   try {
     const formData = await req.formData();
     const file = formData.get(FILE) as File;

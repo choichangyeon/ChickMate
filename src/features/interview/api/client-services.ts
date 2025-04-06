@@ -1,7 +1,7 @@
 import { API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { INTERVIEW_TYPE } from '@/constants/interview-constants';
-import { AI_MESSAGE } from '@/constants/message-constants';
+import { fetchWithSentry } from '@/utils/fetch-with-sentry';
 
 const { TTS, STT } = ROUTE_HANDLER_PATH.AI;
 const { POST } = API_METHOD;
@@ -51,35 +51,24 @@ export const textToSpeech = async ({ text, type }: TTS_Props): Promise<void> => 
   const { MODEL, FORMAT } = TTS_DEFAULT_OPTIONS;
   const { PRESSURE } = INTERVIEW_TYPE;
   const { VOICE, SPEED, INSTRUCTION } = type === PRESSURE ? PRESSURE_OPTIONS : CALM_OPTIONS;
-  const { REQUEST_FAILURE, SERVER_ERROR } = AI_MESSAGE.TTS;
 
-  try {
-    const res = await fetch(TTS, {
-      method: POST,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        text,
-        model: MODEL,
-        response_format: FORMAT,
-        voice: VOICE,
-        speed: SPEED,
-        instruction: INSTRUCTION,
-      }),
-    });
+  const res = await fetchWithSentry(TTS, {
+    method: POST,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      text,
+      model: MODEL,
+      response_format: FORMAT,
+      voice: VOICE,
+      speed: SPEED,
+      instruction: INSTRUCTION,
+    }),
+  });
 
-    const data = await res.json();
+  const data = await res.json();
 
-    if (res.status !== 200) {
-      // TODO : ERROR 처리
-      console.error(REQUEST_FAILURE, data.error || data.message);
-      throw new Error(data.error || data.message);
-    }
-
-    const audio = new Audio(data.audioUrl);
-    await audio.play();
-  } catch (error) {
-    throw new Error(SERVER_ERROR);
-  }
+  const audio = new Audio(data.audioUrl);
+  await audio.play();
 };
 
 /**
@@ -97,33 +86,21 @@ type STT_Props = {
 
 export const speechToText = async ({ blob }: STT_Props): Promise<string> => {
   const { MODEL, FORMAT, LANGUAGE } = STT_DEFAULT_OPTIONS;
-  const { REQUEST_FAILURE, SERVER_ERROR } = AI_MESSAGE.STT;
 
-  try {
-    const formData = new FormData();
+  const formData = new FormData();
 
-    const file = new File([blob], 'recording.webm', { type: `audio/${FORMAT}` });
-    formData.append('file', file);
-    formData.append('model', MODEL);
-    formData.append('language', LANGUAGE);
-    formData.append('format', FORMAT);
+  const file = new File([blob], 'recording.webm', { type: `audio/${FORMAT}` });
+  formData.append('file', file);
+  formData.append('model', MODEL);
+  formData.append('language', LANGUAGE);
+  formData.append('format', FORMAT);
 
-    const res = await fetch(STT, {
-      method: POST,
-      body: formData,
-    });
+  const res = await fetchWithSentry(STT, {
+    method: POST,
+    body: formData,
+  });
 
-    const data = await res.json();
+  const data = await res.json();
 
-    if (res.status !== 200) {
-      // TODO : ERROR 처리
-      console.error(REQUEST_FAILURE, data.error || data.message);
-      throw new Error(data.error || data.message);
-    }
-
-    return data.text;
-  } catch (error) {
-    console.error(error);
-    throw new Error(SERVER_ERROR);
-  }
+  return data.text;
 };

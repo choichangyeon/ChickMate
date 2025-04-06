@@ -1,10 +1,6 @@
+import { AI_MESSAGE } from '@/constants/message-constants';
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
-
-const ERROR_MESSAGE = {
-  AI_REQUEST_FAILURE: 'AI 요청 실패',
-  AI_SERVER_ERROR: 'AI 서버 에러',
-};
 
 const openai = new OpenAI({
   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
@@ -21,7 +17,7 @@ const DEFAULT_COMPLETION_OPTIONS = {
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
   const { messageList } = await req.json();
-  const { AI_REQUEST_FAILURE, AI_SERVER_ERROR } = ERROR_MESSAGE;
+  const { AI_REQUEST_FAILURE, AI_SERVER_ERROR } = AI_MESSAGE.AI;
 
   try {
     const res = await openai.chat.completions.create({

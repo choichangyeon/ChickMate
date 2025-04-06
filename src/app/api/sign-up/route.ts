@@ -9,12 +9,15 @@ type RequestBody = {
   password: string;
 };
 
+const { RESULT } = AUTH_MESSAGE;
+const { SIGN_UP_EMPTY_FIELD, SIGN_UP_EXIST_ERROR, SIGN_UP_FAILED } = RESULT;
+
 export async function POST(request: Request) {
   try {
     const body: RequestBody = await request.json();
 
     if (!body.name || !body.email || !body.password) {
-      return NextResponse.json({ error: AUTH_MESSAGE.RESULT.SIGN_UP_EMPTY_FIELD }, { status: 400 });
+      return NextResponse.json({ message: SIGN_UP_EMPTY_FIELD }, { status: 400 });
     }
 
     const existingUser = await prisma.user.findUnique({
@@ -22,7 +25,7 @@ export async function POST(request: Request) {
     });
 
     if (existingUser) {
-      return NextResponse.json({ error: AUTH_MESSAGE.RESULT.SIGN_UP_EXIST_ERROR }, { status: 400 });
+      return NextResponse.json({ message: SIGN_UP_EXIST_ERROR }, { status: 400 });
     }
 
     const user = await prisma.user.create({
@@ -34,9 +37,8 @@ export async function POST(request: Request) {
     });
 
     const { password, ...result } = user;
-    return NextResponse.json(result, { status: 201 });
+    return NextResponse.json({ result }, { status: 200 });
   } catch (error) {
-    console.error('회원가입 오류:', error);
-    return NextResponse.json({ error: AUTH_MESSAGE.RESULT.SIGN_UP_FAILED }, { status: 500 });
+    return NextResponse.json({ message: SIGN_UP_FAILED }, { status: 500 });
   }
 }

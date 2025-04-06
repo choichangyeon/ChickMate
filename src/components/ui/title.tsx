@@ -6,7 +6,7 @@ type TitleColor = 'default' | 'primary' | 'danger' | 'gray';
 
 type Props = {
   as?: HeadingTag;
-  size: TextSize;
+  size?: TextSize;
   color?: TitleColor;
   children: React.ReactNode;
 };

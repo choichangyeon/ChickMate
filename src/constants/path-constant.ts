@@ -13,4 +13,8 @@ export const ROUTE_HANDLER_PATH = {
   AUTH: {
     SIGN_UP: '/api/sign-up',
   },
+  AI: {
+    STT: '/api/ai/stt',
+    TTS: '/api/ai/tts',
+  },
 };

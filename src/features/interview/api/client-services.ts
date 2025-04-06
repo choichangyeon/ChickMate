@@ -121,7 +121,7 @@ export const speechToText = async ({ blob }: STT_Props): Promise<string> => {
 
     const data = await res.json();
 
-    if (data.status !== 200) {
+    if (res.status !== 200) {
       // TODO : ERROR 처리
       console.error(STT_REQUEST_FAILURE, data.error || data.message);
       throw new Error(data.error || data.message);

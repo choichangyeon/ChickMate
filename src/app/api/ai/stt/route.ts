@@ -30,7 +30,7 @@ export const POST = async (req: NextRequest) => {
     const language = formData.get(LANGUAGE) as string;
 
     if (!file) {
-      return NextResponse.json({ message: NOT_FILE, status: 400 });
+      return NextResponse.json({ message: NOT_FILE }, { status: 400 });
     }
 
     const { text } = await openAi.audio.transcriptions.create({
@@ -39,9 +39,9 @@ export const POST = async (req: NextRequest) => {
       language,
     });
 
-    return NextResponse.json({ status: 200, text });
+    return NextResponse.json({ text }, { status: 200 });
   } catch (error) {
     const error_message = (error as Error).message;
-    return NextResponse.json({ message: error_message, status: 503 });
+    return NextResponse.json({ message: error_message }, { status: 503 });
   }
 };

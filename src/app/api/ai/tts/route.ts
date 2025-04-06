@@ -24,16 +24,16 @@ export const POST = async (req: NextRequest) => {
 
     if (!res.ok) {
       const error_message = await res.text();
-      return NextResponse.json({ message: error_message, status: res.status });
+      return NextResponse.json({ message: error_message }, { status: res.status });
     }
 
     const arrayBuffer = await res.arrayBuffer();
     const base64Audio = Buffer.from(arrayBuffer).toString('base64');
     const audioUrl = `data:audio/${response_format};base64,${base64Audio}`;
 
-    return NextResponse.json({ status: 200, audioUrl });
+    return NextResponse.json({ audioUrl }, { status: 200 });
   } catch (error) {
     const error_message = (error as Error).message;
-    return NextResponse.json({ message: error_message, status: 503 });
+    return NextResponse.json({ message: error_message }, { status: 503 });
   }
 };

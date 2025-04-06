@@ -24,7 +24,6 @@ export const AI_MESSAGE = {
     SERVER_ERROR: 'TTS 서버 에러',
   },
   STT: {
-    REQUEST_FAILURE: 'STT 요청 실패',
     SERVER_ERROR: 'STT 서버 에러',
     NOT_FILE: '파일이 제공되지 않았습니다.',
   },

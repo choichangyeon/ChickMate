@@ -17,7 +17,7 @@ const FORMAT_FORMDATA = {
 /**
  * POST 요청 함수
  */
-export const POST = async (req: NextRequest) => {
+export const POST = async (req: NextRequest): Promise<NextResponse> => {
   const { NOT_FILE, SERVER_ERROR } = AI_MESSAGE.STT;
   const { FILE, MODEL, LANGUAGE } = FORMAT_FORMDATA;
   try {

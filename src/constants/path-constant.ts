@@ -16,5 +16,6 @@ export const ROUTE_HANDLER_PATH = {
   AI: {
     STT: '/api/ai/stt',
     TTS: '/api/ai/tts',
+    INTERVIEW: '/api/ai/interview',
   },
 };

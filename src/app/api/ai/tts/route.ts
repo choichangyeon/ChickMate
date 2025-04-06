@@ -1,4 +1,5 @@
 import { ENV } from '@/constants/env-constants';
+import { AI_MESSAGE } from '@/constants/message-constants';
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
@@ -12,6 +13,7 @@ const openAi = new OpenAI({
  */
 export const POST = async (req: NextRequest) => {
   const { text, model, voice, speed, response_format, instructions } = await req.json();
+  const { REQUEST_FAILURE, SERVER_ERROR } = AI_MESSAGE.TTS;
   try {
     const res = await openAi.audio.speech.create({
       input: text,
@@ -24,7 +26,8 @@ export const POST = async (req: NextRequest) => {
 
     if (!res.ok) {
       const error_message = await res.text();
-      return NextResponse.json({ message: error_message }, { status: res.status });
+      console.error(error_message);
+      return NextResponse.json({ message: REQUEST_FAILURE }, { status: res.status });
     }
 
     const arrayBuffer = await res.arrayBuffer();
@@ -33,7 +36,7 @@ export const POST = async (req: NextRequest) => {
 
     return NextResponse.json({ audioUrl }, { status: 200 });
   } catch (error) {
-    const error_message = (error as Error).message;
-    return NextResponse.json({ message: error_message }, { status: 503 });
+    console.error(error);
+    return NextResponse.json({ message: SERVER_ERROR }, { status: 503 });
   }
 };

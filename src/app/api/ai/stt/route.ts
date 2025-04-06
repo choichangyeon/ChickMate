@@ -18,7 +18,7 @@ const FORMAT_FORMDATA = {
  * POST 요청 함수
  */
 export const POST = async (req: NextRequest) => {
-  const { NOT_FILE } = AI_MESSAGE.STT;
+  const { NOT_FILE, SERVER_ERROR } = AI_MESSAGE.STT;
   const { FILE, MODEL, LANGUAGE } = FORMAT_FORMDATA;
   try {
     const formData = await req.formData();
@@ -38,7 +38,6 @@ export const POST = async (req: NextRequest) => {
 
     return NextResponse.json({ text }, { status: 200 });
   } catch (error) {
-    const error_message = (error as Error).message;
-    return NextResponse.json({ message: error_message }, { status: 503 });
+    return NextResponse.json({ message: SERVER_ERROR }, { status: 503 });
   }
 };

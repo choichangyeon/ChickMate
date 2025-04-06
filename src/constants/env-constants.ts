@@ -17,4 +17,5 @@ export const ENV = {
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
 
   SENTRY_DSN: process.env.SENTRY_DSN,
+  SENTRY_CLIENT_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
 };

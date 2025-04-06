@@ -1,12 +1,12 @@
 import clsx from 'clsx';
 
 type HeadingTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-type TextSize = 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl';
+type TitleSize = 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl';
 type TitleColor = 'default' | 'primary' | 'danger' | 'gray';
 
 type Props = {
   as?: HeadingTag;
-  size?: TextSize;
+  size?: TitleSize;
   color?: TitleColor;
   children: React.ReactNode;
 };

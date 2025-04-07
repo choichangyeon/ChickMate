@@ -1,8 +1,9 @@
 export type JobPosting = {
   id: number;
-  company: String;
-  title: String;
-  location: String;
+  company: string;
+  title: string;
+  location: JSON;
+  experienceType: string;
   url: string;
   jobType: string;
   employmentType: string;

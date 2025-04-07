@@ -5,7 +5,7 @@ export const USER_META_DATA_KEY = {
   JOB: 'jobType',
   MAIN_REGION: 'mainRegion',
   SUB_REGION: 'subRegion',
-  ETC: 'ect',
+  ETC: 'etc',
 } as const;
 
 export const USER_META_DATA_VALUE = {

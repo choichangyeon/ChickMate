@@ -1,12 +1,12 @@
 'use client';
 import { DEFAULT, USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 import type { SelectBoxType } from '@/types/select-box';
-import type { UserMetaDataType } from '@/types/user-meta-data-type';
+import { RegionsType, type UserMetaDataType } from '@/types/user-meta-data-type';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import { getUserMetaData } from './api/client-services';
+import { getRegions, getUserMetaData, postUserMetaData } from './api/client-services';
 import { academicData, jobData, mainRegion, typeData } from './data/user-meta-data';
 import { userMetaFormSchema, UserMetaSchema } from './data/user-meta-form-schema';
 import SingleSelectField from './single-select-field';
@@ -28,6 +28,7 @@ const { TYPE, EDUCATION, JOB, MAIN_REGION, ETC } = USER_META_DATA_KEY;
 const UserMetaData = () => {
   const { data } = useSession();
   const userId = data?.user?.id ?? null;
+  const [regions, setRegions] = useState([]);
 
   const handleSelect = useCallback((key: keyof UserMetaDataType, selected: SelectBoxType['value']) => {
     // if (dependencyMap[key]) {
@@ -40,6 +41,14 @@ const UserMetaData = () => {
     // } => 사람인 api 연결 시 사용
     setValue(key, selected);
     trigger(key);
+  }, []);
+
+  const getLocation = async () => {
+    const res = await getRegions();
+    setRegions(res);
+  };
+  useEffect(() => {
+    getLocation();
   }, []);
 
   useEffect(() => {
@@ -68,10 +77,9 @@ const UserMetaData = () => {
     resolver: zodResolver(userMetaFormSchema),
   });
 
-  const handleOnSubmit = async (values: FieldValues) => {
-    //@TODO: 서버 전송
+  const handleOnSubmit = (values: FieldValues) => {
     console.log('values=>', values);
-    await fetch(`api/user-meta-data/${values}`);
+    postUserMetaData(userId, values);
   };
 
   return (
@@ -115,7 +123,7 @@ const UserMetaData = () => {
 
       <SingleSelectField
         label='*지역'
-        options={mainRegion}
+        options={regions}
         value={watch(MAIN_REGION)}
         fieldKey={MAIN_REGION}
         onSelect={handleSelect}

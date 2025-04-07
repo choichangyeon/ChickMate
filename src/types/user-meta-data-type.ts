@@ -18,3 +18,9 @@ export type UserMetaDataType = {
 //     condition: (value: UserMetaDataType[K]) => boolean;
 //   };
 // }; => 사람인 api 연결되면 살릴 예정
+
+export type RegionsType = {
+  id: number;
+  name: string;
+  value: string;
+};

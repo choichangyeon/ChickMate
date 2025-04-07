@@ -86,8 +86,8 @@ model Sample {
 model Character {
   id          Int                @id @default(autoincrement())
   userId      String             @map("user_id")
-  level       Int
-  experience  Int
+  level       Int                @default(0)
+  experience  Int                @default(0)
   createdAt   DateTime           @default(now()) @map("created_at")
 
   user        User               @relation(fields: [userId], references: [id])
@@ -99,7 +99,7 @@ model Character {
 model CharacterHistory {
   id          Int       @id @default(autoincrement())
   characterId Int       @map("character_id")
-  history     String
+  history     Json      
   experience  Int
   createdAt   DateTime  @default(now()) @map("created_at")
 
@@ -109,17 +109,18 @@ model CharacterHistory {
 }
 
 model Resume {
-  id         Int      @id @default(autoincrement())
-  title      String   
-  userId     String   @map("user_id")
-  content    Json
-  tryCount   Int      @map("try_count")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @default(now()) @map("updated_at")
+  id                  Int      @id @default(autoincrement())
+  title               String?   
+  userId              String   @map("user_id")
+  questionContent     Json?    @map("question_content") 
+  answerContent       Json?    @map("answer_content") 
+  tryCount            Int      @default(0) @map("try_count")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @default(now()) @map("updated_at")
 
-  InterviewHistories InterviewHistory[]
+  InterviewHistories  InterviewHistory[]
 
-  user       User     @relation(fields: [userId], references: [id])
+  user                User     @relation(fields: [userId], references: [id])
 
   @@map("resume")
 }
@@ -128,13 +129,11 @@ model InterviewHistory {
   id                  Int      @id @default(autoincrement())
   userId              String   @map("user_id")
   resumeId            Int      @map("resume_id")
-  feedback            String
-  progress            String  
-  questionContent     Json     @map("question_content")
-  answerContent       Json     @map("answer_content")
+  feedback            Json?   
+  questionContent     Json?    @map("question_content")
+  answerContent       Json?    @map("answer_content")
   createdAt           DateTime @default(now()) @map("created_at")
   interviewType       String   @map("interview_type")
-  historyType         String   @map("history_type")
   user                User     @relation(fields: [userId], references: [id])
   resume              Resume   @relation(fields: [resumeId], references: [id])
 

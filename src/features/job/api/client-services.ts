@@ -6,16 +6,20 @@ const { POSTING } = ROUTE_HANDLER_PATH.JOB;
 const { GET } = API_METHOD;
 
 export const getJobByUserMetaData = async (userData) => {
-  const { educationLevel, location, employmentType, jobType } = userData;
-  const res = await fetchWithSentry(POSTING, {
+  const { educationLevel, location, experienceType, jobType } = userData;
+
+  const queryParams = new URLSearchParams({
+    educationLevel,
+    location: JSON.stringify(location),
+    experienceType,
+    jobType,
+  });
+  const url = `${POSTING}?${queryParams.toString()}`;
+
+  const res = await fetchWithSentry(url, {
     method: GET,
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      educationLevel,
-      location,
-      employmentType,
-      jobType,
-    }),
   });
+
   console.log(res);
 };

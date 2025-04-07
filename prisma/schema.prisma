@@ -13,16 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Sample {
-  id        String   @id @default(cuid())
-  title     String
-  user_id    String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
-}
-
 // NextAuth 모델 정의
 model Account {
   id                String  @id @default(cuid())
@@ -52,22 +42,25 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  password      String?
-  image         String?
-  user_meta_data Json?
-  created_at     DateTime  @default(now())
-  updated_at     DateTime  @updatedAt
-  accounts      Account[]
-  sessions      Session[]
-  characters    Character[]
-  personalStatements PersonalStatement[]
-  interviewHistorys InterviewHistory[]
-  userSelectedJobs UserSelectedJob[]
-  samples Sample[]
+  id                 String    @id @default(cuid())
+  name               String?
+  email              String?   @unique
+  emailVerified      DateTime?
+  image              String?
+  createdAt          DateTime  @default(now())     @map("created_at")
+  updatedAt          DateTime  @updatedAt          @map("updated_at")
+  password           String?
+  userMetaData       Json?                           @map("user_meta_data")
+
+  accounts           Account[]
+  sessions           Session[]
+  characters         Character[]
+  resumes            Resume[]
+  interviewHistorys  InterviewHistory[]
+  userSelectedJobs   UserSelectedJob[]
+  samples            Sample[]
+
+  @@map("user")
 }
 
 model VerificationToken {
@@ -78,57 +71,129 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Character {
-  id           String   @id @default(cuid())
-  user_id      String
-  character_id String
-  level        Int
-  experience   Int
-  created_at   DateTime @default(now())
-  user         User     @relation(fields: [user_id], references: [id])
+model Sample {
+  id        Int      @id @default(autoincrement())
+  title     String
+  userId    String   @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sample")
 }
 
-model PersonalStatement {
-  id         String   @id @default(cuid())
-  user_id     String
+model Character {
+  id          Int                @id @default(autoincrement())
+  userId      String             @map("user_id")
+  level       Int
+  experience  Int
+  createdAt   DateTime           @default(now()) @map("created_at")
+
+  user        User               @relation(fields: [userId], references: [id])
+  characterHistories CharacterHistory[] 
+
+  @@map("character")
+}
+
+model CharacterHistory {
+  id          Int       @id @default(autoincrement())
+  characterId Int       @map("character_id")
+  history     String
+  experience  Int
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  character   Character @relation(fields: [characterId], references: [id])
+
+  @@map("character_history")
+}
+
+model Resume {
+  id         Int      @id @default(autoincrement())
+  title      String   
+  userId     String   @map("user_id")
   content    Json
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-  user       User     @relation(fields: [user_id], references: [id])
+  tryCount   Int      @map("try_count")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @default(now()) @map("updated_at")
+
+  InterviewHistories InterviewHistory[]
+
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@map("resume")
 }
 
 model InterviewHistory {
-  id                    String   @id @default(cuid())
-  user_id               String
-  personal_statement_id String?
-  feedback             String
-  question_content      Json
-  answer_content        Json
-  created_at            DateTime @default(now())
-  interview_type        String
-  user                  User     @relation(fields: [user_id], references: [id])
+  id                  Int      @id @default(autoincrement())
+  userId              String   @map("user_id")
+  resumeId            Int      @map("resume_id")
+  feedback            String
+  progress            String  
+  questionContent     Json     @map("question_content")
+  answerContent       Json     @map("answer_content")
+  createdAt           DateTime @default(now()) @map("created_at")
+  interviewType       String   @map("interview_type")
+  historyType         String   @map("history_type")
+  user                User     @relation(fields: [userId], references: [id])
+  resume              Resume   @relation(fields: [resumeId], references: [id])
+
+  @@map("interview_history")
 }
 
 model JobPosting {
-  id                String               @id @default(cuid())
-  title             String
-  company           String
-  location          String
-  employment_type    String
-  salary_type        String
-  salary_amount      Int
-  posted_at          DateTime
-  deadline          DateTime
-  created_at        DateTime            @default(now())
-  userSelectedJobs  UserSelectedJob[]
+  id               Int               @id @default(autoincrement())
+  title            String
+  company          String
+  location         Json
+  url              String
+  jobType          String            @map("job_type")
+  employmentType   String            @map("employment_type")
+  educationLevel   String            @map("education_level")
+  postedAt         DateTime          @map("posted_at")
+  expiredAt        DateTime          @map("expired_at")
+  createdAt        DateTime          @default(now()) @map("created_at")
+
+  userSelectedJobs UserSelectedJob[]
+
+  @@map("job_posting")
 }
 
 model UserSelectedJob {
-  id             String       @id @default(cuid())
-  user_id        String
-  job_posting_id  String
-  selected_at    DateTime
-  created_at     DateTime    @default(now())
-  jobPosting    JobPosting  @relation(fields: [job_posting_id], references: [id])
-  user          User        @relation(fields: [user_id], references: [id])
+  id           Int        @id @default(autoincrement())
+  userId       String     @map("user_id")
+  jobPostingId Int        @map("job_posting_id")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  jobPosting   JobPosting @relation(fields: [jobPostingId], references: [id])
+  user         User       @relation(fields: [userId], references: [id])
+
+  @@map("user_selected_job")
 }
+
+model Jobs {
+  id    Int    @id @default(autoincrement())
+  name  String
+  value String
+
+  @@map("jobs")
+}
+
+model MainRegion {
+  id         Int        @id @default(autoincrement())
+  name       String
+  value      String
+  subRegions SubRegion[]
+
+  @@map("main_region")
+}
+
+model SubRegion {
+  id           Int        @id @default(autoincrement())
+  mainRegionId Int        @map("mainRegion_id")
+  name         String
+  value        String
+  mainRegion   MainRegion @relation(fields: [mainRegionId], references: [id])
+
+  @@map("sub_region")
+}
+

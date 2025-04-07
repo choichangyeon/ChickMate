@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SelectBox from './select-box';
-import { mainRegion } from './data/user-meta-data';
+import { mainRegion } from '../user-meta-data/data/user-meta-data';
 import type { UserMetaDataType } from '@/types/user-meta-data-type';
 import { onSelectType } from './user-meta-data';
 

@@ -1,7 +1,7 @@
 import type { UserMetaDataType } from '@/types/user-meta-data-type';
 import React from 'react';
-import { careerData, typeData } from './data/user-meta-data';
-import SelectBox from './select-box';
+import { careerData, typeData } from '../user-meta-data/data/user-meta-data';
+import SelectBox from '../user-meta-data/select-box';
 import { onSelectType } from './user-meta-data';
 
 type Props = {

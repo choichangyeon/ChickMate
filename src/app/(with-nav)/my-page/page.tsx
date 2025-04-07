@@ -1,4 +1,4 @@
-import UserMetaData from '@/features/my-page/user-meta-data';
+import UserMetaData from '@/features/user-meta-data/user-meta-data';
 
 const MyPage = () => {
   return (

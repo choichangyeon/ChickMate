@@ -1,4 +1,4 @@
-import { subRegion } from '@/features/my-page/data/user-meta-data';
+import { subRegion } from '@/features/user-meta-data/data/user-meta-data';
 import { NextResponse } from 'next/server';
 
 type Props = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import SelectBox from './select-box';
+import SelectBox from '../user-meta-data/select-box';
 import { SelectBoxType } from '@/types/select-box';
 import { onSelectType } from './user-meta-data';
 import { UserMetaDataType } from '@/types/user-meta-data-type';

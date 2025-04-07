@@ -7,6 +7,7 @@ export const PATH = {
   },
   ON_BOARDING: '/on-boarding',
   MY_PAGE: '/my-page',
+  RESUME: '/resume',
 };
 
 export const ROUTE_HANDLER_PATH = {

@@ -1,35 +1,13 @@
 import { API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
-import { INTERVIEW_TYPE } from '@/constants/interview-constants';
+import { INTERVIEW_CONVERT_OPTIONS, INTERVIEW_TYPE, INTERVIEW_VOICE_OPTIONS } from '@/constants/interview-constants';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
+import { Message } from '@/types/message';
 
-const { TTS, STT } = ROUTE_HANDLER_PATH.AI;
+const { TTS, STT, INTERVIEW } = ROUTE_HANDLER_PATH.AI;
+const { CALM_OPTIONS, PRESSURE_OPTIONS } = INTERVIEW_VOICE_OPTIONS;
+const { TTS_OPTIONS, STT_OPTIONS } = INTERVIEW_CONVERT_OPTIONS;
 const { POST } = API_METHOD;
-
-const TTS_DEFAULT_OPTIONS = {
-  MODEL: 'gpt-4o-mini-tts',
-  FORMAT: 'mp3',
-};
-
-const STT_DEFAULT_OPTIONS = {
-  MODEL: 'gpt-4o-transcribe',
-  FORMAT: 'webm',
-  LANGUAGE: 'ko',
-};
-
-const CALM_OPTIONS = {
-  VOICE: 'ash',
-  SPEED: 1,
-  INSTRUCTION: `Uses a friendly and gentle tone of voice.
-  Rather than challenging the candidate's answers, frequently provides emotional empathy or positive reactions.`,
-};
-
-const PRESSURE_OPTIONS = {
-  VOICE: 'sage',
-  SPEED: 2.5,
-  INSTRUCTION: `Uses a firm and dry tone of voice.
-Avoids showing emotional empathy or positive reactions to the candidate's responses.`,
-};
 
 /**
  * @function textToSpeech
@@ -48,7 +26,7 @@ type TTS_Props = {
 };
 
 export const textToSpeech = async ({ text, type }: TTS_Props): Promise<void> => {
-  const { MODEL, FORMAT } = TTS_DEFAULT_OPTIONS;
+  const { MODEL, FORMAT } = TTS_OPTIONS;
   const { PRESSURE } = INTERVIEW_TYPE;
   const { VOICE, SPEED, INSTRUCTION } = type === PRESSURE ? PRESSURE_OPTIONS : CALM_OPTIONS;
 
@@ -83,7 +61,7 @@ type STT_Props = {
 };
 
 export const speechToText = async ({ blob }: STT_Props): Promise<string> => {
-  const { MODEL, FORMAT, LANGUAGE } = STT_DEFAULT_OPTIONS;
+  const { MODEL, FORMAT, LANGUAGE } = STT_OPTIONS;
 
   const formData = new FormData();
 
@@ -99,4 +77,29 @@ export const speechToText = async ({ blob }: STT_Props): Promise<string> => {
   });
 
   return res.text;
+};
+
+/**
+ * @function getOpenAIResponse
+ * @param messageList - 사용자와 모델간의 대화 리스트
+ * @returns {Message[]}
+ */
+
+export const getOpenAIResponse = async (messageList: Message[]): Promise<Message[]> => {
+  const res = await fetchWithSentry(INTERVIEW, {
+    method: POST,
+    body: JSON.stringify({ messageList: messageList }),
+  });
+
+  messageList.push({
+    role: 'assistant',
+    content: [
+      {
+        type: 'text',
+        text: res.text,
+      },
+    ],
+  });
+
+  return messageList;
 };

@@ -27,4 +27,8 @@ export const AI_MESSAGE = {
     SERVER_ERROR: 'STT 서버 에러',
     NOT_FILE: '파일이 제공되지 않았습니다.',
   },
+  AI: {
+    AI_REQUEST_FAILURE: 'AI 요청 실패',
+    AI_SERVER_ERROR: 'AI 서버 에러',
+  },
 };

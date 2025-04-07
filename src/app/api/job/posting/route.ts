@@ -9,9 +9,11 @@ import { NextRequest, NextResponse } from 'next/server';
 export const GET = async (req: NextRequest): Promise<NextResponse> => {
   const { NOT_FOUND_DATA, DB_SERVER_ERROR } = DB_MESSAGE.ERROR;
   try {
+    // searchParams로 정보 가져오기
     const searchParams = req.nextUrl.searchParams;
     const educationLevel = searchParams.get('educationLevel');
     const location = JSON.parse(searchParams.get('location'));
+    const mainRegion = location.mainRegion;
     const experienceType = searchParams.get('experienceType');
     const jobType = searchParams.get('jobType');
 
@@ -23,7 +25,7 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
         jobType,
         location: {
           path: ['mainRegion'],
-          equals: location.mainRegion,
+          equals: mainRegion,
         },
       },
     });

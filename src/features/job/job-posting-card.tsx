@@ -1,11 +1,12 @@
 'use client';
 
 import { getJobByUserMetaData } from '@/features/job/api/client-services';
+import { JobPosting } from '@prisma/client';
 
 const JobPostingCard = () => {
   const handleClick = async () => {
     // TODO : 유저 데이터 가져오기
-    await getJobByUserMetaData({
+    const jobPostingList: JobPosting[] = await getJobByUserMetaData({
       educationLevel: '대졸(4년)',
       location: { mainRegion: '경남' },
       experienceType: '신입',

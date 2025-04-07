@@ -1,29 +1,44 @@
-import React from 'react';
+'use client';
+import { useEffect, useState } from 'react';
 import QuestionAnswerField from '@/features/resume/question-answer-field';
+import { defaultQuestionList } from '@/features/resume/data/default-question-list';
+import type { Field } from '@/types/resume';
 
 const ResumeForm = () => {
-  const defaultQuestionList = [
-    { key: 'motive', questionText: '해당 회사를 지원한 이유와 입사 후 회사에서 이루고 싶은 꿈을 기술하십시오.' },
-    {
-      key: 'growth',
-      questionText:
-        '본인의 성장 과정을 간략히 기술하되 현재의 자신에게 가장 큰 영향을 끼친 사건, 인물 등을 포함하여 기술하십시오.',
-    },
-    {
-      key: 'experience',
-      questionText:
-        '지원 직무 관련 프로젝트/과제 중 기술적으로 가장 어려웠던 과제와 해결 방안에 대해 구체적으로 서술하십시오.',
-    },
-  ];
+  const STORAGE_KEY = 'resumeFields';
+
+  const [fieldList, setFieldList] = useState<Field[]>(
+    defaultQuestionList.map((question) => ({
+      id: question.id,
+      question: question.questionText,
+      answer: '',
+    }))
+  );
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { id, name, value } = e.target;
+    setFieldList((prev) => prev.map((field) => (field.id === Number(id) ? { ...field, [name]: value } : field)));
+  };
+
+  const handleAddField = () => {
+    setFieldList((prev) => [...prev, { id: Date.now(), question: '', answer: '' }]);
+  };
+
+  const handleDeleteField = (fieldId: number) => {
+    setFieldList((prev) => prev.filter((field) => field.id !== fieldId));
+  };
 
   return (
-    <form>
-      {defaultQuestionList.map((defaultQuestion) => {
-        const { key, questionText } = defaultQuestion;
-
-        return <QuestionAnswerField key={key} questionText={questionText} />;
+    <form className='flex flex-col gap-8'>
+      {fieldList.map((field) => {
+        return (
+          <QuestionAnswerField key={field.id} field={field} onChange={handleChange} onDelete={handleDeleteField} />
+        );
       })}
-      <button>추가하기</button>
+      <button type='button' onClick={handleAddField}>
+        추가하기
+      </button>
+      <button type='submit'>작성 완료</button>
     </form>
   );
 };

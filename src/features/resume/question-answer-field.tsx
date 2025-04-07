@@ -1,28 +1,41 @@
-'use client';
-
-import { useState } from 'react';
+import Text from '@/components/ui/text';
+import type { Field } from '@/types/resume';
 
 type Props = {
-  questionText: string;
+  field: Field;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onDelete: (fieldId: number) => void;
 };
 
-const QuestionAnswerField = ({ questionText }: Props) => {
-  const [content, setContent] = useState({
-    question: questionText || '',
-    answer: '',
-  });
-  const { question, answer } = content;
-
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { id, value } = event.target;
-    setContent({ ...content, [id]: value });
-  };
+const QuestionAnswerField = ({ field, onChange, onDelete }: Props) => {
+  const { id, question, answer } = field;
+  const ANSWER_LENGTH = answer.length;
 
   return (
-    <div className='flex flex-col'>
-      <textarea id='question' value={question} onChange={handleChange} placeholder='질문을 입력하세요.' />
-      <textarea id='answer' maxLength={1000} value={answer} onChange={handleChange} placeholder='답변을 입력하세요.' />
-      <div>{answer.length} / 1000 (공백 포함)</div>
+    <div className='flex w-[600px] flex-col'>
+      <textarea
+        id={String(id)}
+        name='question'
+        value={question}
+        onChange={onChange}
+        placeholder='질문을 입력해주세요.'
+        required
+      />
+      <textarea
+        id={String(id)}
+        name='answer'
+        value={answer}
+        onChange={onChange}
+        maxLength={1000}
+        placeholder='답변을 입력해주세요.'
+        className='h-[300px]'
+      />
+      <div className='flex justify-between'>
+        <Text>{ANSWER_LENGTH} / 1000 (공백 포함)</Text>
+        <button type='button' onClick={() => onDelete(id)}>
+          삭제
+        </button>
+      </div>
     </div>
   );
 };

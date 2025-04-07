@@ -4,7 +4,7 @@ import UserInfoSummary from '@/features/resume/user-info-summary';
 
 export const metadata: Metadata = {
   title: '자기소개서 작성',
-  description: 'Chick Mate에서 자기소개서를 관리해보세요',
+  description: 'Chick Mate에서 자기소개서를 관리해보세요.',
 };
 
 const ResumePage = () => {

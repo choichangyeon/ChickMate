@@ -2,13 +2,15 @@ export const USER_META_DATA_KEY = {
   TYPE: 'experienceType',
   EXPERIENCE: 'workExperience',
   EDUCATION: 'educationLevel',
-  JOB: 'job',
+  JOB: 'jobType',
   MAIN_REGION: 'mainRegion',
   SUB_REGION: 'subRegion',
-};
+  ETC: 'ect',
+} as const;
+
 export const USER_META_DATA_VALUE = {
   INEXPERIENCED: 'inexperienced',
   EXPERIENCED: 'experienced',
-};
+} as const;
 
 export const DEFAULT = 'default';

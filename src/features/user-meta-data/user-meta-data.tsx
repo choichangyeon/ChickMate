@@ -1,104 +1,139 @@
 'use client';
-import { DEFAULT } from '@/constants/user-meta-data-constants';
+import { DEFAULT, USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 import type { SelectBoxType } from '@/types/select-box';
-import type { DependencyMap, UserMetaDataType } from '@/types/user-meta-data-type';
+import type { UserMetaDataType } from '@/types/user-meta-data-type';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useCallback } from 'react';
+import { useSession } from 'next-auth/react';
+import { useCallback, useEffect } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import { academicData, jobData } from './data/user-meta-data';
-import { userMetaFormSchema } from './data/user-meta-form-schema';
-import RegionSelectField from './region-select-field';
+import { getUserMetaData } from './api/client-services';
+import { academicData, jobData, mainRegion, typeData } from './data/user-meta-data';
+import { userMetaFormSchema, UserMetaSchema } from './data/user-meta-form-schema';
 import SingleSelectField from './single-select-field';
-import TypeSelectField from './type-select-field';
 
 export type onSelectType = (key: keyof UserMetaDataType, value: SelectBoxType['value']) => void;
 
-const dependencyMap: DependencyMap = {
-  type: {
-    children: ['career'],
-    condition: (value: UserMetaDataType['type']) => value === 'experienced',
-  },
-  mainRegion: {
-    children: ['subRegion'],
-    condition: (value: UserMetaDataType['mainRegion']) => value !== DEFAULT,
-  },
-};
+const { TYPE, EDUCATION, JOB, MAIN_REGION, ETC } = USER_META_DATA_KEY;
+// const dependencyMap: DependencyMap = {
+//   type: {
+//     children: ['career'],
+//     condition: (value: UserMetaDataType['type']) => value === 'experienced',
+//   },
+//   mainRegion: {
+//     children: ['subRegion'],
+//     condition: (value: UserMetaDataType['mainRegion']) => value !== DEFAULT,
+//   },
+// }; => 사람인 api 연결 시 사용
 
 const UserMetaData = () => {
+  const { data } = useSession();
+  const userId = data?.user?.id ?? null;
+
   const handleSelect = useCallback((key: keyof UserMetaDataType, selected: SelectBoxType['value']) => {
-    if (dependencyMap[key]) {
-      const { children, condition } = dependencyMap[key];
-      if (!condition(selected) || selected !== getValues(key)) {
-        children.forEach((childKey) => {
-          setValue(childKey, DEFAULT);
-        });
-      }
-    }
+    // if (dependencyMap[key]) {
+    //   const { children, condition } = dependencyMap[key];
+    //   if (!condition(selected) || selected !== getValues(key)) {
+    //     children.forEach((childKey) => {
+    //       setValue(childKey, DEFAULT);
+    //     });
+    //   }
+    // } => 사람인 api 연결 시 사용
     setValue(key, selected);
     trigger(key);
   }, []);
+
+  useEffect(() => {
+    if (userId) getUserMetaData(userId);
+  }, [userId]);
 
   const {
     setValue,
     watch,
     trigger,
     handleSubmit,
-    getValues,
     register,
     formState: { errors },
-  } = useForm({
+  } = useForm<UserMetaSchema>({
     defaultValues: {
-      type: DEFAULT,
-      career: DEFAULT,
-      academic: DEFAULT,
-      job: DEFAULT,
-      mainRegion: DEFAULT,
-      subRegion: DEFAULT,
-      etc: null,
+      [TYPE]: DEFAULT,
+      // career: DEFAULT, => 경력기간 :  사람인 api 연결 시 사용
+      [EDUCATION]: DEFAULT,
+      [JOB]: DEFAULT,
+      [MAIN_REGION]: DEFAULT, // => 사람인 api 연결 시 삭제 (상위 지역)
+      // mainRegion: DEFAULT, => 상위지역 (ex:서울,경기):  사람인 api 연결 시 사용
+      // subRegion: DEFAULT, => 하위지역 (ex:용산구,이천시):  사람인 api 연결 시 사용
+      [ETC]: null,
     },
     mode: 'onBlur',
     resolver: zodResolver(userMetaFormSchema),
   });
 
-  const handleOnSubmit = (values: FieldValues) => {
+  const handleOnSubmit = async (values: FieldValues) => {
     //@TODO: 서버 전송
     console.log('values=>', values);
+    await fetch(`api/user-meta-data/${values}`);
   };
 
   return (
     <form onSubmit={handleSubmit(handleOnSubmit)}>
       <h1>주요 이력 작성하기</h1>
-      <TypeSelectField
+      <SingleSelectField
+        label='*경력'
+        options={typeData}
+        value={watch(TYPE)}
+        fieldKey={TYPE}
+        onSelect={handleSelect}
+        error={errors[TYPE]?.message}
+      />
+
+      {/* -------- 사람인 api 사용 START -------*/}
+      {/* <TypeSelectField
         typeValue={watch('type')}
         careerValue={watch('career')}
         onSelect={handleSelect}
         error={errors['type']?.message || errors['career']?.message}
-      />
+      /> */}
+      {/* -------- 사람인 api 사용 END --------- */}
+
       <SingleSelectField
         label='*학력'
         options={academicData}
-        value={watch('academic')}
-        fieldKey='academic'
+        value={watch(EDUCATION)}
+        fieldKey={EDUCATION}
         onSelect={handleSelect}
-        error={errors['academic']?.message}
+        error={errors[EDUCATION]?.message}
       />
+
       <SingleSelectField
         label='*직무'
         options={jobData}
-        value={watch('job')}
-        fieldKey='job'
+        value={watch(JOB)}
+        fieldKey={JOB}
         onSelect={handleSelect}
-        error={errors['job']?.message}
+        error={errors[JOB]?.message}
       />
-      <RegionSelectField
+
+      <SingleSelectField
+        label='*지역'
+        options={mainRegion}
+        value={watch(MAIN_REGION)}
+        fieldKey={MAIN_REGION}
+        onSelect={handleSelect}
+        error={errors[MAIN_REGION]?.message}
+      />
+
+      {/* -------- 사람인 api 사용 START -------*/}
+      {/* <RegionSelectField
         mainRegionValue={watch('mainRegion')}
         subRegionValue={watch('subRegion')}
         onSelect={handleSelect}
         error={errors['mainRegion']?.message || errors['subRegion']?.message}
-      />
+      /> */}
+      {/* -------- 사람인 api 사용 END -------*/}
+
       <div className='h-14'>
         <label>기타 커리어</label>
-        <input id='etc' type='text' {...register('etc')} />
+        <input id={ETC} type='text' {...register(ETC)} />
       </div>
       <button>내 정보 작성 완료</button>
     </form>

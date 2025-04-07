@@ -27,10 +27,8 @@ export const schema = z
     passwordCheck: z.string().trim(),
   })
   .refine(
-    (data) => {
-      console.log(data);
-      return data.password === data.passwordCheck;
-    },
+    (data) => data.password === data.passwordCheck,
+
     { message: PASSWORD_CHECK, path: ['passwordCheck'] }
   );
 

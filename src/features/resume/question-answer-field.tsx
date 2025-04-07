@@ -4,7 +4,7 @@ import type { Field } from '@/types/resume';
 type Props = {
   field: Field;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  onDelete: (fieldId: number) => void;
+  onDelete: (fieldId: string) => void;
 };
 
 const QuestionAnswerField = ({ field, onChange, onDelete }: Props) => {

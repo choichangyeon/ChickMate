@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { getOpenAIResponse } from '@/features/ai-interview/api/client-services';
+import { getOpenAIResponse } from '@/features/interview/api/client-services';
+import { Message } from '@/types/message';
 
 const resume = `1. 지원동기
 사용자 경험을 개선하는 인터페이스를 직접 구현하는 과정에 매력을 느껴 프론트엔드 개발자가 되기로 결심했습니다. 대학에서 UX 디자인을 전공하며 사용자 중심의 사고를 배웠고, 이를 실현하기 위해 개발을 시작했습니다. React와 TypeScript를 활용한 프로젝트를 진행하며 UI/UX 원칙을 코드로 구현하는 경험을 쌓았습니다. 귀사는 혁신적인 서비스를 제공하며 사용자 중심의 개발 문화를 갖춘 기업으로 알고 있습니다. 저의 디자인 감각과 개발 역량을 결합해 사용자 친화적인 제품을 만드는 데 기여하고 싶습니다.
@@ -24,7 +25,7 @@ const resume = `1. 지원동기
 
 6. 주도적으로 업무를 수행한 사례
 프론트엔드 부트캠프에서 진행한 팀 프로젝트에서 UI/UX 개선을 주도적으로 수행한 경험이 있습니다. 기존 디자인이 사용자 친화적이지 않다는 피드백을 받고, 사용자 테스트를 통해 주요 불편 사항을 분석했습니다. 이를 바탕으로 UI를 개선하고, React와 TailwindCSS를 활용해 빠르게 반영했습니다. 또한, 디자인 의도를 팀원들에게 설명하며 원활한 협업을 이끌었습니다. 결과적으로 사용자 만족도가 높아졌고, 프로젝트의 완성도를 높이는 데 기여할 수 있었습니다.`;
-const init_state = [
+const init_state: Message[] = [
   {
     'role': 'system',
     'content': [
@@ -38,30 +39,30 @@ const init_state = [
   { role: 'system', content: `지원자의 자기소개서: ${resume}` },
 ];
 
-const ClientComponent = () => {
-  const [message, setMessage] = useState('');
-  const [messageList, setMessageList] = useState(init_state);
+const InterviewComponent = () => {
+  const [message, setMessage] = useState<string>('');
+  const [messageList, setMessageList] = useState<Message[]>(init_state);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const updatedMessageList = [
-      ...messageList,
-      {
-        role: 'user',
-        content: [
-          {
-            type: 'text',
-            text: message,
-          },
-        ],
-      },
-    ];
-    const response = await getOpenAIResponse(updatedMessageList);
-    // const response = [];
-    if (response) {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    try {
+      event.preventDefault();
+      const updatedMessageList: Message[] = [
+        ...messageList,
+        {
+          role: 'user',
+          content: [
+            {
+              type: 'text',
+              text: message,
+            },
+          ],
+        },
+      ];
+      const response = await getOpenAIResponse(updatedMessageList);
       setMessageList(response);
-    } else {
-      console.log('Error!');
+    } catch (error) {
+      console.error(error);
+      alert(error);
     }
   };
 
@@ -77,4 +78,4 @@ const ClientComponent = () => {
   );
 };
 
-export default ClientComponent;
+export default InterviewComponent;

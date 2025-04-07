@@ -16,7 +16,8 @@ type RouteParams = {
  */
 export async function GET(request: Request, { params }: RouteParams) {
   try {
-    const { id } = params;
+    const { id: sampleId } = params;
+    const id = Number(sampleId);
     const data = await prisma.sample.findMany({
       where: { id },
     });
@@ -52,7 +53,7 @@ export async function POST(request: Request) {
     const newSample = await prisma.sample.create({
       data: {
         title,
-        user_id: session.user.id,
+        userId: session.user.id,
       },
     });
 
@@ -74,7 +75,8 @@ export async function PATCH(request: Request, { params }: RouteParams) {
   }
 
   try {
-    const { id } = params;
+    const { id: sampleId } = params;
+    const id = Number(sampleId);
     const { title, content, isDone } = await request.json();
 
     const sample = await prisma.sample.findUnique({
@@ -85,7 +87,7 @@ export async function PATCH(request: Request, { params }: RouteParams) {
       return NextResponse.json({ error: 'Todo 항목을 찾을 수 없습니다.' }, { status: 404 });
     }
 
-    if (sample.user_id && sample.user_id !== session.user.id) {
+    if (sample.userId && sample.userId !== session.user.id) {
       return NextResponse.json({ error: '이 Todo 항목을 수정할 권한이 없습니다.' }, { status: 403 });
     }
 
@@ -117,7 +119,8 @@ export async function DELETE(request: Request, { params }: RouteParams) {
   }
 
   try {
-    const { id } = params;
+    const { id: sampleId } = params;
+    const id = Number(sampleId);
 
     const sample = await prisma.sample.findUnique({
       where: { id },
@@ -127,12 +130,12 @@ export async function DELETE(request: Request, { params }: RouteParams) {
       return NextResponse.json({ error: 'Todo 항목을 찾을 수 없습니다.' }, { status: 404 });
     }
 
-    if (sample.user_id && sample.user_id !== session.user.id) {
+    if (sample.userId && sample.userId !== session.user.id) {
       return NextResponse.json({ error: '이 Todo 항목을 삭제할 권한이 없습니다.' }, { status: 403 });
     }
 
     await prisma.user.delete({
-      where: { id },
+      where: { id: sample.userId },
     });
 
     return NextResponse.json({ message: 'Todo 항목이 삭제되었습니다.' });

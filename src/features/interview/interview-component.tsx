@@ -61,7 +61,6 @@ const InterviewComponent = () => {
       const response = await getOpenAIResponse(updatedMessageList);
       setMessageList(response);
     } catch (error) {
-      console.error(error);
       alert(error);
     }
   };

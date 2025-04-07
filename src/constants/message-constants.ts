@@ -60,3 +60,10 @@ export const USER_META_DATA_FORM_MESSAGE = {
     POST_DATA_ERROR: '유저 정보를 저장하는데 실패했습니다.',
   },
 };
+
+export const DB_MESSAGE = {
+  ERROR: {
+    NOT_FOUND_DATA: '데이터를 찾을 수 없습니다.',
+    DB_SERVER_ERROR: 'DB 서버 에러',
+  },
+};

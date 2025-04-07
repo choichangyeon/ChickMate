@@ -110,8 +110,9 @@ model CharacterHistory {
 
 model Resume {
   id                  Int      @id @default(autoincrement())
-  title               String?   
+  title               String   @default("제목 없음") 
   userId              String   @map("user_id")
+  status              Int      @default(0)
   questionContent     Json?    @map("question_content") 
   answerContent       Json?    @map("answer_content") 
   tryCount            Int      @default(0) @map("try_count")

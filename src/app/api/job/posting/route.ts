@@ -1,5 +1,6 @@
 import { DB_MESSAGE } from '@/constants/message-constants';
 import { prisma } from '@/lib/prisma';
+import { JobPosting } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 /**
@@ -7,17 +8,25 @@ import { NextRequest, NextResponse } from 'next/server';
  */
 export const GET = async (req: NextRequest): Promise<NextResponse> => {
   const { NOT_FOUND_DATA, DB_SERVER_ERROR } = DB_MESSAGE.ERROR;
-  //   const {} = await req.json();
   try {
+    const searchParams = req.nextUrl.searchParams;
+    const educationLevel = searchParams.get('educationLevel');
+    const location = JSON.parse(searchParams.get('location'));
+    const experienceType = searchParams.get('experienceType');
+    const jobType = searchParams.get('jobType');
+
     // TODO : prisma 로직 재구현
-    // const data = await prisma.sample.findMany({});
-    const data = [
-      {
-        id: 12,
-        company: '삼성물산',
-        url: 'www.naver.com',
+    const data: JobPosting[] = await prisma.jobPosting.findMany({
+      where: {
+        educationLevel,
+        experienceType,
+        jobType,
+        location: {
+          path: ['mainRegion'],
+          equals: location.mainRegion,
+        },
       },
-    ];
+    });
 
     if (!data) {
       return NextResponse.json({ message: NOT_FOUND_DATA }, { status: 400 });

@@ -78,3 +78,28 @@ export const speechToText = async ({ blob }: STT_Props): Promise<string> => {
 
   return res.text;
 };
+
+/**
+ * @function getOpenAIResponse
+ * @param messageList - 사용자와 모델간의 대화 리스트
+ * @returns {Message[]}
+ */
+
+export const getOpenAIResponse = async (messageList: Message[]): Promise<Message[]> => {
+  const res = await fetchWithSentry(INTERVIEW, {
+    method: POST,
+    body: JSON.stringify({ messageList: messageList }),
+  });
+
+  messageList.push({
+    role: 'assistant',
+    content: [
+      {
+        type: 'text',
+        text: res.text,
+      },
+    ],
+  });
+
+  return messageList;
+};

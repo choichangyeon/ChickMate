@@ -146,6 +146,7 @@ model JobPosting {
   title            String
   company          String
   location         Json
+  experienceType   String
   url              String
   jobType          String            @map("job_type")
   employmentType   String            @map("employment_type")

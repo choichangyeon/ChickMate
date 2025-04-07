@@ -1,23 +1,19 @@
 'use client';
-import { useEffect, useState } from 'react';
+
+import { useState } from 'react';
 import QuestionAnswerField from '@/features/resume/question-answer-field';
 import { defaultQuestionList } from '@/features/resume/data/default-question-list';
 import type { Field } from '@/types/resume';
+import { usePreventPageUnload } from './hooks/use-prevent-page-load';
 
 const ResumeForm = () => {
-  const STORAGE_KEY = 'resumeFields';
-
-  const [fieldList, setFieldList] = useState<Field[]>(
-    defaultQuestionList.map((question) => ({
-      id: question.id,
-      question: question.questionText,
-      answer: '',
-    }))
-  );
+  const [isDirty, setIsDirty] = useState<boolean>(false);
+  const [fieldList, setFieldList] = useState<Field[]>(defaultQuestionList);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { id, name, value } = e.target;
     setFieldList((prev) => prev.map((field) => (field.id === Number(id) ? { ...field, [name]: value } : field)));
+    setIsDirty(true);
   };
 
   const handleAddField = () => {
@@ -27,6 +23,8 @@ const ResumeForm = () => {
   const handleDeleteField = (fieldId: number) => {
     setFieldList((prev) => prev.filter((field) => field.id !== fieldId));
   };
+
+  usePreventPageUnload(isDirty);
 
   return (
     <form className='flex flex-col gap-8'>

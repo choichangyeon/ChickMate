@@ -3,31 +3,46 @@
 import { useState } from 'react';
 import QuestionAnswerField from '@/features/resume/question-answer-field';
 import { defaultQuestionList } from '@/features/resume/data/default-question-list';
-import type { Field } from '@/types/resume';
 import { usePreventPageUnload } from './hooks/use-prevent-page-load';
+import { postResumeField } from '@/features/resume/api/client-service';
+import type { Field } from '@/types/resume';
 
 const ResumeForm = () => {
   const [isDirty, setIsDirty] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>('');
   const [fieldList, setFieldList] = useState<Field[]>(defaultQuestionList);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { id, name, value } = e.target;
-    setFieldList((prev) => prev.map((field) => (field.id === Number(id) ? { ...field, [name]: value } : field)));
+    setFieldList((prev) => prev.map((field) => (field.id === id ? { ...field, [name]: value } : field)));
     setIsDirty(true);
   };
 
   const handleAddField = () => {
-    setFieldList((prev) => [...prev, { id: Date.now(), question: '', answer: '' }]);
+    setFieldList((prev) => [...prev, { id: crypto.randomUUID(), question: '', answer: '' }]);
   };
 
-  const handleDeleteField = (fieldId: number) => {
+  const handleDeleteField = (fieldId: string) => {
     setFieldList((prev) => prev.filter((field) => field.id !== fieldId));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const data = { title, fieldList };
+    postResumeField({ data });
   };
 
   usePreventPageUnload(isDirty);
 
   return (
-    <form className='flex flex-col gap-8'>
+    <form onSubmit={handleSubmit} className='flex flex-col gap-8'>
+      <input
+        type='text'
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder='자기소개서 제목을 입력해주세요.'
+      />
       {fieldList.map((field) => {
         return (
           <QuestionAnswerField key={field.id} field={field} onChange={handleChange} onDelete={handleDeleteField} />

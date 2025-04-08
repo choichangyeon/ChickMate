@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getBookmarkByJobPostingId } from '@/features/(job)/api/client-services';
+import { getBookmarkByJobPostingId } from '@/features/job/api/client-services';
 
 export const useBookmark = (jobPostingId: number) => {
   // undefined: 아직 로딩 전 상태

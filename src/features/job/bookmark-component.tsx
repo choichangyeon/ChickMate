@@ -1,7 +1,7 @@
 'use client';
 
-import { postBookmarkWithJobPostingId } from '@/features/(job)/api/client-services';
-import { useBookmark } from '@/features/(job)/hooks/use-bookmark';
+import { postBookmarkWithJobPostingId } from '@/features/job/api/client-services';
+import { useBookmark } from '@/features/job/hooks/use-bookmark';
 import { useEffect, useState } from 'react';
 
 type Props = {

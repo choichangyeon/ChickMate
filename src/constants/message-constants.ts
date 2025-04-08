@@ -38,10 +38,14 @@ export const AI_MESSAGE = {
 };
 
 export const RESUME_MESSAGE = {
-  SUBMIT: { REQUEST_FAILURE: '유효하지 않은 자기소개서 양식입니다.', SERVER_ERROR: '자기소개서 생성에 실패했습니다.' },
+  SUBMIT: {
+    REQUEST_FAILURE: '유효하지 않은 자기소개서 양식입니다.',
+    SUBMIT_SERVER_ERROR: '자기소개서 생성에 실패했습니다.',
+  },
   DRAFT: {
-    REQUEST_FAILURE: '',
-    SERVER_ERROR: '',
+    NOT_FOUND: '해당 자소서를 찾을 수 없습니다.',
+    FORBIDDEN: '해당 자기소개서를 수정할 권한이 없습니다.',
+    DRAFT_SERVER_ERROR: '자기소개서 임시 저장에 실패하였습니다.',
   },
 };
 

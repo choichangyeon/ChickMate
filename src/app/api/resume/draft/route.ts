@@ -12,7 +12,8 @@ type RequestBody = {
 };
 
 const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
-const { REQUEST_FAILURE, SERVER_ERROR } = RESUME_MESSAGE.SUBMIT;
+const { REQUEST_FAILURE, SUBMIT_SERVER_ERROR } = RESUME_MESSAGE.SUBMIT;
+const { NOT_FOUND, FORBIDDEN, DRAFT_SERVER_ERROR } = RESUME_MESSAGE.DRAFT;
 const { DRAFT } = RESUME_STATUS;
 
 /**
@@ -45,7 +46,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(newResume, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ message: SERVER_ERROR }, { status: 500 });
+    return NextResponse.json({ message: SUBMIT_SERVER_ERROR }, { status: 500 });
   }
 }
 
@@ -77,11 +78,11 @@ export async function PATCH(request: Request, { params }: RouteParams) {
     });
 
     if (!resume) {
-      return NextResponse.json({ message: '해당 자소서를 찾을 수 없습니다.' }, { status: 404 });
+      return NextResponse.json({ message: NOT_FOUND }, { status: 404 });
     }
 
     if (resume.userId && resume.userId !== session.user.id) {
-      return NextResponse.json({ message: '해당 자기소개서를 수정할 권한이 없습니다.' }, { status: 403 });
+      return NextResponse.json({ message: FORBIDDEN }, { status: 403 });
     }
 
     const updatedTodo = await prisma.resume.update({
@@ -95,6 +96,6 @@ export async function PATCH(request: Request, { params }: RouteParams) {
 
     return NextResponse.json(updatedTodo);
   } catch (error) {
-    return NextResponse.json({ message: '자소서 수정에 실패하였습니다.' }, { status: 500 });
+    return NextResponse.json({ message: DRAFT_SERVER_ERROR }, { status: 500 });
   }
 }

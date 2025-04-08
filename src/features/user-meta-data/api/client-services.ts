@@ -7,16 +7,16 @@ const {
 } = ROUTE_HANDLER_PATH;
 const { POST } = API_METHOD;
 
-export const getUserMetaData = async (userId: string) => {
-  try {
-    const res = await fetch(`${META_DATA}/${userId}`);
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.message);
-    return result.data;
-  } catch (error) {
-    alert(error);
-  }
-};
+// export const getUserMetaData = async (userId: string) => {
+//   try {
+//     const res = await fetch(`${META_DATA}/${userId}`);
+//     const result = await res.json();
+//     if (!res.ok) throw new Error(result.message);
+//     return result.data;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 export const getRegions = async () => {
   const res = await fetch(REGIONS);
@@ -35,6 +35,6 @@ export const postUserMetaData = async (userId, metaData) => {
     const result = await res.json();
     if (!res.ok) throw new Error(result.message);
   } catch (error) {
-    alert(error);
+    throw error;
   }
 };

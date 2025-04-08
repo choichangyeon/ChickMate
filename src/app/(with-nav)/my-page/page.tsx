@@ -1,9 +1,9 @@
-import UserMetaData from '@/features/user-meta-data/user-meta-data';
+import UserMetaDataModal from '@/features/user-meta-data/user-meta-data-modal';
 
 const MyPage = () => {
   return (
     <div className='pl-28'>
-      <UserMetaData />
+      <UserMetaDataModal />
     </div>
   );
 };

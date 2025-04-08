@@ -9,21 +9,8 @@ type Props = {
 };
 
 const {
-  API: { POST_DATA_ERROR, GET_DATA_ERROR },
+  API: { POST_DATA_ERROR },
 } = USER_META_DATA_FORM_MESSAGE;
-
-export async function GET(request: Request, { params }: Props) {
-  try {
-    const { userId } = params;
-    const { userMetaData } = await prisma.user.findUnique({
-      where: { id: userId },
-    });
-    return NextResponse.json({ data: userMetaData }, { status: 200 });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ message: GET_DATA_ERROR }, { status: 500 });
-  }
-}
 
 export async function POST(request: Request, { params }: Props) {
   try {

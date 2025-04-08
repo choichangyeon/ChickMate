@@ -16,10 +16,9 @@ const DEFAULT_COMPLETION_OPTIONS = {
 };
 
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
-  const { messageList } = await request.json();
   const { AI_REQUEST_FAILURE, AI_SERVER_ERROR } = AI_MESSAGE.AI;
-
   try {
+    const { messageList } = await request.json();
     const res = await openai.chat.completions.create({
       ...DEFAULT_COMPLETION_OPTIONS,
       messages: messageList,

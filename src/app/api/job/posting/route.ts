@@ -1,4 +1,5 @@
 import { DB_MESSAGE } from '@/constants/message-constants';
+import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 import { prisma } from '@/lib/prisma';
 import { JobPosting } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
@@ -8,14 +9,15 @@ import { NextRequest, NextResponse } from 'next/server';
  */
 export const GET = async (req: NextRequest): Promise<NextResponse> => {
   const { NOT_FOUND_DATA, DB_SERVER_ERROR } = DB_MESSAGE.ERROR;
+  const { EDUCATION, TYPE, JOB, MAIN_REGION } = USER_META_DATA_KEY;
   try {
     // searchParams로 정보 가져오기
     const searchParams = req.nextUrl.searchParams;
-    const educationLevel = searchParams.get('educationLevel');
+    const educationLevel = searchParams.get(EDUCATION);
     const location = JSON.parse(searchParams.get('location'));
     const mainRegion = location.mainRegion;
-    const experienceType = searchParams.get('experienceType');
-    const jobType = searchParams.get('jobType');
+    const experienceType = searchParams.get(TYPE);
+    const jobType = searchParams.get(JOB);
 
     const data: JobPosting[] = await prisma.jobPosting.findMany({
       where: {
@@ -23,7 +25,7 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
         experienceType,
         jobType,
         location: {
-          path: ['mainRegion'],
+          path: [MAIN_REGION],
           equals: mainRegion,
         },
       },

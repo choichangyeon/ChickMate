@@ -7,7 +7,10 @@ export const PATH = {
   },
   ON_BOARDING: '/on-boarding',
   MY_PAGE: '/my-page',
-  RESUME: '/resume',
+  RESUME: {
+    ROOT: '/resume',
+    DETAIL: (id: number) => `/resume/${id}`,
+  },
 };
 
 export const ROUTE_HANDLER_PATH = {
@@ -19,4 +22,5 @@ export const ROUTE_HANDLER_PATH = {
     TTS: '/api/ai/tts',
     INTERVIEW: '/api/ai/interview',
   },
+  RESUME: `/api/resume`,
 };

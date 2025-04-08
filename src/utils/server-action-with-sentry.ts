@@ -7,7 +7,6 @@ export const serverActionWithSentry = async <T>(fn: Props<T>): Promise<T> => {
     return await fn();
   } catch (error: any) {
     const statusCode = error?.status || error?.response?.status;
-    console.log(error);
     if (statusCode >= 500 || statusCode === undefined) {
       captureException(error);
     }

@@ -18,4 +18,8 @@ export const ROUTE_HANDLER_PATH = {
     TTS: '/api/ai/tts',
     INTERVIEW: '/api/ai/interview',
   },
+  USER: {
+    META_DATA: '/api/user-meta-data',
+  },
+  REGIONS: '/api/regions',
 };

@@ -4,3 +4,8 @@
 export const QUERY_KEY = {
   SAMPLE: 'sample',
 };
+
+export const META_DATA_QUERY_KEY = {
+  REGIONS: 'regions',
+  META_DATA: 'meta-data',
+};

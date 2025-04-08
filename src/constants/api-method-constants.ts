@@ -9,7 +9,7 @@ export const API_METHOD = {
 };
 
 export const API_HEADER = {
-  JSON: {
+  JSON_HEADER: {
     'Content-Type': 'application/json',
   },
 };

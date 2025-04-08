@@ -5,12 +5,12 @@ import { Character } from '@prisma/client';
 
 const { INFO } = ROUTE_HANDLER_PATH.CHARACTER;
 const { GET } = API_METHOD;
-const { JSON } = API_HEADER;
+const { JSON_HEADER } = API_HEADER;
 
 export const getCharacterByUserId = async (): Promise<Character> => {
   const { response } = await fetchWithSentry(INFO, {
     method: GET,
-    headers: JSON,
+    headers: JSON_HEADER,
   });
 
   return response;

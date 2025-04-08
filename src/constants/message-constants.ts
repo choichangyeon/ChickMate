@@ -43,6 +43,8 @@ export const RESUME_MESSAGE = {
   SAVE_AS_DRAFT: {
     REQUEST_FAILURE: '',
     SERVER_ERROR: '',
+  }
+}
 
 const { TYPE, EDUCATION, JOB, MAIN_REGION } = USER_META_DATA_KEY;
 export const USER_META_DATA_FORM_MESSAGE = {

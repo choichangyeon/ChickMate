@@ -11,8 +11,8 @@ const openAi = new OpenAI({
 /**
  * POST 요청 함수
  */
-export const POST = async (req: NextRequest): Promise<NextResponse> => {
-  const { text, model, voice, speed, response_format, instructions } = await req.json();
+export const POST = async (request: NextRequest): Promise<NextResponse> => {
+  const { text, model, voice, speed, response_format, instructions } = await request.json();
   const { REQUEST_FAILURE, SERVER_ERROR } = AI_MESSAGE.TTS;
   try {
     const res = await openAi.audio.speech.create({

@@ -1,5 +1,5 @@
 import { QUERY_KEY } from '@/constants/query-key';
-import { GC_TIME, STALE_TIME } from '@/constants/time';
+import { GC_TIME, STALE_TIME } from '@/constants/time-constants';
 import { useQuery } from '@tanstack/react-query';
 import { getSample } from '../api/client-services';
 

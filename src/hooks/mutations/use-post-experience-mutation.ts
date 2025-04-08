@@ -11,17 +11,11 @@ export const usePostExperienceMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ characterId, amount }: { characterId: number; amount: number }) => {
-      const res = await fetchWithSentry(EXPERIENCE, {
+      await fetchWithSentry(EXPERIENCE, {
         method: PATCH,
         headers: JSON_HEADER,
         body: JSON.stringify({ characterId, amount }),
       });
-
-      if (!res.ok) {
-        throw new Error('경험치 업데이트 실패');
-      }
-
-      return res.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['character'] });

@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const { PATCH_DATA_FAILED } = CHARACTER_MESSAGE.PATCH;
 
-export async function PATCH(request: NextRequest) {
+export const PATCH = async (request: NextRequest): Promise<NextResponse> => {
   try {
     const { characterId, amount } = await request.json();
 
@@ -16,4 +16,4 @@ export async function PATCH(request: NextRequest) {
   } catch (error) {
     return NextResponse.json({ message: PATCH_DATA_FAILED }, { status: 500 });
   }
-}
+};

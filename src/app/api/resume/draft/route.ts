@@ -6,10 +6,33 @@ import { AUTH_MESSAGE, RESUME_MESSAGE } from '@/constants/message-constants';
 import { RESUME_STATUS } from '@/constants/resume-constants';
 import { getValidTitle } from '@/features/resume/utils/get-valid-title';
 import type { ResumeData } from '@/types/resume';
+import type { RouteParams } from '@/types/route-params';
 
 const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
 const { REQUEST_FAILURE, SUBMIT_SERVER_ERROR } = RESUME_MESSAGE.SUBMIT;
 const { DRAFT } = RESUME_STATUS;
+
+/**
+ * 임시 저장된 자소서 불러오기
+ */
+export const GET = async () => {
+  try {
+    const data = await prisma.resume.findMany({
+      where: { status: 0 },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    if (!data) {
+      return NextResponse.json({ message: '임시 저장된 자기소개서를 찾을 수 없습니다.' }, { status: 404 });
+    }
+
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json({ message: '자기소개서를 가져오는데 실패했습니다.' }, { status: 500 });
+  }
+};
 
 /**
  * 임시 저장한 자소서 등록하는 요청

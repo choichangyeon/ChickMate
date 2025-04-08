@@ -1,7 +1,7 @@
 import { API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
-import type { ResumeData } from '@/types/resume';
+import type { Field, ResumeData } from '@/types/resume';
 
 type Props = {
   data: ResumeData;
@@ -9,7 +9,7 @@ type Props = {
 };
 
 const { SUBMIT, SUBMIT_DETAIL, DRAFT, DRAFT_DETAIL } = ROUTE_HANDLER_PATH.RESUME;
-const { POST, PATCH } = API_METHOD;
+const { GET, POST, PATCH } = API_METHOD;
 
 /**
  * DB에 자소서 등록 요청
@@ -50,4 +50,16 @@ export const autoSaveResume = async ({ resumeId, data }: Props): Promise<number>
   });
 
   return isNewResume ? savedResume.id : resumeId;
+};
+
+/**
+ * 임시 저장된 자소서 불러오기 요청
+ * @returns draftResumeList 임시 저장된 자소서 리스트
+ */
+export const getDraftResumeList = async (): Promise<Field[]> => {
+  const draftResumeList = await fetchWithSentry(DRAFT, {
+    method: GET,
+  });
+
+  return draftResumeList;
 };

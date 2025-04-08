@@ -113,8 +113,7 @@ model Resume {
   title               String   @default("제목 없음") 
   userId              String   @map("user_id")
   status              Int      @default(0)
-  questionContent     Json?    @map("question_content") 
-  answerContent       Json?    @map("answer_content") 
+  content             Json?    
   tryCount            Int      @default(0) @map("try_count")
   createdAt           DateTime @default(now()) @map("created_at")
   updatedAt           DateTime @default(now()) @map("updated_at")

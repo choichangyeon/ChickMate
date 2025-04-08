@@ -5,13 +5,10 @@ import type { ResumeData } from '@/types/resume';
 
 type Props = {
   data: ResumeData;
-};
-
-type AutoSaveProps = Props & {
   resumeId: number;
 };
 
-const { SUBMIT, DRAFT, DETAIL } = ROUTE_HANDLER_PATH.RESUME;
+const { SUBMIT, SUBMIT_DETAIL, DRAFT, DRAFT_DETAIL } = ROUTE_HANDLER_PATH.RESUME;
 const { POST, PATCH } = API_METHOD;
 
 /**
@@ -20,12 +17,19 @@ const { POST, PATCH } = API_METHOD;
  * @param {String} data.title 자소서 제목
  * @param {Array} data.fieldList 자소서 질문/답변
  */
-export const postResume = async ({ data }: Props): Promise<void> => {
-  await fetchWithSentry(SUBMIT, {
-    method: POST,
+export const submitResume = async ({ resumeId, data }: Props): Promise<number> => {
+  const isNewResume = resumeId === null;
+
+  const url = isNewResume ? SUBMIT : SUBMIT_DETAIL(resumeId);
+  const method = isNewResume ? POST : PATCH;
+
+  const savedResume = await fetchWithSentry(url, {
+    method,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
+
+  return isNewResume ? savedResume.id : resumeId;
 };
 
 /**
@@ -33,10 +37,10 @@ export const postResume = async ({ data }: Props): Promise<void> => {
  * @param {Object} data 수정된 자소서 제목, 자소서 질문/답변
  * @returns {Number} resumeID 자소서 ID
  */
-export const autoSaveResume = async ({ resumeId, data }: AutoSaveProps): Promise<number> => {
+export const autoSaveResume = async ({ resumeId, data }: Props): Promise<number> => {
   const isNewResume = resumeId === null;
 
-  const url = isNewResume ? DRAFT : DETAIL(resumeId);
+  const url = isNewResume ? DRAFT : DRAFT_DETAIL(resumeId);
   const method = isNewResume ? POST : PATCH;
 
   const savedResume = await fetchWithSentry(url, {

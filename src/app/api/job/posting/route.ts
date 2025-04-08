@@ -7,12 +7,17 @@ import { NextRequest, NextResponse } from 'next/server';
 /**
  * GET
  */
-export const GET = async (req: NextRequest): Promise<NextResponse> => {
-  const { NOT_FOUND_DATA, DB_SERVER_ERROR } = DB_MESSAGE.ERROR;
+export const GET = async (request: NextRequest): Promise<NextResponse> => {
+  const { DB_REQUEST_ERROR, DB_SERVER_ERROR } = DB_MESSAGE.ERROR;
   const { EDUCATION, TYPE, JOB, MAIN_REGION } = USER_META_DATA_KEY;
   try {
     // searchParams로 정보 가져오기
-    const searchParams = req.nextUrl.searchParams;
+    const searchParams = request.nextUrl.searchParams;
+
+    if (!searchParams) {
+      return NextResponse.json({ message: DB_REQUEST_ERROR }, { status: 400 });
+    }
+
     const educationLevel = searchParams.get(EDUCATION);
     const location = JSON.parse(searchParams.get('location'));
     const mainRegion = location.mainRegion;
@@ -30,10 +35,6 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
         },
       },
     });
-
-    if (!data) {
-      return NextResponse.json({ message: NOT_FOUND_DATA }, { status: 400 });
-    }
 
     return NextResponse.json({ data }, { status: 200 });
   } catch (error) {

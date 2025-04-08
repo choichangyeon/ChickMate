@@ -16,7 +16,7 @@ const { POST } = API_METHOD;
  * @param {String} data.title 자소서 제목
  * @param {Array} data.fieldList 자소서 질문/답변
  */
-export const postResumeField = async ({ data }: Props): Promise<void> => {
+export const postResume = async ({ data }: Props): Promise<void> => {
   await fetchWithSentry(SUBMIT, {
     method: POST,
     headers: { 'Content-Type': 'application/json' },

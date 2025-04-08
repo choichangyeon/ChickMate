@@ -3,7 +3,7 @@ import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
 import { JobPosting } from '@prisma/client';
 
-const { POSTING } = ROUTE_HANDLER_PATH.JOB;
+const { POSTING, BOOKMARK } = ROUTE_HANDLER_PATH.JOB;
 const { POST, DELETE, GET } = API_METHOD;
 const EMPTY_LIST_NUMBER = 0;
 
@@ -42,7 +42,7 @@ type BookmarkProps = {
 export const postBookmarkWithJobPostingId = async ({ jobPostingId, isMarked }: BookmarkProps): Promise<boolean> => {
   // 북마킹 여부에 따라 요청 method 달라짐
   if (isMarked) {
-    const res = await fetchWithSentry('/api/job/bookmark', {
+    const res = await fetchWithSentry(BOOKMARK, {
       method: DELETE,
       body: JSON.stringify({
         jobPostingId,
@@ -51,7 +51,7 @@ export const postBookmarkWithJobPostingId = async ({ jobPostingId, isMarked }: B
 
     return res ? false : true;
   } else {
-    const res = await fetchWithSentry('/api/job/bookmark', {
+    const res = await fetchWithSentry(BOOKMARK, {
       method: POST,
       body: JSON.stringify({
         jobPostingId,
@@ -71,7 +71,7 @@ export const getBookmarkByJobPostingId = async (jobPostingId: number): Promise<b
   const queryParams = new URLSearchParams({
     jobPostingId: jobPostingId.toString(),
   });
-  const url = `/api/job/bookmark?${queryParams.toString()}`;
+  const url = `${BOOKMARK}?${queryParams.toString()}`;
   const { data } = await fetchWithSentry(url, {
     method: GET,
   });

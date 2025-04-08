@@ -22,5 +22,8 @@ export const ROUTE_HANDLER_PATH = {
     TTS: '/api/ai/tts',
     INTERVIEW: '/api/ai/interview',
   },
-  RESUME: `/api/resume`,
+  RESUME: {
+    SUBMIT: `/api/resume/submit`,
+    DRAFT: `/api/resume/draft`,
+  },
 };

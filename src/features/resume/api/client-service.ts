@@ -7,7 +7,7 @@ type Props = {
   data: { title: string; fieldList: Field[] };
 };
 
-const { RESUME } = ROUTE_HANDLER_PATH;
+const { SUBMIT } = ROUTE_HANDLER_PATH.RESUME;
 const { POST } = API_METHOD;
 
 /**
@@ -17,7 +17,7 @@ const { POST } = API_METHOD;
  * @param {Array} data.fieldList 자소서 질문/답변
  */
 export const postResumeField = async ({ data }: Props): Promise<void> => {
-  await fetchWithSentry(RESUME, {
+  await fetchWithSentry(SUBMIT, {
     method: POST,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),

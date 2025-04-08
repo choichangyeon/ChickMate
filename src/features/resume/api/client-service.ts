@@ -10,6 +10,12 @@ type Props = {
 const { RESUME } = ROUTE_HANDLER_PATH;
 const { POST } = API_METHOD;
 
+/**
+ * DB에 자소서 등록 요청
+ * @param {Object} data 자소서 제목, 자소서 질문/답변
+ * @param {String} data.title 자소서 제목
+ * @param {Array} data.fieldList 자소서 질문/답변
+ */
 export const postResumeField = async ({ data }: Props): Promise<void> => {
   await fetchWithSentry(RESUME, {
     method: POST,

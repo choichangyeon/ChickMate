@@ -18,8 +18,10 @@ const QuestionAnswerField = ({ field, onChange, onDelete }: Props) => {
         name='question'
         value={question}
         onChange={onChange}
+        rows={3}
         placeholder='질문을 입력해주세요.'
         required
+        className='resize-none'
       />
       <textarea
         id={String(id)}

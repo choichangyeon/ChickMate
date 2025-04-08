@@ -27,7 +27,7 @@ const QuestionAnswerField = ({ field, onChange, onDelete }: Props) => {
         value={answer}
         onChange={onChange}
         maxLength={MAX_ANSWER_LENGTH}
-        placeholder='답변을 입력해주세요.'
+        placeholder='1000자 이하의 답변을 입력해주세요.'
         required
         className='h-[300px]'
       />

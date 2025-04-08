@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     const body: RequestBody = await request.json();
     const { title, fieldList } = body;
 
-    if (!title || !fieldList || !Array.isArray(fieldList)) {
+    if (!title || !fieldList) {
       return NextResponse.json({ error: REQUEST_FAILURE }, { status: 400 });
     }
 

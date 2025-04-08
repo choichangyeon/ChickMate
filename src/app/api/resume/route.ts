@@ -19,7 +19,7 @@ export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
-    return NextResponse.json({ error: AUTH_REQUIRED }, { status: 403 });
+    return NextResponse.json({ message: AUTH_REQUIRED }, { status: 403 });
   }
 
   try {
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     const { title, fieldList } = body;
 
     if (!title || !fieldList) {
-      return NextResponse.json({ error: REQUEST_FAILURE }, { status: 400 });
+      return NextResponse.json({ message: REQUEST_FAILURE }, { status: 400 });
     }
 
     const newResume = await prisma.resume.create({
@@ -41,6 +41,6 @@ export async function POST(request: Request) {
 
     return NextResponse.json(newResume, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: SERVER_ERROR }, { status: 500 });
+    return NextResponse.json({ message: SERVER_ERROR }, { status: 500 });
   }
 }

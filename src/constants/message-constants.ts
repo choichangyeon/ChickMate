@@ -39,7 +39,7 @@ export const AI_MESSAGE = {
 
 export const RESUME_MESSAGE = {
   SUBMIT: { REQUEST_FAILURE: '유효하지 않은 자기소개서 양식입니다.', SERVER_ERROR: '자기소개서 생성에 실패했습니다.' },
-  SAVE_AS_DRAFT: {
+  DRAFT: {
     REQUEST_FAILURE: '',
     SERVER_ERROR: '',
   },

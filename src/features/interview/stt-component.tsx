@@ -1,4 +1,4 @@
-import { speechToText } from '@/features/interview/api/client-services';
+import { postSpeechToText } from '@/features/interview/api/client-services';
 import { useState } from 'react';
 
 type Props = {
@@ -9,7 +9,7 @@ const STTComponent = ({ blob }: Props) => {
   const [voiceText, setVoiceText] = useState<string>('');
   const handleClick = async () => {
     try {
-      const text = await speechToText({ blob });
+      const text = await postSpeechToText({ blob });
       setVoiceText(text);
     } catch (error) {
       // TODO : ERROR 처리

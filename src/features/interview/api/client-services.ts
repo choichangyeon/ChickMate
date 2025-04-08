@@ -25,7 +25,7 @@ type TTS_Props = {
   type: string;
 };
 
-export const textToSpeech = async ({ text, type }: TTS_Props): Promise<void> => {
+export const postTextToSpeech = async ({ text, type }: TTS_Props): Promise<void> => {
   const { MODEL, FORMAT } = TTS_OPTIONS;
   const { PRESSURE } = INTERVIEW_TYPE;
   const { VOICE, SPEED, INSTRUCTION } = type === PRESSURE ? PRESSURE_OPTIONS : CALM_OPTIONS;
@@ -60,7 +60,7 @@ type STT_Props = {
   blob: Blob;
 };
 
-export const speechToText = async ({ blob }: STT_Props): Promise<string> => {
+export const postSpeechToText = async ({ blob }: STT_Props): Promise<string> => {
   const { MODEL, FORMAT, LANGUAGE } = STT_OPTIONS;
 
   const formData = new FormData();

@@ -37,14 +37,13 @@ export const AI_MESSAGE = {
   },
 };
 
-
 export const RESUME_MESSAGE = {
   SUBMIT: { REQUEST_FAILURE: '유효하지 않은 자기소개서 양식입니다.', SERVER_ERROR: '자기소개서 생성에 실패했습니다.' },
   SAVE_AS_DRAFT: {
     REQUEST_FAILURE: '',
     SERVER_ERROR: '',
-  }
-}
+  },
+};
 
 const { TYPE, EDUCATION, JOB, MAIN_REGION } = USER_META_DATA_KEY;
 export const USER_META_DATA_FORM_MESSAGE = {
@@ -63,7 +62,7 @@ export const USER_META_DATA_FORM_MESSAGE = {
 
 export const DB_MESSAGE = {
   ERROR: {
-    NOT_FOUND_DATA: '데이터를 찾을 수 없습니다.',
+    DB_REQUEST_ERROR: 'DB 서버 요청 에러',
     DB_SERVER_ERROR: 'DB 서버 에러',
   },
 };

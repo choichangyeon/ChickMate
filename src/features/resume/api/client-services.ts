@@ -9,7 +9,7 @@ type Props = {
 };
 
 const { SUBMIT, SUBMIT_DETAIL, DRAFT, DRAFT_DETAIL } = ROUTE_HANDLER_PATH.RESUME;
-const { GET, POST, PATCH } = API_METHOD;
+const { POST, PATCH } = API_METHOD;
 
 /**
  * DB에 자소서 등록 요청
@@ -50,16 +50,4 @@ export const autoSaveResume = async ({ resumeId, data }: Props): Promise<number>
   });
 
   return isNewResume ? savedResume.id : resumeId;
-};
-
-/**
- * 임시 저장된 자소서 불러오기 요청
- * @returns draftResumeList 임시 저장된 자소서 리스트
- */
-export const getDraftResumeList = async (): Promise<Field[]> => {
-  const draftResumeList = await fetchWithSentry(DRAFT, {
-    method: GET,
-  });
-
-  return draftResumeList;
 };

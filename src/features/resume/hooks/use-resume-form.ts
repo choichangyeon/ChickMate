@@ -4,7 +4,7 @@ import { PATH } from '@/constants/path-constant';
 import { DELAY_TIME } from '@/constants/time-constants';
 import { defaultQuestionList } from '@/features/resume/data/default-question-list';
 import { usePreventPageUnload } from '@/features/resume/hooks/use-prevent-page-load';
-import { autoSaveResume, submitResume } from '@/features/resume/api/client-service';
+import { autoSaveResume, submitResume } from '@/features/resume/api/client-services';
 import useDebounce from '@/hooks/customs/use-debounce';
 import type { Field } from '@/types/resume';
 

@@ -2,12 +2,7 @@ import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/utils/auth-option';
-
-type RouteParams = {
-  params: {
-    id: string;
-  };
-};
+import type { RouteParams } from '@/types/route-params';
 
 // 프리즈마
 

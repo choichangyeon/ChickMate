@@ -30,4 +30,7 @@ export const ROUTE_HANDLER_PATH = {
     META_DATA: '/api/user-meta-data',
   },
   REGIONS: '/api/regions',
+  JOB: {
+    POSTING: '/api/job/posting',
+  },
 };

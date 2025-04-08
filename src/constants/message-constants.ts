@@ -67,6 +67,10 @@ export const DB_MESSAGE = {
     DB_REQUEST_ERROR: 'DB 서버 요청 에러',
     DB_SERVER_ERROR: 'DB 서버 에러',
   },
+  VALIDATION: {
+    USER_ID_VALIDATION: '유저 아이디가 유효하지 않습니다.',
+    JOB_POSTING_ID_VALIDATION: '채용 공고 아이디가 유효하지 않습니다.',
+  },
 };
 
 export const CHARACTER_MESSAGE = {

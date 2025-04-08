@@ -3,18 +3,16 @@ import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import { authOptions } from '@/utils/auth-option';
 import { AUTH_MESSAGE, RESUME_MESSAGE } from '@/constants/message-constants';
-import { RESUME_STATUS } from '@/constants/resume-constants';
 import { getValidTitle } from '@/features/resume/utils/get-valid-title';
 import type { RouteParams } from '@/types/route-params';
 import type { ResumeData } from '@/types/resume';
 
 const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
-const { DRAFT } = RESUME_STATUS;
 
 const { NOT_FOUND, FORBIDDEN, DRAFT_SERVER_ERROR } = RESUME_MESSAGE.DRAFT;
 
 /**
- * 수정된 자소서 내용을 등록하는 요청
+ * 임시 저장된 자소서가 있을 경우 해당 자소서 내용을 수정하는 요청 (임시 저장된 자소서)
  * @param request 자소서에서 변경한 내용
  * @param params resumeId
  */
@@ -47,7 +45,6 @@ export const PATCH = async (request: Request, { params }: RouteParams) => {
     const updatedResume = await prisma.resume.update({
       where: { id },
       data: {
-        status: DRAFT,
         title: getValidTitle(title),
         content: fieldList,
       },

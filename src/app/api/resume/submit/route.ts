@@ -15,6 +15,10 @@ const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
 const { REQUEST_FAILURE, SERVER_ERROR } = RESUME_MESSAGE.SUBMIT;
 const { SUBMIT } = RESUME_STATUS;
 
+/**
+ * 자소서 등록하는 요청
+ * @param request 자소서 제목, 자소서 질문/답변
+ */
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
 

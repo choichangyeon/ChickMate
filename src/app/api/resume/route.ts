@@ -11,7 +11,7 @@ type RequestBody = {
   fieldList: Field[];
 };
 
-const { AUTH_REQUIRED } = AUTH_MESSAGE;
+const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
 const { REQUEST_FAILURE, SERVER_ERROR } = RESUME_MESSAGE.SUBMIT;
 const { SUBMIT } = RESUME_STATUS;
 

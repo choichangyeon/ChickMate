@@ -4,8 +4,9 @@ import { getServerSession } from 'next-auth';
 import React from 'react';
 
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {
-  const { user } = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
 
+  const user = session?.user ?? null;
   return (
     <>
       <Nav user={user} />

@@ -33,6 +33,7 @@ export const ROUTE_HANDLER_PATH = {
   REGIONS: '/api/regions',
   JOB: {
     POSTING: '/api/job/posting',
+    BOOKMARK: '/api/job/bookmark',
   },
   CHARACTER: {
     INFO: '/api/character',

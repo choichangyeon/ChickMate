@@ -12,7 +12,7 @@ const {
   API: { POST_DATA_ERROR },
 } = USER_META_DATA_FORM_MESSAGE;
 
-export async function POST(request: Request, { params }: Props) {
+export const POST = async (request: Request, { params }: Props) => {
   try {
     const { userId } = params;
     const payload = await request.json();
@@ -35,4 +35,4 @@ export async function POST(request: Request, { params }: Props) {
       }
     );
   }
-}
+};

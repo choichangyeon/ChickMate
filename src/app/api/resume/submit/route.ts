@@ -4,15 +4,10 @@ import { prisma } from '@/lib/prisma';
 import { authOptions } from '@/utils/auth-option';
 import { AUTH_MESSAGE, RESUME_MESSAGE } from '@/constants/message-constants';
 import { RESUME_STATUS } from '@/constants/resume-constants';
-import type { Field } from '@/types/resume';
-
-type RequestBody = {
-  title: string;
-  fieldList: Field[];
-};
+import type { ResumeData } from '@/types/resume';
 
 const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
-const { REQUEST_FAILURE, SERVER_ERROR } = RESUME_MESSAGE.SUBMIT;
+const { REQUEST_FAILURE, SUBMIT_SERVER_ERROR } = RESUME_MESSAGE.SUBMIT;
 const { SUBMIT } = RESUME_STATUS;
 
 /**
@@ -27,7 +22,7 @@ export const POST = async (request: Request) => {
   }
 
   try {
-    const body: RequestBody = await request.json();
+    const body: ResumeData = await request.json();
     const { title, fieldList } = body;
 
     if (!title || !fieldList) {
@@ -45,6 +40,6 @@ export const POST = async (request: Request) => {
 
     return NextResponse.json(newResume, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ message: SERVER_ERROR }, { status: 500 });
+    return NextResponse.json({ message: SUBMIT_SERVER_ERROR }, { status: 500 });
   }
 };

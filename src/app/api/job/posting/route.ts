@@ -17,7 +17,6 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
     const experienceType = searchParams.get('experienceType');
     const jobType = searchParams.get('jobType');
 
-    // TODO : prisma 로직 재구현
     const data: JobPosting[] = await prisma.jobPosting.findMany({
       where: {
         educationLevel,

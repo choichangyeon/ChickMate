@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { PATH } from '@/constants/path-constant';
 import { defaultQuestionList } from '@/features/resume/data/default-question-list';
 import { usePreventPageUnload } from '@/features/resume/hooks/use-prevent-page-load';
-import { postResumeField } from '@/features/resume/api/client-service';
+import { postResume } from '@/features/resume/api/client-service';
 import type { Field } from '@/types/resume';
 
 export const useResumeForm = () => {
@@ -52,7 +52,7 @@ export const useResumeForm = () => {
 
     try {
       const data = { title, fieldList };
-      await postResumeField({ data });
+      await postResume({ data });
 
       // 수정해야되는 alert창
       alert('자기소개서 작성이 완료되었습니다.');

@@ -66,3 +66,9 @@ export const DB_MESSAGE = {
     DB_SERVER_ERROR: 'DB 서버 에러',
   },
 };
+
+export const CHARACTER_MESSAGE = {
+  INFO: {
+    GET_DATA_FAILED: '캐릭터 정보를 가져오는데 실패했습니다.'
+  }
+}

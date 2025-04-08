@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import { authOptions } from '@/utils/auth-option';
-import { RESUME_MESSAGE } from '@/constants/message-constants';
+import { AUTH_MESSAGE, RESUME_MESSAGE } from '@/constants/message-constants';
 import type { Field } from '@/types/resume';
 import { RESUME_STATUS } from '@/constants/resume-constants';
 
@@ -11,6 +11,7 @@ type RequestBody = {
   fieldList: Field[];
 };
 
+const { AUTH_REQUIRED } = AUTH_MESSAGE;
 const { REQUEST_FAILURE, SERVER_ERROR } = RESUME_MESSAGE.SUBMIT;
 const { SUBMIT } = RESUME_STATUS;
 
@@ -18,7 +19,7 @@ export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
-    return NextResponse.json({ error: '사용자 인증이 필요합니다.' }, { status: 403 });
+    return NextResponse.json({ error: AUTH_REQUIRED }, { status: 403 });
   }
 
   try {

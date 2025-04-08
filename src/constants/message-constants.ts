@@ -17,6 +17,7 @@ export const AUTH_MESSAGE = {
     SIGN_IN_SUCCESS: '로그인에 성공했습니다.',
     SIGN_IN_FAILED: '이메일 혹은 비밀번호를 확인해주세요.',
   },
+  AUTH_REQUIRED: '사용자 인증이 필요합니다.',
 };
 
 export const AI_MESSAGE = {

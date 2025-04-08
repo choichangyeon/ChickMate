@@ -1,7 +1,6 @@
 import { User } from '@/types/user';
 import HeaderCharacter from '../chraracter/header-character';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-import { prisma } from '@/lib/prisma';
 import { CHARACTER_QUERY_KEY } from '@/constants/query-key';
 import { getCharacterByUserId } from '../chraracter/api/server-services';
 import { serverActionWithSentry } from '@/utils/server-action-with-sentry';

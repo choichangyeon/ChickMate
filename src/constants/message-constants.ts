@@ -46,6 +46,7 @@ export const USER_META_DATA_FORM_MESSAGE = {
   } as const,
   API: {
     GET_REGIONS_ERROR: '지역 정보를 가져오는데 실패했습니다.',
+    GET_DATA_ERROR: '유저 정보를 가져오는데 실패했습니다.',
     POST_DATA_ERROR: '유저 정보를 저장하는데 실패했습니다.',
   },
 };

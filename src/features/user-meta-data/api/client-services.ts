@@ -8,8 +8,14 @@ const {
 const { POST } = API_METHOD;
 
 export const getUserMetaData = async (userId: string) => {
-  const res = await fetch(`${META_DATA}/${userId}`);
-  console.log('res=>', res);
+  try {
+    const res = await fetch(`${META_DATA}/${userId}`);
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.message);
+    return result.data;
+  } catch (error) {
+    alert(error);
+  }
 };
 
 export const getRegions = async () => {
@@ -19,10 +25,16 @@ export const getRegions = async () => {
 };
 
 export const postUserMetaData = async (userId, metaData) => {
-  if (metaData.etc === '' || metaData.etc === null) delete metaData.etc;
-  await fetch(`${META_DATA}/${userId}`, {
-    method: POST,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(metaData),
-  });
+  try {
+    if (metaData.etc === '' || metaData.etc === null) delete metaData.etc;
+    const res = await fetch(`${META_DATA}/${userId}`, {
+      method: POST,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(metaData),
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.message);
+  } catch (error) {
+    alert(error);
+  }
 };

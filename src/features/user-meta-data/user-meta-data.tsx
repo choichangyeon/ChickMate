@@ -1,13 +1,13 @@
 'use client';
 import { DEFAULT, USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 import type { SelectBoxType } from '@/types/select-box';
-import { RegionsType, type UserMetaDataType } from '@/types/user-meta-data-type';
+import { type UserMetaDataType } from '@/types/user-meta-data-type';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
 import { useCallback, useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { getRegions, getUserMetaData, postUserMetaData } from './api/client-services';
-import { academicData, jobData, mainRegion, typeData } from './data/user-meta-data';
+import { academicData, jobData, typeData } from './data/user-meta-data';
 import { userMetaFormSchema, UserMetaSchema } from './data/user-meta-form-schema';
 import SingleSelectField from './single-select-field';
 

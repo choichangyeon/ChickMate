@@ -13,10 +13,9 @@ export const GET = async (): Promise<NextResponse> => {
   if (!session || !session.user) {
     return NextResponse.json({ message: AUTH_REQUIRED }, { status: 403 });
   }
-  try {
-    const { user } = await getServerSession(authOptions);
-    const userId = user.id;
 
+  const userId = session.user.id;
+  try {
     const response = await prisma.character.findFirst({
       where: { userId },
     });

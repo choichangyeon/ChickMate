@@ -18,6 +18,7 @@ export const AUTH_MESSAGE = {
     SIGN_UP_EMPTY_FIELD: '모든 값을 입력해주세요.',
     SIGN_IN_SUCCESS: '로그인에 성공했습니다.',
     SIGN_IN_FAILED: '이메일 혹은 비밀번호를 확인해주세요.',
+    AUTH_REQUIRED: '사용자 인증이 필요합니다.',
   },
 };
 
@@ -35,6 +36,15 @@ export const AI_MESSAGE = {
     AI_SERVER_ERROR: 'AI 서버 에러',
   },
 };
+
+
+export const RESUME_MESSAGE = {
+  SUBMIT: { REQUEST_FAILURE: '유효하지 않은 자기소개서 양식입니다.', SERVER_ERROR: '자기소개서 생성에 실패했습니다.' },
+  SAVE_AS_DRAFT: {
+    REQUEST_FAILURE: '',
+    SERVER_ERROR: '',
+  }
+}
 
 const { TYPE, EDUCATION, JOB, MAIN_REGION } = USER_META_DATA_KEY;
 export const USER_META_DATA_FORM_MESSAGE = {

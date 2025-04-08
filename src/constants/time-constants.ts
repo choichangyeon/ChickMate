@@ -9,3 +9,7 @@ export const STALE_TIME = {
 export const GC_TIME = {
   SAMPLE: 10,
 };
+
+export const DELAY_TIME = {
+  DEFAULT: 2000,
+};

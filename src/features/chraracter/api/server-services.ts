@@ -4,10 +4,11 @@ import { prisma } from '@/lib/prisma';
 import { authOptions } from '@/utils/auth-option';
 import { getServerSession } from 'next-auth';
 import { AUTH_MESSAGE } from '@/constants/message-constants';
+import { Character } from '@prisma/client';
 
 const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
 
-export const getCharacterByUserId = async () => {
+export const getCharacterByUserId = async (): Promise<Character> => {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {

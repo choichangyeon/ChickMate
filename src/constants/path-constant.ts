@@ -33,4 +33,7 @@ export const ROUTE_HANDLER_PATH = {
   JOB: {
     POSTING: '/api/job/posting',
   },
+  CHARACTER: {
+    INFO: '/api/character',
+  },
 };

@@ -19,7 +19,7 @@ const { SUBMIT } = RESUME_STATUS;
  * 자소서 등록하는 요청
  * @param request 자소서 제목, 자소서 질문/답변
  */
-export async function POST(request: Request) {
+export const POST = async (request: Request) => {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -47,4 +47,4 @@ export async function POST(request: Request) {
   } catch (error) {
     return NextResponse.json({ message: SERVER_ERROR }, { status: 500 });
   }
-}
+};

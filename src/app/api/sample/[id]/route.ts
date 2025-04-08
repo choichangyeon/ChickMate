@@ -14,7 +14,7 @@ type RouteParams = {
 /**
  * GET: 단일 항목 조회
  */
-export async function GET(request: Request, { params }: RouteParams) {
+export const GET = async (request: Request, { params }: RouteParams) => {
   try {
     const { id: sampleId } = params;
     const id = Number(sampleId);
@@ -31,12 +31,12 @@ export async function GET(request: Request, { params }: RouteParams) {
     console.error('데이터 조회 에러:', error);
     return NextResponse.json({ message: '데이터 항목을 가져오는데 실패했습니다.' }, { status: 500 });
   }
-}
+};
 
 /**
  * POST: 새로운 항목 생성 (로그인 필요)
  */
-export async function POST(request: Request) {
+export const POST = async (request: Request) => {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -62,12 +62,12 @@ export async function POST(request: Request) {
     console.error('Todo 생성 에러:', error);
     return NextResponse.json({ message: 'Sample 항목 생성에 실패했습니다.' }, { status: 500 });
   }
-}
+};
 
 /**
  * PATCH: 항목 수정 (로그인 필요, 자신의 항목만)
  */
-export async function PATCH(request: Request, { params }: RouteParams) {
+export const PATCH = async (request: Request, { params }: RouteParams) => {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -105,12 +105,12 @@ export async function PATCH(request: Request, { params }: RouteParams) {
     console.error('Todo 수정 에러:', error);
     return NextResponse.json({ message: 'Todo 항목 수정에 실패했습니다.' }, { status: 500 });
   }
-}
+};
 
 /**
  * DELETE: 항목 삭제 (로그인 필요, 자신의 항목만)
  */
-export async function DELETE(request: Request, { params }: RouteParams) {
+export const DELETE = async (request: Request, { params }: RouteParams) => {
   const session = await getServerSession(authOptions);
 
   // 인증되지 않은 사용자는 403 에러
@@ -143,4 +143,4 @@ export async function DELETE(request: Request, { params }: RouteParams) {
     console.error('Todo 삭제 에러:', error);
     return NextResponse.json({ message: 'Todo 항목 삭제에 실패했습니다.' }, { status: 500 });
   }
-}
+};

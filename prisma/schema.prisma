@@ -130,8 +130,7 @@ model InterviewHistory {
   userId              String   @map("user_id")
   resumeId            Int      @map("resume_id")
   feedback            Json?   
-  questionContent     Json?    @map("question_content")
-  answerContent       Json?    @map("answer_content")
+  content             Json?    
   createdAt           DateTime @default(now()) @map("created_at")
   interviewType       String   @map("interview_type")
   user                User     @relation(fields: [userId], references: [id])

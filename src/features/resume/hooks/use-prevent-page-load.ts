@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 
 export const usePreventPageUnload = (shouldPrevent: boolean) => {
   useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       if (!shouldPrevent) return;
-      e.preventDefault();
-      e.returnValue = '';
+      event.preventDefault();
+      event.returnValue = '';
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);

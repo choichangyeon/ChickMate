@@ -3,6 +3,10 @@ import { DEFAULT, USER_META_DATA_KEY } from '@/constants/user-meta-data-constant
 import { z } from 'zod';
 const { TYPE, EDUCATION, JOB, MAIN_REGION, ETC } = USER_META_DATA_KEY;
 const { VALIDATION } = USER_META_DATA_FORM_MESSAGE;
+
+/**
+ * user metadata form의 validation schema
+ */
 export const userMetaFormSchema = z.object({
   [TYPE]: z.string().refine((value) => value !== DEFAULT, VALIDATION[TYPE]),
   // career: z.string(), => 경력기간 :  사람인 api 연결 시 사용

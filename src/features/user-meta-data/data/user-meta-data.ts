@@ -13,28 +13,28 @@ export const typeData: SelectBoxType[] = [
   },
 ];
 
-export const careerData: SelectBoxType[] = [
-  {
-    name: '1년 미만',
-    value: '1년 미만',
-    // value: 'CAREER1', => 사람인 API 연결되면 바꿀 예정
-  },
-  {
-    name: '1년 이상 ~ 3년 미만',
-    value: '1년 이상 ~ 3년 미만',
-    // value: 'CAREER2', => 사람인 API 연결되면 바꿀 예정
-  },
-  {
-    name: '3년 이상 ~ 5년 미만',
-    value: '3년 이상 ~ 5년 미만',
-    // value: 'CAREER3', => 사람인 API 연결되면 바꿀 예정
-  },
-  {
-    name: '5년 이상',
-    value: '5년 이상',
-    // value: 'CAREER4', => 사람인 API 연결되면 바꿀 예정
-  },
-];
+// export const careerData: SelectBoxType[] = [
+//   {
+//     name: '1년 미만',
+//     value: '1년 미만',
+//     // value: 'CAREER1', => 사람인 API 연결되면 바꿀 예정
+//   },
+//   {
+//     name: '1년 이상 ~ 3년 미만',
+//     value: '1년 이상 ~ 3년 미만',
+//     // value: 'CAREER2', => 사람인 API 연결되면 바꿀 예정
+//   },
+//   {
+//     name: '3년 이상 ~ 5년 미만',
+//     value: '3년 이상 ~ 5년 미만',
+//     // value: 'CAREER3', => 사람인 API 연결되면 바꿀 예정
+//   },
+//   {
+//     name: '5년 이상',
+//     value: '5년 이상',
+//     // value: 'CAREER4', => 사람인 API 연결되면 바꿀 예정
+//   },
+// ]; -> 사람인 API 연결되면 사용 예정
 
 export const academicData: SelectBoxType[] = [
   {
@@ -73,6 +73,7 @@ export const academicData: SelectBoxType[] = [
     // value: 'ACADEMIC7',
   },
 ];
+
 export const jobData: SelectBoxType[] = [
   { name: '기획·전략', value: '기획·전략' },
   { name: '마케팅·홍보·조사', value: '마케팅·홍보·조사' },

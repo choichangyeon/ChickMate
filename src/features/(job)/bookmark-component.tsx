@@ -1,12 +1,10 @@
 'use client';
 
-import { useUser } from '@/hooks/customs/use-user';
+import { postBookmarkWithUserId } from '@/features/(job)/api/client-services';
 
 const BookmarkComponent = () => {
-  const user = useUser();
-
   const handleClick = async () => {
-    console.log(user.id);
+    await postBookmarkWithUserId(1);
   };
   return (
     <div>

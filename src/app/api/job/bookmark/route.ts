@@ -1,7 +1,11 @@
+import { DB_MESSAGE } from '@/constants/message-constants';
 import { prisma } from '@/lib/prisma';
 import { authOptions } from '@/utils/auth-option';
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
+
+const { USER_ID_VALIDATION, JOB_POSTING_ID_VALIDATION } = DB_MESSAGE.VALIDATION;
+const { DB_SERVER_ERROR } = DB_MESSAGE.ERROR;
 
 /**
  * POST 요청 함수
@@ -12,9 +16,11 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     const { jobPostingId } = await request.json();
     const userId = user.id;
 
-    if (!userId || !jobPostingId) {
-      // 유효성 검사 TODO : 에러 메시지 상수화
-      return NextResponse.json({ message: 'INVALID_DATA' }, { status: 400 });
+    if (!userId) {
+      return NextResponse.json({ message: USER_ID_VALIDATION }, { status: 400 });
+    }
+    if (!jobPostingId) {
+      return NextResponse.json({ message: JOB_POSTING_ID_VALIDATION }, { status: 400 });
     }
 
     const data = await prisma.userSelectedJob.create({
@@ -26,8 +32,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
 
     return NextResponse.json({ data }, { status: 200 });
   } catch (error) {
-    // TODO : 에러 메시지 상수화
-    return NextResponse.json({ message: 'SERVER_ERROR' }, { status: 503 });
+    return NextResponse.json({ message: DB_SERVER_ERROR }, { status: 503 });
   }
 };
 
@@ -40,9 +45,11 @@ export const DELETE = async (request: NextRequest): Promise<NextResponse> => {
     const { jobPostingId } = await request.json();
     const userId = user.id;
 
-    if (!userId || !jobPostingId) {
-      // 유효성 검사 TODO : 에러 메시지 상수화
-      return NextResponse.json({ message: 'INVALID_DATA' }, { status: 400 });
+    if (!userId) {
+      return NextResponse.json({ message: USER_ID_VALIDATION }, { status: 400 });
+    }
+    if (!jobPostingId) {
+      return NextResponse.json({ message: JOB_POSTING_ID_VALIDATION }, { status: 400 });
     }
 
     const data = await prisma.userSelectedJob.deleteMany({
@@ -54,8 +61,7 @@ export const DELETE = async (request: NextRequest): Promise<NextResponse> => {
 
     return NextResponse.json({ data }, { status: 200 });
   } catch (error) {
-    // TODO : 에러 메시지 상수화
-    return NextResponse.json({ message: 'SERVER_ERROR' }, { status: 503 });
+    return NextResponse.json({ message: DB_SERVER_ERROR }, { status: 503 });
   }
 };
 
@@ -69,9 +75,11 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
     const userId = user.id;
     const jobPostingId = Number(searchParams.get('jobPostingId'));
 
-    if (!userId || !jobPostingId) {
-      // 유효성 검사 TODO : 에러 메시지 상수화
-      return NextResponse.json({ message: 'INVALID_DATA' }, { status: 400 });
+    if (!userId) {
+      return NextResponse.json({ message: USER_ID_VALIDATION }, { status: 400 });
+    }
+    if (!jobPostingId) {
+      return NextResponse.json({ message: JOB_POSTING_ID_VALIDATION }, { status: 400 });
     }
 
     const data = await prisma.userSelectedJob.findMany({
@@ -80,7 +88,6 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
 
     return NextResponse.json({ data }, { status: 200 });
   } catch (error) {
-    console.error('데이터 조회 에러:', error);
-    return NextResponse.json({ error: '데이터 항목을 가져오는데 실패했습니다.' }, { status: 500 });
+    return NextResponse.json({ message: DB_SERVER_ERROR }, { status: 500 });
   }
 };

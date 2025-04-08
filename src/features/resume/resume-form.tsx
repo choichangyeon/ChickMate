@@ -9,7 +9,7 @@ const ResumeForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className='flex flex-col gap-8'>
-      <input type='text' value={title} onChange={handleTitleChange} placeholder='제목을 입력해주세요.' />
+      <input type='text' value={title} onChange={handleTitleChange} placeholder='제목을 입력해주세요.' required />
       {fieldList.map((field) => {
         return (
           <QuestionAnswerField key={field.id} field={field} onChange={handleFieldChange} onDelete={handleDeleteField} />

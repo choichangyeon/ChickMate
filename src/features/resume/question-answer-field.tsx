@@ -9,7 +9,6 @@ type Props = {
 
 const QuestionAnswerField = ({ field, onChange, onDelete }: Props) => {
   const { id, question, answer } = field;
-  const ANSWER_LENGTH = answer.length;
   const MAX_ANSWER_LENGTH = 1000;
 
   return (
@@ -29,10 +28,11 @@ const QuestionAnswerField = ({ field, onChange, onDelete }: Props) => {
         onChange={onChange}
         maxLength={MAX_ANSWER_LENGTH}
         placeholder='답변을 입력해주세요.'
+        required
         className='h-[300px]'
       />
       <div className='flex justify-between'>
-        <Text>{ANSWER_LENGTH} / 1000 (공백 포함)</Text>
+        <Text>{answer.length} / 1000 (공백 포함)</Text>
         <button type='button' onClick={() => onDelete(id)}>
           삭제
         </button>

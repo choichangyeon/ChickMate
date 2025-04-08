@@ -10,6 +10,7 @@ type Props = {
 const QuestionAnswerField = ({ field, onChange, onDelete }: Props) => {
   const { id, question, answer } = field;
   const ANSWER_LENGTH = answer.length;
+  const MAX_ANSWER_LENGTH = 1000;
 
   return (
     <div className='flex w-[600px] flex-col'>
@@ -26,7 +27,7 @@ const QuestionAnswerField = ({ field, onChange, onDelete }: Props) => {
         name='answer'
         value={answer}
         onChange={onChange}
-        maxLength={1000}
+        maxLength={MAX_ANSWER_LENGTH}
         placeholder='답변을 입력해주세요.'
         className='h-[300px]'
       />

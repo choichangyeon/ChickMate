@@ -3,8 +3,8 @@ import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import { authOptions } from '@/utils/auth-option';
 import { AUTH_MESSAGE, RESUME_MESSAGE } from '@/constants/message-constants';
-import type { Field } from '@/types/resume';
 import { RESUME_STATUS } from '@/constants/resume-constants';
+import type { Field } from '@/types/resume';
 
 type RequestBody = {
   title: string;

@@ -17,6 +17,6 @@ export const getUserMetaData = async (userId: User['id']): Promise<MetaData> => 
     });
     return userMetaData;
   } catch (error) {
-    console.error(error);
+    throw error; //@TODO: error statusCode가 정의가 안 되는데.. 이거 serverActionWithSentry에서 어떻게 잡죠..?
   }
 };

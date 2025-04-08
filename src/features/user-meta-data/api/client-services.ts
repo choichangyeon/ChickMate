@@ -2,6 +2,7 @@ import { API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import type { User } from '@/types/user';
 import type { UserMetaDataType } from '@/types/user-meta-data-type';
+import { fetchWithSentry } from '@/utils/fetch-with-sentry';
 import { MainRegion } from '@prisma/client';
 const {
   USER: { META_DATA },
@@ -14,8 +15,7 @@ const { POST } = API_METHOD;
  * @returns 지역리스트
  */
 export const getRegions = async (): Promise<MainRegion[]> => {
-  const res = await fetch(REGIONS);
-  const regions = await res.json();
+  const regions = await fetchWithSentry(REGIONS);
   return regions;
 };
 
@@ -25,16 +25,10 @@ export const getRegions = async (): Promise<MainRegion[]> => {
  * @param metaData - DB에 저장할 user의 meta data
  */
 export const postUserMetaData = async (userId: User['id'], metaData: UserMetaDataType): Promise<void> => {
-  try {
-    if (metaData.etc === '' || metaData.etc === null) delete metaData.etc;
-    const res = await fetch(`${META_DATA}/${userId}`, {
-      method: POST,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(metaData),
-    });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.message);
-  } catch (error) {
-    throw error;
-  }
+  if (metaData.etc === '' || metaData.etc === null) delete metaData.etc;
+  await fetchWithSentry(`${META_DATA}/${userId}`, {
+    method: POST,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(metaData),
+  });
 };

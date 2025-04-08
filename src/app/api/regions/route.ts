@@ -10,7 +10,6 @@ export async function GET() {
     const mainRegions = await prisma.mainRegion.findMany();
     return NextResponse.json(mainRegions, { status: 200 });
   } catch (error) {
-    console.error(error);
     return NextResponse.json({ message: GET_REGIONS_ERROR }, { status: 500 });
   }
 }

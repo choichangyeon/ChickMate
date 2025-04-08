@@ -26,7 +26,6 @@ export async function POST(request: Request, { params }: Props) {
     });
     return NextResponse.json({ status: 200 });
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
       {
         message: POST_DATA_ERROR,

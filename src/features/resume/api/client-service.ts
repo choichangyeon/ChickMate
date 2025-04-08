@@ -1,7 +1,7 @@
 import { API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
-import { Field } from '@/types/resume';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
+import type { Field } from '@/types/resume';
 
 type Props = {
   data: { title: string; fieldList: Field[] };

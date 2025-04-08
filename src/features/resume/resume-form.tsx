@@ -6,8 +6,13 @@ import { defaultQuestionList } from '@/features/resume/data/default-question-lis
 import { usePreventPageUnload } from './hooks/use-prevent-page-load';
 import { postResumeField } from '@/features/resume/api/client-service';
 import type { Field } from '@/types/resume';
+import { useRouter } from 'next/navigation';
+import { PATH } from '@/constants/path-constant';
 
 const ResumeForm = () => {
+  const router = useRouter();
+  const { MY_PAGE } = PATH;
+
   const [isDirty, setIsDirty] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
   const [fieldList, setFieldList] = useState<Field[]>(defaultQuestionList);
@@ -31,6 +36,10 @@ const ResumeForm = () => {
 
     const data = { title, fieldList };
     postResumeField({ data });
+
+    // 임시로 넣어둔 alert창
+    alert('자기소개서 작성이 완료되었습니다.');
+    router.push(MY_PAGE);
   };
 
   usePreventPageUnload(isDirty);

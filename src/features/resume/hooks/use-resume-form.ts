@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { PATH } from '@/constants/path-constant';
+import { DELAY_TIME } from '@/constants/time-constants';
 import { defaultQuestionList } from '@/features/resume/data/default-question-list';
 import { usePreventPageUnload } from '@/features/resume/hooks/use-prevent-page-load';
-import { postResume } from '@/features/resume/api/client-service';
+import { autoSaveResume, submitResume } from '@/features/resume/api/client-service';
+import useDebounce from '@/hooks/customs/use-debounce';
 import type { Field } from '@/types/resume';
 
 export const useResumeForm = () => {
@@ -11,11 +13,13 @@ export const useResumeForm = () => {
 
   /** constant */
   const { MY_PAGE } = PATH;
+  const { DEFAULT } = DELAY_TIME;
 
   /** state */
   const [isDirty, setIsDirty] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
   const [fieldList, setFieldList] = useState<Field[]>(defaultQuestionList);
+  const [resumeId, setResumeId] = useState<number>(null);
 
   /** function */
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +56,7 @@ export const useResumeForm = () => {
 
     try {
       const data = { title, fieldList };
-      await postResume({ data });
+      await submitResume({ resumeId, data });
 
       // 수정해야되는 alert창
       alert('자기소개서 작성이 완료되었습니다.');
@@ -63,6 +67,22 @@ export const useResumeForm = () => {
   };
 
   usePreventPageUnload(isDirty);
+
+  /** 자동 저장 */
+  const debouncedTitle = useDebounce(title, DEFAULT);
+  const debouncedFieldList = useDebounce(fieldList, DEFAULT);
+
+  useEffect(() => {
+    if (!isDirty) return;
+
+    const data = { title: debouncedTitle, fieldList: debouncedFieldList };
+
+    autoSaveResume({ resumeId, data }).then((savedResumeId) => {
+      if (resumeId === null) {
+        setResumeId(savedResumeId);
+      }
+    });
+  }, [debouncedTitle, debouncedFieldList]);
 
   return {
     title,

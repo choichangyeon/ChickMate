@@ -26,4 +26,8 @@ export const ROUTE_HANDLER_PATH = {
     SUBMIT: `/api/resume/submit`,
     DRAFT: `/api/resume/draft`,
   },
+  USER: {
+    META_DATA: '/api/user-meta-data',
+  },
+  REGIONS: '/api/regions',
 };

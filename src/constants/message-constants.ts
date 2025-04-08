@@ -1,3 +1,5 @@
+import { USER_META_DATA_KEY } from './user-meta-data-constants';
+
 export const AUTH_MESSAGE = {
   VALIDATION: {
     NAME_LENGTH: '이름은 2~8자여야 합니다.',
@@ -35,10 +37,24 @@ export const AI_MESSAGE = {
   },
 };
 
+
 export const RESUME_MESSAGE = {
   SUBMIT: { REQUEST_FAILURE: '유효하지 않은 자기소개서 양식입니다.', SERVER_ERROR: '자기소개서 생성에 실패했습니다.' },
   SAVE_AS_DRAFT: {
     REQUEST_FAILURE: '',
     SERVER_ERROR: '',
+
+const { TYPE, EDUCATION, JOB, MAIN_REGION } = USER_META_DATA_KEY;
+export const USER_META_DATA_FORM_MESSAGE = {
+  VALIDATION: {
+    [TYPE]: '경력을 선택해 주세요.',
+    [EDUCATION]: '학력을 선택해 주세요.',
+    [JOB]: '직종을 선택해 주세요.',
+    [MAIN_REGION]: '지역을 선택해 주세요.',
+  } as const,
+  API: {
+    GET_REGIONS_ERROR: '지역 정보를 가져오는데 실패했습니다.',
+    GET_DATA_ERROR: '유저 정보를 가져오는데 실패했습니다.',
+    POST_DATA_ERROR: '유저 정보를 저장하는데 실패했습니다.',
   },
 };

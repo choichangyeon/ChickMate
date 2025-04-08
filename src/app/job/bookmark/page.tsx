@@ -5,7 +5,7 @@ const BookmarkPage = async () => {
   return (
     <div>
       BookmarkPage
-      <BookmarkComponent />
+      <BookmarkComponent jobPostingId={1} />
     </div>
   );
 };

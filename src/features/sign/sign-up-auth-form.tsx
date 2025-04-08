@@ -2,12 +2,12 @@
 
 import { PATH } from '@/constants/path-constant';
 import { useRouter } from 'next/navigation';
-import { postSignUp } from '@/features/auth/sign-up/api/client-services';
+import { postSignUp } from '@/features/sign/api/client-services';
 import { AUTH_MESSAGE } from '@/constants/message-constants';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import AuthInput from '@/features/auth/auth-input';
-import { SignUpFormData, schema } from '@/features/auth/sign-up/data/schema';
+import AuthInput from '@/features/sign/auth-input';
+import { SignUpFormData, schema } from '@/features/sign/data/sign-up-schema';
 
 const SignUpAuthForm = () => {
   const {
@@ -17,7 +17,7 @@ const SignUpAuthForm = () => {
   } = useForm<SignUpFormData>({
     resolver: zodResolver(schema),
     mode: 'onBlur',
-    defaultValues: { name: '', email: '', password: '' } as SignUpFormData,
+    defaultValues: { name: '', email: '', password: '', passwordCheck: '' } as SignUpFormData,
   });
   const router = useRouter();
 
@@ -42,6 +42,13 @@ const SignUpAuthForm = () => {
         <AuthInput label='NAME' id='name' register={register} error={errors.name} type='text' />
         <AuthInput label='EMAIL' id='email' register={register} error={errors.email} type='email' />
         <AuthInput label='PASSWORD' id='password' register={register} error={errors.password} type='password' />
+        <AuthInput
+          label='PASSWORD CHECK'
+          id='passwordCheck'
+          register={register}
+          error={errors.passwordCheck}
+          type='password'
+        />
         <button
           type='submit'
           className='bg-blue-white mt-2 w-full rounded-md border border-gray-400 px-4 py-2 text-sm font-medium text-black shadow-sm'

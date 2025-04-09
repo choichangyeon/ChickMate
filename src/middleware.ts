@@ -1,10 +1,11 @@
 import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
-import { PATH } from './constants/path-constant';
+import { PATH, QUERY_PARAMS } from './constants/path-constant';
 
 const {
   AUTH: { SIGN_IN },
 } = PATH;
+const { UNAUTH } = QUERY_PARAMS;
 export const middleware = async (request: NextRequest) => {
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
   if (!token) {
@@ -20,7 +21,7 @@ export const middleware = async (request: NextRequest) => {
     // unauthorized=true를 넣은 이유 : 토큰이 만료된 상태에서 로그인 페이지로 이동
     //  -> '토큰'이 만료되었을 뿐 '세션'은 그대로여서 로그인한 상태로 인식
     // 따라서 queryParams로 토큰 만료되어서 이동한 로그인 페이지임을 알림
-    return NextResponse.redirect(new URL(`${SIGN_IN}?unauthorized=true`, request.url));
+    return NextResponse.redirect(new URL(`${SIGN_IN}?${UNAUTH}=true`, request.url));
   }
 
   return NextResponse.next();

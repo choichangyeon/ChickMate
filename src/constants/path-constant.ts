@@ -44,3 +44,8 @@ export const ROUTE_HANDLER_PATH = {
     EXPERIENCE: '/api/character/experience',
   },
 };
+
+export const QUERY_PARAMS = {
+  ERROR: 'error',
+  UNAUTH: 'unauthorized',
+};

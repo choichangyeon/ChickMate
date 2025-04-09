@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import { AUTH_MESSAGE } from '@/constants/message-constants';
-import { PATH } from '@/constants/path-constant';
+import { PATH, QUERY_PARAMS } from '@/constants/path-constant';
 
 const { SIGN_IN_SUCCESS, SIGN_IN_FAILED, SOCIAL_SIGN_IN_EXIST_ERROR, SOCIAL_SIGN_IN_FAILED } = AUTH_MESSAGE.RESULT;
 
@@ -13,12 +13,12 @@ const NEXT_AUTH_STATUS = {
 };
 
 const { AUTHENTICATED, OAUTH_ACCOUNT_NOT_LINKED, CREDENTIAL_SIGN_IN } = NEXT_AUTH_STATUS;
-
+const { ERROR, UNAUTH } = QUERY_PARAMS;
 export const useSignInResult = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const path = searchParams.get('unauthorized');
-  const error = searchParams.get('error');
+  const path = searchParams.get(UNAUTH);
+  const error = searchParams.get(ERROR);
   const { status } = useSession();
   const pathname = usePathname();
 
@@ -31,7 +31,7 @@ export const useSignInResult = () => {
         return;
       }
       alert(SIGN_IN_SUCCESS);
-      window.location.replace(PATH.ON_BOARDING);
+      router.replace(PATH.ON_BOARDING);
     }
   }, [status, router, path]);
 

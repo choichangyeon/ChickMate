@@ -3,3 +3,8 @@ export type Field = {
   question: string;
   answer: string;
 };
+
+export type ResumeData = {
+  title: string;
+  fieldList: Field[];
+};

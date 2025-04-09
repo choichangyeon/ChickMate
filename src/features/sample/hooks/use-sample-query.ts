@@ -1,5 +1,5 @@
 import { QUERY_KEY } from '@/constants/query-key';
-import { GC_TIME, STALE_TIME } from '@/constants/time';
+import { GC_TIME, STALE_TIME } from '@/constants/time-constants';
 import { useQuery } from '@tanstack/react-query';
 import { getSample } from '../api/client-services';
 
@@ -10,7 +10,7 @@ import { getSample } from '../api/client-services';
  */
 export const useGetSampleQuery = (prop) => {
   return useQuery({
-    queryKey: [QUERY_KEY.SAMPLE, prop],
+    queryKey: ['queryKey', prop],
     queryFn: getSample,
     staleTime: STALE_TIME.MIN,
     gcTime: GC_TIME.SAMPLE,

@@ -40,11 +40,17 @@ export const AI_MESSAGE = {
 };
 
 export const RESUME_MESSAGE = {
-  SUBMIT: { REQUEST_FAILURE: '유효하지 않은 자기소개서 양식입니다.', SERVER_ERROR: '자기소개서 생성에 실패했습니다.' },
-  SAVE_AS_DRAFT: {
-    REQUEST_FAILURE: '',
-    SERVER_ERROR: '',
+  SUBMIT: {
+    REQUEST_FAILURE: '유효하지 않은 자기소개서 양식입니다.',
+    SUBMIT_SERVER_ERROR: '자기소개서 생성에 실패했습니다.',
   },
+  DRAFT: {
+    NOT_FOUND: '해당 자소서를 찾을 수 없습니다.',
+    FORBIDDEN: '해당 자기소개서를 수정할 권한이 없습니다.',
+    DRAFT_SERVER_ERROR: '자기소개서 임시 저장에 실패하였습니다.',
+  },
+  NOT_FOUND: '임시 저장된 자소서를 찾을 수 없습니다.',
+  GET_SERVER_ERROR: '자기소개서를 가져오는데 실패했습니다.',
 };
 
 const { TYPE, EDUCATION, JOB, MAIN_REGION } = USER_META_DATA_KEY;

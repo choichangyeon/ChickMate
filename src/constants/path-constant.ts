@@ -24,8 +24,11 @@ export const ROUTE_HANDLER_PATH = {
     INTERVIEW: '/api/ai/interview',
   },
   RESUME: {
+    ROOT: '/api/resume',
     SUBMIT: `/api/resume/submit`,
+    SUBMIT_DETAIL: (id: number) => `/api/resume/submit/${id}`,
     DRAFT: `/api/resume/draft`,
+    DRAFT_DETAIL: (id: number) => `/api/resume/draft/${id}`,
   },
   USER: {
     META_DATA: '/api/user-meta-data',

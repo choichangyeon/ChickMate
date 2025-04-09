@@ -7,7 +7,7 @@ export const usePostSampleMutation = () => {
   return useMutation({
     mutationFn: (title: string) => postSample(title),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.SAMPLE] });
+      queryClient.invalidateQueries({ queryKey: ['queryKey'] });
     },
   });
 };

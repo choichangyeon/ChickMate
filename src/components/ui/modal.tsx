@@ -46,10 +46,7 @@ const Modal = ({ hasCloseButton, portalRoot, closeModal, children }: Props) => {
   return createPortal(
     <div className='fixed inset-0 z-50 flex items-center justify-center overflow-y-auto'>
       <div className='fixed inset-0 bg-black opacity-70' onClick={closeModal} />
-      <div
-        ref={modalContentRef}
-        className='relative w-full max-w-[750px] flex-col items-center rounded-lg bg-white p-6'
-      >
+      <div ref={modalContentRef} className='relative w-full max-w-[750px] flex-col rounded-lg bg-white p-8'>
         {hasCloseButton && (
           <button type='button' onClick={closeModal}>
             닫기

@@ -1,13 +1,9 @@
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
+import { NextRequest } from 'next/server';
 
-interface RequestBody {
-  email: string;
-  password: string;
-}
-
-export async function POST(request: Request) {
-  const body: RequestBody = await request.json();
+export const POST = async (request: NextRequest) => {
+  const body = await request.json();
 
   const user = await prisma.user.findFirst({
     where: {
@@ -17,6 +13,7 @@ export async function POST(request: Request) {
 
   if (user && (await bcrypt.compare(body.password, user.password))) {
     const { password, ...userWithoutPass } = user;
+    console.log('user', user);
     return new Response(JSON.stringify(userWithoutPass));
   } else return new Response(JSON.stringify(null));
-}
+};

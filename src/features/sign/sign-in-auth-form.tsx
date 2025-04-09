@@ -34,11 +34,13 @@ const SignInAuthForm = () => {
         ...data,
         redirect: false,
       });
+      console.log(res);
       if (!res.ok) {
         throw new Error(SIGN_IN_FAILED);
       } else {
         alert(SIGN_IN_SUCCESS);
-        router.replace(PATH.ON_BOARDING);
+        await router.replace(PATH.ON_BOARDING);
+        router.refresh();
       }
     } catch (error) {
       alert(error.message);

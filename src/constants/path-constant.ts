@@ -16,6 +16,7 @@ export const PATH = {
 export const ROUTE_HANDLER_PATH = {
   AUTH: {
     SIGN_UP: '/api/sign-up',
+    SIGN_IN: '/api/auth/sign-in',
   },
   AI: {
     STT: '/api/ai/stt',
@@ -35,6 +36,6 @@ export const ROUTE_HANDLER_PATH = {
   },
   CHARACTER: {
     INFO: '/api/character',
-    EXPERIENCE: '/api/character/experience'
+    EXPERIENCE: '/api/character/experience',
   },
 };

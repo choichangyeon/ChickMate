@@ -4,6 +4,14 @@ import { prisma } from '@/lib/prisma';
 import type { NextAuthOptions } from 'next-auth';
 import NaverProvider from 'next-auth/providers/naver';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
+import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
+import { ENV } from '@/constants/env-constants';
+
+const { POST } = API_METHOD;
+const { JSON_HEADER } = API_HEADER;
+const { SIGN_IN } = ROUTE_HANDLER_PATH.AUTH;
+const { BASE_URL } = ENV;
 
 // NextAuth 설정 옵션을 정의합니다.
 export const authOptions: NextAuthOptions = {
@@ -29,16 +37,15 @@ export const authOptions: NextAuthOptions = {
 
       // 이메일, 패스워드 부분을 체크해서 맞으면 user 객체 리턴 틀리면 null 리턴
       async authorize(credentials, req) {
-        const res = await fetch(`http://localhost:3000/api/auth/sign-in`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+        const res = await fetch(`${BASE_URL}/${SIGN_IN}`, {
+          method: POST,
+          headers: JSON_HEADER,
           body: JSON.stringify({
             email: credentials?.email,
             password: credentials?.password,
           }),
         });
+        console.log(res);
         const user = await res.json();
 
         if (res.ok && user) {
@@ -70,13 +77,13 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  
+
   // 사용자 정의 로그인 페이지 경로를 설정합니다.
   // 원래의 경우라면, 로그인 페이지가 없어서 기본 로그인 페이지로 리디렉션됩니다.
   // 하지만, 우리는 사용자 정의 로그인 페이지를 사용하기 때문에 이 설정을 추가합니다.
 
   pages: {
-    signIn: '/', // 사용자가 로그인하지 않았을 때 리디렉션될 페이지입니다.
+    signIn: '/on-boarding', // 사용자가 로그인하지 않았을 때 리디렉션될 페이지입니다.
   },
   session: {
     strategy: 'jwt',

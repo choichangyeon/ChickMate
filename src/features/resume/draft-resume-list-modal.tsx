@@ -17,8 +17,13 @@ const DraftResumeListModal = ({ draftResumeList, isError, onLoadDraft, onClose }
           <Text>임시 저장된 자기소개서가 없습니다</Text>
         ) : (
           draftResumeList?.map((resume) => {
+            const handleDraftResumeClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+              event.stopPropagation();
+              onLoadDraft(resume);
+            };
+
             return (
-              <button key={resume.id} onClick={() => onLoadDraft(resume)}>
+              <button key={resume.id} onClick={handleDraftResumeClick}>
                 {resume.title}
               </button>
             );

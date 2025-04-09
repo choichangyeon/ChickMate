@@ -8,6 +8,7 @@ import QuestionAnswerField from '@/features/resume/question-answer-field';
 import DraftResumeListModal from './draft-resume-list-modal';
 import type { Field } from '@/types/resume';
 import type { Resume } from '@prisma/client';
+import { useEffect } from 'react';
 
 const ResumeForm = () => {
   /** hook */
@@ -28,7 +29,7 @@ const ResumeForm = () => {
   const { data: draftResumeList, isError, refetch } = useDraftResumesQuery();
 
   /** function */
-  const handleClick = () => {
+  const handleDraftResumeListClick = () => {
     openModal();
     refetch();
   };
@@ -55,7 +56,7 @@ const ResumeForm = () => {
         추가하기
       </button>
       <Text>{autoSaveStatus}</Text>
-      <button type='button' onClick={handleClick}>
+      <button type='button' onClick={handleDraftResumeListClick}>
         임시 저장된 글 | {draftResumeList?.length ?? 0}
       </button>
 

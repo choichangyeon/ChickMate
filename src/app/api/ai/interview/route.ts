@@ -15,7 +15,7 @@ const DEFAULT_COMPLETION_OPTIONS = {
   store: false,
 };
 
-export const POST = async (request: NextRequest): Promise<NextResponse> => {
+export const POST = async (request: NextRequest) => {
   const { AI_REQUEST_FAILURE, AI_SERVER_ERROR } = AI_MESSAGE.AI;
   try {
     const { messageList } = await request.json();

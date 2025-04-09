@@ -17,8 +17,8 @@ const BookmarkComponent = ({ jobPostingId }: Props) => {
   }, [isBookmarked]);
 
   const handleClick = async () => {
-    const check = await postBookmarkWithJobPostingId({ jobPostingId, isMarked });
-    setIsMarked(check);
+    const isBookmarked = await postBookmarkWithJobPostingId({ jobPostingId, isMarked });
+    setIsMarked(isBookmarked);
   };
 
   // 북마크 여부 확인 코드 - TODO : 이후에 북마크 UI 적용 코드 수정

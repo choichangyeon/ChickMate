@@ -31,10 +31,8 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, onClose }: P
             };
 
             return (
-              <div className='flex gap-3'>
-                <button key={resume.id} onClick={handleDraftResumeClick}>
-                  {resume.title}
-                </button>
+              <div key={resume.id} className='flex gap-3'>
+                <button onClick={handleDraftResumeClick}>{resume.title}</button>
                 <button onClick={(event) => handleDeleteResume(resume.id, event)} className='bg-red-300'>
                   삭제
                 </button>

@@ -15,13 +15,13 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     const session = await getServerSession(authOptions);
 
     if (!session || !session.user) {
-      return NextResponse.json({ message: USER_ID_VALIDATION }, { status: 400 });
+      return NextResponse.json({ message: USER_ID_VALIDATION }, { status: 401 });
     }
 
     const { jobPostingId } = await request.json();
 
     if (!jobPostingId) {
-      return NextResponse.json({ message: JOB_POSTING_ID_VALIDATION }, { status: 401 });
+      return NextResponse.json({ message: JOB_POSTING_ID_VALIDATION }, { status: 400 });
     }
 
     const userId = session.user.id;
@@ -34,7 +34,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
 
     return NextResponse.json({ data }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ message: DB_SERVER_ERROR }, { status: 503 });
+    return NextResponse.json({ message: DB_SERVER_ERROR }, { status: 500 });
   }
 };
 
@@ -46,14 +46,14 @@ export const DELETE = async (request: NextRequest): Promise<NextResponse> => {
     const session = await getServerSession(authOptions);
 
     if (!session || !session.user) {
-      return NextResponse.json({ message: USER_ID_VALIDATION }, { status: 400 });
+      return NextResponse.json({ message: USER_ID_VALIDATION }, { status: 401 });
     }
 
     const searchParams = request.nextUrl.searchParams;
     const jobPostingId = Number(searchParams.get('jobPostingId'));
 
     if (!jobPostingId) {
-      return NextResponse.json({ message: JOB_POSTING_ID_VALIDATION }, { status: 401 });
+      return NextResponse.json({ message: JOB_POSTING_ID_VALIDATION }, { status: 400 });
     }
 
     const userId = session.user.id;
@@ -66,7 +66,7 @@ export const DELETE = async (request: NextRequest): Promise<NextResponse> => {
 
     return NextResponse.json({ data }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ message: DB_SERVER_ERROR }, { status: 503 });
+    return NextResponse.json({ message: DB_SERVER_ERROR }, { status: 500 });
   }
 };
 

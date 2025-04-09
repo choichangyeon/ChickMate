@@ -64,8 +64,8 @@ export const DELETE = async (request: Request, { params }: RouteParams) => {
       return NextResponse.json({ message: DELETE_FORBIDDEN }, { status: 403 });
     }
 
-    await prisma.user.delete({
-      where: { id: resume.userId },
+    await prisma.resume.delete({
+      where: { id },
     });
 
     return NextResponse.json({ message: DELETE_REQUEST_SUCCESS });

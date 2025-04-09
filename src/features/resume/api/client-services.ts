@@ -10,7 +10,7 @@ type Props = {
 };
 
 const { ROOT, DETAIL, SUBMIT, SUBMIT_DETAIL, DRAFT, DRAFT_DETAIL } = ROUTE_HANDLER_PATH.RESUME;
-const { GET, POST, PATCH } = API_METHOD;
+const { GET, POST, PATCH, DELETE } = API_METHOD;
 const { JSON_HEADER } = API_HEADER;
 
 /**
@@ -57,7 +57,7 @@ export const autoSaveResume = async ({ resumeId, data }: Props) => {
 
 /**
  * DB에서 자소서 리스트 불러오는 요청
- * @param status 저장 상태(등록/임시 저장)
+ * @param {Number} status 저장 상태(등록/임시 저장)
  * @returns draftResumes 임시 저장된 자소서 리스트
  */
 export const getResumeList = async (status: number): Promise<Resume[]> => {
@@ -72,7 +72,7 @@ export const getResumeList = async (status: number): Promise<Resume[]> => {
 
 /**
  * DB에서 원하는 자소서를 불러오는 요청
- * @returns draftResumes 임시 저장된 자소서 리스트
+ * @returns {Array} draftResumes 임시 저장된 자소서 리스트
  */
 export const getResume = async (resumeId: number): Promise<Resume> => {
   const { response: resume } = await fetchWithSentry(DETAIL(resumeId), {
@@ -80,4 +80,14 @@ export const getResume = async (resumeId: number): Promise<Resume> => {
   });
 
   return resume;
+};
+
+/**
+ * DB에서 자소서 삭제하는 요청
+ * @param {Number} resumeId 자소서 ID
+ */
+export const deleteResume = async (resumeId: number): Promise<void> => {
+  await fetchWithSentry(DETAIL(resumeId), {
+    method: DELETE,
+  });
 };

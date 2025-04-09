@@ -50,26 +50,13 @@ export const postBookmarkWithJobPostingId = async ({
   isBookmarked,
 }: BookmarkPostProps): Promise<boolean> => {
   // 북마킹 여부에 따라 요청 method 달라짐
-  if (isBookmarked) {
-    const queryParams = new URLSearchParams({
-      jobPostingId: jobPostingId.toString(),
-    });
-    const url = `${BOOKMARK}?${queryParams}`;
-    const res = await fetchWithSentry(url, {
-      method: DELETE,
-    });
+  const method = isBookmarked ? DELETE : POST;
+  const url = BOOKMARK.DETAIL(jobPostingId);
+  const res = await fetchWithSentry(url, {
+    method,
+  });
 
-    return res ? false : true;
-  } else {
-    const res = await fetchWithSentry(BOOKMARK, {
-      method: POST,
-      body: JSON.stringify({
-        jobPostingId,
-      }),
-    });
-
-    return res ? true : false;
-  }
+  return res ? !isBookmarked : isBookmarked;
 };
 
 /**
@@ -81,10 +68,7 @@ type BookmarkDeleteProps = {
   jobPostingId: number;
 };
 export const getBookmarkByJobPostingId = async ({ jobPostingId }: BookmarkDeleteProps): Promise<boolean> => {
-  const queryParams = new URLSearchParams({
-    jobPostingId: jobPostingId.toString(),
-  });
-  const url = `${BOOKMARK}?${queryParams}`;
+  const url = BOOKMARK.DETAIL(jobPostingId);
   const { data } = await fetchWithSentry(url, {
     method: GET,
   });

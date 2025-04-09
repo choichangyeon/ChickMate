@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-key';
+import { serverActionWithSentry } from '@/utils/server-action-with-sentry';
 import ResumeForm from '@/features/resume/resume-form';
 import UserInfoSummary from '@/features/resume/user-info-summary';
 import { getDraftResumeList } from '@/features/resume/api/server-services';
@@ -17,7 +18,7 @@ const ResumePage = async () => {
 
   await queryClient.prefetchQuery({
     queryKey: [RESUME],
-    queryFn: () => getDraftResumeList(),
+    queryFn: () => serverActionWithSentry(getDraftResumeList),
   });
 
   return (

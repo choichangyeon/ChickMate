@@ -25,9 +25,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     });
 
     if (!res.ok) {
-      const error_message = await res.text();
-      console.error(error_message);
-      return NextResponse.json({ message: REQUEST_FAILURE }, { status: res.status });
+      return NextResponse.json({ message: REQUEST_FAILURE }, { status: 400 });
     }
 
     const arrayBuffer = await res.arrayBuffer();
@@ -36,7 +34,6 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
 
     return NextResponse.json({ audioUrl }, { status: 200 });
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ message: SERVER_ERROR }, { status: 503 });
+    return NextResponse.json({ message: SERVER_ERROR }, { status: 500 });
   }
 };

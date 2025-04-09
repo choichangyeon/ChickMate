@@ -32,6 +32,6 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
 
     return NextResponse.json({ text }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ message: AI_SERVER_ERROR }, { status: 503 });
+    return NextResponse.json({ message: AI_SERVER_ERROR }, { status: 500 });
   }
 };

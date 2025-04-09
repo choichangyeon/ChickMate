@@ -25,6 +25,7 @@ export const ROUTE_HANDLER_PATH = {
   },
   RESUME: {
     ROOT: '/api/resume',
+    DETAIL: (id: number) => `/api/resume/${id}`,
     SUBMIT: `/api/resume/submit`,
     SUBMIT_DETAIL: (id: number) => `/api/resume/submit/${id}`,
     DRAFT: `/api/resume/draft`,

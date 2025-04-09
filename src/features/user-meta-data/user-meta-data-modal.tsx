@@ -4,9 +4,9 @@ import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query
 import { getServerSession } from 'next-auth';
 import { getUserMetaData } from './api/server-services';
 import UserMetaDataForm from './user-meta-data-form';
-import { META_DATA_QUERY_KEY } from '@/constants/query-key';
+import { QUERY_KEY } from '@/constants/query-key';
 import { serverActionWithSentry } from '@/utils/server-action-with-sentry';
-const { META_DATA } = META_DATA_QUERY_KEY;
+const { META_DATA } = QUERY_KEY;
 const UserMetaDataModal = async () => {
   const session = await getServerSession(authOptions);
   const user = session?.user ?? null;
@@ -15,12 +15,12 @@ const UserMetaDataModal = async () => {
   if (user?.id) {
     await queryClient.prefetchQuery({
       queryKey: [META_DATA, user.id],
-      queryFn: () => serverActionWithSentry(async () => getUserMetaData(user.id)),
+      queryFn: () => serverActionWithSentry(async () => getUserMetaData(user?.id)),
     });
   }
 
   const dehydratedState = dehydrate(queryClient);
-  const metaData = queryClient.getQueryData<UserMetaDataType>([META_DATA, user.id]);
+  const metaData = queryClient.getQueryData<UserMetaDataType>([META_DATA, user?.id]);
 
   return (
     <section>

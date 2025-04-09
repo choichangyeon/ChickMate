@@ -23,8 +23,8 @@ export const POST = async (request: Request) => {
   }
 
   try {
-    const body: ResumeData = await request.json();
-    const { title, fieldList } = body;
+    const data: ResumeData = await request.json();
+    const { title, fieldList } = data;
 
     if (!fieldList) {
       return NextResponse.json({ message: REQUEST_FAILURE }, { status: 400 });

@@ -21,7 +21,7 @@ export const useResumeForm = () => {
   const [isDirty, setIsDirty] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
   const [fieldList, setFieldList] = useState<Field[]>(defaultQuestionList);
-  const [resumeId, setResumeId] = useState<number>(null);
+  const [resumeId, setResumeId] = useState<number>(0);
   const [autoSaveStatus, setAutoSaveStatus] = useState<string>(SAVING);
 
   /** function */
@@ -69,7 +69,9 @@ export const useResumeForm = () => {
       alert('자기소개서 작성이 완료되었습니다.');
       router.push(MY_PAGE);
     } catch (error) {
-      alert(error.message);
+      if (error instanceof Error) {
+        alert(error.message);
+      }
     }
   };
 

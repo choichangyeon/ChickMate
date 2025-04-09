@@ -43,7 +43,9 @@ export const postTextToSpeech = async ({ text, type }: TTS_Props): Promise<void>
     }),
   });
 
-  const audio = new Audio(res.audioUrl);
+  const { audioUrl } = await res.json();
+
+  const audio = new Audio(audioUrl);
   await audio.play();
 };
 
@@ -76,7 +78,9 @@ export const postSpeechToText = async ({ blob }: STT_Props): Promise<string> => 
     body: formData,
   });
 
-  return res.text;
+  const { text } = await res.json();
+
+  return text;
 };
 
 /**
@@ -91,12 +95,14 @@ export const getOpenAIResponse = async (messageList: Message[]): Promise<Message
     body: JSON.stringify({ messageList: messageList }),
   });
 
+  const { text } = await res.json();
+
   messageList.push({
     role: 'assistant',
     content: [
       {
         type: 'text',
-        text: res.text,
+        text: text,
       },
     ],
   });

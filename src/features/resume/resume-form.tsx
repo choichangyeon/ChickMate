@@ -5,7 +5,7 @@ import { useModal } from '@/hooks/customs/use-modal';
 import { useResumeForm } from '@/features/resume/hooks/use-resume-form';
 import { useDraftResumesQuery } from '@/features/resume/hooks/use-draft-resumes-query';
 import QuestionAnswerField from '@/features/resume/question-answer-field';
-import DraftResumeListModal from './draft-resume-list-modal';
+import DraftResumesModal from '@/features/resume/draft-resumes-modal';
 import type { Field } from '@/types/resume';
 import type { Resume } from '@prisma/client';
 
@@ -60,7 +60,7 @@ const ResumeForm = () => {
       </button>
 
       {isModalOpen && (
-        <DraftResumeListModal
+        <DraftResumesModal
           draftResumeList={draftResumeList}
           isError={isError}
           onClose={closeModal}

@@ -9,7 +9,7 @@ type Props = {
   onClose: () => void;
 };
 
-const DraftResumeListModal = ({ draftResumeList, isError, onLoadDraft, onClose }: Props) => {
+const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, onClose }: Props) => {
   return (
     <Modal closeModal={onClose}>
       <div className='flex flex-col gap-3'>
@@ -23,9 +23,12 @@ const DraftResumeListModal = ({ draftResumeList, isError, onLoadDraft, onClose }
             };
 
             return (
-              <button key={resume.id} onClick={handleDraftResumeClick}>
-                {resume.title}
-              </button>
+              <div className='flex gap-3'>
+                <button key={resume.id} onClick={handleDraftResumeClick}>
+                  {resume.title}
+                </button>
+                <button className='bg-red-300'>삭제</button>
+              </div>
             );
           })
         )}
@@ -34,4 +37,4 @@ const DraftResumeListModal = ({ draftResumeList, isError, onLoadDraft, onClose }
   );
 };
 
-export default DraftResumeListModal;
+export default DraftResumesModal;

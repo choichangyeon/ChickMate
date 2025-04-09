@@ -45,7 +45,7 @@ export const postBookmarkWithJobPostingId = async ({ jobPostingId, isMarked }: B
     const queryParams = new URLSearchParams({
       jobPostingId: jobPostingId.toString(),
     });
-    const url = `${BOOKMARK}?${queryParams.toString()}`;
+    const url = `${BOOKMARK}?${queryParams}`;
     const res = await fetchWithSentry(url, {
       method: DELETE,
     });
@@ -72,14 +72,10 @@ export const getBookmarkByJobPostingId = async (jobPostingId: number): Promise<b
   const queryParams = new URLSearchParams({
     jobPostingId: jobPostingId.toString(),
   });
-  const url = `${BOOKMARK}?${queryParams.toString()}`;
+  const url = `${BOOKMARK}?${queryParams}`;
   const { data } = await fetchWithSentry(url, {
     method: GET,
   });
 
-  if (data.length !== EMPTY_LIST_NUMBER) {
-    return true;
-  }
-
-  return false;
+  return data.length !== EMPTY_LIST_NUMBER;
 };

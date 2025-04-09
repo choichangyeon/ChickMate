@@ -1,12 +1,14 @@
 import clsx from 'clsx';
-import { fontColor, textFontSize } from '@/styles/typography-styles';
+import { fontAlign, fontColor, textFontSize } from '@/styles/typography-styles';
 
 type TextSize = keyof typeof textFontSize;
 type TextColor = keyof typeof fontColor;
+type TextAlign = keyof typeof fontAlign;
 
 type Props = {
   size?: TextSize;
   color?: TextColor;
+  align?: TextAlign;
   children: React.ReactNode;
 };
 
@@ -16,8 +18,8 @@ type Props = {
  * @param color 폰트 컬러
  * @returns JSX
  */
-const Text = ({ size = 'md', color = 'default', children }: Props) => {
-  const textClassName = clsx('font-normal', textFontSize[size], fontColor[color]);
+const Text = ({ size = 'md', color = 'default', align = 'left', children }: Props) => {
+  const textClassName = clsx('font-normal', textFontSize[size], fontColor[color], fontAlign[align]);
 
   return <p className={textClassName}>{children}</p>;
 };

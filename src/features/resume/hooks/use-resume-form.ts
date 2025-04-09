@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { PATH } from '@/constants/path-constant';
 import { DELAY_TIME } from '@/constants/time-constants';
+import { AUTO_SAVE_STATUS } from '@/constants/resume-constants';
 import { defaultQuestionList } from '@/features/resume/data/default-question-list';
 import { usePreventPageUnload } from '@/features/resume/hooks/use-prevent-page-load';
 import { autoSaveResume, submitResume } from '@/features/resume/api/client-services';
@@ -14,23 +15,27 @@ export const useResumeForm = () => {
   /** constant */
   const { MY_PAGE } = PATH;
   const { DEFAULT } = DELAY_TIME;
+  const { SAVING, SAVED } = AUTO_SAVE_STATUS;
 
   /** state */
   const [isDirty, setIsDirty] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
   const [fieldList, setFieldList] = useState<Field[]>(defaultQuestionList);
   const [resumeId, setResumeId] = useState<number>(null);
+  const [autoSaveStatus, setAutoSaveStatus] = useState<string>(SAVING);
 
   /** function */
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
     setIsDirty(true);
+    setAutoSaveStatus(SAVING);
   };
 
   const handleFieldChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { id, name, value } = event.target;
     setFieldList((prev) => prev.map((field) => (field.id === id ? { ...field, [name]: value } : field)));
     setIsDirty(true);
+    setAutoSaveStatus(SAVING);
   };
 
   const handleAddField = () => {
@@ -40,6 +45,7 @@ export const useResumeForm = () => {
       return;
     }
     setFieldList((prev) => [...prev, { id: crypto.randomUUID(), question: '', answer: '' }]);
+    setAutoSaveStatus(SAVING);
   };
 
   const handleDeleteField = (fieldId: string) => {
@@ -49,6 +55,7 @@ export const useResumeForm = () => {
       return;
     }
     setFieldList((prev) => prev.filter((field) => field.id !== fieldId));
+    setAutoSaveStatus(SAVING);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -74,10 +81,12 @@ export const useResumeForm = () => {
 
   useEffect(() => {
     if (!isDirty) return;
+    setAutoSaveStatus(SAVING);
 
     const data = { title: debouncedTitle, fieldList: debouncedFieldList };
-
     autoSaveResume({ resumeId, data }).then((savedResumeId) => {
+      setAutoSaveStatus(SAVED);
+
       if (resumeId === null) {
         setResumeId(savedResumeId);
       }
@@ -87,6 +96,7 @@ export const useResumeForm = () => {
   return {
     title,
     fieldList,
+    autoSaveStatus,
     handleTitleChange,
     handleFieldChange,
     handleAddField,

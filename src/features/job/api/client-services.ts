@@ -42,11 +42,12 @@ type BookmarkProps = {
 export const postBookmarkWithJobPostingId = async ({ jobPostingId, isMarked }: BookmarkProps): Promise<boolean> => {
   // 북마킹 여부에 따라 요청 method 달라짐
   if (isMarked) {
-    const res = await fetchWithSentry(BOOKMARK, {
+    const queryParams = new URLSearchParams({
+      jobPostingId: jobPostingId.toString(),
+    });
+    const url = `${BOOKMARK}?${queryParams.toString()}`;
+    const res = await fetchWithSentry(url, {
       method: DELETE,
-      body: JSON.stringify({
-        jobPostingId,
-      }),
     });
 
     return res ? false : true;

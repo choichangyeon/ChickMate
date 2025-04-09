@@ -10,7 +10,13 @@ const { DB_SERVER_ERROR } = DB_MESSAGE.ERROR;
 /**
  * POST 요청 함수
  */
-export const POST = async (request: NextRequest): Promise<NextResponse> => {
+type Props = {
+  params: {
+    id: string;
+  };
+};
+
+export const POST = async ({ params }: Props) => {
   try {
     const session = await getServerSession(authOptions);
 
@@ -18,7 +24,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
       return NextResponse.json({ message: USER_ID_VALIDATION }, { status: 401 });
     }
 
-    const { jobPostingId } = await request.json();
+    const jobPostingId = Number(params.id);
 
     if (!jobPostingId) {
       return NextResponse.json({ message: JOB_POSTING_ID_VALIDATION }, { status: 400 });
@@ -41,7 +47,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
 /**
  * DELETE 요청 함수
  */
-export const DELETE = async (request: NextRequest): Promise<NextResponse> => {
+export const DELETE = async ({ params }: Props) => {
   try {
     const session = await getServerSession(authOptions);
 
@@ -49,8 +55,7 @@ export const DELETE = async (request: NextRequest): Promise<NextResponse> => {
       return NextResponse.json({ message: USER_ID_VALIDATION }, { status: 401 });
     }
 
-    const searchParams = request.nextUrl.searchParams;
-    const jobPostingId = Number(searchParams.get('jobPostingId'));
+    const jobPostingId = Number(params.id);
 
     if (!jobPostingId) {
       return NextResponse.json({ message: JOB_POSTING_ID_VALIDATION }, { status: 400 });
@@ -73,19 +78,18 @@ export const DELETE = async (request: NextRequest): Promise<NextResponse> => {
 /**
  * GET 요청 함수
  */
-export const GET = async (request: NextRequest): Promise<NextResponse> => {
+export const GET = async ({ params }: Props) => {
   try {
     const session = await getServerSession(authOptions);
 
     if (!session || !session.user) {
-      return NextResponse.json({ message: USER_ID_VALIDATION }, { status: 400 });
+      return NextResponse.json({ message: USER_ID_VALIDATION }, { status: 401 });
     }
 
-    const searchParams = request.nextUrl.searchParams;
-    const jobPostingId = Number(searchParams.get('jobPostingId'));
+    const jobPostingId = Number(params.id);
 
     if (!jobPostingId) {
-      return NextResponse.json({ message: JOB_POSTING_ID_VALIDATION }, { status: 401 });
+      return NextResponse.json({ message: JOB_POSTING_ID_VALIDATION }, { status: 400 });
     }
 
     const userId = session.user.id;

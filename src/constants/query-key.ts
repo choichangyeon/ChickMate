@@ -4,13 +4,10 @@
 export const QUERY_KEY = {
   SAMPLE: 'sample',
   CHARACTER: 'character',
+  BOOKMARK: 'bookmark',
 };
 
 export const META_DATA_QUERY_KEY = {
   REGIONS: 'regions',
   META_DATA: 'meta-data',
-};
-
-export const JOB_QUERY_KEY = {
-  BOOKMARK: 'bookmark',
 };

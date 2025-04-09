@@ -1,8 +1,8 @@
-import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postBookmarkWithJobPostingId } from '../api/client-services';
-import { JOB_QUERY_KEY } from '@/constants/query-key';
+import { QUERY_KEY } from '@/constants/query-key';
 
-const { BOOKMARK } = JOB_QUERY_KEY;
+const { BOOKMARK } = QUERY_KEY;
 
 type Props = {
   jobPostingId: number;

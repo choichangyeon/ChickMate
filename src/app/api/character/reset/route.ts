@@ -8,7 +8,7 @@ import { AUTH_MESSAGE } from '@/constants/message-constants';
 
 const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
 
-export async function PATCH() {
+export async function PATCH(): Promise<NextResponse> {
   try {
     const session = await getServerSession(authOptions);
 

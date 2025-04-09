@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/constants/query-key';
 import ResumeForm from '@/features/resume/resume-form';
 import UserInfoSummary from '@/features/resume/user-info-summary';
-import { draftResumeOptions } from '@/features/resume/data/draft-resume-options';
+import { getDraftResumeList } from '@/features/resume/api/server-services';
 
 export const metadata: Metadata = {
   title: '자기소개서 작성',
@@ -10,9 +11,14 @@ export const metadata: Metadata = {
 };
 
 const ResumePage = async () => {
+  const { RESUME } = QUERY_KEY;
+
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(draftResumeOptions);
+  await queryClient.prefetchQuery({
+    queryKey: [RESUME],
+    queryFn: () => getDraftResumeList(),
+  });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

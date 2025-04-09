@@ -1,7 +1,8 @@
+import { Resume } from '@prisma/client';
 import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
-import type { Field, ResumeData } from '@/types/resume';
+import type { ResumeData } from '@/types/resume';
 
 type Props = {
   data: ResumeData;
@@ -47,7 +48,7 @@ export const autoSaveResume = async ({ resumeId, data }: Props) => {
 
   const { response: savedResume } = await fetchWithSentry(url, {
     method,
-    headers: { 'Content-Type': 'application/json' },
+    headers: JSON_HEADER,
     body: JSON.stringify(data),
   });
 
@@ -58,7 +59,7 @@ export const autoSaveResume = async ({ resumeId, data }: Props) => {
  * DB에서 임시 저장된 자소서 불러오는 요청
  * @returns draftResumes 임시 저장된 자소서 리스트
  */
-export const getDraftResumeList = async (): Promise<Field[]> => {
+export const getDraftResumeList = async (): Promise<Resume[]> => {
   const { response: draftResumes } = await fetchWithSentry(ROOT, {
     method: GET,
   });

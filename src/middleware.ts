@@ -18,7 +18,10 @@ export const middleware = async (request: NextRequest) => {
     // 서버와 통신이 아닌 auth page로 이동을 하려는 사용자는 이유도 모르고 갑자기 로그인 페이지로 이동함
     // 왜냐하면 페이지 이동에서는 alert를 띄울 수 없음 -> 우리도 토큰 만료에 의한 이동인지, 비회원이라 이동인지 알 수 없기 때문!
     // 뾰족한 방법이 없는 관계로 일단 로그인 페이지로 이동시키는 것으로 처리해둠.
-    return NextResponse.redirect(new URL(SIGN_IN, request.url));
+    // unauthorized=true를 넣은 이유 : 토큰이 만료된 상태에서 로그인 페이지로 이동
+    //  -> '토큰'이 만료되었을 뿐 '세션'은 그대로여서 로그인한 상태로 인식
+    // 따라서 queryParams로 토큰 만료되어서 이동한 로그인 페이지임을 알림
+    return NextResponse.redirect(new URL(`${SIGN_IN}?unauthorized=true`, request.url));
   }
 
   return NextResponse.next();

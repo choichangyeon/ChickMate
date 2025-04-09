@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useSession } from 'next-auth/react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { signOut, useSession } from 'next-auth/react';
 import { AUTH_MESSAGE } from '@/constants/message-constants';
 import { PATH } from '@/constants/path-constant';
 
@@ -17,15 +17,23 @@ const { AUTHENTICATED, OAUTH_ACCOUNT_NOT_LINKED, CREDENTIAL_SIGN_IN } = NEXT_AUT
 export const useSignInResult = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const path = searchParams.get('unauthorized');
   const error = searchParams.get('error');
   const { status } = useSession();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (status === AUTHENTICATED) {
+      if (!!path) {
+        signOut({ redirect: false }).then(() => {
+          router.replace(pathname);
+        });
+        return;
+      }
       alert(SIGN_IN_SUCCESS);
-      router.push(PATH.ON_BOARDING);
+      window.location.replace(PATH.ON_BOARDING);
     }
-  }, [status, router]);
+  }, [status, router, path]);
 
   useEffect(() => {
     if (!error) return;

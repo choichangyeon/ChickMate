@@ -1,9 +1,10 @@
-import { API_METHOD } from '@/constants/api-method-constants';
+import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
 import { JobPosting } from '@prisma/client';
 
 const { POSTING, BOOKMARK_DETAIL } = ROUTE_HANDLER_PATH.JOB;
+const { JSON_HEADER } = API_HEADER;
 const { POST, DELETE, GET } = API_METHOD;
 const EMPTY_LIST_NUMBER = 0;
 
@@ -27,7 +28,7 @@ export const getJobByUserMetaData = async (userData: UserDataProps): Promise<Job
 
   const res = await fetchWithSentry(url, {
     method: GET,
-    headers: { 'Content-Type': 'application/json' },
+    headers: JSON_HEADER,
   });
 
   const jobPostingList: JobPosting[] = res.data;

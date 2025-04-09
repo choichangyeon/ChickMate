@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
  * @param {Number} delay 디바운스 딜레이 시간(ms)
  * @returns debouncedValue delay 이후 확정된 값
  */
-const useDebounce = (value, delay) => {
+const useDebounce = (value: string | number, delay: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {

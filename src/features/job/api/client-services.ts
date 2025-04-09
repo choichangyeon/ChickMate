@@ -43,11 +43,14 @@ export const getJobByUserMetaData = async (userData: userDataProps): Promise<Job
  */
 type BookmarkPostProps = {
   jobPostingId: number;
-  isMarked: boolean;
+  isBookmarked: boolean;
 };
-export const postBookmarkWithJobPostingId = async ({ jobPostingId, isMarked }: BookmarkPostProps): Promise<boolean> => {
+export const postBookmarkWithJobPostingId = async ({
+  jobPostingId,
+  isBookmarked,
+}: BookmarkPostProps): Promise<boolean> => {
   // 북마킹 여부에 따라 요청 method 달라짐
-  if (isMarked) {
+  if (isBookmarked) {
     const queryParams = new URLSearchParams({
       jobPostingId: jobPostingId.toString(),
     });

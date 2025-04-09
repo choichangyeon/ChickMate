@@ -1,4 +1,4 @@
-import { API_METHOD } from '@/constants/api-method-constants';
+import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
 import type { Field, ResumeData } from '@/types/resume';
@@ -10,6 +10,7 @@ type Props = {
 
 const { ROOT, SUBMIT, SUBMIT_DETAIL, DRAFT, DRAFT_DETAIL } = ROUTE_HANDLER_PATH.RESUME;
 const { GET, POST, PATCH } = API_METHOD;
+const { JSON_HEADER } = API_HEADER;
 
 /**
  * DB에 자소서 등록 요청
@@ -26,7 +27,7 @@ export const submitResume = async ({ resumeId, data }: Props): Promise<number> =
 
   const { response: savedResume } = await fetchWithSentry(url, {
     method,
-    headers: { 'Content-Type': 'application/json' },
+    headers: JSON_HEADER,
     body: JSON.stringify(data),
   });
 

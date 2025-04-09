@@ -1,4 +1,4 @@
-import { API_METHOD } from '@/constants/api-method-constants';
+import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { INTERVIEW_CONVERT_OPTIONS, INTERVIEW_TYPE, INTERVIEW_VOICE_OPTIONS } from '@/constants/interview-constants';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
@@ -29,10 +29,10 @@ export const postTextToSpeech = async ({ text, type }: TtsProps): Promise<void> 
   const { MODEL, FORMAT } = TTS_OPTIONS;
   const { PRESSURE } = INTERVIEW_TYPE;
   const { VOICE, SPEED, INSTRUCTION } = type === PRESSURE ? PRESSURE_OPTIONS : CALM_OPTIONS;
-
+  const { JSON_HEADER } = API_HEADER;
   const res = await fetchWithSentry(TTS, {
     method: POST,
-    headers: { 'Content-Type': 'application/json' },
+    headers: JSON_HEADER,
     body: JSON.stringify({
       text,
       model: MODEL,

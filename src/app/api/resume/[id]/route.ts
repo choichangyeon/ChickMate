@@ -8,7 +8,7 @@ import type { RouteParams } from '@/types/route-params';
 const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
 const { NOT_FOUND, GET_SERVER_ERROR } = RESUME_MESSAGE;
 
-export const GET = async ({ params }: RouteParams) => {
+export const GET = async (request: Request, { params }: RouteParams) => {
   const resumeId = Number(params.id);
 
   try {

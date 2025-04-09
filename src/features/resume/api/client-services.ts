@@ -1,7 +1,7 @@
 import { API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
-import type { Field, ResumeData } from '@/types/resume';
+import type { ResumeData } from '@/types/resume';
 
 type Props = {
   data: ResumeData;
@@ -23,7 +23,7 @@ export const submitResume = async ({ resumeId, data }: Props): Promise<number> =
   const url = isNewResume ? SUBMIT : SUBMIT_DETAIL(resumeId);
   const method = isNewResume ? POST : PATCH;
 
-  const savedResume = await fetchWithSentry(url, {
+  const { response: savedResume } = await fetchWithSentry(url, {
     method,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -37,13 +37,13 @@ export const submitResume = async ({ resumeId, data }: Props): Promise<number> =
  * @param {Object} data 수정된 자소서 제목, 자소서 질문/답변
  * @returns {Number} resumeID 자소서 ID
  */
-export const autoSaveResume = async ({ resumeId, data }: Props): Promise<number> => {
+export const autoSaveResume = async ({ resumeId, data }: Props) => {
   const isNewResume = resumeId === null;
 
   const url = isNewResume ? DRAFT : DRAFT_DETAIL(resumeId);
   const method = isNewResume ? POST : PATCH;
 
-  const savedResume = await fetchWithSentry(url, {
+  const { response: savedResume } = await fetchWithSentry(url, {
     method,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),

@@ -28,7 +28,9 @@ export const postUserMetaData = async (userId: User['id'], metaData: UserMetaDat
   if (metaData.etc === '' || metaData.etc === null) delete metaData.etc;
   await fetchWithSentry(`${META_DATA}/${userId}`, {
     method: POST,
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(metaData),
   });
 };

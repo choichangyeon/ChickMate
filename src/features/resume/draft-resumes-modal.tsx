@@ -1,6 +1,7 @@
 import Modal from '@/components/ui/modal';
 import Text from '@/components/ui/text';
 import type { Resume } from '@prisma/client';
+import { useDeleteResumeMutation } from './hooks/use-delete-resume-mutation';
 
 type Props = {
   draftResumeList: Resume[];
@@ -10,6 +11,13 @@ type Props = {
 };
 
 const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, onClose }: Props) => {
+  const { mutate: deleteResumeMutate } = useDeleteResumeMutation();
+
+  const handleDeleteResume = (resumeId: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation();
+    deleteResumeMutate(resumeId);
+  };
+
   return (
     <Modal closeModal={onClose}>
       <div className='flex flex-col gap-3'>
@@ -27,7 +35,9 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, onClose }: P
                 <button key={resume.id} onClick={handleDraftResumeClick}>
                   {resume.title}
                 </button>
-                <button className='bg-red-300'>삭제</button>
+                <button onClick={(event) => handleDeleteResume(resume.id, event)} className='bg-red-300'>
+                  삭제
+                </button>
               </div>
             );
           })

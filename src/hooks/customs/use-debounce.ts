@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 
 /**
  * 디바운스 함수
- * 짧은 시간 동안 반복되는 이벤트를 하나로 묶어서 마지막 이벤트만 실행시켜줍니다
+ * 지덩한 시간(delay) 동안 값이 변경되지 않으면 마지막 값을 반영합니다.
+ * 입력값이 자주 변경될 때 성능 최적화를 위해 사용됩니다.
  *
- * @param value 디바운싱 처리를 하고 싶은 값
- * @param delay 몇 밀리초(ms) 뒤에 반영할 것인가
- * @returns
+ * @param value 디바운싱 처리할 값
+ * @param {Number} delay 디바운스 딜레이 시간(ms)
+ * @returns debouncedValue delay 이후 확정된 값
  */
 const useDebounce = (value, delay) => {
   const [debouncedValue, setDebouncedValue] = useState(value);

@@ -8,7 +8,6 @@ import QuestionAnswerField from '@/features/resume/question-answer-field';
 import DraftResumeListModal from './draft-resume-list-modal';
 import type { Field } from '@/types/resume';
 import type { Resume } from '@prisma/client';
-import { useEffect } from 'react';
 
 const ResumeForm = () => {
   /** hook */

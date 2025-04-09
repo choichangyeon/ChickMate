@@ -18,10 +18,6 @@ export const getDraftResumeList = async () => {
       },
     });
 
-    if (!data) {
-      return [];
-    }
-
     return data;
   } catch (error) {
     throw new Error('자기소개서를 가져오는데 실패했습니다.');

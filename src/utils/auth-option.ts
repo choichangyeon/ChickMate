@@ -83,7 +83,8 @@ export const authOptions: NextAuthOptions = {
   // 하지만, 우리는 사용자 정의 로그인 페이지를 사용하기 때문에 이 설정을 추가합니다.
 
   pages: {
-    signIn: '/on-boarding', // 사용자가 로그인하지 않았을 때 리디렉션될 페이지입니다.
+    signIn: '/auth/sign-in',
+    error: '/auth/sign-in',
   },
   session: {
     strategy: 'jwt',

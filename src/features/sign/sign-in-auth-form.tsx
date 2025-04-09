@@ -3,18 +3,14 @@
 import { PATH } from '@/constants/path-constant';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import AuthInput from '@/features/sign/auth-input';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { schema, SignInFormData } from '@/features/sign/data/sign-in-schema';
 import Image from 'next/image';
-import { AUTH_MESSAGE } from '@/constants/message-constants';
+import { useSignInResult } from './\bhooks/use-sign-in-result';
 
-const callback_url = `${process.env.NEXT_PUBLIC_BASE_URL}/${PATH.ON_BOARDING}`;
-
-const { RESULT } = AUTH_MESSAGE;
-const { SIGN_IN_SUCCESS, SIGN_IN_FAILED } = RESULT;
+const callback_url = `${process.env.NEXT_PUBLIC_BASE_URL}/${PATH.AUTH.SIGN_IN}`;
 
 const SignInAuthForm = () => {
   const {
@@ -26,25 +22,13 @@ const SignInAuthForm = () => {
     mode: 'onBlur',
     defaultValues: { email: '', password: '' } as SignInFormData,
   });
-  const router = useRouter();
+
+  useSignInResult();
 
   const onSubmit = async (data: SignInFormData) => {
-    try {
-      const res = await signIn('credentials', {
-        ...data,
-        redirect: false,
-      });
-      console.log(res);
-      if (!res.ok) {
-        throw new Error(SIGN_IN_FAILED);
-      } else {
-        alert(SIGN_IN_SUCCESS);
-        await router.replace(PATH.ON_BOARDING);
-        router.refresh();
-      }
-    } catch (error) {
-      alert(error.message);
-    }
+    await signIn('credentials', {
+      ...data,
+    });
   };
 
   return (

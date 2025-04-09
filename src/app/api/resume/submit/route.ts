@@ -38,7 +38,7 @@ export const POST = async (request: Request) => {
       },
     });
 
-    return NextResponse.json(newResume, { status: 201 });
+    return NextResponse.json({ newResume }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: SUBMIT_SERVER_ERROR }, { status: 500 });
   }

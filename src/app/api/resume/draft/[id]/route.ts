@@ -27,6 +27,8 @@ export const PATCH = async (request: Request, { params }: RouteParams) => {
     const { id: resumeId } = params;
     const id = Number(resumeId);
 
+    console.log(resumeId);
+
     const body: ResumeData = await request.json();
     const { title, fieldList } = body;
 
@@ -42,15 +44,16 @@ export const PATCH = async (request: Request, { params }: RouteParams) => {
       return NextResponse.json({ message: FORBIDDEN }, { status: 403 });
     }
 
-    const updatedResume = await prisma.resume.update({
+    const response = await prisma.resume.update({
       where: { id },
       data: {
+        userId: session.user.id,
         title: getValidTitle(title),
         content: fieldList,
       },
     });
 
-    return NextResponse.json(updatedResume);
+    return NextResponse.json({ response }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: DRAFT_SERVER_ERROR }, { status: 500 });
   }

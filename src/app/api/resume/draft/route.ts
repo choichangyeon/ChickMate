@@ -30,7 +30,7 @@ export const POST = async (request: Request) => {
       return NextResponse.json({ message: REQUEST_FAILURE }, { status: 400 });
     }
 
-    const newResume = await prisma.resume.create({
+    const response = await prisma.resume.create({
       data: {
         userId: session.user.id,
         status: DRAFT,
@@ -39,7 +39,7 @@ export const POST = async (request: Request) => {
       },
     });
 
-    return NextResponse.json(newResume, { status: 201 });
+    return NextResponse.json({ response }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: SUBMIT_SERVER_ERROR }, { status: 500 });
   }

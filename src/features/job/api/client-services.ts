@@ -10,7 +10,7 @@ const EMPTY_LIST_NUMBER = 0;
 // TODO : userData 타입 지정하기
 type userDataProps = {
   educationLevel: string;
-  location: string[];
+  location: Record<string, string>;
   experienceType: string;
   jobType: string;
 };

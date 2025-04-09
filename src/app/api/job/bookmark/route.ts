@@ -12,17 +12,19 @@ const { DB_SERVER_ERROR } = DB_MESSAGE.ERROR;
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
   try {
-    const { user } = await getServerSession(authOptions);
-    const { jobPostingId } = await request.json();
-    const userId = user.id;
+    const session = await getServerSession(authOptions);
 
-    if (!userId) {
+    if (!session || !session.user) {
       return NextResponse.json({ message: USER_ID_VALIDATION }, { status: 400 });
     }
+
+    const { jobPostingId } = await request.json();
+
     if (!jobPostingId) {
-      return NextResponse.json({ message: JOB_POSTING_ID_VALIDATION }, { status: 400 });
+      return NextResponse.json({ message: JOB_POSTING_ID_VALIDATION }, { status: 401 });
     }
 
+    const userId = session.user.id;
     const data = await prisma.userSelectedJob.create({
       data: {
         userId,
@@ -41,17 +43,20 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
  */
 export const DELETE = async (request: NextRequest): Promise<NextResponse> => {
   try {
-    const { user } = await getServerSession(authOptions);
-    const { jobPostingId } = await request.json();
-    const userId = user.id;
+    const session = await getServerSession(authOptions);
 
-    if (!userId) {
+    if (!session || !session.user) {
       return NextResponse.json({ message: USER_ID_VALIDATION }, { status: 400 });
     }
+
+    const searchParams = request.nextUrl.searchParams;
+    const jobPostingId = Number(searchParams.get('jobPostingId'));
+
     if (!jobPostingId) {
-      return NextResponse.json({ message: JOB_POSTING_ID_VALIDATION }, { status: 400 });
+      return NextResponse.json({ message: JOB_POSTING_ID_VALIDATION }, { status: 401 });
     }
 
+    const userId = session.user.id;
     const data = await prisma.userSelectedJob.deleteMany({
       where: {
         userId,
@@ -70,18 +75,20 @@ export const DELETE = async (request: NextRequest): Promise<NextResponse> => {
  */
 export const GET = async (request: NextRequest): Promise<NextResponse> => {
   try {
-    const { user } = await getServerSession(authOptions);
-    const searchParams = request.nextUrl.searchParams;
-    const userId = user.id;
-    const jobPostingId = Number(searchParams.get('jobPostingId'));
+    const session = await getServerSession(authOptions);
 
-    if (!userId) {
+    if (!session || !session.user) {
       return NextResponse.json({ message: USER_ID_VALIDATION }, { status: 400 });
     }
+
+    const searchParams = request.nextUrl.searchParams;
+    const jobPostingId = Number(searchParams.get('jobPostingId'));
+
     if (!jobPostingId) {
-      return NextResponse.json({ message: JOB_POSTING_ID_VALIDATION }, { status: 400 });
+      return NextResponse.json({ message: JOB_POSTING_ID_VALIDATION }, { status: 401 });
     }
 
+    const userId = session.user.id;
     const data = await prisma.userSelectedJob.findMany({
       where: { userId, jobPostingId },
     });

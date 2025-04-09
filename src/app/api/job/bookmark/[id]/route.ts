@@ -16,7 +16,7 @@ type Props = {
   };
 };
 
-export const POST = async ({ params }: Props) => {
+export const POST = async (request: NextRequest, { params }: Props) => {
   try {
     const session = await getServerSession(authOptions);
 
@@ -47,7 +47,7 @@ export const POST = async ({ params }: Props) => {
 /**
  * DELETE 요청 함수
  */
-export const DELETE = async ({ params }: Props) => {
+export const DELETE = async (request: NextRequest, { params }: Props) => {
   try {
     const session = await getServerSession(authOptions);
 
@@ -78,7 +78,7 @@ export const DELETE = async ({ params }: Props) => {
 /**
  * GET 요청 함수
  */
-export const GET = async ({ params }: Props) => {
+export const GET = async (request: NextRequest, { params }: Props) => {
   try {
     const session = await getServerSession(authOptions);
 

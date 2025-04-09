@@ -1,15 +1,15 @@
 'use client';
 
 import { postBookmarkWithJobPostingId } from '@/features/job/api/client-services';
-import { useBookmark } from '@/features/job/hooks/use-bookmark';
 import { useEffect, useState } from 'react';
+import useBookmarkQuery from '@/features/job/hooks/use-bookmark-query';
 
 type Props = {
   jobPostingId: number;
 };
 
 const BookmarkComponent = ({ jobPostingId }: Props) => {
-  const { isBookmarked, loading, error } = useBookmark(jobPostingId);
+  const { data: isBookmarked, isLoading, error } = useBookmarkQuery({ jobPostingId });
   const [isMarked, setIsMarked] = useState(isBookmarked);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const BookmarkComponent = ({ jobPostingId }: Props) => {
     console.log(isMarked);
   };
 
-  if (loading) return <div>...loading</div>;
+  if (isLoading) return <div>...loading</div>;
   if (error) return <div>error</div>;
 
   return (

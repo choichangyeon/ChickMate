@@ -8,7 +8,7 @@ import { Character } from '@prisma/client';
 
 const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
 
-export const getCharacterByUserId = async (): Promise<Character> => {
+export const getCharacterByUserId = async (): Promise<Character | null> => {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -20,6 +20,10 @@ export const getCharacterByUserId = async (): Promise<Character> => {
   const character = await prisma.character.findFirst({
     where: { userId },
   });
+
+  if (!character) {
+    return null;
+  }
 
   return character;
 };

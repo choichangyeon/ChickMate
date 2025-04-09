@@ -46,7 +46,7 @@ const HeaderCharacter = ({ user }: Props) => {
         <div>
           <div>
             <span>LV{level}</span>
-            <span>{user.name}님</span>
+            {user && <span>{user.name}님</span>}
           </div>
           <div>{percent}%</div>
           <button onClick={handleResetExperience} className='mt-2 rounded bg-red-500 px-2 py-1 text-white'>

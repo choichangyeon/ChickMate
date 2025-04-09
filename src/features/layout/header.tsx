@@ -5,13 +5,9 @@ import { CHARACTER_QUERY_KEY } from '@/constants/query-key';
 import { getCharacterByUserId } from '../chraracter/api/server-services';
 import { serverActionWithSentry } from '@/utils/server-action-with-sentry';
 
-type Props = {
-  user?: User;
-};
-
 const { CHARACTER } = CHARACTER_QUERY_KEY;
 
-export const Header = async ({ user }: Props) => {
+export const Header = async ({ user }: { user: User }) => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({

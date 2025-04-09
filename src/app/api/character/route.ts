@@ -12,7 +12,7 @@ export const GET = async (): Promise<NextResponse> => {
     const session = await getServerSession(authOptions);
 
     if (!session || !session.user) {
-      return NextResponse.json({ message: AUTH_REQUIRED }, { status: 403 });
+      return NextResponse.json({ message: AUTH_REQUIRED }, { status: 401 });
     }
 
     const userId = session.user.id;

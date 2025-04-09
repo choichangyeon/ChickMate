@@ -9,19 +9,22 @@ import { AUTH_MESSAGE } from '@/constants/message-constants';
 const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
 
 export async function PATCH() {
-  const session = await getServerSession(authOptions);
-
-  if (!session || !session.user) {
-    return NextResponse.json({ message: AUTH_REQUIRED }, { status: 403 });
-  }
-
-  const { id: userId } = session.user;
-  console.log(session.user);
-
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session || !session.user) {
+      return NextResponse.json({ message: AUTH_REQUIRED }, { status: 401 });
+    }
+
+    const { id: userId } = session.user;
+
     const character = await prisma.character.findFirst({
       where: { userId },
     });
+
+    if(!character){
+      return NextResponse.json({ message: '캐릭터가 존재하지 않습니다.' }, { status: 404 });
+    }
 
     const updated = await prisma.character.update({
       where: { id: character.id },

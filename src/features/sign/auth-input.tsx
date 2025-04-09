@@ -1,6 +1,6 @@
-import { Path, UseFormRegister } from 'react-hook-form';
+import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 
-type Props<T> = {
+type Props<T extends FieldValues> = {
   label: string;
   id: Path<T>;
   register: UseFormRegister<T>;
@@ -8,7 +8,7 @@ type Props<T> = {
   type: string;
 };
 
-const AuthInput = <T,>({ label, id, register, error, type }: Props<T>) => (
+const AuthInput = <T extends FieldValues>({ label, id, register, error, type }: Props<T>) => (
   <div className='flex w-full flex-col px-3 py-2'>
     <label>{label}</label>
     <input {...register(id)} type={type} className='border-b border-gray-300 focus:outline-0' />

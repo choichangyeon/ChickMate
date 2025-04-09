@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   description: 'ChickMate에 가입하고 취업을 위한 여정을 떠나보아요~.',
 };
 
-
 const SignUpPage = () => {
   return <SignUpAuthForm />;
 };

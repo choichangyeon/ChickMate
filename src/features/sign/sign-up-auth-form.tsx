@@ -27,7 +27,9 @@ const SignUpAuthForm = () => {
       router.push(PATH.AUTH.SIGN_IN);
       alert(AUTH_MESSAGE.RESULT.SIGN_UP_SUCCESS);
     } catch (error) {
-      alert(error.message);
+      if (error instanceof Error) {
+        alert(error.message);
+      }
     }
   };
 

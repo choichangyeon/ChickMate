@@ -3,6 +3,7 @@
  */
 export const QUERY_KEY = {
   SAMPLE: 'sample',
+  CHARACTER: 'character',
 };
 
 export const META_DATA_QUERY_KEY = {

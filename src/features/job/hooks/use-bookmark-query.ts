@@ -10,12 +10,10 @@ type Props = {
   jobPostingId: number;
 };
 
-const useBookmarkQuery = ({ jobPostingId }: Props) => {
+export const useBookmarkQuery = ({ jobPostingId }: Props) => {
   return useQuery({
     queryKey: [BOOKMARK, jobPostingId],
     queryFn: () => getBookmarkByJobPostingId({ jobPostingId }),
     staleTime: MIN,
   });
 };
-
-export default useBookmarkQuery;

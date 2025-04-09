@@ -1,15 +1,18 @@
 'use client';
-import { useSession } from 'next-auth/react';
+
 import { useMemo } from 'react';
 import { Private_Nav_Items, Public_Nav_Items } from './data/nav-items';
 import type { NavItems } from './data/nav-items';
 import LinkNav from './link-nav';
 import ButtonNav from './button-nav';
+import { User } from '@/types/user';
 
-export const Nav = () => {
-  const { data } = useSession();
+type Props = {
+  user?: User;
+};
 
-  const menus: NavItems[] = useMemo(() => (!!data?.user ? Private_Nav_Items : Public_Nav_Items), [data]);
+export const Nav = ({ user }: Props) => {
+  const menus: NavItems[] = useMemo(() => (user ? Private_Nav_Items : Public_Nav_Items), [user]);
 
   return (
     <nav className='absolute left-0 top-0 h-full bg-red-950 text-white opacity-90'>

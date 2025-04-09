@@ -17,7 +17,7 @@ export const getJobByUserMetaData = async (userData): Promise<JobPosting[]> => {
     experienceType,
     jobType,
   });
-  const url = `${POSTING}?${queryParams.toString()}`;
+  const url = `${POSTING}?${queryParams}`;
 
   const res = await fetchWithSentry(url, {
     method: GET,

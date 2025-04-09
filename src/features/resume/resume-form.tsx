@@ -31,7 +31,7 @@ const ResumeForm = () => {
         추가하기
       </button>
       <Text>{autoSaveStatus}</Text>
-      <button type='button'>임시 저장된 글 | {draftResumeList.length}</button>
+      <button type='button'>임시 저장된 글 | {draftResumeList?.length}</button>
       <button type='submit'>작성 완료</button>
     </form>
   );

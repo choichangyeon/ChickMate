@@ -13,7 +13,11 @@ const TTSComponent = () => {
       });
     } catch (error) {
       // TODO : ERROR 처리
-      alert(error.message);
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        console.error('Unknown error:', error);
+      }
     }
   };
   return (

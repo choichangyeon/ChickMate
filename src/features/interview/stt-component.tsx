@@ -12,8 +12,12 @@ const STTComponent = ({ blob }: Props) => {
       const text = await postSpeechToText({ blob });
       setVoiceText(text);
     } catch (error) {
-      // TODO : ERROR 처리
-      alert(error.message);
+      // TODO: 에러 처리
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        console.error('Unknown error:', error);
+      }
     }
   };
   return (

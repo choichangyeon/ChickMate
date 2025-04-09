@@ -8,7 +8,13 @@ const { POST, DELETE, GET } = API_METHOD;
 const EMPTY_LIST_NUMBER = 0;
 
 // TODO : userData 타입 지정하기
-export const getJobByUserMetaData = async (userData): Promise<JobPosting[]> => {
+type userDataProps = {
+  educationLevel: string;
+  location: string[];
+  experienceType: string;
+  jobType: string;
+};
+export const getJobByUserMetaData = async (userData: userDataProps): Promise<JobPosting[]> => {
   const { educationLevel, location, experienceType, jobType } = userData;
 
   const queryParams = new URLSearchParams({
@@ -35,11 +41,11 @@ export const getJobByUserMetaData = async (userData): Promise<JobPosting[]> => {
  * @param isBookmarked - 북마크 여부(boolean)
  * @returns {boolean} - 북마킹 여부
  */
-type BookmarkProps = {
+type BookmarkPostProps = {
   jobPostingId: number;
   isMarked: boolean;
 };
-export const postBookmarkWithJobPostingId = async ({ jobPostingId, isMarked }: BookmarkProps): Promise<boolean> => {
+export const postBookmarkWithJobPostingId = async ({ jobPostingId, isMarked }: BookmarkPostProps): Promise<boolean> => {
   // 북마킹 여부에 따라 요청 method 달라짐
   if (isMarked) {
     const queryParams = new URLSearchParams({
@@ -68,7 +74,10 @@ export const postBookmarkWithJobPostingId = async ({ jobPostingId, isMarked }: B
  * @param jobPostingId - 채용 공고 id(string)
  * @returns {boolean} - 북마킹 여부
  */
-export const getBookmarkByJobPostingId = async (jobPostingId: number): Promise<boolean> => {
+type BookmarkDeleteProps = {
+  jobPostingId: number;
+};
+export const getBookmarkByJobPostingId = async (jobPostingId: BookmarkDeleteProps): Promise<boolean> => {
   const queryParams = new URLSearchParams({
     jobPostingId: jobPostingId.toString(),
   });

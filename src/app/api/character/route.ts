@@ -8,14 +8,14 @@ const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
 const { GET_DATA_FAILED } = CHARACTER_MESSAGE.INFO;
 
 export const GET = async (): Promise<NextResponse> => {
-  const session = await getServerSession(authOptions);
-
-  if (!session || !session.user) {
-    return NextResponse.json({ message: AUTH_REQUIRED }, { status: 403 });
-  }
-
-  const userId = session.user.id;
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session || !session.user) {
+      return NextResponse.json({ message: AUTH_REQUIRED }, { status: 403 });
+    }
+
+    const userId = session.user.id;
     const response = await prisma.character.findFirst({
       where: { userId },
     });

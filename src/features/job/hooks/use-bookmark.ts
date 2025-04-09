@@ -14,7 +14,7 @@ export const useBookmark = (jobPostingId: number) => {
       setLoading(true);
       setError(null);
       try {
-        const bookmarked = await getBookmarkByJobPostingId(jobPostingId);
+        const bookmarked = await getBookmarkByJobPostingId({ jobPostingId });
         if (!cancelled) setIsBookmarked(bookmarked);
       } catch (error) {
         if (!cancelled) setError(error as Error);

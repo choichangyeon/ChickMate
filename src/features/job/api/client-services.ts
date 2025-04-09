@@ -77,7 +77,7 @@ export const postBookmarkWithJobPostingId = async ({ jobPostingId, isMarked }: B
 type BookmarkDeleteProps = {
   jobPostingId: number;
 };
-export const getBookmarkByJobPostingId = async (jobPostingId: BookmarkDeleteProps): Promise<boolean> => {
+export const getBookmarkByJobPostingId = async ({ jobPostingId }: BookmarkDeleteProps): Promise<boolean> => {
   const queryParams = new URLSearchParams({
     jobPostingId: jobPostingId.toString(),
   });

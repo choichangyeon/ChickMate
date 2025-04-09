@@ -10,7 +10,7 @@ import { getSample } from '../api/client-services';
  */
 export const useGetSampleQuery = (prop) => {
   return useQuery({
-    queryKey: [QUERY_KEY.SAMPLE, prop],
+    queryKey: ['queryKey', prop],
     queryFn: getSample,
     staleTime: STALE_TIME.MIN,
     gcTime: GC_TIME.SAMPLE,

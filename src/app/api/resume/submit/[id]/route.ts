@@ -4,7 +4,6 @@ import { prisma } from '@/lib/prisma';
 import { authOptions } from '@/utils/auth-option';
 import { AUTH_MESSAGE, RESUME_MESSAGE } from '@/constants/message-constants';
 import { RESUME_STATUS } from '@/constants/resume-constants';
-import { getValidTitle } from '@/features/resume/utils/get-valid-title';
 import type { RouteParams } from '@/types/route-params';
 import type { ResumeData } from '@/types/resume';
 
@@ -19,13 +18,12 @@ const { SUBMIT } = RESUME_STATUS;
  * @param params resumeId
  */
 export const PATCH = async (request: Request, { params }: RouteParams) => {
-  const session = await getServerSession(authOptions);
-
-  if (!session || !session.user) {
-    return NextResponse.json({ message: AUTH_REQUIRED }, { status: 403 });
-  }
-
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session || !session.user) {
+      return NextResponse.json({ message: AUTH_REQUIRED }, { status: 401 });
+    }
     const { id: resumeId } = params;
     const id = Number(resumeId);
 

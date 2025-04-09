@@ -15,15 +15,15 @@ const { SUBMIT } = RESUME_STATUS;
  * @param request 자소서 제목, 자소서 질문/답변
  */
 export const POST = async (request: Request) => {
-  const session = await getServerSession(authOptions);
-
-  if (!session || !session.user) {
-    return NextResponse.json({ message: AUTH_REQUIRED }, { status: 403 });
-  }
-
   try {
-    const data: ResumeData = await request.json();
-    const { title, fieldList } = data;
+    const session = await getServerSession(authOptions);
+
+    if (!session || !session.user) {
+      return NextResponse.json({ message: AUTH_REQUIRED }, { status: 401 });
+    }
+
+    const body: ResumeData = await request.json();
+    const { title, fieldList } = body;
 
     if (!title || !fieldList) {
       return NextResponse.json({ message: REQUEST_FAILURE }, { status: 400 });

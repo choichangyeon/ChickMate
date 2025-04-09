@@ -17,13 +17,13 @@ const { NOT_FOUND, FORBIDDEN, DRAFT_SERVER_ERROR } = RESUME_MESSAGE.DRAFT;
  * @param params resumeId
  */
 export const PATCH = async (request: Request, { params }: RouteParams) => {
-  const session = await getServerSession(authOptions);
-
-  if (!session || !session.user) {
-    return NextResponse.json({ message: AUTH_REQUIRED }, { status: 403 });
-  }
-
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session || !session.user) {
+      return NextResponse.json({ message: AUTH_REQUIRED }, { status: 401 });
+    }
+
     const { id: resumeId } = params;
     const id = Number(resumeId);
 

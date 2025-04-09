@@ -30,7 +30,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
 
     const text = res.choices[0].message.content;
 
-    return NextResponse.json({ text }, { status: 200 });
+    return NextResponse.json({ data: text }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: AI_SERVER_ERROR }, { status: 500 });
   }

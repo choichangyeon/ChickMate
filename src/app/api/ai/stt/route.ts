@@ -36,7 +36,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
       language,
     });
 
-    return NextResponse.json({ text }, { status: 200 });
+    return NextResponse.json({ data: text }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: SERVER_ERROR }, { status: 500 });
   }

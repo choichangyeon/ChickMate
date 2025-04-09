@@ -1,12 +1,13 @@
 'use client';
 
 import Text from '@/components/ui/text';
-import Modal from '@/components/ui/modal';
 import { useModal } from '@/hooks/customs/use-modal';
 import { useResumeForm } from '@/features/resume/hooks/use-resume-form';
 import { useDraftResumesQuery } from '@/features/resume/hooks/use-draft-resumes-query';
 import QuestionAnswerField from '@/features/resume/question-answer-field';
+import DraftResumeListModal from './draft-resume-list-modal';
 import type { Field } from '@/types/resume';
+import type { Resume } from '@prisma/client';
 
 const ResumeForm = () => {
   /** hook */
@@ -27,13 +28,18 @@ const ResumeForm = () => {
   const { data: draftResumeList, isError, refetch } = useDraftResumesQuery();
 
   /** function */
-  const handleClose = () => {
-    closeModal();
-  };
-
   const handleClick = () => {
     openModal();
     refetch();
+  };
+
+  const handleLoadDraft = (resume: Resume) => {
+    const { id, title, content } = resume;
+
+    setTitle(title);
+    setFieldList(content as Field[]);
+    setResumeId(id);
+    closeModal();
   };
 
   /** UI */
@@ -54,30 +60,12 @@ const ResumeForm = () => {
       </button>
 
       {isModalOpen && (
-        <Modal closeModal={handleClose}>
-          <div className='flex flex-col gap-3'>
-            {!isError && draftResumeList?.length === 0 ? (
-              <Text>임시 저장된 자기소개서가 없습니다</Text>
-            ) : (
-              draftResumeList?.map((resume) => {
-                const { id, title, content } = resume;
-
-                const handleLoadDraft = () => {
-                  setTitle(title);
-                  setFieldList(content as Field[]);
-                  setResumeId(id);
-                  closeModal();
-                };
-
-                return (
-                  <button key={resume.id} onClick={handleLoadDraft}>
-                    {resume.title}
-                  </button>
-                );
-              })
-            )}
-          </div>
-        </Modal>
+        <DraftResumeListModal
+          draftResumeList={draftResumeList}
+          isError={isError}
+          onClose={closeModal}
+          onLoadDraft={handleLoadDraft}
+        />
       )}
       <button type='submit'>작성 완료</button>
     </form>

@@ -47,6 +47,7 @@ export const RESUME_MESSAGE = {
     FORBIDDEN: '해당 자기소개서를 수정할 권한이 없습니다.',
     DRAFT_SERVER_ERROR: '자기소개서 임시 저장에 실패하였습니다.',
   },
+  GET_SERVER_ERROR: '자기소개서를 가져오는데 실패했습니다.',
 };
 
 const { TYPE, EDUCATION, JOB, MAIN_REGION } = USER_META_DATA_KEY;

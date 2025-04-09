@@ -2,7 +2,6 @@
 import { PATH } from '@/constants/path-constant';
 import { DEFAULT, USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 import type { SelectBoxType } from '@/types/select-box';
-import type { User } from '@/types/user';
 import { type UserMetaDataType } from '@/types/user-meta-data-type';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCallback, useEffect } from 'react';
@@ -12,6 +11,7 @@ import { userMetaFormSchema, UserMetaSchema } from './data/user-meta-form-schema
 import useMetaDataMutation from './hooks/use-meta-data-mutation';
 import useRegionsQuery from './hooks/use-regions-query';
 import SingleSelectField from './single-select-field';
+import type { User } from '@/types/user';
 
 export type onSelectType = (key: keyof UserMetaDataType, value: SelectBoxType['value']) => void;
 
@@ -20,13 +20,20 @@ const {
   AUTH: { SIGN_IN },
 } = PATH;
 type Props = {
-  user: User;
+  user: {
+    id: User['id'] | null;
+    email?: User['email'] | null;
+    image?: User['image'] | null;
+    name?: User['name'] | null;
+  };
   initMetaData?: UserMetaDataType;
 };
+
 const UserMetaDataForm = ({ user, initMetaData }: Props) => {
-  const userId = user.id ?? null;
+  const userId = user.id;
+  if (!userId) return null; //부모컴포넌트에서 userId가 없으면 Return하기 때문에 실행될 일이 없음...
   const FORM_TYPE = initMetaData ? '수정' : '작성';
-  const { data: regions, isPending } = useRegionsQuery();
+  const { data: regions = [], isPending } = useRegionsQuery();
   const { mutate, error } = useMetaDataMutation(userId);
   const handleSelect = useCallback((key: keyof UserMetaDataType, selected: SelectBoxType['value']) => {
     setValue(key, selected);

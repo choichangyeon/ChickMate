@@ -6,11 +6,14 @@ import { getUserMetaData } from './api/server-services';
 import UserMetaDataForm from './user-meta-data-form';
 import { QUERY_KEY } from '@/constants/query-key';
 import { serverActionWithSentry } from '@/utils/server-action-with-sentry';
+import ErrorComponent from '@/components/common/error-component';
 const { META_DATA } = QUERY_KEY;
 const UserMetaDataModal = async () => {
   const session = await getServerSession(authOptions);
   const user = session?.user ?? null;
   const queryClient = new QueryClient();
+
+  if (!user) return <ErrorComponent />; // 사실상 user가 없으면 이 컴포넌트 진입 자체가 안 되지만 타입 오류로 인해 넣어둠
 
   if (user?.id) {
     await queryClient.prefetchQuery({

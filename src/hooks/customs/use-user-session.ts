@@ -1,12 +1,8 @@
-import { User } from '@/types/user';
 import { useSession } from 'next-auth/react';
 
-export const useUserSession = (): User | null => {
+export const useUserSession = () => {
   const { data } = useSession();
+  if (!data || !data.user) return null;
 
-  if (data && data.user) {
-    return data.user;
-  }
-
-  return null;
+  return data.user;
 };

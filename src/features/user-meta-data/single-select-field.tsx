@@ -10,7 +10,7 @@ type Props = {
   value: SelectBoxType['value'];
   fieldKey: keyof UserMetaDataType;
   onSelect: onSelectType;
-  error: string;
+  error?: string;
 };
 
 const SingleSelectField = ({ label, options, value, fieldKey, onSelect, error }: Props) => {

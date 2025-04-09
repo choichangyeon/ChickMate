@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { PATH } from './constants/path-constant';
 
 const {
-  ON_BOARDING,
   AUTH: { SIGN_IN },
 } = PATH;
 export const middleware = async (request: NextRequest) => {

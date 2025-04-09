@@ -1,6 +1,9 @@
 'use server';
 
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/utils/auth-option';
 import { prisma } from '@/lib/prisma';
+import { AUTH_MESSAGE, RESUME_MESSAGE } from '@/constants/message-constants';
 import { RESUME_STATUS } from '@/constants/resume-constants';
 
 /**
@@ -9,10 +12,21 @@ import { RESUME_STATUS } from '@/constants/resume-constants';
  */
 export const getDraftResumeList = async () => {
   const { DRAFT } = RESUME_STATUS;
+  const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
+  const { GET_SERVER_ERROR } = RESUME_MESSAGE;
 
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session || !session.user) {
+      throw new Error(AUTH_REQUIRED);
+    }
+
     const data = await prisma.resume.findMany({
-      where: { status: DRAFT },
+      where: {
+        userId: session.user.id,
+        status: DRAFT,
+      },
       orderBy: {
         createdAt: 'desc',
       },
@@ -20,6 +34,6 @@ export const getDraftResumeList = async () => {
 
     return data;
   } catch (error) {
-    throw new Error('자기소개서를 가져오는데 실패했습니다.');
+    throw new Error(GET_SERVER_ERROR);
   }
 };

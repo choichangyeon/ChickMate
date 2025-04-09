@@ -7,7 +7,7 @@ import { NextResponse } from 'next/server';
 const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
 const { GET_DATA_FAILED } = CHARACTER_MESSAGE.INFO;
 
-export const GET = async (): Promise<NextResponse> => {
+export const GET = async () => {
   try {
     const session = await getServerSession(authOptions);
 

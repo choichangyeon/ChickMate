@@ -8,7 +8,7 @@ import { AUTH_MESSAGE } from '@/constants/message-constants';
 
 const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
 
-export async function PATCH(): Promise<NextResponse> {
+export async function PATCH() {
   try {
     const session = await getServerSession(authOptions);
 
@@ -22,7 +22,7 @@ export async function PATCH(): Promise<NextResponse> {
       where: { userId },
     });
 
-    if(!character){
+    if (!character) {
       return NextResponse.json({ message: '캐릭터가 존재하지 않습니다.' }, { status: 404 });
     }
 

@@ -5,9 +5,9 @@ import { NextRequest, NextResponse } from 'next/server';
 type RequestBody = {
   email: string;
   password: string;
-}
+};
 
-export const POST = async (request: NextRequest): Promise<NextResponse> => {
+export const POST = async (request: NextRequest) => {
   const body: RequestBody = await request.json();
 
   const user = await prisma.user.findFirst({

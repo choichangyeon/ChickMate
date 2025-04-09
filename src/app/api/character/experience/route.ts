@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const { PATCH_DATA_FAILED } = CHARACTER_MESSAGE.PATCH;
 const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
 
-export const PATCH = async (request: NextRequest): Promise<NextResponse> => {
+export const PATCH = async (request: NextRequest) => {
   try {
     const session = await getServerSession(authOptions);
 

@@ -8,7 +8,7 @@ import { getSample } from '../api/client-services';
  * @refetchOnReconnect { boolean }
  * @refetchOnMount { boolean }
  */
-export const useGetSampleQuery = (prop) => {
+export const useGetSampleQuery = (prop: any) => {
   return useQuery({
     queryKey: ['queryKey', prop],
     queryFn: getSample,

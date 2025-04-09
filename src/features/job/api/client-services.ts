@@ -1,20 +1,21 @@
-import { API_METHOD } from '@/constants/api-method-constants';
+import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
 import { JobPosting } from '@prisma/client';
 
-const { POSTING, BOOKMARK } = ROUTE_HANDLER_PATH.JOB;
+const { POSTING, BOOKMARK_DETAIL } = ROUTE_HANDLER_PATH.JOB;
+const { JSON_HEADER } = API_HEADER;
 const { POST, DELETE, GET } = API_METHOD;
 const EMPTY_LIST_NUMBER = 0;
 
 // TODO : userData 타입 지정하기
-type userDataProps = {
+type UserDataProps = {
   educationLevel: string;
   location: Record<string, string>;
   experienceType: string;
   jobType: string;
 };
-export const getJobByUserMetaData = async (userData: userDataProps): Promise<JobPosting[]> => {
+export const getJobByUserMetaData = async (userData: UserDataProps): Promise<JobPosting[]> => {
   const { educationLevel, location, experienceType, jobType } = userData;
 
   const queryParams = new URLSearchParams({
@@ -27,7 +28,7 @@ export const getJobByUserMetaData = async (userData: userDataProps): Promise<Job
 
   const res = await fetchWithSentry(url, {
     method: GET,
-    headers: { 'Content-Type': 'application/json' },
+    headers: JSON_HEADER,
   });
 
   const jobPostingList: JobPosting[] = res.data;
@@ -51,7 +52,7 @@ export const postBookmarkWithJobPostingId = async ({
 }: BookmarkPostProps): Promise<boolean> => {
   // 북마킹 여부에 따라 요청 method 달라짐
   const method = isBookmarked ? DELETE : POST;
-  const url = BOOKMARK.DETAIL(jobPostingId);
+  const url = BOOKMARK_DETAIL(jobPostingId);
   const res = await fetchWithSentry(url, {
     method,
   });
@@ -68,7 +69,7 @@ type BookmarkDeleteProps = {
   jobPostingId: number;
 };
 export const getBookmarkByJobPostingId = async ({ jobPostingId }: BookmarkDeleteProps): Promise<boolean> => {
-  const url = BOOKMARK.DETAIL(jobPostingId);
+  const url = BOOKMARK_DETAIL(jobPostingId);
   const { data } = await fetchWithSentry(url, {
     method: GET,
   });

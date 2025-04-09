@@ -15,11 +15,10 @@ const DEFAULT_COMPLETION_OPTIONS = {
   store: false,
 };
 
-export const POST = async (req: NextRequest): Promise<NextResponse> => {
-  const { messageList } = await req.json();
+export const POST = async (request: NextRequest) => {
   const { AI_REQUEST_FAILURE, AI_SERVER_ERROR } = AI_MESSAGE.AI;
-
   try {
+    const { messageList } = await request.json();
     const res = await openai.chat.completions.create({
       ...DEFAULT_COMPLETION_OPTIONS,
       messages: messageList,
@@ -31,8 +30,8 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
 
     const text = res.choices[0].message.content;
 
-    return NextResponse.json({ text }, { status: 200 });
+    return NextResponse.json({ data: text }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ message: AI_SERVER_ERROR }, { status: 503 });
+    return NextResponse.json({ message: AI_SERVER_ERROR }, { status: 500 });
   }
 };

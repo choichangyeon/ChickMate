@@ -12,7 +12,7 @@ const VoiceInputButton = () => {
         {isRecording ? '답변 완료하기' : '답변하기'}
       </button>
       {audioBlob && <audio controls src={URL.createObjectURL(audioBlob)} />}
-      <STTComponent blob={audioBlob} />
+      {audioBlob && <STTComponent blob={audioBlob} />}
     </>
   );
 };

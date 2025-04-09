@@ -17,11 +17,11 @@ const FORMAT_FORMDATA = {
 /**
  * POST 요청 함수
  */
-export const POST = async (req: NextRequest): Promise<NextResponse> => {
+export const POST = async (request: NextRequest) => {
   const { NOT_FILE, SERVER_ERROR } = AI_MESSAGE.STT;
   const { FILE, MODEL, LANGUAGE } = FORMAT_FORMDATA;
   try {
-    const formData = await req.formData();
+    const formData = await request.formData();
     const file = formData.get(FILE) as File;
     const model = formData.get(MODEL) as string;
     const language = formData.get(LANGUAGE) as string;
@@ -36,8 +36,8 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
       language,
     });
 
-    return NextResponse.json({ text }, { status: 200 });
+    return NextResponse.json({ data: text }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ message: SERVER_ERROR }, { status: 503 });
+    return NextResponse.json({ message: SERVER_ERROR }, { status: 500 });
   }
 };

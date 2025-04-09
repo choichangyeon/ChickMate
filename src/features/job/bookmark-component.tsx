@@ -1,6 +1,5 @@
 'use client';
 
-import { postBookmarkWithJobPostingId } from '@/features/job/api/client-services';
 import { useEffect, useState } from 'react';
 import { useBookmarkQuery } from '@/features/job/hooks/use-bookmark-query';
 import { useBookmarkMutation } from '@/features/job/hooks/use-bookmark-mutation';

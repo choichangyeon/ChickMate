@@ -8,22 +8,26 @@ import { NextRequest, NextResponse } from 'next/server';
  * GET
  */
 export const GET = async (request: NextRequest): Promise<NextResponse> => {
-  const { DB_REQUEST_ERROR, DB_SERVER_ERROR } = DB_MESSAGE.ERROR;
+  const { DB_REQUEST_ERROR, DB_SERVER_ERROR, DB_URL_ERROR } = DB_MESSAGE.ERROR;
   const { EDUCATION, TYPE, JOB, MAIN_REGION } = USER_META_DATA_KEY;
   try {
     // searchParams로 정보 가져오기
     const searchParams = request.nextUrl.searchParams;
 
     if (!searchParams) {
-      return NextResponse.json({ message: DB_REQUEST_ERROR }, { status: 400 });
+      return NextResponse.json({ message: DB_URL_ERROR }, { status: 400 });
     }
 
     const educationLevel = searchParams.get(EDUCATION);
-    const location = JSON.parse(searchParams.get('location'));
-    const mainRegion = location.mainRegion;
+    const location = searchParams.get('location');
     const experienceType = searchParams.get(TYPE);
     const jobType = searchParams.get(JOB);
 
+    if (!educationLevel || !location || !experienceType || !jobType) {
+      return NextResponse.json({ message: DB_REQUEST_ERROR }, { status: 400 });
+    }
+
+    const mainRegion = JSON.parse(location).mainRegion;
     const data: JobPosting[] = await prisma.jobPosting.findMany({
       where: {
         educationLevel,

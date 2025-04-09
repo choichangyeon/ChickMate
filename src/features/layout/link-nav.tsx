@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { NavItems } from './data/nav-items';
+import type { NavItems } from '@/features/layout/data/nav-items';
 
 type Props = {
   menu: NavItems;

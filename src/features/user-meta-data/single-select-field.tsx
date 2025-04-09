@@ -1,7 +1,7 @@
 import React from 'react';
-import SelectBox from '../user-meta-data/select-box';
+import SelectBox from '@/features/user-meta-data/select-box';
 import { SelectBoxType } from '@/types/select-box';
-import { onSelectType } from './user-meta-data-form';
+import { onSelectType } from '@/features/user-meta-data/user-meta-data-form';
 import { UserMetaDataType } from '@/types/user-meta-data-type';
 
 type Props = {

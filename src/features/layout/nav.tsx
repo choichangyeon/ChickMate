@@ -1,10 +1,10 @@
 'use client';
 
 import { useMemo } from 'react';
-import ButtonNav from './button-nav';
-import type { NavItems } from './data/nav-items';
-import { Private_Nav_Items, Public_Nav_Items } from './data/nav-items';
-import LinkNav from './link-nav';
+import ButtonNav from '@/features/layout/button-nav';
+import type { NavItems } from '@/features/layout/data/nav-items';
+import { Private_Nav_Items, Public_Nav_Items } from '@/features/layout/data/nav-items';
+import LinkNav from '@/features/layout/link-nav';
 import { User } from '@/types/user';
 
 type Props = {

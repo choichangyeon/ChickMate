@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { postUserMetaData } from '../api/client-services';
+import { postUserMetaData } from '@/features/user-meta-data/api/client-services';
 import type { UserMetaDataType } from '@/types/user-meta-data-type';
 import type { User } from '@/types/user';
 import { QUERY_KEY } from '@/constants/query-key';

@@ -6,11 +6,11 @@ import { type UserMetaDataType } from '@/types/user-meta-data-type';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { academicData, jobData, typeData } from './data/user-meta-data';
-import { userMetaFormSchema, UserMetaSchema } from './data/user-meta-form-schema';
-import useMetaDataMutation from './hooks/use-meta-data-mutation';
-import useRegionsQuery from './hooks/use-regions-query';
-import SingleSelectField from './single-select-field';
+import { academicData, jobData, typeData } from '@/features/user-meta-data/data/user-meta-data';
+import { userMetaFormSchema, UserMetaSchema } from '@/features/user-meta-data/data/user-meta-form-schema';
+import useMetaDataMutation from '@/features/user-meta-data/hooks/use-meta-data-mutation';
+import useRegionsQuery from '@/features/user-meta-data/hooks/use-regions-query';
+import SingleSelectField from '@/features/user-meta-data/single-select-field';
 import type { User } from '@/types/user';
 
 export type onSelectType = (key: keyof UserMetaDataType, value: SelectBoxType['value']) => void;

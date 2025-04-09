@@ -2,7 +2,7 @@
 
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { NavItems } from './data/nav-items';
+import { NavItems } from '@/features/layout/data/nav-items';
 
 type Props = {
   menu: NavItems;

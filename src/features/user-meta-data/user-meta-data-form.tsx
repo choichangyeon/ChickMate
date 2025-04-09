@@ -1,10 +1,11 @@
 'use client';
+import { PATH } from '@/constants/path-constant';
 import { DEFAULT, USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 import type { SelectBoxType } from '@/types/select-box';
 import type { User } from '@/types/user';
 import { type UserMetaDataType } from '@/types/user-meta-data-type';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { academicData, jobData, typeData } from './data/user-meta-data';
 import { userMetaFormSchema, UserMetaSchema } from './data/user-meta-form-schema';
@@ -15,7 +16,9 @@ import SingleSelectField from './single-select-field';
 export type onSelectType = (key: keyof UserMetaDataType, value: SelectBoxType['value']) => void;
 
 const { TYPE, EDUCATION, JOB, MAIN_REGION, ETC } = USER_META_DATA_KEY;
-
+const {
+  AUTH: { SIGN_IN },
+} = PATH;
 type Props = {
   user: User;
   initMetaData?: UserMetaDataType;
@@ -24,12 +27,18 @@ const UserMetaDataForm = ({ user, initMetaData }: Props) => {
   const userId = user.id ?? null;
   const FORM_TYPE = initMetaData ? '수정' : '작성';
   const { data: regions, isPending } = useRegionsQuery();
-  const { mutate } = useMetaDataMutation(userId);
-
+  const { mutate, error } = useMetaDataMutation(userId);
   const handleSelect = useCallback((key: keyof UserMetaDataType, selected: SelectBoxType['value']) => {
     setValue(key, selected);
     trigger(key);
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      alert(error.message);
+      window.location.replace(SIGN_IN);
+    }
+  }, [error]);
 
   const {
     setValue,

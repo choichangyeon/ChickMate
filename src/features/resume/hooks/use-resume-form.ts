@@ -21,7 +21,7 @@ export const useResumeForm = () => {
   const [isDirty, setIsDirty] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
   const [fieldList, setFieldList] = useState<Field[]>(defaultQuestionList);
-  const [resumeId, setResumeId] = useState<number>(0);
+  const [resumeId, setResumeId] = useState<number | null>(null);
   const [autoSaveStatus, setAutoSaveStatus] = useState<string>(SAVING);
 
   /** function */

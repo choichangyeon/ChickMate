@@ -36,10 +36,8 @@ export const ROUTE_HANDLER_PATH = {
   REGIONS: '/api/regions',
   JOB: {
     POSTING: '/api/job/posting',
-    BOOKMARK: {
-      ROOT: '/api/job/bookmark',
-      DETAIL: (id: number) => `/api/job/bookmark/${id}`,
-    },
+    BOOKMARK: '/api/job/bookmark',
+    BOOKMARK_DETAIL: (id: number) => `/api/job/bookmark/${id}`,
   },
   CHARACTER: {
     INFO: '/api/character',

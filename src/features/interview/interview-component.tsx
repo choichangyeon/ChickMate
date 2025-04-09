@@ -26,7 +26,7 @@ const InterviewComponent = () => {
           ],
         },
       ];
-      const response = await getOpenAIResponse(updatedMessageList);
+      const response = await getOpenAIResponse({ messageList: updatedMessageList });
       setMessageList(response);
     } catch (error) {
       alert(error);

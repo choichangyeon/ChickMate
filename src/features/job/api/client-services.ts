@@ -8,13 +8,13 @@ const { POST, DELETE, GET } = API_METHOD;
 const EMPTY_LIST_NUMBER = 0;
 
 // TODO : userData 타입 지정하기
-type userDataProps = {
+type UserDataProps = {
   educationLevel: string;
   location: Record<string, string>;
   experienceType: string;
   jobType: string;
 };
-export const getJobByUserMetaData = async (userData: userDataProps): Promise<JobPosting[]> => {
+export const getJobByUserMetaData = async (userData: UserDataProps): Promise<JobPosting[]> => {
   const { educationLevel, location, experienceType, jobType } = userData;
 
   const queryParams = new URLSearchParams({

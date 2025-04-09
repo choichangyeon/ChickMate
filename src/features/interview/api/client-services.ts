@@ -20,12 +20,12 @@ const { POST } = API_METHOD;
  * @returns {void}
  */
 
-type TTS_Props = {
+type TtsProps = {
   text: string;
   type: string;
 };
 
-export const postTextToSpeech = async ({ text, type }: TTS_Props): Promise<void> => {
+export const postTextToSpeech = async ({ text, type }: TtsProps): Promise<void> => {
   const { MODEL, FORMAT } = TTS_OPTIONS;
   const { PRESSURE } = INTERVIEW_TYPE;
   const { VOICE, SPEED, INSTRUCTION } = type === PRESSURE ? PRESSURE_OPTIONS : CALM_OPTIONS;
@@ -58,11 +58,11 @@ export const postTextToSpeech = async ({ text, type }: TTS_Props): Promise<void>
  * @returns {text}
  */
 
-type STT_Props = {
+type SttProps = {
   blob: Blob;
 };
 
-export const postSpeechToText = async ({ blob }: STT_Props): Promise<string> => {
+export const postSpeechToText = async ({ blob }: SttProps): Promise<string> => {
   const { MODEL, FORMAT, LANGUAGE } = STT_OPTIONS;
 
   const formData = new FormData();
@@ -89,7 +89,11 @@ export const postSpeechToText = async ({ blob }: STT_Props): Promise<string> => 
  * @returns {Message[]}
  */
 
-export const getOpenAIResponse = async (messageList: Message[]): Promise<Message[]> => {
+type MessageListProps = {
+  messageList: Message[];
+};
+
+export const getOpenAIResponse = async ({ messageList }: MessageListProps): Promise<Message[]> => {
   const res = await fetchWithSentry(INTERVIEW, {
     method: POST,
     body: JSON.stringify({ messageList: messageList }),

@@ -13,7 +13,7 @@ const textVariant = cva('', {
     color: {
       default: 'text-cool-gray-900',
       white: 'text-white',
-      primary: 'text-primary-orange',
+      primary: 'text-primary',
       'secondary-amber': 'text-secondary-amber',
       'secondary-yellow': 'text-secondary-yellow',
       'gray-700': 'text-cool-gray-700',

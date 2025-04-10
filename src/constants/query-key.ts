@@ -5,4 +5,5 @@ export const QUERY_KEY = {
   BOOKMARK: 'bookmark',
   REGIONS: 'regions',
   META_DATA: 'meta-data',
+  JOB_POSTING: 'job-posting',
 };

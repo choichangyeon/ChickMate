@@ -12,6 +12,7 @@ const textVariant = cva('font-normal', {
       default: 'text-black',
       gray: 'text-gray-500',
       red: 'text-red-500',
+      primary: 'text-primary',
     },
     align: {
       left: 'text-left',

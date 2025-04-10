@@ -11,9 +11,6 @@ type Props = {
 };
 
 const Card = ({ children, className, date, title, iconButton, onClick }: Props) => {
-  const cardClassName =
-    'relative w-72 h-40 bg-emerald-900/0 rounded-lg outline outline-1 outline-offset-[-1px] outline-gray-200 overflow-hidden';
-
   return (
     <div className={clsx(cardClassName, className)} onClick={onClick}>
       {iconButton && (
@@ -24,17 +21,33 @@ const Card = ({ children, className, date, title, iconButton, onClick }: Props) 
           <div className='absolute left-[5px] top-[8px] h-3.5 w-3.5 bg-black' />
         </div>
       )}
-      {/* TODO: 반응형 사이즈 추가하기 */}
-      <div className='absolute left-[20px] top-[25px] justify-start text-sm font-normal leading-tight text-black/50'>
-        {date}
+      {/* TODO: 반응형 크기 재정의 */}
+      <div className='flex h-full flex-col justify-between'>
+        {/* 날짜와 타이틀 */}
+        <div>
+          <div className={dateClassName}>{date}</div>
+          <div className={titleClassName}>{title}</div>
+        </div>
+        {/* badge area */}
+        <div className={badgeClassName}>{children}</div>
       </div>
-      <div className='absolute left-[20px] top-[43px] w-52 justify-start text-base font-bold leading-normal text-black'>
-        {title}
-      </div>
-      {/* TODO: badge area */}
-      <div className='absolute left-[20px] top-[117px] flex gap-[16px]'>{children}</div>
     </div>
   );
 };
 
 export default Card;
+
+const cardClassName = clsx(
+  'relative bg-emerald-900/0 rounded-lg outline outline-1 outline-offset-[-1px] outline-gray-200 ',
+  'w-[288px] h-[160px] p-[20px]'
+  //   TODO: 반응형 크기 재정의
+  //   'sm:w-[320px] sm:h-[176px] sm:p-[30px]',
+  //   'md:w-[384px] md:h-[224px] md:p-[40px]',
+  //   'lg:w-[400px] lg:h-[240px] lg:p-[50px]'
+);
+
+const dateClassName = clsx('text-sm font-normal text-black/50');
+
+const titleClassName = clsx('text-base font-bold text-black', 'mb-[20px]', 'line-clamp-2');
+
+const badgeClassName = clsx('flex gap-[16px]');

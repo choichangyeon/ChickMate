@@ -70,7 +70,6 @@ export const DELETE = async (request: Request, { params }: RouteParams) => {
 
     return NextResponse.json({ message: DELETE_REQUEST_SUCCESS });
   } catch (error) {
-    console.error('Todo 삭제 에러:', error);
     return NextResponse.json({ message: DELETE_SERVER_ERROR }, { status: 500 });
   }
 };

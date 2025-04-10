@@ -1,4 +1,3 @@
-import CreateCharacterForm from '@/features/chraracter/create-character-form';
 import MainCharacter from '@/features/chraracter/main-character';
 import { authOptions } from '@/utils/auth-option';
 import { getServerSession } from 'next-auth';

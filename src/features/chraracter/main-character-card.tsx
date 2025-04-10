@@ -1,43 +1,42 @@
 import Image from 'next/image';
+import CreateCharacterForm from './create-character-form';
+import { Character } from '@prisma/client';
+import { getLevelAndPercentage } from './utils/get-level-and-percent';
+import { useModalStore } from '@/store/use-modal-store';
+import { defaultCharacter } from './data/character-data';
+import CharacterExpBar from './character-exp-bar';
 
 type Props = {
-  level: number;
-  percent: number;
-  name: string;
-  type: string;
-  disabled?: boolean;
+  characterData?: Character;
+  requiredModal?: boolean;
   overlayText?: string;
-  onClick?: () => void;
 };
 
-const MainCharacterCard = ({ level, percent, name, type, disabled = false, overlayText, onClick }: Props) => {
+const MainCharacterCard = ({ characterData = defaultCharacter, overlayText, requiredModal = false }: Props) => {
+  const { isModalOpen, toggleModal } = useModalStore();
+  const { type, experience } = characterData;
+  const { level, percent } = getLevelAndPercentage(experience);
+  const isDefault = characterData === defaultCharacter;
+
   return (
-    // 추후 캐릭터 modal 만들어질 시 onClick 조건부 삭제
     <div
-      onClick={onClick}
-      className={`relative flex flex-col overflow-hidden rounded-lg border-2 p-7 ${
-        onClick ? 'cursor-pointer hover:shadow-lg' : ''
-      }`}
+      onClick={() => {
+        requiredModal && toggleModal();
+      }}
+      className='relative flex cursor-pointer flex-col overflow-hidden rounded-lg border-2 p-7 hover:shadow-lg'
     >
-      {disabled && (
+      {isDefault && (
         <div className='absolute inset-0 z-10 flex items-center justify-center bg-white/30'>
           <span className='text-xl font-semibold text-black/70'>{overlayText}</span>
         </div>
       )}
-
-      <div className={`${disabled ? 'pointer-events-none opacity-60' : ''}`}>
+      <div className={`${isDefault && 'pointer-events-none opacity-60'}`}>
         <div className='flex items-center gap-3 text-black/50'>
           <span className='text-2xl font-extrabold'>EXP</span>
           <div className='flex w-full justify-around'>
-            {Array.from({ length: 10 }).map((_, i) => (
-              <div
-                key={i}
-                className={`h-[6px] w-5 rounded-sm ${i < Math.floor(percent / 10) ? 'bg-green-500' : 'bg-gray-300'}`}
-              />
-            ))}
+            <CharacterExpBar percent={percent} type='main' />
           </div>
         </div>
-
         <Image
           src={`/assets/character/card/${type}-level${level}.png`}
           width={344}
@@ -45,14 +44,14 @@ const MainCharacterCard = ({ level, percent, name, type, disabled = false, overl
           alt='character-img'
           className='mx-auto'
         />
-
         <div className='flex justify-between gap-6'>
           <span className='text-[40px] font-extrabold text-red-500'>LV : {level}</span>
           <div className='flex items-center justify-center rounded-3xl border border-black px-9 py-3'>
-            <span className='text-xl'>{name}</span>
+            <span className='text-xl'>병아리</span>
           </div>
         </div>
       </div>
+      {isModalOpen && <CreateCharacterForm />}
     </div>
   );
 };

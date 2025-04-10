@@ -8,6 +8,7 @@ import QuestionAnswerField from '@/features/resume/question-answer-field';
 import DraftResumesModal from '@/features/resume/draft-resumes-modal';
 import type { Field } from '@/types/resume';
 import type { Resume } from '@prisma/client';
+import { useEffect } from 'react';
 
 const ResumeForm = () => {
   /** hook */
@@ -41,6 +42,10 @@ const ResumeForm = () => {
     setResumeId(id);
     closeModal();
   };
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   /** UI */
   return (

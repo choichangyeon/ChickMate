@@ -4,7 +4,7 @@ import type { Resume } from '@prisma/client';
 import { useDeleteResumeMutation } from './hooks/use-delete-resume-mutation';
 
 type Props = {
-  draftResumeList: Resume[];
+  draftResumeList: Resume[] | undefined;
   isError: boolean;
   onLoadDraft: (resume: Resume) => void;
   onClose: () => void;

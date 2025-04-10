@@ -1,7 +1,7 @@
 'use client';
 
 import { useModalStore } from '@/store/use-modal-store';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 type Props = {

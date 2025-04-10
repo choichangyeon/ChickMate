@@ -17,11 +17,11 @@ const MainCharacter = ({ session }: Props) => {
 
   useCharacterStoreSync(characterData);
 
-  if (!session) return <MainCharacterCard disabled overlayText={NEED_LOGIN} />;
+  if (!session) return <MainCharacterCard overlayText={NEED_LOGIN} />;
 
-  if (isPending) return <MainCharacterCard disabled overlayText={GET_DATA_LOADING} />;
+  if (isPending) return <MainCharacterCard overlayText={GET_DATA_LOADING} />;
 
-  if (isError || !characterData) return <MainCharacterCard disabled requiredModal overlayText={GET_DATA_NULL} />;
+  if (isError || !characterData) return <MainCharacterCard requiredModal overlayText={GET_DATA_NULL} />;
 
   if (characterData) return <MainCharacterCard characterData={characterData} />;
 };

@@ -32,6 +32,7 @@ const MainCharacter = ({ session }: Props) => {
         level={4}
         percent={100}
         name='ChickMate'
+        type='normal'
         disabled
         overlayText='로그인이 필요합니다.'
         onClick={() => router.push(SIGN_IN)}
@@ -45,6 +46,7 @@ const MainCharacter = ({ session }: Props) => {
         level={4}
         percent={0}
         name='ChickMate'
+        type='normal'
         disabled
         overlayText='캐릭터를 생성해주세요.'
         // onClick={() => router.push()}
@@ -56,6 +58,7 @@ const MainCharacter = ({ session }: Props) => {
       level={4}
       percent={0}
       name='ChickMate'
+      type='normal'
       disabled
       overlayText='캐릭터 정보를 불러오는 중입니다.'
       // onClick={() => router.push(CHARACTER_CREATE)}
@@ -70,6 +73,7 @@ const MainCharacter = ({ session }: Props) => {
         level={level}
         percent={percent}
         name='똑똑한 병아리'
+        type={characterData.type}
         onClick={() => {
           // 캐릭터 상세 or 모달로 연결 가능
         }}

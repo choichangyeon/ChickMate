@@ -4,12 +4,13 @@ type Props = {
   level: number;
   percent: number;
   name: string;
+  type: string;
   disabled?: boolean;
   overlayText?: string;
   onClick?: () => void;
 };
 
-const MainCharacterCard = ({ level, percent, name, disabled = false, overlayText, onClick }: Props) => {
+const MainCharacterCard = ({ level, percent, name, type, disabled = false, overlayText, onClick }: Props) => {
   return (
     // 추후 캐릭터 modal 만들어질 시 onClick 조건부 삭제
     <div
@@ -38,7 +39,7 @@ const MainCharacterCard = ({ level, percent, name, disabled = false, overlayText
         </div>
 
         <Image
-          src={`/assets/character/card/level${level}.png`}
+          src={`/assets/character/card/${type}-level${level}.png`}
           width={344}
           height={344}
           alt='character-img'

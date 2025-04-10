@@ -11,14 +11,11 @@ type Props = {
 };
 
 const Modal = ({ portalRoot, children, className }: Props) => {
-  const [isMounted, setIsMounted] = useState(false);
   const modalContentRef = useRef<HTMLDivElement | null>(null);
 
   const toggleModal = useModalStore((state) => state.toggleModal);
 
   useEffect(() => {
-    setIsMounted(true);
-
     // 모달 외부를 클릭했을 때 모달창이 닫힘
     const handleClickOutside = (event: MouseEvent) => {
       if (modalContentRef.current && !modalContentRef.current.contains(event.target as Node)) {
@@ -42,8 +39,6 @@ const Modal = ({ portalRoot, children, className }: Props) => {
       document.removeEventListener('keydown', handleEscKey);
     };
   }, [toggleModal]);
-
-  if (!isMounted) return null;
 
   return createPortal(
     <div className='fixed inset-0 z-50 flex items-center justify-center overflow-y-auto'>

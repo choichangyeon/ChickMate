@@ -3,15 +3,17 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/utils/auth-option';
 import { prisma } from '@/lib/prisma';
 import { AUTH_MESSAGE, RESUME_MESSAGE } from '@/constants/message-constants';
+import { SEARCH_PARAMS } from '@/constants/resume-constants';
 
 const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
 const { NOT_FOUND, GET_SERVER_ERROR } = RESUME_MESSAGE;
+const { STATUS } = SEARCH_PARAMS;
 
 export const GET = async (request: NextRequest) => {
   try {
     const session = await getServerSession(authOptions);
 
-    const status = request.nextUrl.searchParams.get('status');
+    const status = request.nextUrl.searchParams.get(STATUS);
 
     if (!session || !session.user) {
       return NextResponse.json({ message: AUTH_REQUIRED }, { status: 401 });

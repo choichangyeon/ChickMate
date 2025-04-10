@@ -1,51 +1,81 @@
 'use client';
 
-import Image from 'next/image';
-import { useGetCharacterQuery } from './hooks/use-get-character-query';
+import { useGetCharacterQuery } from '@/features/chraracter/hooks/use-get-character-query';
 import { useCharacterStore } from '@/store/use-character-store';
+import { getLevelAndPercentage } from '@/features/chraracter/utils/get-level-and-percent';
 import { useEffect } from 'react';
-import { getLevelAndPercentage } from './utils/get-level-and-percent';
+import MainCharacterCard from './main-character-card';
+import { PATH } from '@/constants/path-constant';
+import { useRouter } from 'next/navigation';
+import { Session } from 'next-auth';
 
-const MainCharacter = () => {
-  const { data, isPending, isError } = useGetCharacterQuery();
+type Props = {
+  session: Session | null;
+};
 
+const { SIGN_IN } = PATH.AUTH;
+
+const MainCharacter = ({ session }: Props) => {
+  const { data: characterData, isPending, isError } = useGetCharacterQuery();
   const setCharacterId = useCharacterStore((state) => state.setCharacterId);
+  const router = useRouter();
 
   useEffect(() => {
-    if (data) {
-      setCharacterId(data.id);
+    if (characterData) {
+      setCharacterId(characterData.id);
     }
-  }, [data, setCharacterId]);
+  }, [characterData, setCharacterId]);
+
+  if (!session)
+    return (
+      <MainCharacterCard
+        level={4}
+        percent={100}
+        name='ChickMate'
+        disabled
+        overlayText='로그인이 필요합니다.'
+        onClick={() => router.push(SIGN_IN)}
+      />
+    );
+
+  // 세션은 있는데 캐릭터가 없음 → 캐릭터 생성 유도
+  if (isError || (!isPending && !characterData))
+    return (
+      <MainCharacterCard
+        level={4}
+        percent={0}
+        name='ChickMate'
+        disabled
+        overlayText='캐릭터를 생성해주세요.'
+        // onClick={() => router.push()}
+      />
+    );
 
   if (isPending) {
-    return null;
+    <MainCharacterCard
+      level={4}
+      percent={0}
+      name='ChickMate'
+      disabled
+      overlayText='캐릭터 정보를 불러오는 중입니다.'
+      // onClick={() => router.push(CHARACTER_CREATE)}
+    />;
   }
-  if (isError) {
-    return null;
+
+  // 캐릭터 있음 → 정상 출력
+  if (characterData) {
+    const { level, percent } = getLevelAndPercentage(characterData.experience);
+    return (
+      <MainCharacterCard
+        level={level}
+        percent={percent}
+        name='똑똑한 병아리'
+        onClick={() => {
+          // 캐릭터 상세 or 모달로 연결 가능
+        }}
+      />
+    );
   }
-  const { level, percent } = getLevelAndPercentage(data.experience);
-  return (
-    <div className='flex flex-col rounded-lg border p-7'>
-      <div className='flex items-center gap-3 text-black/50'>
-        <span className='text-2xl font-extrabold'>EXP</span>
-        <div className='flex w-full justify-around'>
-          {Array.from({ length: 10 }).map((_, i) => (
-            <div
-              key={i}
-              className={`h-[6px] w-5 rounded-sm ${i < Math.floor(percent / 10) ? 'bg-green-500' : 'bg-gray-300'}`}
-            />
-          ))}
-        </div>
-      </div>
-      <Image src={`/assets/character/card/level${level}.png`} width={344} height={344} alt='character-img' />
-      <div className='flex gap-6'>
-        <span className='text-[40px] font-extrabold text-red-500'>LV : {level}</span>
-        <div className='flex items-center justify-center rounded-3xl border border-black px-9 py-3'>
-          <span className='text-xl'>똑똑한 병아리</span>
-        </div>
-      </div>
-    </div>
-  );
 };
 
 export default MainCharacter;

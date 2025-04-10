@@ -1,6 +1,10 @@
 import MainCharacter from '@/features/chraracter/main-character';
+import { authOptions } from '@/utils/auth-option';
+import { getServerSession } from 'next-auth';
 
-const OnBoarding = () => {
+const OnBoarding = async() => {
+  const session = await getServerSession(authOptions);
+
   return (
     <div className='flex h-[100vh] w-full items-center justify-center bg-white pl-20'>
       <div className='flex w-[70%] flex-col justify-center'>
@@ -46,7 +50,7 @@ const OnBoarding = () => {
               </div>
             </section>
           </div>
-          <MainCharacter/>
+          <MainCharacter session={session}/>
         </div>
       </div>
     </div>

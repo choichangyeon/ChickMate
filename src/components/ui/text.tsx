@@ -1,27 +1,46 @@
-import clsx from 'clsx';
-import { fontAlign, fontColor, textFontSize } from '@/styles/typography-styles';
+import { cva, VariantProps } from 'class-variance-authority';
+import React from 'react';
 
-type TextSize = keyof typeof textFontSize;
-type TextColor = keyof typeof fontColor;
-type TextAlign = keyof typeof fontAlign;
+const textVariant = cva('font-normal', {
+  variants: {
+    size: {
+      sm: 'text-sm',
+      md: 'text-base',
+      lg: 'text-lg',
+    },
+    color: {
+      default: 'text-black',
+      gray: 'text-gray-500',
+      red: 'text-red-500',
+    },
+    align: {
+      left: 'text-left',
+      center: 'text-center',
+      right: 'text-right',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+    color: 'default',
+    align: 'left',
+  },
+});
 
-type Props = {
-  size?: TextSize;
-  color?: TextColor;
-  align?: TextAlign;
+type AllowedTags = 'p' | 'span';
+
+type TextProps<T extends AllowedTags = 'p'> = {
+  as?: T;
   children: React.ReactNode;
-};
+} & VariantProps<typeof textVariant> &
+  Omit<React.ComponentPropsWithoutRef<T>, 'as'>;
 
-/**
- * Text 컴포넌트
- * @param size 폰트 크기
- * @param color 폰트 컬러
- * @returns JSX
- */
-const Text = ({ size = 'md', color = 'default', align = 'left', children }: Props) => {
-  const textClassName = clsx('font-normal', textFontSize[size], fontColor[color], fontAlign[align]);
-
-  return <p className={textClassName}>{children}</p>;
+const Text = <T extends AllowedTags = 'p'>({ as, size, color, align, children, ...props }: TextProps<T>) => {
+  const Component = as || 'p';
+  return (
+    <Component className={textVariant({ size, color, align })} {...props}>
+      {children}
+    </Component>
+  );
 };
 
 export default Text;

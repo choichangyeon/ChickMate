@@ -99,6 +99,7 @@ export const useResumeForm = () => {
     title,
     fieldList,
     autoSaveStatus,
+    resumeId,
     setTitle,
     setFieldList,
     setResumeId,

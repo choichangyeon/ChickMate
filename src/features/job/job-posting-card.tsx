@@ -1,5 +1,6 @@
 'use client';
 
+import Card from '@/components/ui/card';
 import { getJobByUserMetaData } from '@/features/job/api/client-services';
 import { JobPosting } from '@prisma/client';
 
@@ -14,10 +15,10 @@ const JobPostingCard = () => {
     });
   };
   return (
-    <div>
-      JobPostingCard
+    <Card date='2025.05.31' title='2025년 상반기 CJ제일제당(식품/공통부문)' iconButton={true}>
+      <p>JobPostingCard</p>
       <button onClick={handleClick}>테스트</button>
-    </div>
+    </Card>
   );
 };
 

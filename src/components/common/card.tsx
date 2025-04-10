@@ -48,7 +48,7 @@ const cardClassName = clsx(
   //   'lg:w-[400px] lg:h-[240px] lg:p-[50px]'
 );
 
-// TODO: 반응형 크기 재정의
+// TODO: 반응형 크기 재정의 & 텍스트 크기에 따른 line-height 조정 생각하기
 const subClassName = clsx('text-sm font-normal text-black/50', 'line-clamp-1');
 const mainClassName = clsx('text-base font-bold text-black', 'line-clamp-2');
 const contentClassName = clsx('text-sm font-normal text-black/50', 'line-clamp-1');

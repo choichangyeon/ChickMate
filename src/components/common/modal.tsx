@@ -35,7 +35,7 @@ const Modal = ({ portalRoot, children, className }: Props) => {
     document.addEventListener('keydown', handleEscKey);
 
     return () => {
-      // document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('keydown', handleEscKey);
     };
   }, [toggleModal]);

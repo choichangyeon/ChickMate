@@ -1,17 +1,19 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/utils/auth-option';
 import { prisma } from '@/lib/prisma';
 import { AUTH_MESSAGE, RESUME_MESSAGE } from '@/constants/message-constants';
-import { RESUME_STATUS } from '@/constants/resume-constants';
+import { SEARCH_PARAMS } from '@/constants/resume-constants';
 
-const { DRAFT } = RESUME_STATUS;
 const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
 const { NOT_FOUND, GET_SERVER_ERROR } = RESUME_MESSAGE;
+const { STATUS } = SEARCH_PARAMS;
 
-export const GET = async () => {
+export const GET = async (request: NextRequest) => {
   try {
     const session = await getServerSession(authOptions);
+
+    const status = request.nextUrl.searchParams.get(STATUS);
 
     if (!session || !session.user) {
       return NextResponse.json({ message: AUTH_REQUIRED }, { status: 401 });
@@ -20,7 +22,7 @@ export const GET = async () => {
     const response = await prisma.resume.findMany({
       where: {
         userId: session.user.id,
-        status: DRAFT,
+        status: Number(status),
       },
       orderBy: {
         createdAt: 'desc',

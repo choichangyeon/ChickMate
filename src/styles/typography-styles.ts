@@ -9,6 +9,15 @@ export const fontColor = {
 };
 
 /**
+ * 폰트 정렬
+ */
+export const fontAlign = {
+  left: 'text-left',
+  right: 'text-right',
+  center: 'text-center',
+};
+
+/**
  * Text 컴포넌트 폰트 크기
  */
 export const textFontSize = {

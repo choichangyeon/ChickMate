@@ -1,15 +1,16 @@
+import { Resume } from '@prisma/client';
 import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
-import type { Field, ResumeData } from '@/types/resume';
+import type { ResumeData } from '@/types/resume';
 
 type Props = {
   data: ResumeData;
   resumeId: number | null;
 };
 
-const { ROOT, SUBMIT, SUBMIT_DETAIL, DRAFT, DRAFT_DETAIL } = ROUTE_HANDLER_PATH.RESUME;
-const { GET, POST, PATCH } = API_METHOD;
+const { ROOT, DETAIL, SUBMIT, SUBMIT_DETAIL, DRAFT, DRAFT_DETAIL } = ROUTE_HANDLER_PATH.RESUME;
+const { GET, POST, PATCH, DELETE } = API_METHOD;
 const { JSON_HEADER } = API_HEADER;
 
 /**
@@ -47,7 +48,7 @@ export const autoSaveResume = async ({ resumeId, data }: Props) => {
 
   const { response: savedResume } = await fetchWithSentry(url, {
     method,
-    headers: { 'Content-Type': 'application/json' },
+    headers: JSON_HEADER,
     body: JSON.stringify(data),
   });
 
@@ -55,13 +56,38 @@ export const autoSaveResume = async ({ resumeId, data }: Props) => {
 };
 
 /**
- * DB에서 임시 저장된 자소서 불러오는 요청
+ * DB에서 자소서 리스트 불러오는 요청
+ * @param {Number} status 저장 상태(등록/임시 저장)
  * @returns draftResumes 임시 저장된 자소서 리스트
  */
-export const getDraftResumeList = async (): Promise<Field[]> => {
-  const { response: draftResumes } = await fetchWithSentry(ROOT, {
+export const getResumeList = async (status: number): Promise<Resume[]> => {
+  const url = `${ROOT}?status=${status}`;
+
+  const { response: draftResumes } = await fetchWithSentry(url, {
     method: GET,
   });
 
   return draftResumes;
+};
+
+/**
+ * DB에서 원하는 자소서를 불러오는 요청
+ * @returns {Array} draftResumes 임시 저장된 자소서 리스트
+ */
+export const getResume = async (resumeId: number): Promise<Resume> => {
+  const { response: resume } = await fetchWithSentry(DETAIL(resumeId), {
+    method: GET,
+  });
+
+  return resume;
+};
+
+/**
+ * DB에서 자소서 삭제하는 요청
+ * @param {Number} resumeId 자소서 ID
+ */
+export const deleteResume = async (resumeId: number): Promise<void> => {
+  await fetchWithSentry(DETAIL(resumeId), {
+    method: DELETE,
+  });
 };

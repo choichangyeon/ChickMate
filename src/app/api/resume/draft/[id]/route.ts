@@ -27,8 +27,6 @@ export const PATCH = async (request: Request, { params }: RouteParams) => {
     const { id: resumeId } = params;
     const id = Number(resumeId);
 
-    console.log(resumeId);
-
     const body: ResumeData = await request.json();
     const { title, fieldList } = body;
 

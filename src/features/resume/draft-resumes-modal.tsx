@@ -15,16 +15,14 @@ type Props = {
 const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResumeId, setResumeId }: Props) => {
   const { mutate: deleteResumeMutate } = useDeleteResumeMutation();
 
-  const handleDeleteResume = (resumeId: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    event.stopPropagation();
+  const handleDeleteResume = (resumeId: number) => {
     deleteResumeMutate(resumeId);
     if (activeResumeId === resumeId) {
       setResumeId(null);
     }
   };
 
-  const handleDraftResumeClick = (resume: Resume, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    event.stopPropagation();
+  const handleDraftResumeClick = (resume: Resume) => {
     onLoadDraft(resume);
   };
 
@@ -35,8 +33,8 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResume
       ) : (
         draftResumeList?.map((resume) => (
           <div key={resume.id} className='flex gap-3'>
-            <button onClick={(event) => handleDraftResumeClick(resume, event)}>{resume.title}</button>
-            <button onClick={(event) => handleDeleteResume(resume.id, event)} className='bg-red-300'>
+            <button onClick={() => handleDraftResumeClick(resume)}>{resume.title}</button>
+            <button onClick={() => handleDeleteResume(resume.id)} className='bg-red-300'>
               삭제
             </button>
           </div>

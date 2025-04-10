@@ -1,7 +1,6 @@
 'use client';
 
 import Text from '@/components/ui/text';
-import { useModal } from '@/hooks/customs/use-modal';
 import { useResumeForm } from '@/features/resume/hooks/use-resume-form';
 import { useDraftResumesQuery } from '@/features/resume/hooks/use-draft-resumes-query';
 import QuestionAnswerField from '@/features/resume/question-answer-field';
@@ -9,8 +8,12 @@ import DraftResumesModal from '@/features/resume/draft-resumes-modal';
 import type { Field } from '@/types/resume';
 import type { Resume } from '@prisma/client';
 import { useEffect } from 'react';
+import { useModalStore } from '@/store/use-modal-store';
 
 const ResumeForm = () => {
+  const toggleModal = useModalStore((state) => state.toggleModal);
+  const isModalOpen = useModalStore((state) => state.isModalOpen);
+
   /** hook */
   const {
     title,
@@ -25,12 +28,12 @@ const ResumeForm = () => {
     handleDeleteField,
     handleSubmit,
   } = useResumeForm();
-  const { isModalOpen, openModal, closeModal } = useModal();
+
   const { data: draftResumeList, isError, refetch } = useDraftResumesQuery();
 
   /** function */
   const handleDraftResumeListClick = () => {
-    openModal();
+    toggleModal();
     refetch();
   };
 
@@ -40,7 +43,7 @@ const ResumeForm = () => {
     setTitle(title);
     setFieldList(content as Field[]);
     setResumeId(id);
-    closeModal();
+    toggleModal();
   };
 
   useEffect(() => {
@@ -65,12 +68,7 @@ const ResumeForm = () => {
       </button>
 
       {isModalOpen && (
-        <DraftResumesModal
-          draftResumeList={draftResumeList}
-          isError={isError}
-          onClose={closeModal}
-          onLoadDraft={handleLoadDraft}
-        />
+        <DraftResumesModal draftResumeList={draftResumeList} isError={isError} onLoadDraft={handleLoadDraft} />
       )}
       <button type='submit'>작성 완료</button>
     </form>

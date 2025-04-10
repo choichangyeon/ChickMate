@@ -1,7 +1,7 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import React from 'react';
 
-const textVariant = cva('font-normal', {
+const textVariant = cva('', {
   variants: {
     size: {
       sm: 'text-sm',

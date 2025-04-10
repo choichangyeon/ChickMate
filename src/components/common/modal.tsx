@@ -35,14 +35,14 @@ const Modal = ({ portalRoot, children, className }: Props) => {
     document.addEventListener('keydown', handleEscKey);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      // document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('keydown', handleEscKey);
     };
   }, [toggleModal]);
 
   return createPortal(
     <div className='fixed inset-0 z-50 flex items-center justify-center overflow-y-auto'>
-      <div className='fixed inset-0 bg-black opacity-70' onClick={toggleModal} />
+      <div className='fixed inset-0 bg-black opacity-70' />
       <div ref={modalContentRef} className='relative w-full max-w-[750px] flex-col rounded-lg bg-white p-8'>
         <div className={className}>{children}</div>
       </div>

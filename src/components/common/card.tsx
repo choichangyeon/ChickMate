@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import Text from '@/components/ui/text';
 
 type Props = {
   children?: React.ReactNode;
@@ -13,7 +14,7 @@ type Props = {
 
 const Card = ({ children, className, mainTitle, subTitle, content, iconButton, onClick }: Props) => {
   return (
-    <div className={clsx(cardClassName, className)} onClick={onClick}>
+    <article className={clsx(cardClassName, className)} onClick={onClick}>
       {iconButton && (
         // TODO: iconButton component 적용
         <div className='absolute right-[20px] top-[12px] h-6 w-6'>
@@ -26,14 +27,18 @@ const Card = ({ children, className, mainTitle, subTitle, content, iconButton, o
       <div className='flex h-full flex-col justify-between'>
         {/* 텍스트 컨텐츠 조절*/}
         <div>
-          {subTitle && <div className={subClassName}>{subTitle}</div>}
+          {subTitle && (
+            <Text size='sm' color='gray'>
+              {subTitle}
+            </Text>
+          )}
           <div className={mainClassName}>{mainTitle}</div>
-          {content && <div className={contentClassName}>{content}</div>}
+          {content && <p className={contentClassName}>{content}</p>}
         </div>
         {/* badge area */}
-        <div className={badgeClassName}>{children}</div>
+        <footer className={badgeClassName}>{children}</footer>
       </div>
-    </div>
+    </article>
   );
 };
 

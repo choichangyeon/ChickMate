@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import Modal from '@/components/ui/modal';
+import Modal from '@/components/common/modal';
 import Text from '@/components/ui/text';
 import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
 import type { Resume } from '@prisma/client';

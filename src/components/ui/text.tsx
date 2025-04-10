@@ -1,5 +1,4 @@
 import { cva, VariantProps } from 'class-variance-authority';
-import React from 'react';
 
 const textVariant = cva('', {
   variants: {

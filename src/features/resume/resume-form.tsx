@@ -19,6 +19,7 @@ const ResumeForm = () => {
     title,
     fieldList,
     autoSaveStatus,
+    resumeId,
     setTitle,
     setFieldList,
     setResumeId,
@@ -68,7 +69,13 @@ const ResumeForm = () => {
       </button>
 
       {isModalOpen && (
-        <DraftResumesModal draftResumeList={draftResumeList} isError={isError} onLoadDraft={handleLoadDraft} />
+        <DraftResumesModal
+          draftResumeList={draftResumeList}
+          isError={isError}
+          onLoadDraft={handleLoadDraft}
+          activeResumeId={resumeId}
+          setResumeId={setResumeId}
+        />
       )}
       <button type='submit'>작성 완료</button>
     </form>

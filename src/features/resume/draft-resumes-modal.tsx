@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import Modal from '@/components/ui/modal';
 import Text from '@/components/ui/text';
 import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
@@ -7,14 +8,19 @@ type Props = {
   draftResumeList: Resume[] | undefined;
   isError: boolean;
   onLoadDraft: (resume: Resume) => void;
+  activeResumeId: number | null;
+  setResumeId: Dispatch<SetStateAction<number | null>>;
 };
 
-const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft }: Props) => {
+const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResumeId, setResumeId }: Props) => {
   const { mutate: deleteResumeMutate } = useDeleteResumeMutation();
 
   const handleDeleteResume = (resumeId: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation();
     deleteResumeMutate(resumeId);
+    if (activeResumeId === resumeId) {
+      setResumeId(null);
+    }
   };
 
   const handleDraftResumeClick = (resume: Resume, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

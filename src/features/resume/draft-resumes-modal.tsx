@@ -1,7 +1,7 @@
 import Modal from '@/components/ui/modal';
 import Text from '@/components/ui/text';
+import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
 import type { Resume } from '@prisma/client';
-import { useDeleteResumeMutation } from './hooks/use-delete-resume-mutation';
 
 type Props = {
   draftResumeList: Resume[] | undefined;

@@ -1,8 +1,9 @@
+import CreateCharacterForm from '@/features/chraracter/create-character-form';
 import MainCharacter from '@/features/chraracter/main-character';
 import { authOptions } from '@/utils/auth-option';
 import { getServerSession } from 'next-auth';
 
-const OnBoarding = async() => {
+const OnBoarding = async () => {
   const session = await getServerSession(authOptions);
 
   return (
@@ -50,7 +51,7 @@ const OnBoarding = async() => {
               </div>
             </section>
           </div>
-          <MainCharacter session={session}/>
+          <MainCharacter session={session} />
         </div>
       </div>
     </div>

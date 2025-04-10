@@ -7,10 +7,9 @@ type Props = {
   draftResumeList: Resume[] | undefined;
   isError: boolean;
   onLoadDraft: (resume: Resume) => void;
-  onClose: () => void;
 };
 
-const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, onClose }: Props) => {
+const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft }: Props) => {
   const { mutate: deleteResumeMutate } = useDeleteResumeMutation();
 
   const handleDeleteResume = (resumeId: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -24,7 +23,7 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, onClose }: P
   };
 
   return (
-    <Modal closeModal={onClose} className='flex flex-col gap-2'>
+    <Modal className='flex flex-col gap-2'>
       {!isError && draftResumeList?.length === 0 ? (
         <Text>임시 저장된 자기소개서가 없습니다</Text>
       ) : (

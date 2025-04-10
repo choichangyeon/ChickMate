@@ -93,6 +93,9 @@ export const CHARACTER_MESSAGE = {
     GET_DATA_NULL: '캐릭터를 생성해주세요.',
     NEED_LOGIN: '로그인이 필요합니다.'
   },
+  POST: {
+    POST_DATA_FAILED: '캐릭터를 생성하는 데 실패했습니다.'
+  },
   PATCH: {
     PATCH_DATA_FAILED: '경험치 획득에 실패했습니다.',
   },

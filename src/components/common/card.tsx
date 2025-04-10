@@ -48,8 +48,9 @@ const cardClassName = clsx(
   //   'lg:w-[400px] lg:h-[240px] lg:p-[50px]'
 );
 
-const subClassName = clsx('text-sm font-normal text-black/50');
-const mainClassName = clsx('text-base font-bold text-black', 'mb-[20px]', 'line-clamp-2');
-const contentClassName = clsx('text-sm font-normal text-black/50', 'line-clamp-2');
+// TODO: 반응형 크기 재정의
+const subClassName = clsx('text-sm font-normal text-black/50', 'line-clamp-1');
+const mainClassName = clsx('text-base font-bold text-black', 'line-clamp-2');
+const contentClassName = clsx('text-sm font-normal text-black/50', 'line-clamp-1');
 
 const badgeClassName = clsx('flex gap-[16px]');

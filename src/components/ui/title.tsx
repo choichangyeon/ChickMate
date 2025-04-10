@@ -1,22 +1,32 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import React from 'react';
 
-const titleVariant = cva('font-bold', {
+const titleVariant = cva('', {
   variants: {
     size: {
+      sm: 'text-sm',
+      md: 'text-base',
       lg: 'text-lg',
       xl: 'text-xl',
       '2xl': 'text-2xl',
-      '3xl': 'text-3xl',
-      '4xl': 'text-4xl',
-      '5xl': 'text-5xl',
       '6xl': 'text-6xl',
     },
     color: {
-      default: 'text-black',
-      gray: 'text-gray-500',
-      red: 'text-red-500',
-      primary: 'text-primary',
+      default: 'text-cool-gray-900',
+      white: 'text-white',
+      primary: 'text-primary-orange',
+      'secondary-amber': 'text-secondary-amber',
+      'secondary-yellow': 'text-secondary-yellow',
+      'gray-700': 'text-cool-gray-700',
+      'gray-500': 'text-cool-gray-500',
+      'gray-300': 'text-cool-gray-300',
+      'gray-100': 'text-cool-gray-100',
+      'gray-50': 'text-cool-gray-50',
+    },
+    weight: {
+      thin: 'font-thin',
+      medium: 'font-medium',
+      bold: 'font-bold',
     },
     align: {
       left: 'text-left',
@@ -28,6 +38,7 @@ const titleVariant = cva('font-bold', {
     size: 'lg',
     color: 'default',
     align: 'left',
+    weight: 'medium',
   },
 });
 
@@ -39,13 +50,9 @@ type TextProps<T extends AllowedHeadings = 'h1'> = {
 } & VariantProps<typeof titleVariant> &
   Omit<React.ComponentPropsWithoutRef<T>, 'as'>;
 
-const Title = <T extends AllowedHeadings = 'h1'>({ as, size, color, align, children, ...props }: TextProps<T>) => {
+const Title = <T extends AllowedHeadings = 'h1'>({ as, size, color, weight, align, children }: TextProps<T>) => {
   const Component = as || 'h1';
-  return (
-    <Component className={titleVariant({ size, color, align })} {...props}>
-      {children}
-    </Component>
-  );
+  return <Component className={titleVariant({ size, color, weight, align })}>{children}</Component>;
 };
 
 export default Title;

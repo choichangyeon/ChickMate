@@ -3,6 +3,7 @@
  */
 export const STALE_TIME = {
   MIN: 1000 * 60,
+  AN_HOUR: 1000 * 60 * 60,
   A_DAY: 1000 * 60 * 60 * 24,
 };
 

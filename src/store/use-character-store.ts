@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 
 type CharacterState = {
   characterId: number | null;
@@ -11,14 +10,7 @@ const initialState: CharacterState = {
   setCharacterId: () => {},
 };
 
-export const useCharacterStore = create<CharacterState>()(
-  persist(
-    (set) => ({
-      characterId: initialState.characterId,
-      setCharacterId: (id) => set({ characterId: id }),
-    }),
-    {
-      name: 'character-store',
-    }
-  )
-);
+export const useCharacterStore = create<CharacterState>()((set) => ({
+  characterId: initialState.characterId,
+  setCharacterId: (id) => set({ characterId: id }),
+}));

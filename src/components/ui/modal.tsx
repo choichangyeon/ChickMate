@@ -8,9 +8,10 @@ type Props = {
   portalRoot?: HTMLElement;
   closeModal: () => void;
   children: React.ReactNode;
+  className?: string;
 };
 
-const Modal = ({ hasCloseButton, portalRoot, closeModal, children }: Props) => {
+const Modal = ({ hasCloseButton, portalRoot, closeModal, children, className }: Props) => {
   const [isMounted, setIsMounted] = useState(false);
   const modalContentRef = useRef<HTMLDivElement | null>(null);
 
@@ -47,12 +48,14 @@ const Modal = ({ hasCloseButton, portalRoot, closeModal, children }: Props) => {
     <div className='fixed inset-0 z-50 flex items-center justify-center overflow-y-auto'>
       <div className='fixed inset-0 bg-black opacity-70' onClick={closeModal} />
       <div ref={modalContentRef} className='relative w-full max-w-[750px] flex-col rounded-lg bg-white p-8'>
-        {hasCloseButton && (
-          <button type='button' onClick={closeModal}>
-            닫기
-          </button>
-        )}
-        {children}
+        <div className={className}>
+          {children}
+          {hasCloseButton && (
+            <button type='button' onClick={closeModal}>
+              닫기
+            </button>
+          )}
+        </div>
       </div>
     </div>,
     portalRoot || document.body

@@ -1,16 +1,21 @@
 'use client';
 
+import React, { useEffect } from 'react';
 import { useGetCharacterQuery } from './hooks/use-get-character-query';
 import { User } from '@/types/user';
 import Image from 'next/image';
+import { useCharacterStore } from '@/store/use-character-store';
 import { getLevelAndPercentage } from './utils/get-level-and-percent';
+import { useCharacterStoreSync } from './hooks/use-character-store-sync';
 
 type Props = {
   user?: User;
 };
 
 const HeaderCharacter = ({ user }: Props) => {
-  const { data, isPending, isError, refetch } = useGetCharacterQuery();
+  const { data: characterData, isPending, isError, refetch } = useGetCharacterQuery();
+
+  useCharacterStoreSync(characterData);
 
   if (isPending) {
     return null;
@@ -27,7 +32,7 @@ const HeaderCharacter = ({ user }: Props) => {
     await refetch();
   };
 
-  const { level, percent } = getLevelAndPercentage(data.experience);
+  const { level, percent } = getLevelAndPercentage(characterData.experience);
 
   return (
     <div className='flex gap-2'>

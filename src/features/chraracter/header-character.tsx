@@ -1,10 +1,8 @@
 'use client';
 
-import React, { useEffect } from 'react';
 import { useGetCharacterQuery } from './hooks/use-get-character-query';
 import { User } from '@/types/user';
 import Image from 'next/image';
-import { useCharacterStore } from '@/store/use-character-store';
 import { getLevelAndPercentage } from './utils/get-level-and-percent';
 
 type Props = {
@@ -13,15 +11,6 @@ type Props = {
 
 const HeaderCharacter = ({ user }: Props) => {
   const { data, isPending, isError, refetch } = useGetCharacterQuery();
-
-  // 캐릭터 id zustand로 관리
-  const setCharacterId = useCharacterStore((state) => state.setCharacterId);
-
-  useEffect(() => {
-    if (data) {
-      setCharacterId(data.id);
-    }
-  }, [data, setCharacterId]);
 
   if (isPending) {
     return null;

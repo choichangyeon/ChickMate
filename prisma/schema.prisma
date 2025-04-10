@@ -86,6 +86,7 @@ model Sample {
 model Character {
   id          Int                @id @default(autoincrement())
   userId      String             @map("user_id")
+  type        String             
   level       Int                @default(0)
   experience  Int                @default(0)
   createdAt   DateTime           @default(now()) @map("created_at")

@@ -1,10 +1,11 @@
+import { API_HEADER } from '@/constants/api-method-constants';
 import { captureException } from '@sentry/nextjs';
 
 type FetchOptions = Omit<RequestInit, 'body'> & {
   body?: string | FormData | URLSearchParams | Blob | null;
   headers?: HeadersInit;
 };
-
+const { JSON_HEADER } = API_HEADER;
 /**
  * 공통 fetch 요청 래퍼입니다. 에러 처리 및 Sentry 로깅을 포함합니다.
  *
@@ -22,7 +23,7 @@ export const fetchWithSentry = async (url: string, options: FetchOptions = {}) =
     const isMultipart = body instanceof FormData || body instanceof URLSearchParams || body instanceof Blob;
 
     if (!isMultipart) {
-      resolvedHeaders = { 'Content-Type': 'application/json' };
+      resolvedHeaders = JSON_HEADER;
     }
   }
 

@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { schema, SignInFormData } from '@/features/sign/data/sign-in-schema';
 import Image from 'next/image';
-import { useSignInResult } from './\bhooks/use-sign-in-result';
+import { useSignInResult } from './hooks/use-sign-in-result';
 
 const callback_url = `${process.env.NEXT_PUBLIC_BASE_URL}/${PATH.AUTH.SIGN_IN}`;
 

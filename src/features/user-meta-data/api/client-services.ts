@@ -1,4 +1,4 @@
-import { API_METHOD } from '@/constants/api-method-constants';
+import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import type { User } from '@/types/user';
 import type { UserMetaDataType } from '@/types/user-meta-data-type';
@@ -9,6 +9,7 @@ const {
   REGIONS,
 } = ROUTE_HANDLER_PATH;
 const { POST } = API_METHOD;
+const { JSON_HEADER } = API_HEADER;
 
 /**
  * DB에 저장된 지역 데이터를 불러오는 함수
@@ -28,7 +29,7 @@ export const postUserMetaData = async (userId: User['id'], metaData: UserMetaDat
   if (metaData.etc === '' || metaData.etc === null) delete metaData.etc;
   await fetchWithSentry(`${META_DATA}/${userId}`, {
     method: POST,
-    headers: { 'Content-Type': 'application/json' },
+    headers: JSON_HEADER,
     body: JSON.stringify(metaData),
   });
 };

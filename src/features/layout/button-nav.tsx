@@ -2,7 +2,7 @@
 
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { NavItems } from './data/nav-items';
+import { NavItems } from '@/features/layout/data/nav-items';
 
 type Props = {
   menu: NavItems;
@@ -10,9 +10,11 @@ type Props = {
 
 const ButtonNav = ({ menu }: Props) => {
   const router = useRouter();
-  const handleNavigate = () => {
-    signOut();
-    router.replace(menu.path);
+  const handleNavigate = async () => {
+    await signOut({ redirect: false }).then(() => {
+      router.replace(menu.path);
+      router.refresh();
+    });
   };
 
   return (

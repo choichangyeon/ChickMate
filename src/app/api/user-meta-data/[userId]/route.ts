@@ -1,6 +1,7 @@
-import { USER_META_DATA_FORM_MESSAGE } from '@/constants/message-constants';
+import { AUTH_MESSAGE, USER_META_DATA_FORM_MESSAGE } from '@/constants/message-constants';
 import { prisma } from '@/lib/prisma';
-import { NextResponse } from 'next/server';
+import { getToken } from 'next-auth/jwt';
+import { NextRequest, NextResponse } from 'next/server';
 
 type Props = {
   params: {
@@ -12,8 +13,15 @@ const {
   API: { POST_DATA_ERROR },
 } = USER_META_DATA_FORM_MESSAGE;
 
-export const POST = async (request: Request, { params }: Props) => {
+const {
+  ERROR: { EXPIRED_TOKEN },
+} = AUTH_MESSAGE;
+
+export const POST = async (request: NextRequest, { params }: Props) => {
   try {
+    const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+
+    if (!token) return NextResponse.json({ message: EXPIRED_TOKEN }, { status: 401 });
     const { userId } = params;
     const payload = await request.json();
     await prisma.user.update({

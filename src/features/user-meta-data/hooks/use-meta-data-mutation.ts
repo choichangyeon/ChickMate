@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { postUserMetaData } from '../api/client-services';
+import { postUserMetaData } from '@/features/user-meta-data/api/client-services';
 import type { UserMetaDataType } from '@/types/user-meta-data-type';
 import type { User } from '@/types/user';
-import { META_DATA_QUERY_KEY } from '@/constants/query-key';
-const { META_DATA } = META_DATA_QUERY_KEY;
+import { QUERY_KEY } from '@/constants/query-key';
+const { META_DATA } = QUERY_KEY;
 const useMetaDataMutation = (userId: User['id']) => {
   const queryClient = useQueryClient();
   return useMutation({

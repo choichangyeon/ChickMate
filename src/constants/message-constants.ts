@@ -22,6 +22,9 @@ export const AUTH_MESSAGE = {
     SOCIAL_SIGN_IN_FAILED: '소셜 로그인에 실패했어요. 다시 시도해 주세요.',
     AUTH_REQUIRED: '사용자 인증이 필요합니다.',
   },
+  ERROR: {
+    EXPIRED_TOKEN: '토큰이 만료되었습니다. 다시 로그인해 주세요.',
+  },
 };
 
 export const AI_MESSAGE = {

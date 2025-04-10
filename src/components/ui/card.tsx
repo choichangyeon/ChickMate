@@ -3,14 +3,15 @@ import clsx from 'clsx';
 type Props = {
   children?: React.ReactNode;
   className?: string;
-  title: string;
-  date: string;
+  subTitle?: string;
+  mainTitle: string;
+  content?: string;
   // TODO: iconButton type 수정
   iconButton?: boolean;
   onClick?: () => void;
 };
 
-const Card = ({ children, className, date, title, iconButton, onClick }: Props) => {
+const Card = ({ children, className, mainTitle, subTitle, content, iconButton, onClick }: Props) => {
   return (
     <div className={clsx(cardClassName, className)} onClick={onClick}>
       {iconButton && (
@@ -23,10 +24,11 @@ const Card = ({ children, className, date, title, iconButton, onClick }: Props) 
       )}
       {/* TODO: 반응형 크기 재정의 */}
       <div className='flex h-full flex-col justify-between'>
-        {/* 날짜와 타이틀 */}
+        {/* 텍스트 컨텐츠 조절*/}
         <div>
-          <div className={dateClassName}>{date}</div>
-          <div className={titleClassName}>{title}</div>
+          {subTitle && <div className={subClassName}>{subTitle}</div>}
+          <div className={mainClassName}>{mainTitle}</div>
+          {content && <div className={contentClassName}>{content}</div>}
         </div>
         {/* badge area */}
         <div className={badgeClassName}>{children}</div>
@@ -46,8 +48,8 @@ const cardClassName = clsx(
   //   'lg:w-[400px] lg:h-[240px] lg:p-[50px]'
 );
 
-const dateClassName = clsx('text-sm font-normal text-black/50');
-
-const titleClassName = clsx('text-base font-bold text-black', 'mb-[20px]', 'line-clamp-2');
+const subClassName = clsx('text-sm font-normal text-black/50');
+const mainClassName = clsx('text-base font-bold text-black', 'mb-[20px]', 'line-clamp-2');
+const contentClassName = clsx('text-sm font-normal text-black/50', 'line-clamp-2');
 
 const badgeClassName = clsx('flex gap-[16px]');

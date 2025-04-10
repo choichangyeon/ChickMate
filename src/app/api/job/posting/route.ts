@@ -1,6 +1,7 @@
 import { DB_MESSAGE } from '@/constants/message-constants';
 import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 import { prisma } from '@/lib/prisma';
+import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
 import { JobPosting } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -9,19 +10,15 @@ import { NextRequest, NextResponse } from 'next/server';
  */
 export const GET = async (request: NextRequest): Promise<NextResponse> => {
   const { DB_REQUEST_ERROR, DB_SERVER_ERROR, DB_URL_ERROR } = DB_MESSAGE.ERROR;
-  const { EDUCATION, TYPE, JOB, MAIN_REGION } = USER_META_DATA_KEY;
+  const { MAIN_REGION } = USER_META_DATA_KEY;
   try {
     // searchParams로 정보 가져오기
     const searchParams = request.nextUrl.searchParams;
+    const { educationLevel, location, experienceType, jobType } = sanitizeQueryParams(searchParams);
 
     if (!searchParams) {
       return NextResponse.json({ message: DB_URL_ERROR }, { status: 400 });
     }
-
-    const educationLevel = searchParams.get(EDUCATION);
-    const location = searchParams.get('location');
-    const experienceType = searchParams.get(TYPE);
-    const jobType = searchParams.get(JOB);
 
     if (!educationLevel || !location || !experienceType || !jobType) {
       return NextResponse.json({ message: DB_REQUEST_ERROR }, { status: 400 });

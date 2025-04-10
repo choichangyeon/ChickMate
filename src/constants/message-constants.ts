@@ -89,6 +89,9 @@ export const DB_MESSAGE = {
 export const CHARACTER_MESSAGE = {
   INFO: {
     GET_DATA_FAILED: '캐릭터 정보를 가져오는데 실패했습니다.',
+    GET_DATA_LOADING: '캐릭터 정보를 가져오는 중입니다.',
+    GET_DATA_NULL: '캐릭터를 생성해주세요.',
+    NEED_LOGIN: '로그인이 필요합니다.'
   },
   PATCH: {
     PATCH_DATA_FAILED: '경험치 획득에 실패했습니다.',

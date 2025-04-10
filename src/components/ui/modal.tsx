@@ -2,16 +2,18 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import Link from 'next/link';
 
 type Props = {
-  hasCloseButton?: boolean;
+  linkHref?: string;
+  linkText?: string;
   portalRoot?: HTMLElement;
   closeModal: () => void;
   children: React.ReactNode;
   className?: string;
 };
 
-const Modal = ({ hasCloseButton, portalRoot, closeModal, children, className }: Props) => {
+const Modal = ({ linkHref, linkText, portalRoot, closeModal, children, className }: Props) => {
   const [isMounted, setIsMounted] = useState(false);
   const modalContentRef = useRef<HTMLDivElement | null>(null);
 
@@ -50,10 +52,10 @@ const Modal = ({ hasCloseButton, portalRoot, closeModal, children, className }: 
       <div ref={modalContentRef} className='relative w-full max-w-[750px] flex-col rounded-lg bg-white p-8'>
         <div className={className}>
           {children}
-          {hasCloseButton && (
-            <button type='button' onClick={closeModal}>
-              닫기
-            </button>
+          {linkHref && (
+            <Link href={linkHref as string} type='button' onClick={closeModal}>
+              {linkText}
+            </Link>
           )}
         </div>
       </div>

@@ -1,33 +1,29 @@
 'use client';
 
-import { useGetCharacterQuery } from '@/features/chraracter/hooks/use-get-character-query';
-import { useCharacterStore } from '@/store/use-character-store';
-import { useEffect } from 'react';
-import MainCharacterCard from './main-character-card';
 import { Session } from 'next-auth';
-import { useCharacterStoreSync } from './hooks/use-character-store-sync';
+import { useCharacterStoreSync } from '@/features/chraracter/hooks/use-character-store-sync';
+import { useGetCharacterQuery } from '@/features/chraracter/hooks/use-get-character-query';
+import MainCharacterCard from './main-character-card';
+import { CHARACTER_MESSAGE } from '@/constants/message-constants';
 
 type Props = {
   session: Session | null;
 };
+
+const { NEED_LOGIN, GET_DATA_LOADING, GET_DATA_NULL } = CHARACTER_MESSAGE.INFO;
 
 const MainCharacter = ({ session }: Props) => {
   const { data: characterData, isPending, isError } = useGetCharacterQuery();
 
   useCharacterStoreSync(characterData);
 
-  if (!session) return <MainCharacterCard disabled overlayText='로그인이 필요합니다.' />;
+  if (!session) return <MainCharacterCard disabled overlayText={NEED_LOGIN} />;
 
-  if (isError || (!isPending && !characterData))
-    return <MainCharacterCard disabled requiredModal overlayText='캐릭터를 생성해주세요.' />;
+  if (isPending) return <MainCharacterCard disabled overlayText={GET_DATA_LOADING} />;
 
-  if (isPending) {
-    <MainCharacterCard disabled overlayText='캐릭터 정보를 불러오는 중입니다.' />;
-  }
+  if (isError || !characterData) return <MainCharacterCard disabled requiredModal overlayText={GET_DATA_NULL} />;
 
-  if (characterData) {
-    return <MainCharacterCard characterData={characterData} />;
-  }
+  if (characterData) return <MainCharacterCard characterData={characterData} />;
 };
 
 export default MainCharacter;

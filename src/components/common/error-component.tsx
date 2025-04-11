@@ -1,11 +1,11 @@
 'use client';
 
-import Title from '../ui/title';
+import Typography from '../ui/typography';
 
 const ErrorComponent = () => {
   return (
     <section>
-      <Title>에러가 발생했습니다.</Title>
+      <Typography>에러가 발생했습니다.</Typography>
       <button onClick={() => window.location.reload()}>새로고침</button>
     </section>
   );

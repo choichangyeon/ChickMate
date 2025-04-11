@@ -1,4 +1,4 @@
-import Text from '@/components/ui/text';
+import Typography from '@/components/ui/typography';
 import type { Field } from '@/types/resume';
 
 type Props = {
@@ -34,7 +34,7 @@ const QuestionAnswerField = ({ field, onChange, onDelete }: Props) => {
         className='h-[300px]'
       />
       <div className='flex justify-between'>
-        <Text>{answer.length} / 1000 (공백 포함)</Text>
+        <Typography>{answer.length} / 1000 (공백 포함)</Typography>
         <button type='button' onClick={() => onDelete(id)}>
           삭제
         </button>

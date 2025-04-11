@@ -42,7 +42,7 @@ const typographyVariant = cva('', {
   },
 });
 
-type AllowedTags = 'p' | 'span' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+type AllowedTags = 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
 type TextProps<T extends AllowedTags = 'p'> = {
   as?: T;

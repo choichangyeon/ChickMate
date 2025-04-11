@@ -5,7 +5,9 @@ import { PATH, QUERY_PARAMS } from './constants/path-constant';
 const {
   AUTH: { SIGN_IN },
 } = PATH;
+
 const { UNAUTH } = QUERY_PARAMS;
+
 export const middleware = async (request: NextRequest) => {
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
   const pathname = request.nextUrl.pathname;
@@ -33,5 +35,5 @@ export const middleware = async (request: NextRequest) => {
 };
 
 export const config = {
-  matcher: ['/my-page', '/resume/:path*', '/character'],
+  matcher: ['/my-page', '/resume/:path*', '/character', '/job'],
 };

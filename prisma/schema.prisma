@@ -91,7 +91,7 @@ model Character {
   experience  Int                @default(0)
   createdAt   DateTime           @default(now()) @map("created_at")
 
-  user        User               @relation(fields: [userId], references: [id])
+  user        User               @relation(fields: [userId], references: [id],onDelete: Cascade)
   characterHistories CharacterHistory[] 
 
   @@map("character")
@@ -104,7 +104,7 @@ model CharacterHistory {
   experience  Int
   createdAt   DateTime  @default(now()) @map("created_at")
 
-  character   Character @relation(fields: [characterId], references: [id])
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
 
   @@map("character_history")
 }
@@ -121,7 +121,7 @@ model Resume {
 
   InterviewHistories  InterviewHistory[]
 
-  user                User     @relation(fields: [userId], references: [id])
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("resume")
 }
@@ -134,8 +134,8 @@ model InterviewHistory {
   content             Json?    
   createdAt           DateTime @default(now()) @map("created_at")
   interviewType       String   @map("interview_type")
-  user                User     @relation(fields: [userId], references: [id])
-  resume              Resume   @relation(fields: [resumeId], references: [id])
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resume              Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 
   @@map("interview_history")
 }
@@ -164,8 +164,8 @@ model UserSelectedJob {
   userId       String     @map("user_id")
   jobPostingId Int        @map("job_posting_id")
   createdAt    DateTime   @default(now()) @map("created_at")
-  jobPosting   JobPosting @relation(fields: [jobPostingId], references: [id])
-  user         User       @relation(fields: [userId], references: [id])
+  jobPosting   JobPosting @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("user_selected_job")
 }
@@ -192,7 +192,7 @@ model SubRegion {
   mainRegionId Int        @map("mainRegion_id")
   name         String
   value        String
-  mainRegion   MainRegion @relation(fields: [mainRegionId], references: [id])
+  mainRegion   MainRegion @relation(fields: [mainRegionId], references: [id], onDelete: Cascade)
 
   @@map("sub_region")
 }

@@ -14,6 +14,7 @@ const typographyVariant = cva('', {
       default: 'text-cool-gray-900',
       white: 'text-white',
       'primary-600': 'text-primary-orange-600',
+      'primary-700': 'text-primary-orange-700',
       'secondary-amber': 'text-secondary-amber',
       'secondary-yellow': 'text-secondary-yellow',
       'gray-700': 'text-cool-gray-700',

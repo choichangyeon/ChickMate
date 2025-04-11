@@ -1,7 +1,9 @@
 import clsx from 'clsx';
-import Text from '@/components/ui/text';
+import Typography from '@/components/ui/typography';
+import { DEFAULT } from '@/constants/user-meta-data-constants';
 
 type Props = {
+  type: 'jobPosting' | 'resume' | 'default';
   children?: React.ReactNode;
   className?: string;
   subTitle?: string;
@@ -12,9 +14,34 @@ type Props = {
   onClick?: () => void;
 };
 
-const Card = ({ children, className, mainTitle, subTitle, content, iconButton, onClick }: Props) => {
+const Card = ({ type = 'default', children, className, mainTitle, subTitle, content, iconButton, onClick }: Props) => {
+  const textBox = () => {
+    switch (type) {
+      case 'resume':
+        return;
+      case 'jobPosting':
+        return;
+      default:
+        return null;
+    }
+  };
+  if (type === 'jobPosting') {
+    const textBox = (
+      <div>
+        {subTitle && (
+          <Typography size='sm' color='gray-500'>
+            {subTitle}
+          </Typography>
+        )}
+        <Typography as='h3' weight='bold' className='line-clamp-2'>
+          {mainTitle}
+        </Typography>
+        {content && <Typography className={contentClassName}>{content}</Typography>}
+      </div>
+    );
+  }
   return (
-    <article className={clsx(cardClassName, className)} onClick={onClick}>
+    <section className={clsx(cardClassName, className)} onClick={onClick}>
       {iconButton && (
         // TODO: iconButton component 적용
         <div className='absolute right-[20px] top-[12px] h-6 w-6'>
@@ -23,39 +50,22 @@ const Card = ({ children, className, mainTitle, subTitle, content, iconButton, o
           <div className='absolute left-[5px] top-[8px] h-3.5 w-3.5 bg-black' />
         </div>
       )}
-      {/* TODO: 반응형 크기 재정의 */}
       <div className='flex h-full flex-col justify-between'>
-        {/* 텍스트 컨텐츠 조절*/}
-        <div>
-          {subTitle && (
-            <Text size='sm' color='gray'>
-              {subTitle}
-            </Text>
-          )}
-          <div className={mainClassName}>{mainTitle}</div>
-          {content && <p className={contentClassName}>{content}</p>}
-        </div>
+        {textBox}
         {/* badge area */}
-        <footer className={badgeClassName}>{children}</footer>
+        <div className={badgeClassName}>{children}</div>
       </div>
-    </article>
+    </section>
   );
 };
 
 export default Card;
-
+//TODO: bg-emerald-900/0 -> color 수정, outline-gray-200 -> color 수정
 const cardClassName = clsx(
-  'relative bg-emerald-900/0 rounded-lg outline outline-1 outline-offset-[-1px] outline-gray-200 ',
-  'w-[288px] h-[160px] p-[20px]'
-  //   TODO: 반응형 크기 재정의
-  //   'sm:w-[320px] sm:h-[176px] sm:p-[30px]',
-  //   'md:w-[384px] md:h-[224px] md:p-[40px]',
-  //   'lg:w-[400px] lg:h-[240px] lg:p-[50px]'
+  'bg-emerald-900/0 rounded-lg shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] outline outline-1 outline-offset-[-1px] outline-gray-200 flex-col justify-between items-start',
+  'w-[307px] h-[173px] p-[24px]'
 );
 
-// TODO: 반응형 크기 재정의 & 텍스트 크기에 따른 line-height 조정 생각하기
-const subClassName = clsx('text-sm font-normal text-black/50', 'line-clamp-1');
-const mainClassName = clsx('text-base font-bold text-black', 'line-clamp-2');
 const contentClassName = clsx('text-sm font-normal text-black/50', 'line-clamp-1');
 
 const badgeClassName = clsx('flex gap-[16px]');

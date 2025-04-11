@@ -7,7 +7,7 @@ const {
   JOB,
 } = PATH;
 
-export const getTitleFromHeaders = () => {
+export const getTitleFromPath = () => {
   const allHeaders = headers();
   const pathname = allHeaders.get('x-pathname');
 

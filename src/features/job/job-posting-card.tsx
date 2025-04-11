@@ -1,25 +1,44 @@
 'use client';
 
 import Card from '@/components/common/card';
-import { getJobByUserMetaData } from '@/features/job/api/client-services';
+import Typography from '@/components/ui/typography';
+import { formatDate } from '@/utils/format-date';
 import { JobPosting } from '@prisma/client';
+import clsx from 'clsx';
 
-const JobPostingCard = () => {
-  const handleClick = async () => {
-    // TODO : 유저 데이터 가져오기
-    const jobPostingList: JobPosting[] = await getJobByUserMetaData({
-      educationLevel: '대졸(4년)',
-      location: { mainRegion: '경남' },
-      experienceType: '신입',
-      jobType: '의료',
-    });
-  };
+type Props = {
+  jobPosting: JobPosting;
+  children?: React.ReactNode;
+};
+
+const JobPostingCard = ({ jobPosting, children }: Props) => {
+  const { company, title, experienceType, expiredAt, postedAt } = jobPosting;
+  const postedAtDate = formatDate({ input: postedAt });
+  const expiredAtDate = formatDate({ input: expiredAt });
   return (
-    <Card subTitle='2025.05.31' mainTitle='2025년 상반기 CJ제일제당' content='(식품/공통부문)' iconButton={true}>
-      <p>JobPostingCard</p>
-      <button onClick={handleClick}>테스트</button>
+    <Card iconButton={true}>
+      <div>
+        <Typography weight='bold' color='gray-500'>
+          {company}
+        </Typography>
+        <Typography as='h3' weight='bold' className='line-clamp-2'>
+          {title}
+        </Typography>
+        <div className='flex flex-row items-center gap-[16px]'>
+          <Typography size='sm' color='gray-500'>
+            {experienceType}
+          </Typography>
+          <Typography size='sm' color='gray-500'>
+            {postedAtDate}~{expiredAtDate}
+          </Typography>
+        </div>
+      </div>
+      {/* badge area */}
+      <div className={badgeClassName}>{children} </div>
     </Card>
   );
 };
+
+const badgeClassName = clsx('flex gap-[16px]');
 
 export default JobPostingCard;

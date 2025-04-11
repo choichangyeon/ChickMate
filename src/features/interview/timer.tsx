@@ -1,68 +1,18 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
 import Typography from '@/components/ui/typography';
-import { useAudioRecorder } from '@/features/interview/hooks/use-audio-recorder';
+import STTComponent from '@/features/interview/stt-component';
+import { useAudioWithTimer } from '@/features/interview/hooks/use-audio-with-timer';
 
 const Timer = () => {
   const MINUTES_IN_MS = 1 * 60 * 1000;
 
-  const [isTimerStart, setIsTimerStart] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(MINUTES_IN_MS);
-
-  const timerStartRef = useRef<number | null>(null);
-  const animationFrameRef = useRef<number | null>(null);
-
-  const minutes = String(Math.floor((timeLeft / (1000 * 60)) % 60)).padStart(2, '0');
-  const seconds = String(Math.floor((timeLeft / 1000) % 60)).padStart(2, '0');
-
-  /** hook */
-  const { audioBlob, startRecording, stopRecording } = useAudioRecorder();
-
-  /** function */
-  const startTimer = () => {
-    setIsTimerStart(true);
-    startRecording();
-    timerStartRef.current = Date.now();
-    updateTimer();
-  };
-
-  const stopTimer = () => {
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
-      animationFrameRef.current = null;
-    }
-    setIsTimerStart(false);
-    stopRecording();
-    setTimeLeft(MINUTES_IN_MS);
-  };
-
-  const updateTimer = () => {
-    if (!timerStartRef.current) return;
-
-    const timeElapsed = Date.now() - timerStartRef.current;
-    const newTimeLeft = MINUTES_IN_MS - timeElapsed;
-
-    if (newTimeLeft <= 0) {
-      stopTimer();
-      return;
-    }
-
-    setTimeLeft(newTimeLeft);
-    animationFrameRef.current = requestAnimationFrame(updateTimer);
-  };
+  const { isRecording, formattedTime, startRecordingWithTimer, stopRecordingWithTimer, audioBlob } =
+    useAudioWithTimer(MINUTES_IN_MS);
 
   const handleButtonClick = () => {
-    isTimerStart ? stopTimer() : startTimer();
+    isRecording ? stopRecordingWithTimer() : startRecordingWithTimer();
   };
-
-  useEffect(() => {
-    return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-    };
-  }, []);
 
   /** ui */
   return (
@@ -75,11 +25,12 @@ const Timer = () => {
       </div>
       <div>
         <Typography color='primary-600' size='3xl' weight='black'>
-          {minutes} : {seconds}
+          {formattedTime.minutes} : {formattedTime.seconds}
         </Typography>
       </div>
       <div>
-        <button onClick={handleButtonClick}>{isTimerStart ? '답변 완료' : '말하기'}</button>
+        <button onClick={handleButtonClick}>{isRecording ? '답변 완료하기' : '말하기'}</button>
+        {audioBlob && <STTComponent blob={audioBlob} />}
       </div>
     </div>
   );

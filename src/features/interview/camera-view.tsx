@@ -6,7 +6,7 @@ const CameraView = () => {
   const videoRef = useWebcamStream();
 
   return (
-    <div className='w-[300px]'>
+    <div className='flex-1'>
       <video ref={videoRef} autoPlay />
     </div>
   );

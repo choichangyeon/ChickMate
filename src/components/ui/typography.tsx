@@ -8,6 +8,7 @@ const typographyVariant = cva('', {
       lg: 'text-lg',
       xl: 'text-xl',
       '2xl': 'text-2xl',
+      '3xl': 'text-3xl',
       '6xl': 'text-6xl',
     },
     color: {
@@ -27,11 +28,18 @@ const typographyVariant = cva('', {
       thin: 'font-thin',
       medium: 'font-medium',
       bold: 'font-bold',
+      black: 'font-black',
     },
     align: {
       left: 'text-left',
       center: 'text-center',
       right: 'text-right',
+    },
+    lineClamp: {
+      '1': 'line-clamp-1',
+      '2': 'line-clamp-2',
+      '3': 'line-clamp-3',
+      '4': 'line-clamp-4',
     },
   },
   defaultVariants: {
@@ -44,15 +52,23 @@ const typographyVariant = cva('', {
 
 type AllowedTags = 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
-type TextProps<T extends AllowedTags = 'p'> = {
+type TypographyProps<T extends AllowedTags = 'p'> = {
   as?: T;
   children: React.ReactNode;
 } & VariantProps<typeof typographyVariant> &
   Omit<React.ComponentPropsWithoutRef<T>, 'as'>;
 
-const Typography = <T extends AllowedTags = 'p'>({ as, size, color, weight, align, children }: TextProps<T>) => {
+const Typography = <T extends AllowedTags = 'p'>({
+  as,
+  size,
+  color,
+  weight,
+  align,
+  lineClamp,
+  children,
+}: TypographyProps<T>) => {
   const Component = as || 'p';
-  return <Component className={typographyVariant({ size, color, weight, align })}>{children}</Component>;
+  return <Component className={typographyVariant({ size, color, weight, align, lineClamp })}>{children}</Component>;
 };
 
 export default Typography;

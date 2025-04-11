@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'primary-orange ': {
+        'primary-orange': {
           600: '#E55A27',
           700: '#C2410C',
         },
@@ -25,6 +25,17 @@ const config: Config = {
         },
         background: 'var(--background)',
         foreground: 'var(--foreground)',
+      },
+      borderRadius: {
+        'rounded-none': '0rem',
+        'rounded-sm': '0.125rem',
+        'rounded': '0.25rem',
+        'rounded-md': '0.375rem',
+        'rounded-lg': '0.5rem',
+        'rounded-xl': '0.75rem',
+        'rounded-2xl': '1rem',
+        'rounded-3xl': '1.5rem',
+        'rounded-full': '50%',
       },
     },
   },

@@ -46,6 +46,6 @@ const ResumeCard = ({ resume, iconButton, children }: Props) => {
     </Card>
   );
 };
-const badgeClassName = clsx('flex gap-[16px]');
+const badgeClassName = clsx('flex gap-4');
 
 export default ResumeCard;

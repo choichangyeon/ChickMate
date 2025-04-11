@@ -13,7 +13,7 @@ type Props = {
   iconButton?: boolean;
 };
 
-const JobPostingCard = ({ jobPosting,  iconButton, children, }: Props) => {
+const JobPostingCard = ({ jobPosting, iconButton, children }: Props) => {
   const { company, title, experienceType, expiredAt, postedAt } = jobPosting;
   const postedAtDate = formatDate({ input: postedAt });
   const expiredAtDate = formatDate({ input: expiredAt });
@@ -49,6 +49,6 @@ const JobPostingCard = ({ jobPosting,  iconButton, children, }: Props) => {
   );
 };
 
-const badgeClassName = clsx('flex gap-[16px]');
+const badgeClassName = clsx('flex gap-4');
 
 export default JobPostingCard;

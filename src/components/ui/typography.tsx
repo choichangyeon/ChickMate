@@ -1,6 +1,6 @@
 import { cva, VariantProps } from 'class-variance-authority';
 
-const textVariant = cva('', {
+const typographyVariant = cva('', {
   variants: {
     size: {
       sm: 'text-sm',
@@ -13,7 +13,7 @@ const textVariant = cva('', {
     color: {
       default: 'text-cool-gray-900',
       white: 'text-white',
-      primary: 'text-primary',
+      'primary-600': 'text-primary-orange-600',
       'secondary-amber': 'text-secondary-amber',
       'secondary-yellow': 'text-secondary-yellow',
       'gray-700': 'text-cool-gray-700',
@@ -41,17 +41,17 @@ const textVariant = cva('', {
   },
 });
 
-type AllowedTags = 'p' | 'span';
+type AllowedTags = 'p' | 'span' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
 type TextProps<T extends AllowedTags = 'p'> = {
   as?: T;
   children: React.ReactNode;
-} & VariantProps<typeof textVariant> &
+} & VariantProps<typeof typographyVariant> &
   Omit<React.ComponentPropsWithoutRef<T>, 'as'>;
 
-const Text = <T extends AllowedTags = 'p'>({ as, size, color, weight, align, children }: TextProps<T>) => {
+const Typography = <T extends AllowedTags = 'p'>({ as, size, color, weight, align, children }: TextProps<T>) => {
   const Component = as || 'p';
-  return <Component className={textVariant({ size, color, weight, align })}>{children}</Component>;
+  return <Component className={typographyVariant({ size, color, weight, align })}>{children}</Component>;
 };
 
-export default Text;
+export default Typography;

@@ -23,7 +23,7 @@ export const getCharacterByUserId = async (): Promise<Character> => {
   return response;
 };
 
-type Props = string;
+type Props = Pick<Character, 'type'>;
 
 /**
  * 새로운 캐릭터를 생성합니다.
@@ -33,7 +33,7 @@ type Props = string;
  * @returns {Promise<Character>} 생성된 캐릭터 정보를 담은 Promise 객체
  * @throws {Error}
  */
-export const postCreateCharacter = async (type: Props): Promise<Character> => {
+export const postCreateCharacter = async ({type}: Props): Promise<Character> => {
   const { response } = await fetchWithSentry(INFO, {
     method: POST,
     headers: JSON_HEADER,

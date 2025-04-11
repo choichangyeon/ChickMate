@@ -1,10 +1,6 @@
 import { withSentryConfig } from '@sentry/nextjs';
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  images: {
-    domains: ['lh3.googleusercontent.com', 'googleusercontent.com'],
-  },
-};
+const nextConfig = {};
 
 export default withSentryConfig(nextConfig, {
   // For all available options, see:

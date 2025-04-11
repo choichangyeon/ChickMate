@@ -18,7 +18,7 @@ export const AUTH_MESSAGE = {
     SIGN_UP_EMPTY_FIELD: '모든 값을 입력해주세요.',
     SIGN_IN_SUCCESS: '로그인에 성공했습니다.',
     SIGN_IN_FAILED: '이메일 혹은 비밀번호를 확인해주세요.',
-    SOCIAL_SIGN_IN_EXIST_ERROR: '다른 로그인 방식으로 이미 가입된 계정이에요.',
+    SOCIAL_SIGN_IN_EXIST_ERROR: '다른 로그인 방식으로 이미 가입된 계정입니다.',
     SOCIAL_SIGN_IN_FAILED: '소셜 로그인에 실패했어요. 다시 시도해 주세요.',
     AUTH_REQUIRED: '사용자 인증이 필요합니다.',
   },
@@ -89,6 +89,13 @@ export const DB_MESSAGE = {
 export const CHARACTER_MESSAGE = {
   INFO: {
     GET_DATA_FAILED: '캐릭터 정보를 가져오는데 실패했습니다.',
+    GET_DATA_LOADING: '캐릭터 정보를 가져오는 중입니다.',
+    GET_DATA_NULL: '캐릭터를 생성해주세요.',
+    NEED_LOGIN: '로그인이 필요합니다.'
+  },
+  POST: {
+    POST_DATA_FAILED: '캐릭터를 생성하는 데 실패했습니다.',
+    POST_DATA_SUCCESS: '캐릭터가 생성되었습니다.'
   },
   PATCH: {
     PATCH_DATA_FAILED: '경험치 획득에 실패했습니다.',

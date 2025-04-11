@@ -5,6 +5,7 @@ import { getLevelAndPercentage } from './utils/get-level-and-percent';
 import { useModalStore } from '@/store/use-modal-store';
 import { defaultCharacter } from './data/character-data';
 import CharacterExpBar from './character-exp-bar';
+import { CHARACTER_INFOMATIONS } from '@/constants/character-constants';
 
 type Props = {
   characterData?: Character;
@@ -14,9 +15,10 @@ type Props = {
 
 const MainCharacterCard = ({ characterData = defaultCharacter, overlayText, requiredModal = false }: Props) => {
   const { isModalOpen, toggleModal } = useModalStore();
+  const isDefault = characterData === defaultCharacter;
   const { type, experience } = characterData;
   const { level, percent } = getLevelAndPercentage(experience);
-  const isDefault = characterData === defaultCharacter;
+  const characterName = CHARACTER_INFOMATIONS[type][level].name;
 
   return (
     <>
@@ -43,12 +45,12 @@ const MainCharacterCard = ({ characterData = defaultCharacter, overlayText, requ
             width={344}
             height={344}
             alt='character-img'
-            className='mx-auto'
+            priority
           />
           <div className='flex justify-between gap-6'>
             <span className='text-[40px] font-extrabold text-red-500'>LV : {level}</span>
             <div className='flex items-center justify-center rounded-3xl border border-black px-9 py-3'>
-              <span className='text-xl'>병아리</span>
+              <span className='text-xl'>{characterName}</span>
             </div>
           </div>
         </div>

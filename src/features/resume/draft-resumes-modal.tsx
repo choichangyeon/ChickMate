@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import Modal from '@/components/common/modal';
-import Text from '@/components/ui/text';
+import Typography from '@/components/ui/typography';
 import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
 import type { Resume } from '@prisma/client';
 
@@ -29,7 +29,7 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResume
   return (
     <Modal className='flex flex-col gap-2'>
       {!isError && draftResumeList?.length === 0 ? (
-        <Text>임시 저장된 자기소개서가 없습니다</Text>
+        <Typography>임시 저장된 자기소개서가 없습니다</Typography>
       ) : (
         draftResumeList?.map((resume) => (
           <div key={resume.id} className='flex gap-3'>

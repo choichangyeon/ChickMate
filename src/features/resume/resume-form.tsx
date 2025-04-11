@@ -1,14 +1,14 @@
 'use client';
 
-import Text from '@/components/ui/text';
+import { useEffect } from 'react';
+import Typography from '@/components/ui/typography';
+import { useModalStore } from '@/store/use-modal-store';
 import { useResumeForm } from '@/features/resume/hooks/use-resume-form';
 import { useDraftResumesQuery } from '@/features/resume/hooks/use-draft-resumes-query';
 import QuestionAnswerField from '@/features/resume/question-answer-field';
 import DraftResumesModal from '@/features/resume/draft-resumes-modal';
 import type { Field } from '@/types/resume';
 import type { Resume } from '@prisma/client';
-import { useEffect } from 'react';
-import { useModalStore } from '@/store/use-modal-store';
 
 const ResumeForm = () => {
   const toggleModal = useModalStore((state) => state.toggleModal);
@@ -63,7 +63,7 @@ const ResumeForm = () => {
       <button type='button' onClick={handleAddField}>
         추가하기
       </button>
-      <Text>{autoSaveStatus}</Text>
+      <Typography>{autoSaveStatus}</Typography>
       <button type='button' onClick={handleDraftResumeListClick}>
         임시 저장된 글 | {draftResumeList?.length ?? 0}
       </button>

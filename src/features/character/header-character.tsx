@@ -1,56 +1,30 @@
 'use client';
 
-import { User } from '@/types/user';
-import Image from 'next/image';
-import { getLevelAndPercentage } from './utils/get-level-and-percent';
 import { useGetCharacterQuery } from '@/features/character/hooks/use-get-character-query';
 import { useCharacterStoreSync } from '@/features/character/hooks/use-character-store-sync';
+import HeaderCharacterCard from '@/features/character/header-character-card';
+import { Session } from 'next-auth';
+import { CHARACTER_MESSAGE } from '@/constants/message-constants';
 
 type Props = {
-  user?: User;
+  session: Session | null;
 };
 
-const HeaderCharacter = ({ user }: Props) => {
-  const { data: characterData, isPending, isError, refetch } = useGetCharacterQuery();
+const { NEED_LOGIN, GET_DATA_LOADING, GET_DATA_NULL } = CHARACTER_MESSAGE.INFO;
+
+const HeaderCharacter = ({ session }: Props) => {
+  const { data: characterData, isPending, isError } = useGetCharacterQuery();
 
   useCharacterStoreSync(characterData);
 
-  if (isPending) {
-    return null;
-  }
-  if (isError) {
-    return null;
-  }
+  if (!session) return <HeaderCharacterCard overlayText={NEED_LOGIN} />;
 
-  // 테스트용 reset
-  const handleResetExperience = async () => {
-    await fetch('/api/character/reset', {
-      method: 'PATCH',
-    });
-    await refetch();
-  };
+  if (isPending) return <HeaderCharacterCard session={session} overlayText={GET_DATA_LOADING} />;
 
-  const { level, percent } = getLevelAndPercentage(characterData.experience);
+  if (isError || !characterData)
+    return <HeaderCharacterCard session={session} requiredModal overlayText={GET_DATA_NULL} />;
 
-  return (
-    <div className='flex gap-2'>
-      <div className='flex'>
-        <div>
-          <div>
-            <span>LV{level}</span>
-            {user && <span>{user.name}님</span>}
-          </div>
-          <div>{percent}%</div>
-          <button onClick={handleResetExperience} className='mt-2 rounded bg-red-500 px-2 py-1 text-white'>
-            경험치 초기화
-          </button>
-        </div>
-        <div>
-          <Image src={`/assets/character/header/level${level}.jpeg`} width={70} height={70} alt='character-img' />
-        </div>
-      </div>
-    </div>
-  );
+  return <HeaderCharacterCard session={session} characterData={characterData} />;
 };
 
 export default HeaderCharacter;

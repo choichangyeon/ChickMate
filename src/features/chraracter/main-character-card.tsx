@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import CreateCharacterModal from './create-character-modal';
+import CreateCharacterModal from '@/features/chraracter/create-character-modal';
 import { Character } from '@prisma/client';
-import { getLevelAndPercentage } from './utils/get-level-and-percent';
+import { getLevelAndPercentage } from '@/features/chraracter/utils/get-level-and-percent';
 import { useModalStore } from '@/store/use-modal-store';
-import { defaultCharacter } from './data/character-data';
-import CharacterExpBar from './character-exp-bar';
+import { defaultCharacter } from '@/features/chraracter/data/character-data';
+import CharacterExpBar from '@/features/chraracter/character-exp-bar';
 import { CHARACTER_INFOMATIONS } from '@/constants/character-constants';
 
 type Props = {

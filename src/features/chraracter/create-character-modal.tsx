@@ -4,8 +4,8 @@ import { useState } from 'react';
 import Modal from '@/components/ui/modal';
 import { useModalStore } from '@/store/use-modal-store';
 import Image from 'next/image';
-import { postCreateCharacter } from './api/client-services';
-import { CHARACTER_INFOMATIONS  } from '@/constants/character-constants';
+import { postCreateCharacter } from '@/features/chraracter/api/client-services';
+import { CHARACTER_INFOMATIONS } from '@/constants/character-constants';
 import { CHARACTER_MESSAGE } from '@/constants/message-constants';
 
 const { POST_DATA_SUCCESS } = CHARACTER_MESSAGE.POST;
@@ -21,7 +21,7 @@ const CreateCharacterModal = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await postCreateCharacter({type});
+      await postCreateCharacter({ type });
       alert(POST_DATA_SUCCESS);
       toggleModal();
     } catch (error) {

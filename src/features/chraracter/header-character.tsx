@@ -1,12 +1,10 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import { useGetCharacterQuery } from './hooks/use-get-character-query';
 import { User } from '@/types/user';
 import Image from 'next/image';
-import { useCharacterStore } from '@/store/use-character-store';
 import { getLevelAndPercentage } from './utils/get-level-and-percent';
-import { useCharacterStoreSync } from './hooks/use-character-store-sync';
+import { useGetCharacterQuery } from '@/features/chraracter/hooks/use-get-character-query';
+import { useCharacterStoreSync } from '@/features/chraracter/hooks/use-character-store-sync';
 
 type Props = {
   user?: User;

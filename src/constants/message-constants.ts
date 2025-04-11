@@ -71,6 +71,7 @@ export const USER_META_DATA_FORM_MESSAGE = {
     GET_REGIONS_ERROR: '지역 정보를 가져오는데 실패했습니다.',
     GET_DATA_ERROR: '유저 정보를 가져오는데 실패했습니다.',
     POST_DATA_ERROR: '유저 정보를 저장하는데 실패했습니다.',
+    POST_DATA_SUCCESS: '주요 이력이 저장되었습니다.',
   },
 };
 
@@ -91,11 +92,11 @@ export const CHARACTER_MESSAGE = {
     GET_DATA_FAILED: '캐릭터 정보를 가져오는데 실패했습니다.',
     GET_DATA_LOADING: '캐릭터 정보를 가져오는 중입니다.',
     GET_DATA_NULL: '캐릭터를 생성해주세요.',
-    NEED_LOGIN: '로그인이 필요합니다.'
+    NEED_LOGIN: '로그인이 필요합니다.',
   },
   POST: {
     POST_DATA_FAILED: '캐릭터를 생성하는 데 실패했습니다.',
-    POST_DATA_SUCCESS: '캐릭터가 생성되었습니다.'
+    POST_DATA_SUCCESS: '캐릭터가 생성되었습니다.',
   },
   PATCH: {
     PATCH_DATA_FAILED: '경험치 획득에 실패했습니다.',

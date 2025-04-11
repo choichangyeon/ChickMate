@@ -1,4 +1,4 @@
-import MainCharacter from '@/features/chraracter/main-character';
+import MainCharacter from '@/features/character/main-character';
 import { authOptions } from '@/utils/auth-option';
 import { getServerSession } from 'next-auth';
 

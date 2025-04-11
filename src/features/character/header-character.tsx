@@ -3,8 +3,8 @@
 import { User } from '@/types/user';
 import Image from 'next/image';
 import { getLevelAndPercentage } from './utils/get-level-and-percent';
-import { useGetCharacterQuery } from '@/features/chraracter/hooks/use-get-character-query';
-import { useCharacterStoreSync } from '@/features/chraracter/hooks/use-character-store-sync';
+import { useGetCharacterQuery } from '@/features/character/hooks/use-get-character-query';
+import { useCharacterStoreSync } from '@/features/character/hooks/use-character-store-sync';
 
 type Props = {
   user?: User;

@@ -1,5 +1,5 @@
 import { QUERY_KEY } from '@/constants/query-key';
-import { getCharacterByUserId } from '@/features/chraracter/api/server-services';
+import { getCharacterByUserId } from '@/features/character/api/server-services';
 import { Nav } from '@/features/layout/nav';
 import { User } from '@/types/user';
 import { authOptions } from '@/utils/auth-option';

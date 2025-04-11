@@ -1,9 +1,9 @@
 'use client';
 
 import { Session } from 'next-auth';
-import { useCharacterStoreSync } from '@/features/chraracter/hooks/use-character-store-sync';
-import { useGetCharacterQuery } from '@/features/chraracter/hooks/use-get-character-query';
-import MainCharacterCard from '@/features/chraracter/main-character-card';
+import { useCharacterStoreSync } from '@/features/character/hooks/use-character-store-sync';
+import { useGetCharacterQuery } from '@/features/character/hooks/use-get-character-query';
+import MainCharacterCard from '@/features/character/main-character-card';
 import { CHARACTER_MESSAGE } from '@/constants/message-constants';
 
 type Props = {

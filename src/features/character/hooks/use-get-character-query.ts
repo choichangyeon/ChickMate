@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getCharacterByUserId } from '@/features/chraracter/api/client-services';
+import { getCharacterByUserId } from '@/features/character/api/client-services';
 import { QUERY_KEY } from '@/constants/query-key';
 
 const { CHARACTER } = QUERY_KEY;

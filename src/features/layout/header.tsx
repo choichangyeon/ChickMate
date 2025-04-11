@@ -1,5 +1,5 @@
 import { User } from '@/types/user';
-import HeaderCharacter from '../chraracter/header-character';
+import HeaderCharacter from '../character/header-character';
 
 export const Header = async ({ user }: { user: User }) => {
   return (

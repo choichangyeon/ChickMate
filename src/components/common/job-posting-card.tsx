@@ -1,6 +1,6 @@
 'use client';
 
-import Card from '@/components/common/card';
+import Card from '@/components/ui/card';
 import Typography from '@/components/ui/typography';
 import { formatDate } from '@/utils/format-date';
 import { JobPosting } from '@prisma/client';
@@ -31,7 +31,7 @@ const JobPostingCard = ({ jobPosting, iconButton, children }: Props) => {
         <Typography weight='bold' color='gray-500'>
           {company}
         </Typography>
-        <Typography as='h3' weight='bold' className='line-clamp-2'>
+        <Typography as='h3' weight='bold' lineClamp='2'>
           {title}
         </Typography>
         <div className='flex flex-row items-center gap-[16px]'>

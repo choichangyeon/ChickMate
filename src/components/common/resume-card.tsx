@@ -1,6 +1,6 @@
 'use client';
 
-import Card from '@/components/common/card';
+import Card from '@/components/ui/card';
 import Typography from '@/components/ui/typography';
 import { formatDate } from '@/utils/format-date';
 import { Resume } from '@prisma/client';
@@ -37,7 +37,7 @@ const ResumeCard = ({ resume, iconButton, children }: Props) => {
         <Typography size='sm' color='gray-500'>
           {updatedAt ? updatedAtDate : createdAtDate}
         </Typography>
-        <Typography as='h3' weight='bold' className='line-clamp-2'>
+        <Typography as='h3' weight='bold' lineClamp='2'>
           {title}
         </Typography>
       </div>

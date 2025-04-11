@@ -1,15 +1,40 @@
+import { QUERY_KEY } from '@/constants/query-key';
+import { STALE_TIME } from '@/constants/time-constants';
+import { getJobByUserMetaData } from '@/features/job/api/client-services';
 import BookmarkComponent from '@/features/job/bookmark-component';
+// import { useJobPostingQuery } from '@/features/job/hooks/use-job-posting-query';
 import JobPostingCard from '@/components/common/job-posting-card';
+import { getUserMetaData } from '@/features/user-meta-data/api/server-services';
+import { UserMetaDataType } from '@/types/user-meta-data-type';
+import { authOptions } from '@/utils/auth-option';
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
+import { getServerSession } from 'next-auth';
 
-const JobPage = () => {
+const { JOB_POSTING } = QUERY_KEY;
+const { AN_HOUR } = STALE_TIME;
+
+const JobPage = async () => {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: [JOB_POSTING],
+    queryFn: async () => {
+      const session = await getServerSession(authOptions);
+      const user = session?.user ?? null;
+      const userMetaData: UserMetaDataType = await getUserMetaData(user?.id);
+      return getJobByUserMetaData(userMetaData);
+    },
+    staleTime: AN_HOUR,
+  });
+
   return (
-    <div>
+    <HydrationBoundary state={dehydrate(queryClient)}>
       JobPage
       <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
       <br />
       <br />
       <BookmarkComponent jobPostingId={1} />
-    </div>
+    </HydrationBoundary>
   );
 };
 
@@ -32,4 +57,3 @@ const mockJobPosting = {
   employmentType: '정규직',
   createdAt: new Date(),
 };
-

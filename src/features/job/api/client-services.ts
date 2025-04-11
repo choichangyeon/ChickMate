@@ -30,6 +30,8 @@ export const getJobByUserMetaData = async (userMetaData: UserMetaDataProps): Pro
 
   const jobPostingList: JobPosting[] = res.data;
 
+  console.log(jobPostingList);
+
   return jobPostingList;
 };
 

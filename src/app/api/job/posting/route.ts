@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
 import { JobPosting } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
+import { mainRegion } from '../../../../features/user-meta-data/data/user-meta-data';
 
 /**
  * GET
@@ -14,7 +15,8 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
   try {
     // searchParams로 정보 가져오기
     const searchParams = request.nextUrl.searchParams;
-    const { educationLevel, location, experienceType, jobType } = sanitizeQueryParams(searchParams);
+    // TODO: mainRegion -> location으로 바꾸기
+    const { educationLevel, mainRegion, experienceType, jobType } = sanitizeQueryParams(searchParams);
 
     if (!searchParams) {
       return NextResponse.json({ message: DB_URL_ERROR }, { status: 400 });
@@ -24,7 +26,7 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
       return NextResponse.json({ message: DB_REQUEST_ERROR }, { status: 400 });
     }
 
-    const mainRegion = JSON.parse(location).mainRegion;
+    // const mainRegion = JSON.parse(location).mainRegion;
     const data: JobPosting[] = await prisma.jobPosting.findMany({
       where: {
         educationLevel,

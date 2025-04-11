@@ -5,7 +5,11 @@ type Props = {
   className?: string;
   onClick?: () => void;
 };
-
+/**
+ * @param children - ReactNode
+ * @param className - tailwind className
+ * @param onClick - onClick event handler
+ */
 const Card = ({ children, className, onClick }: Props) => {
   return (
     <section className={clsx(cardClassName, className)} onClick={onClick}>

@@ -5,23 +5,23 @@ import Modal from '@/components/ui/modal';
 import { useModalStore } from '@/store/use-modal-store';
 import Image from 'next/image';
 import { postCreateCharacter } from './api/client-services';
-import { CHARACTER_INFO, CharacterType } from '@/constants/character-constants';
+import { CHARACTER_INFOMATIONS  } from '@/constants/character-constants';
 import { CHARACTER_MESSAGE } from '@/constants/message-constants';
 
 const { POST_DATA_SUCCESS } = CHARACTER_MESSAGE.POST;
 
 const CreateCharacterModal = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const characterTypes = Object.keys(CHARACTER_INFO) as CharacterType[];
-  const characterType = characterTypes[currentIndex];
-  const selectedCharacter = CHARACTER_INFO[characterType][1];
+  const characterTypes = Object.keys(CHARACTER_INFOMATIONS);
+  const type = characterTypes[currentIndex];
+  const selectedCharacter = CHARACTER_INFOMATIONS[type][1];
 
   const toggleModal = useModalStore((state) => state.toggleModal);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await postCreateCharacter(characterType);
+      await postCreateCharacter({type});
       alert(POST_DATA_SUCCESS);
       toggleModal();
     } catch (error) {
@@ -52,11 +52,12 @@ const CreateCharacterModal = () => {
               onClick={goToPrev}
               disabled={characterTypes.length <= 1}
               className='text-3xl text-gray-500 transition'
+              aria-label='이전 캐릭터 보기'
             >
               &lt;
             </button>
             <Image
-              src={`/assets/character/card/${characterType}-level1.png`}
+              src={`/assets/character/card/${type}-level1.png`}
               alt={selectedCharacter.name}
               width={220}
               height={220}
@@ -66,6 +67,7 @@ const CreateCharacterModal = () => {
               onClick={goToNext}
               disabled={characterTypes.length <= 1}
               className='text-3xl text-gray-500 transition'
+              aria-label='다음 캐릭터 보기'
             >
               &gt;
             </button>

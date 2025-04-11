@@ -27,6 +27,7 @@ export const useSignInResult = () => {
       if (!!path) {
         signOut({ redirect: false }).then(() => {
           router.replace(pathname);
+          router.refresh();
         });
         return;
       }

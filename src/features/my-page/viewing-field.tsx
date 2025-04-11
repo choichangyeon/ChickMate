@@ -5,7 +5,7 @@ import UserMetaDataModal from '@/features/user-meta-data/user-meta-data-modal';
 import { useModalStore } from '@/store/use-modal-store';
 import Typography from '@/components/ui/typography';
 
-const UserField = () => {
+const ViewingField = () => {
   const isModalOpen = useModalStore((state) => state.isModalOpen);
   const toggleModal = useModalStore((state) => state.toggleModal);
 
@@ -22,4 +22,4 @@ const UserField = () => {
   );
 };
 
-export default UserField;
+export default ViewingField;

@@ -1,6 +1,6 @@
 import BookmarkComponent from '@/features/job/bookmark-component';
-import JobPostingCard from '@/features/job/job-posting-card';
-import ResumeCard from '@/features/job/resume-card';
+import JobPostingCard from '@/components/common/job-posting-card';
+import ResumeCard from '@/components/common/resume-card';
 
 const JobPage = () => {
   return (

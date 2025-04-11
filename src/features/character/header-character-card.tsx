@@ -51,7 +51,7 @@ const HeaderCharacterCard = ({
       <div onClick={handleClickCard} className='relative flex cursor-pointer items-center gap-4 px-8'>
         {isDefault && <ScreenOverlay overlayText={overlayText} />}
 
-        <div className={`${isDefault && 'pointer-events-none opacity-60'} flex items-center gap-4`}>
+        <div className={`${isDefault && 'opacity-60'} flex items-center gap-4`}>
           <div>
             <div className='flex flex-col'>
               <div className='flex w-56 items-center justify-between'>

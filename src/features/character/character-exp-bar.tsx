@@ -8,7 +8,7 @@ type Props = {
 };
 
 const CharacterExpBar = ({ percent, type }: Props) => {
-  const size = type === 'main' ? 'sm' : 'xs' 
+  const size = type === 'main' ? 'xl' : 'xs' 
   const width = `w-[${percent}%]`;
 
   return (

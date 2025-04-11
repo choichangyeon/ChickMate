@@ -73,14 +73,12 @@ export const postSpeechToText = async ({ blob }: SttProps): Promise<string> => {
   formData.append('language', LANGUAGE);
   formData.append('format', FORMAT);
 
-  const res = await fetchWithSentry(STT, {
+  const { response: transcribedText } = await fetchWithSentry(STT, {
     method: POST,
     body: formData,
   });
 
-  const { text } = await res.json();
-
-  return text;
+  return transcribedText;
 };
 
 /**
@@ -113,3 +111,5 @@ export const getOpenAIResponse = async ({ messageList }: MessageListProps): Prom
 
   return messageList;
 };
+
+export const postTranscribedText = async () => {};

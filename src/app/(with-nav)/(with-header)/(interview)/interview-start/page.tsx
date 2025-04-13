@@ -32,12 +32,10 @@ const InterviewStartPage = () => {
             를 제출하세요
           </Typography>
         </div>
-          <ResumeCardsBox/>
+        <ResumeCardsBox />
       </section>
     </main>
   );
 };
 
 export default InterviewStartPage;
-
-

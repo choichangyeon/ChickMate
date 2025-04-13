@@ -13,7 +13,6 @@ const Timer = () => {
     isRecording ? stopRecordingWithTimer() : startRecordingWithTimer();
   };
 
-  /** ui */
   return (
     <div className='flex h-[220px] w-[526px] flex-shrink-0 flex-col items-center justify-center gap-4 border-2 p-6'>
       <div className='flex flex-col items-center'>

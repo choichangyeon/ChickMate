@@ -1,4 +1,3 @@
-import Modal from '@/components/common/modal';
 import { create } from 'zustand';
 
 type Modal = {

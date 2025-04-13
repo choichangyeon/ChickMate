@@ -1,6 +1,6 @@
 import SelectInterviewerBox from '@/features/interview/select-interviewer-box';
-import ResumeCard from '@/components/common/resume-card';
 import Typography from '@/components/ui/typography';
+import ResumeCardsBox from '@/features/interview/resume-cards-box';
 
 const InterviewStartPage = () => {
   // TODO: prefetch user resume datadata
@@ -32,11 +32,7 @@ const InterviewStartPage = () => {
             를 제출하세요
           </Typography>
         </div>
-        <div className='flex flex-row gap-5'>
-          <ResumeCard resume={mockResume} />
-          <ResumeCard resume={mockResume} />
-          <ResumeCard resume={mockResume} />
-        </div>
+          <ResumeCardsBox/>
       </section>
     </main>
   );
@@ -44,13 +40,4 @@ const InterviewStartPage = () => {
 
 export default InterviewStartPage;
 
-const mockResume = {
-  id: 1,
-  title: '이력서 제목 조금 더 길게 작성해보자 하하하',
-  userId: 'userId',
-  status: 1,
-  content: '이력서 내용',
-  tryCount: 0,
-  createdAt: new Date(),
-  updatedAt: new Date(),
-};
+

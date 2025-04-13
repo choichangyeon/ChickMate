@@ -9,6 +9,7 @@ import Typography from '@/components/ui/typography';
 import CharacterExpBar from '@/features/character/character-exp-bar';
 import ScreenOverlay from '@/components/ui/screen-overlay';
 import { useCharacterCard } from './hooks/use-character-card';
+import CharacterDetailModal from './character-detail-modal';
 
 type Props = {
   session?: Session;
@@ -23,12 +24,13 @@ const HeaderCharacterCard = ({
   overlayText,
   requiredModal = false,
 }: Props) => {
-  const { isModalOpen, isDefault, level, percent, characterName, handleClickCard } = useCharacterCard({
-    characterData,
-    overlayText,
-    requiredModal,
-    session,
-  });
+  const { isCreateModalOpen, isDetailModalOpen, isDefault, level, percent, characterName, handleClickCard } =
+    useCharacterCard({
+      characterData,
+      overlayText,
+      requiredModal,
+      session,
+    });
 
   return (
     <>
@@ -65,7 +67,8 @@ const HeaderCharacterCard = ({
           </div>
         </div>
       </div>
-      {isModalOpen && <CreateCharacterModal />}
+      {isCreateModalOpen && <CreateCharacterModal />}
+      {isDetailModalOpen && session && <CharacterDetailModal session={session} />}
     </>
   );
 };

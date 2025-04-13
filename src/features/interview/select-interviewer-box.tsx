@@ -14,11 +14,9 @@ const SelectInterviewerBox = () => {
             통해 면접자를 평가합니다.
           </Typography>
         </div>
-        {/* <div className='absolute left-[90px] top-[217px] inline-flex h-9 w-56 items-center justify-center gap-2.5 rounded-[50px] p-2.5 outline outline-1 outline-offset-[-1px] outline-black'>
-          <div className="justify-start text-center font-['SUIT_Variable'] text-xl font-bold leading-loose text-black">
-            선택 완료
-          </div>
-        </div> */}
+        <div className=''>
+          <Typography weight='bold'>선택 완료</Typography>
+        </div>
       </aside>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import SelectBox from '@/features/user-meta-data/select-box';
 import { SelectBoxType } from '@/types/select-box';
-import { onSelectType } from '@/features/user-meta-data/user-meta-data-form';
+
 import { UserMetaDataType } from '@/types/user-meta-data-type';
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
   options: SelectBoxType[];
   value: SelectBoxType['value'];
   fieldKey: keyof UserMetaDataType;
-  onSelect: onSelectType;
+  onSelect: (key: keyof UserMetaDataType, selected: SelectBoxType['value']) => void;
   error?: string;
 };
 

@@ -1,16 +1,29 @@
+import Modal from '@/components/common/modal';
 import { create } from 'zustand';
 
-type ModalState = {
+type Modal = {
+  id: string;
   isModalOpen: boolean;
-  toggleModal: () => void;
+};
+
+type ModalState = {
+  modalList: Modal[];
+  toggleModal: (id: string) => void;
 };
 
 const initialState: ModalState = {
-  isModalOpen: false,
-  toggleModal: () => {},
+  modalList: [],
+  toggleModal: () => [],
 };
 
 export const useModalStore = create<ModalState>()((set) => ({
-  isModalOpen: initialState.isModalOpen,
-  toggleModal: () => set((state) => ({ isModalOpen: !state.isModalOpen })),
+  modalList: initialState.modalList,
+  toggleModal: (id) =>
+    set((state) => {
+      const modal = state.modalList.find((modal) => modal.id === id);
+      const isModalOpen = modal ? !modal.isModalOpen : true;
+      return {
+        modalList: [...state.modalList.filter((modal) => modal.id !== id), { id, isModalOpen }],
+      };
+    }),
 }));

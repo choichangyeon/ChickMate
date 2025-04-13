@@ -4,12 +4,18 @@ import { PATH, QUERY_PARAMS } from './constants/path-constant';
 
 const {
   AUTH: { SIGN_IN },
+  MY_PAGE,
+  ON_BOARDING,
+  RESUME,
+  JOB,
 } = PATH;
 
 const { UNAUTH } = QUERY_PARAMS;
 
 export const middleware = async (request: NextRequest) => {
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+  const pathname = request.nextUrl.pathname;
+  const isSignInPage = pathname === SIGN_IN;
   // next-auth에서는 token이 만료되었는지에 대한 정보를 주지 않음
   // 따라서 이 사용자가 토큰이 없는 이유가 로그인을 안 해서인지, 토큰이 만료되어서인지 확인 불가
   // 일단 토큰이 없으면 로그인 페이지로 이동을 하는데,
@@ -24,11 +30,18 @@ export const middleware = async (request: NextRequest) => {
   // 따라서 queryParams로 토큰 만료되어서 이동한 로그인 페이지임을 알림
   //   NextResponse.redirect(new URL(`${SIGN_IN}?${UNAUTH}=true`, request.url));
 
-  const response = token ? NextResponse.next() : NextResponse.redirect(new URL(`${SIGN_IN}?${UNAUTH}=true`));
+  if (token && isSignInPage) {
+    // 로그인한 사용자가 /sign-in에 접근하는 경우 리디렉트
+    return NextResponse.redirect(new URL(ON_BOARDING, request.url));
+  }
 
-  return response;
+  if (!token && [MY_PAGE, RESUME.ROOT, '/character', JOB].some((path) => pathname.startsWith(path))) {
+    return NextResponse.redirect(new URL(`${SIGN_IN}?${UNAUTH}=true`, request.url));
+  }
+
+  return NextResponse.next();
 };
 
 export const config = {
-  matcher: ['/my-page', '/resume/:path*', '/character', '/job'],
+  matcher: ['/my-page', '/resume/:path*', '/character', '/job', '/auth/sign-in'],
 };

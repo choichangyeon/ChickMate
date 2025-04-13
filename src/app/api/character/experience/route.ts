@@ -16,7 +16,7 @@ export const PATCH = async (request: NextRequest) => {
     }
     const { characterId, amount, history } = await request.json();
 
-    const [updated, createHistory] = await prisma.$transaction([
+    const [updated] = await prisma.$transaction([
       prisma.character.update({
         where: { id: characterId },
         data: { experience: { increment: amount } },

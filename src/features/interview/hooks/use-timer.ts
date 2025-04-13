@@ -7,13 +7,11 @@ type Props = {
 
 export const useTimer = ({ duration, onTimerComplete }: Props) => {
   const [timeLeft, setTimeLeft] = useState(duration);
-  const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const startTimer = () => {
     if (intervalRef.current) return;
 
-    setIsRunning(true);
     const startTime = Date.now();
 
     intervalRef.current = setInterval(() => {
@@ -24,7 +22,6 @@ export const useTimer = ({ duration, onTimerComplete }: Props) => {
         clearInterval(intervalRef.current!);
         intervalRef.current = null;
         setTimeLeft(duration);
-        setIsRunning(false);
         if (onTimerComplete) onTimerComplete();
       }
 
@@ -38,7 +35,6 @@ export const useTimer = ({ duration, onTimerComplete }: Props) => {
       intervalRef.current = null;
     }
 
-    setIsRunning(false);
     setTimeLeft(duration);
   };
 
@@ -56,7 +52,6 @@ export const useTimer = ({ duration, onTimerComplete }: Props) => {
 
   return {
     timeLeft,
-    isRunning,
     startTimer,
     stopTimer,
     formatTime,

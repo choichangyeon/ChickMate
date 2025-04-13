@@ -19,8 +19,8 @@ export const useAudioRecorder = () => {
 
       // 녹음 중 MediaRecorder가 데이터를 제공할 때마다 조각(chunk)을 audioChunksRef에 추가함
       // 녹음 중 데이터가 쪼개져서 순차적으로 들어오는 구조임
-      mediaRecorder.ondataavailable = (e) => {
-        audioChunksRef.current.push(e.data);
+      mediaRecorder.ondataavailable = (event) => {
+        audioChunksRef.current.push(event.data);
       };
 
       // 실제 녹음을 시작함

@@ -30,10 +30,10 @@ export const middleware = async (request: NextRequest) => {
   // 따라서 queryParams로 토큰 만료되어서 이동한 로그인 페이지임을 알림
   //   NextResponse.redirect(new URL(`${SIGN_IN}?${UNAUTH}=true`, request.url));
 
-  if (token && isSignInPage) {
-    // 로그인한 사용자가 /sign-in에 접근하는 경우 리디렉트
-    return NextResponse.redirect(new URL(ON_BOARDING, request.url));
-  }
+  // if (token && isSignInPage) {
+  //   // 로그인한 사용자가 /sign-in에 접근하는 경우 리디렉트
+  //   return NextResponse.redirect(new URL(ON_BOARDING, request.url));
+  // }
 
   if (!token && [MY_PAGE, RESUME.ROOT, '/character', JOB].some((path) => pathname.startsWith(path))) {
     return NextResponse.redirect(new URL(`${SIGN_IN}?${UNAUTH}=true`, request.url));

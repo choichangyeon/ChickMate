@@ -1,16 +1,28 @@
 import { create } from 'zustand';
 
-type ModalState = {
+type Modal = {
+  id: string;
   isModalOpen: boolean;
-  toggleModal: () => void;
 };
 
-const initialState: ModalState = {
-  isModalOpen: false,
-  toggleModal: () => {},
+type ModalStore = {
+  modalList: Modal[];
+  getIsModalOpen: (id: string) => boolean;
+  toggleModal: (id: string) => void;
 };
 
-export const useModalStore = create<ModalState>()((set) => ({
-  isModalOpen: initialState.isModalOpen,
-  toggleModal: () => set((state) => ({ isModalOpen: !state.isModalOpen })),
+export const useModalStore = create<ModalStore>()((set, get) => ({
+  modalList: [],
+  getIsModalOpen: (modalId) => get().modalList.find((modal) => modal.id === modalId)?.isModalOpen || false,
+  toggleModal: (id) =>
+    set((state) => {
+      const selectedModal = state.modalList.find((modal) => modal.id === id);
+      const isModalOpen = selectedModal ? !selectedModal.isModalOpen : true;
+
+      const newModalList = [...state.modalList.filter((modal) => modal.id !== id), { id, isModalOpen }];
+
+      return {
+        modalList: newModalList,
+      };
+    }),
 }));

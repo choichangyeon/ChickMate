@@ -6,6 +6,9 @@ import { useModalStore } from '@/store/use-modal-store';
 import { defaultCharacter } from '@/features/character/data/character-data';
 import CharacterExpBar from '@/features/character/character-exp-bar';
 import { CHARACTER_INFOMATIONS } from '@/constants/character-constants';
+import { MODAL_ID } from '@/constants/modal-id-constants';
+
+const { CHARACTER_CREATE } = MODAL_ID;
 
 type Props = {
   characterData?: Character;
@@ -14,7 +17,8 @@ type Props = {
 };
 
 const MainCharacterCard = ({ characterData = defaultCharacter, overlayText, requiredModal = false }: Props) => {
-  const { isModalOpen, toggleModal } = useModalStore();
+  const toggleModal = useModalStore((state) => state.toggleModal);
+  const isModalOpen = useModalStore((state) => state.getIsModalOpen(CHARACTER_CREATE));
   const isDefault = characterData === defaultCharacter;
   const { type, experience } = characterData;
   const { level, percent } = getLevelAndPercentage(experience);
@@ -24,7 +28,7 @@ const MainCharacterCard = ({ characterData = defaultCharacter, overlayText, requ
     <>
       <div
         onClick={() => {
-          requiredModal && toggleModal();
+          requiredModal && toggleModal(CHARACTER_CREATE);
         }}
         className='relative flex cursor-pointer flex-col overflow-hidden rounded-lg border-2 p-7 hover:shadow-lg'
       >

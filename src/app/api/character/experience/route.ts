@@ -14,12 +14,21 @@ export const PATCH = async (request: NextRequest) => {
     if (!session || !session.user) {
       return NextResponse.json({ message: AUTH_REQUIRED }, { status: 401 });
     }
-    const { characterId, amount } = await request.json();
+    const { characterId, amount, history } = await request.json();
 
-    const updated = await prisma.character.update({
-      where: { id: characterId },
-      data: { experience: { increment: amount } },
-    });
+    const [updated, createHistory] = await prisma.$transaction([
+      prisma.character.update({
+        where: { id: characterId },
+        data: { experience: { increment: amount } },
+      }),
+      prisma.characterHistory.create({
+        data: {
+          characterId,
+          experience: amount,
+          history,
+        },
+      }),
+    ]);
     return NextResponse.json({ updated }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: PATCH_DATA_FAILED }, { status: 500 });

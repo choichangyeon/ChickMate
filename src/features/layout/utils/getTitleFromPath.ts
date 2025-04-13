@@ -1,5 +1,6 @@
 import { PATH } from '@/constants/path-constant';
-import { headers } from 'next/headers';
+
+type Props = string;
 
 const {
   MY_PAGE,
@@ -7,10 +8,7 @@ const {
   JOB,
 } = PATH;
 
-export const getTitleFromPath = () => {
-  const allHeaders = headers();
-  const pathname = allHeaders.get('x-pathname');
-
+export const getTitleFromPath = (pathname: Props) => {
   if (!pathname) return 'ChickMate';
 
   if (pathname.startsWith(MY_PAGE)) {

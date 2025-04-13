@@ -22,11 +22,9 @@ const ResumeCard = ({ type = 'resume', resume, iconButton, children, isSelected,
   const createdAtDate = formatDate({ input: createdAt });
 
   // TODO: isSelected Style 설정하기
-  const selectedClassName = '';
-
+  const selectedClassName = isSelected ? 'outline-2 outline-primary-600 bg-red-500' : '';
   const handleClick = () => {
-    // TODO: 면접 사용을 위한 이력서 선택 로직
-    if (isSelected && type === 'interview') {
+    if (type === 'interview') {
       onSelect && onSelect();
     }
     // TODO: 이력서 상세 페이지로 이동

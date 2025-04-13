@@ -5,13 +5,17 @@ import Typography from '@/components/ui/typography';
 import { INTERVIEW_TYPE } from '@/constants/interview-constants';
 import Image from 'next/image';
 import { useState } from 'react';
+import useResumeStore from '@/features/interview/hooks/use-resume-store';
 
 const { CALM, PRESSURE } = INTERVIEW_TYPE;
 
 const SelectInterviewerBox = () => {
   const [interviewType, setInterviewType] = useState<string>(CALM);
+  const { id } = useResumeStore();
   const handleClickSetInterviewType = () => {
     // TODO: 민조님 여기서 interview-live에서 필요한 정보를 보내는 로직을 구현해주세요
+    // id는 자소서의 id입니다!
+    console.log(id);
   };
   return (
     <div className='flex flex-row'>

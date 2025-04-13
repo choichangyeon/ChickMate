@@ -10,7 +10,9 @@ const { CALM, PRESSURE } = INTERVIEW_TYPE;
 
 const SelectInterviewerBox = () => {
   const [interviewType, setInterviewType] = useState<string>(CALM);
-  const handleClickSetInterviewType = () => {};
+  const handleClickSetInterviewType = () => {
+    // TODO: 민조님 여기서 interview-live에서 필요한 정보를 보내는 로직을 구현해주세요
+  };
   return (
     <div className='flex flex-row'>
       <div className='mr-5 flex w-full items-start justify-start gap-5 self-stretch'>

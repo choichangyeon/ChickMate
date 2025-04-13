@@ -8,14 +8,16 @@ type Props = {
 };
 
 const CharacterExpBar = ({ percent, type }: Props) => {
-  const size = type === 'main' ? 'xl' : 'xs' 
+  const size = type === 'main' ? 'sm' : 'xs';
   const width = `w-[${percent}%]`;
 
   return (
     <div className='flex w-full items-center gap-2'>
-      <Typography size={size} color='gray-500' weight='bold'>EXP</Typography>
-      <div className={clsx('flex-1 overflow-hidden rounded-2xl bg-gray-300 h-1',)}>
-        <div className={clsx('bg-green-500 transition-all duration-300 h-1', width)} />
+      <Typography size={size} color='gray-500' weight='bold'>
+        EXP
+      </Typography>
+      <div className={clsx('h-1 flex-1 overflow-hidden rounded-2xl bg-gray-300')}>
+        <div className={clsx('h-1 bg-green-500 transition-all duration-300', width)} />
       </div>
     </div>
   );

@@ -7,10 +7,11 @@ import useMetaDataMutation from '@/features/user-meta-data/hooks/use-meta-data-m
 import { userMetaFormSchema, UserMetaSchema } from '@/features/user-meta-data/data/user-meta-form-schema';
 import { DEFAULT, USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 import { PATH } from '@/constants/path-constant';
-import type { UserMetaDataType } from '@/types/user-meta-data-type';
-import type { SelectBoxType } from '@/types/select-box';
 import { USER_META_DATA_FORM_MESSAGE } from '@/constants/message-constants';
 import { useModalStore } from '@/store/use-modal-store';
+import { MODAL_ID } from '@/constants/modal-id-constants';
+import type { UserMetaDataType } from '@/types/user-meta-data-type';
+import type { SelectBoxType } from '@/types/select-box';
 
 const { TYPE, EDUCATION, JOB, MAIN_REGION, ETC } = USER_META_DATA_KEY;
 const {
@@ -19,6 +20,7 @@ const {
 const {
   API: { POST_DATA_SUCCESS },
 } = USER_META_DATA_FORM_MESSAGE;
+const { USER_META_DATA } = MODAL_ID;
 
 export const useMetaDataForm = (userId: string) => {
   const { data: metaData, isPending: isMetaDataPending } = UseMetaDataQuery({ userId });
@@ -75,7 +77,7 @@ export const useMetaDataForm = (userId: string) => {
     mutate(values, {
       onSuccess: () => {
         alert(POST_DATA_SUCCESS);
-        toggleModal();
+        toggleModal(USER_META_DATA);
       },
     });
   };

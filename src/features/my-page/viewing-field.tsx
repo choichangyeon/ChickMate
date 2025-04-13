@@ -1,10 +1,9 @@
 'use client';
-import React from 'react';
 import Modal from '@/components/ui/modal';
-import UserMetaDataModal from '@/features/user-meta-data/user-meta-data-modal';
-import { useModalStore } from '@/store/use-modal-store';
 import Typography from '@/components/ui/typography';
+import { useModalStore } from '@/store/use-modal-store';
 import { MODAL_ID } from '@/constants/modal-id-constants';
+import UserMetaDataModal from '@/features/user-meta-data/user-meta-data-modal';
 
 const { USER_META_DATA } = MODAL_ID;
 

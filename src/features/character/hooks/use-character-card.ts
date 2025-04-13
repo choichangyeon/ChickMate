@@ -25,7 +25,7 @@ export const useCharacterCard = ({
 
   const isDefault = characterData === defaultCharacter && !!overlayText;
   const { type, experience } = characterData;
-  const { level, percent } = getLevelAndPercentage(experience);
+  const { level, percent, remainingExp } = getLevelAndPercentage(experience);
   const characterName = CHARACTER_INFOMATIONS[type][level].name;
 
   const handleClickCard = () => {
@@ -34,7 +34,7 @@ export const useCharacterCard = ({
     } else if (requiredModal) {
       toggleModal();
     } else if (!isDefault) {
-      // 캐릭터 상세 모달 toggle
+      toggleModal();
     }
   };
 
@@ -44,6 +44,7 @@ export const useCharacterCard = ({
     isDefault,
     type,
     level,
+    remainingExp,
     percent,
     characterName,
     handleClickCard,

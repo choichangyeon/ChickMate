@@ -1,12 +1,18 @@
 'use client';
 import ResumeCard from '@/components/common/resume-card';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const ResumeCardsBox = () => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
+  useEffect(() => {
+    if (selectedId === null && mockList.length > 0) {
+      setSelectedId(mockList[0].id);
+    }
+  }, []);
+
   return (
-    <div className='flex flex-row flex-nowrap gap-5 overflow-x-auto scrollbar-hide'>
+    <div className='flex max-w-[100vw] flex-row flex-nowrap gap-5 overflow-x-auto scrollbar-hide'>
       {mockList.map((resume) => (
         <ResumeCard
           key={resume.id}

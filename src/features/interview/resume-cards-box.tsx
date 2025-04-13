@@ -6,6 +6,7 @@ import useResumeStore from '@/features/interview/hooks/use-resume-store';
 const ResumeCardsBox = () => {
   const { id: selectedId, setResume } = useResumeStore();
 
+  // TODO: mock data 삭제 후, 실제 데이터로 교체 & 무한 스크롤 구현
   useEffect(() => {
     if (selectedId === null && mockList.length > 0) {
       setResume(mockList[0].id);

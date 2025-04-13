@@ -5,24 +5,24 @@ type Modal = {
   isModalOpen: boolean;
 };
 
-type ModalState = {
+type ModalStore = {
   modalList: Modal[];
+  getIsModalOpen: (id: string) => boolean;
   toggleModal: (id: string) => void;
 };
 
-const initialState: ModalState = {
+export const useModalStore = create<ModalStore>()((set, get) => ({
   modalList: [],
-  toggleModal: () => [],
-};
-
-export const useModalStore = create<ModalState>()((set) => ({
-  modalList: initialState.modalList,
+  getIsModalOpen: (modalId) => get().modalList.find((modal) => modal.id === modalId)?.isModalOpen || false,
   toggleModal: (id) =>
     set((state) => {
-      const modal = state.modalList.find((modal) => modal.id === id);
-      const isModalOpen = modal ? !modal.isModalOpen : true;
+      const selectedModal = state.modalList.find((modal) => modal.id === id);
+      const isModalOpen = selectedModal ? !selectedModal.isModalOpen : true;
+
+      const newModalList = [...state.modalList.filter((modal) => modal.id !== id), { id, isModalOpen }];
+
       return {
-        modalList: [...state.modalList.filter((modal) => modal.id !== id), { id, isModalOpen }],
+        modalList: newModalList,
       };
     }),
 }));

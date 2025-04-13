@@ -11,13 +11,11 @@ import DraftResumesModal from '@/features/resume/draft-resumes-modal';
 import type { Field } from '@/types/resume';
 import type { Resume } from '@prisma/client';
 
+const { DRAFT_RESUME } = MODAL_ID;
+
 const ResumeForm = () => {
-  const { DRAFT_RESUME } = MODAL_ID;
-
   const toggleModal = useModalStore((state) => state.toggleModal);
-  const modalList = useModalStore((state) => state.modalList);
-
-  const isModalOpen = modalList.find((modal) => modal.id === DRAFT_RESUME)?.isModalOpen || false;
+  const isModalOpen = useModalStore((state) => state.getIsModalOpen(DRAFT_RESUME));
 
   /** hook */
   const {

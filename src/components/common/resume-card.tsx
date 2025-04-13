@@ -7,19 +7,20 @@ import { Resume } from '@prisma/client';
 import clsx from 'clsx';
 
 type Props = {
+  type?: 'resume' | 'interview';
   resume: Resume;
   children?: React.ReactNode;
   // TODO: iconButton type 수정
   iconButton?: boolean;
 };
 
-const ResumeCard = ({ resume, iconButton, children }: Props) => {
+const ResumeCard = ({ type = 'resume', resume, iconButton, children }: Props) => {
   const { id, title, updatedAt, createdAt } = resume;
   const updatedAtDate = formatDate({ input: updatedAt });
   const createdAtDate = formatDate({ input: createdAt });
 
   const handleClick = () => {
-    // TODO: 이력서 상세 페이지로 이동
+    // TODO: 이력서 상세 페이지로 이동 || 면접 사용을 위한 이력서 선택 로직
     console.log(id);
   };
 

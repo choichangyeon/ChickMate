@@ -25,7 +25,7 @@ const typographyVariant = cva('', {
       'gray-50': 'text-cool-gray-50',
     },
     weight: {
-      normal: 'font-normal',
+      thin: 'font-thin',
       medium: 'font-medium',
       bold: 'font-bold',
       black: 'font-black',

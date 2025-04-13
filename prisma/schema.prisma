@@ -100,7 +100,7 @@ model Character {
 model CharacterHistory {
   id          Int       @id @default(autoincrement())
   characterId Int       @map("character_id")
-  history     Json      
+  history     String      
   experience  Int
   createdAt   DateTime  @default(now()) @map("created_at")
 

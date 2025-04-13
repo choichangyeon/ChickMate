@@ -1,3 +1,4 @@
+import { FileDockFill } from '@/components/icons/file-dock-fill';
 import MainCharacter from '@/features/character/main-character';
 import { authOptions } from '@/utils/auth-option';
 import { getServerSession } from 'next-auth';
@@ -16,7 +17,9 @@ const OnBoarding = async () => {
           {/* 컴포넌트 분리 */}
           <div className='flex flex-col justify-between'>
             <section className='flex items-center gap-8 rounded-lg border p-7'>
-              <div className='text-yellow-400'>아이콘</div>
+              <div className='text-yellow-400'>
+                <FileDockFill />
+              </div>
               <div className='flex flex-col gap-2'>
                 <span className='font-bold'>자소서 연습하기</span>
                 <div className='flex flex-col'>
@@ -30,7 +33,10 @@ const OnBoarding = async () => {
               </div>
             </section>
             <section className='flex items-center gap-8 rounded-lg border p-7'>
-              <div className='text-yellow-400'>아이콘</div>
+              <div className='text-yellow-400'>
+                {' '}
+                <FileDockFill />
+              </div>
               <div className='flex flex-col gap-2'>
                 <span className='font-bold'>AI 면접 준비하기</span>
                 <div className='flex flex-col'>
@@ -40,7 +46,9 @@ const OnBoarding = async () => {
               </div>
             </section>
             <section className='flex items-center gap-8 rounded-lg border p-7'>
-              <div className='text-yellow-400'>아이콘</div>
+              <div className='text-yellow-400'>
+                <FileDockFill />
+              </div>
               <div className='flex flex-col gap-2'>
                 <span className='font-bold'>맞춤 채용공고 확인하기</span>
                 <div className='flex flex-col'>

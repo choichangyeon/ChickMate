@@ -3,6 +3,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import { AUTH_MESSAGE } from '@/constants/message-constants';
 import { PATH, QUERY_PARAMS } from '@/constants/path-constant';
+import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
 
 const { SIGN_IN_SUCCESS, SIGN_IN_FAILED, SOCIAL_SIGN_IN_EXIST_ERROR, SOCIAL_SIGN_IN_FAILED } = AUTH_MESSAGE.RESULT;
 
@@ -13,10 +14,18 @@ const NEXT_AUTH_STATUS = {
 };
 
 const { AUTHENTICATED, OAUTH_ACCOUNT_NOT_LINKED, CREDENTIAL_SIGN_IN } = NEXT_AUTH_STATUS;
+
 const { ERROR, UNAUTH } = QUERY_PARAMS;
+
+const {
+  ON_BOARDING,
+  AUTH: { SIGN_IN },
+} = PATH;
+
 export const useSignInResult = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  // const sanitizedParams = sanitizeQueryParams(searchParams);
   const path = searchParams.get(UNAUTH);
   const error = searchParams.get(ERROR);
   const { status } = useSession();
@@ -32,7 +41,7 @@ export const useSignInResult = () => {
         return;
       }
       alert(SIGN_IN_SUCCESS);
-      router.replace(PATH.ON_BOARDING);
+      router.replace(ON_BOARDING);
     }
   }, [status, router, path]);
 
@@ -46,5 +55,6 @@ export const useSignInResult = () => {
     } else {
       alert(SOCIAL_SIGN_IN_FAILED);
     }
+    router.replace(SIGN_IN);
   }, [error]);
 };

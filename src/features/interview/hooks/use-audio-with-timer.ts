@@ -6,7 +6,7 @@ import { postSpeechToText } from '@/features/interview/api/client-services';
 export const useAudioWithTimer = (duration: number) => {
   const [transcribedText, setTranscribedText] = useState('');
 
-  const { audioBlob, startRecording, stopRecording } = useAudioRecorder();
+  const { startRecording, stopRecording } = useAudioRecorder();
 
   const handleTimerComplete = () => {
     stopRecording();
@@ -38,7 +38,6 @@ export const useAudioWithTimer = (duration: number) => {
   };
 
   return {
-    audioBlob,
     isRecording: isRunning,
     timeLeft,
     formattedTime: formatTime(),

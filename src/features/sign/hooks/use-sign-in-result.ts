@@ -3,7 +3,13 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import { AUTH_MESSAGE } from '@/constants/message-constants';
 import { PATH, QUERY_PARAMS } from '@/constants/path-constant';
-import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
+import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
+import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
+import { useGetCharacterQuery } from '@/features/character/hooks/use-get-character-query';
+import { useCharacterStoreSync } from '@/features/character/hooks/use-character-store-sync';
+import { useCharacterStore } from '@/store/use-character-store';
+
+// import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
 
 const { SIGN_IN_SUCCESS, SIGN_IN_FAILED, SOCIAL_SIGN_IN_EXIST_ERROR, SOCIAL_SIGN_IN_FAILED } = AUTH_MESSAGE.RESULT;
 
@@ -22,6 +28,8 @@ const {
   AUTH: { SIGN_IN },
 } = PATH;
 
+const { LOGIN } = CHARACTER_HISTORY_KEY;
+
 export const useSignInResult = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -30,9 +38,13 @@ export const useSignInResult = () => {
   const error = searchParams.get(ERROR);
   const { status } = useSession();
   const pathname = usePathname();
+  const { data: characterData } = useGetCharacterQuery();
+  useCharacterStoreSync(characterData);
+  const characterId = useCharacterStore((state) => state.characterId);
+  const { handleExperienceUp } = useExperienceUp();
 
   useEffect(() => {
-    if (status === AUTHENTICATED) {
+    if (status === AUTHENTICATED && characterId !== null) {
       if (!!path) {
         signOut({ redirect: false }).then(() => {
           router.replace(pathname);
@@ -41,9 +53,11 @@ export const useSignInResult = () => {
         return;
       }
       alert(SIGN_IN_SUCCESS);
+      console.log(1);
+      handleExperienceUp(LOGIN);
       router.replace(ON_BOARDING);
     }
-  }, [status, router, path]);
+  }, [status, router, path, characterId]);
 
   useEffect(() => {
     if (!error) return;

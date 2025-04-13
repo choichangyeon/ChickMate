@@ -5,40 +5,43 @@ import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 type Props = {
+  modalId: string;
   portalRoot?: HTMLElement;
   children: React.ReactNode;
   className?: string;
 };
 
-const Modal = ({ portalRoot, children, className }: Props) => {
+const Modal = ({ portalRoot, modalId, children, className }: Props) => {
   const modalContentRef = useRef<HTMLDivElement | null>(null);
 
   const toggleModal = useModalStore((state) => state.toggleModal);
 
   useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
     // 모달 외부를 클릭했을 때 모달창이 닫힘
     const handleClickOutside = (event: MouseEvent) => {
       if (modalContentRef.current && !modalContentRef.current.contains(event.target as Node)) {
-        toggleModal();
+        toggleModal(modalId);
       }
     };
-
-    document.addEventListener('mousedown', handleClickOutside);
 
     // ESC 키를 눌렀을 때 모달창이 닫힘
     const handleEscKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        toggleModal();
+        toggleModal(modalId);
       }
     };
 
+    document.addEventListener('mousedown', handleClickOutside);
     document.addEventListener('keydown', handleEscKey);
 
     return () => {
+      document.body.style.overflow = '';
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('keydown', handleEscKey);
     };
-  }, [toggleModal]);
+  }, [toggleModal, modalId]);
 
   return createPortal(
     <div className='fixed inset-0 z-50 flex items-center justify-center overflow-y-auto'>

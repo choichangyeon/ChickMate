@@ -1,13 +1,14 @@
 'use client';
 import ResumeCard from '@/components/common/resume-card';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import useResumeStore from '@/features/interview/hooks/use-resume-store';
 
 const ResumeCardsBox = () => {
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const { id: selectedId, setResume } = useResumeStore();
 
   useEffect(() => {
     if (selectedId === null && mockList.length > 0) {
-      setSelectedId(mockList[0].id);
+      setResume(mockList[0].id);
     }
   }, []);
 
@@ -19,7 +20,7 @@ const ResumeCardsBox = () => {
           resume={resume}
           type='interview'
           isSelected={selectedId === resume.id}
-          onSelect={() => setSelectedId(resume.id)}
+          onSelect={() => setResume(resume.id)}
         />
       ))}
     </div>

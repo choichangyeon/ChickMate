@@ -31,6 +31,7 @@ const SelectInterviewerBox = () => {
       </div>
       <aside className='flex h-80 w-96 flex-shrink-0 flex-col items-center justify-center overflow-hidden rounded-lg bg-emerald-900/0 outline outline-1 outline-offset-[-1px] outline-yellow-500'>
         <div className='mb-4'>
+          {/* TODO: 이 부분은 면접관을 설명하는 부분, 추후 수정 가능 */}
           {interviewType === 'calm' ? (
             <>
               <Typography as='h3' size='3xl' weight='bold' align='center' className='mb-2'>

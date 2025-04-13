@@ -6,64 +6,59 @@ type Props = {
 };
 
 export const useTimer = ({ duration, onTimerComplete }: Props) => {
-  const [isRunning, setIsRunning] = useState(false);
   const [timeLeft, setTimeLeft] = useState(duration);
-
-  const timerStartRef = useRef<number | null>(null);
-  const animationFrameRef = useRef<number | null>(null);
+  const [isRunning, setIsRunning] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const startTimer = () => {
+    if (intervalRef.current) return;
+
     setIsRunning(true);
-    timerStartRef.current = Date.now();
-    updateTimer();
+    const startTime = Date.now();
+
+    intervalRef.current = setInterval(() => {
+      const timeElapsed = Date.now() - startTime;
+      const newTimeLeft = duration - timeElapsed;
+
+      if (newTimeLeft <= 0) {
+        clearInterval(intervalRef.current!);
+        intervalRef.current = null;
+        setTimeLeft(duration);
+        setIsRunning(false);
+        if (onTimerComplete) onTimerComplete();
+      }
+
+      setTimeLeft(newTimeLeft);
+    }, 1000);
   };
 
   const stopTimer = () => {
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
-      animationFrameRef.current = null;
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
+
     setIsRunning(false);
     setTimeLeft(duration);
   };
 
-  const updateTimer = () => {
-    if (!timerStartRef.current) return;
-
-    const timeElapsed = Date.now() - timerStartRef.current;
-
-    const newTimeLeft = duration - timeElapsed;
-
-    if (newTimeLeft <= 0) {
-      setTimeLeft(0);
-      setIsRunning(false);
-      if (onTimerComplete) onTimerComplete();
-      return;
-    }
-
-    setTimeLeft(newTimeLeft);
-    animationFrameRef.current = requestAnimationFrame(updateTimer);
-  };
-
   useEffect(() => {
     return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, []);
 
   const formatTime = () => {
-    const minutes = String(Math.floor((timeLeft / (1000 * 60)) % 60)).padStart(2, '0');
-    const seconds = String(Math.floor((timeLeft / 1000) % 60)).padStart(2, '0');
+    const minutes = String(Math.floor(timeLeft / 60000)).padStart(2, '0');
+    const seconds = String(Math.ceil((timeLeft % 60000) / 1000)).padStart(2, '0');
     return { minutes, seconds };
   };
 
   return {
-    isRunning,
     timeLeft,
-    formatTime,
+    isRunning,
     startTimer,
     stopTimer,
+    formatTime,
   };
 };

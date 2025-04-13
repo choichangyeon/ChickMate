@@ -2,17 +2,13 @@
 
 import Image from 'next/image';
 import { Character } from '@prisma/client';
-import { getLevelAndPercentage } from '@/features/character/utils/get-level-and-percent';
 import { Session } from 'next-auth';
 import { defaultCharacter } from './data/character-data';
 import CreateCharacterModal from '@/features/character/create-character-modal';
-import { useModalStore } from '@/store/use-modal-store';
-import { CHARACTER_INFOMATIONS } from '@/constants/character-constants';
 import Typography from '@/components/ui/typography';
 import CharacterExpBar from '@/features/character/character-exp-bar';
 import ScreenOverlay from '@/components/ui/screen-overlay';
-import { useRouter } from 'next/navigation';
-import { PATH } from '@/constants/path-constant';
+import { useCharacterCard } from './hooks/use-character-card';
 
 type Props = {
   session?: Session;
@@ -21,35 +17,23 @@ type Props = {
   requiredModal?: boolean;
 };
 
-const { SIGN_IN } = PATH.AUTH;
-
 const HeaderCharacterCard = ({
   session,
   characterData = defaultCharacter,
   overlayText,
   requiredModal = false,
 }: Props) => {
-  const router = useRouter();
-  const { isModalOpen, toggleModal } = useModalStore();
-
-  const isDefault = characterData === defaultCharacter && !!overlayText;
-  const { level, percent } = getLevelAndPercentage(characterData.experience);
-  const characterName = CHARACTER_INFOMATIONS[characterData.type][level].name;
-
-  const handleClickCard = () => {
-    if (!session) {
-      router.push(SIGN_IN);
-    } else if (requiredModal) {
-      toggleModal();
-    } else if (!isDefault) {
-      // 캐릭터 상세 모달 toggle
-    }
-  };
+  const { isModalOpen, isDefault, level, percent, characterName, handleClickCard } = useCharacterCard({
+    characterData,
+    overlayText,
+    requiredModal,
+    session,
+  });
 
   return (
     <>
       <div onClick={handleClickCard} className='relative flex cursor-pointer items-center gap-4 px-8'>
-        {isDefault && <ScreenOverlay overlayText={overlayText} />}
+        {isDefault && <ScreenOverlay overlayText={overlayText!} />}
 
         <div className={`${isDefault && 'opacity-60'} flex items-center gap-4`}>
           <div>

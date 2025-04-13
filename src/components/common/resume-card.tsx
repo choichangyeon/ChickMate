@@ -12,20 +12,29 @@ type Props = {
   children?: React.ReactNode;
   // TODO: iconButton type 수정
   iconButton?: boolean;
+  isSelected?: boolean;
+  onSelect?: () => void;
 };
 
-const ResumeCard = ({ type = 'resume', resume, iconButton, children }: Props) => {
+const ResumeCard = ({ type = 'resume', resume, iconButton, children, isSelected, onSelect }: Props) => {
   const { id, title, updatedAt, createdAt } = resume;
   const updatedAtDate = formatDate({ input: updatedAt });
   const createdAtDate = formatDate({ input: createdAt });
 
+  // TODO: isSelected Style 설정하기
+  const selectedClassName = '';
+
   const handleClick = () => {
-    // TODO: 이력서 상세 페이지로 이동 || 면접 사용을 위한 이력서 선택 로직
+    // TODO: 면접 사용을 위한 이력서 선택 로직
+    if (isSelected && type === 'interview') {
+      onSelect && onSelect();
+    }
+    // TODO: 이력서 상세 페이지로 이동
     console.log(id);
   };
 
   return (
-    <Card onClick={handleClick}>
+    <Card onClick={handleClick} className={selectedClassName}>
       {iconButton && (
         // TODO: iconButton component 적용
         <div className='absolute right-[20px] top-[12px] h-6 w-6'>
@@ -47,6 +56,7 @@ const ResumeCard = ({ type = 'resume', resume, iconButton, children }: Props) =>
     </Card>
   );
 };
+
 const badgeClassName = clsx('flex gap-4');
 
 export default ResumeCard;

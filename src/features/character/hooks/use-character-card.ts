@@ -1,3 +1,5 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
 import { useModalStore } from '@/store/use-modal-store';
 import { getLevelAndPercentage } from '@/features/character/utils/get-level-and-percent';
@@ -6,6 +8,7 @@ import { PATH } from '@/constants/path-constant';
 import { defaultCharacter } from '@/features/character/data/character-data';
 import { Session } from 'next-auth';
 import { Character } from '@prisma/client';
+import { MODAL_ID } from '@/constants/modal-id-constants';
 
 type Props = {
   characterData?: Character;
@@ -14,13 +17,18 @@ type Props = {
   session?: Session;
 };
 
+const { CHARACTER_CREATE, CHARACTER_DETAIL } = MODAL_ID;
+
 export const useCharacterCard = ({
   characterData = defaultCharacter,
   overlayText,
   requiredModal = false,
   session,
 }: Props) => {
-  const { isModalOpen, toggleModal } = useModalStore();
+  const toggleModal = useModalStore((state) => state.toggleModal);
+  const isCreateModalOpen = useModalStore((state) => state.getIsModalOpen(CHARACTER_CREATE));
+  const isDetailModalOpen = useModalStore((state) => state.getIsModalOpen(CHARACTER_DETAIL));
+
   const router = useRouter();
 
   const isDefault = characterData === defaultCharacter && !!overlayText;
@@ -32,15 +40,16 @@ export const useCharacterCard = ({
     if (!session) {
       router.push(PATH.AUTH.SIGN_IN);
     } else if (requiredModal) {
-      toggleModal();
+      toggleModal(CHARACTER_CREATE);
     } else if (!isDefault) {
-      toggleModal();
+      toggleModal(CHARACTER_DETAIL);
     }
   };
 
   return {
-    isModalOpen,
     toggleModal,
+    isCreateModalOpen,
+    isDetailModalOpen,
     isDefault,
     type,
     level,

@@ -1,13 +1,12 @@
 'use client';
 
 import Typography from '@/components/ui/typography';
-import STTComponent from '@/features/interview/stt-component';
 import { useAudioWithTimer } from '@/features/interview/hooks/use-audio-with-timer';
 
 const Timer = () => {
   const MINUTES_IN_MS = 1 * 60 * 1000;
 
-  const { isRecording, formattedTime, startRecordingWithTimer, stopRecordingWithTimer, audioBlob } =
+  const { isRecording, formattedTime, startRecordingWithTimer, stopRecordingWithTimer } =
     useAudioWithTimer(MINUTES_IN_MS);
 
   const handleButtonClick = () => {
@@ -30,7 +29,6 @@ const Timer = () => {
       </div>
       <div>
         <button onClick={handleButtonClick}>{isRecording ? '답변 완료하기' : '말하기'}</button>
-        {audioBlob && <STTComponent blob={audioBlob} />}
       </div>
     </div>
   );

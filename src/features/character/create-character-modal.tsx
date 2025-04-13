@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Modal from '@/components/common/modal';
+import Modal from '@/components/ui/modal';
 import { useModalStore } from '@/store/use-modal-store';
 import Image from 'next/image';
 import { postCreateCharacter } from '@/features/character/api/client-services';

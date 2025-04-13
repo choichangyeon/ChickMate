@@ -15,20 +15,6 @@ const Home = () => {
       <Button link href={ON_BOARDING}>
         지금 바로 시작해볼까요?
       </Button>
-
-      <Button>default</Button>
-      <Button variant='contained' color='primary'>
-        contained & primary
-      </Button>
-      <Button variant='contained' color='secondary'>
-        contained & secondary
-      </Button>
-      <Button variant='outline' color='secondary'>
-        outline & secondary
-      </Button>
-      <Button variant='ghost' color='secondary'>
-        ghost & secondary
-      </Button>
     </main>
   );
 };

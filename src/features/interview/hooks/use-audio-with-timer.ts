@@ -18,14 +18,14 @@ export const useAudioWithTimer = (duration: number) => {
   });
 
   const startRecordingWithTimer = () => {
-    setTranscribedText('');
     startRecording();
+    setTranscribedText('');
     startTimer();
   };
 
   const stopRecordingWithTimer = async () => {
-    const blob = await stopRecording();
     stopTimer();
+    const blob = await stopRecording();
 
     try {
       const text = await postSpeechToText({ blob });

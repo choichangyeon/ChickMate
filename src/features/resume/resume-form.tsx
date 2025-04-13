@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import Typography from '@/components/ui/typography';
+import { MODAL_ID } from '@/constants/modal-id-constants';
 import { useModalStore } from '@/store/use-modal-store';
 import { useResumeForm } from '@/features/resume/hooks/use-resume-form';
 import { useDraftResumesQuery } from '@/features/resume/hooks/use-draft-resumes-query';
@@ -11,8 +12,12 @@ import type { Field } from '@/types/resume';
 import type { Resume } from '@prisma/client';
 
 const ResumeForm = () => {
+  const { DRAFT_RESUME } = MODAL_ID;
+
   const toggleModal = useModalStore((state) => state.toggleModal);
-  const isModalOpen = useModalStore((state) => state.isModalOpen);
+  const modalList = useModalStore((state) => state.modalList);
+
+  const isModalOpen = modalList.find((modal) => modal.id === DRAFT_RESUME)?.isModalOpen || false;
 
   /** hook */
   const {
@@ -34,7 +39,7 @@ const ResumeForm = () => {
 
   /** function */
   const handleDraftResumeListClick = () => {
-    toggleModal();
+    toggleModal(DRAFT_RESUME);
     refetch();
   };
 
@@ -44,7 +49,7 @@ const ResumeForm = () => {
     setTitle(title);
     setFieldList(content as Field[]);
     setResumeId(id);
-    toggleModal();
+    toggleModal(DRAFT_RESUME);
   };
 
   useEffect(() => {

@@ -7,8 +7,10 @@ import Image from 'next/image';
 import { postCreateCharacter } from '@/features/character/api/client-services';
 import { CHARACTER_INFOMATIONS } from '@/constants/character-constants';
 import { CHARACTER_MESSAGE } from '@/constants/message-constants';
+import { MODAL_ID } from '@/constants/modal-id-constants';
 
 const { POST_DATA_SUCCESS } = CHARACTER_MESSAGE.POST;
+const { CHARACTER_CREATE } = MODAL_ID;
 
 const CreateCharacterModal = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -23,7 +25,7 @@ const CreateCharacterModal = () => {
     try {
       await postCreateCharacter({ type });
       alert(POST_DATA_SUCCESS);
-      toggleModal();
+      toggleModal(CHARACTER_CREATE);
     } catch (error) {
       alert((error as Error).message);
     }
@@ -38,7 +40,7 @@ const CreateCharacterModal = () => {
   };
 
   return (
-    <Modal>
+    <Modal modalId={CHARACTER_CREATE}>
       <form
         onSubmit={handleSubmit}
         className='mx-auto flex w-full max-w-xl flex-col items-center justify-center bg-white p-6'

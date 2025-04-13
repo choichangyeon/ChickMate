@@ -23,13 +23,6 @@ export const useAudioRecorder = () => {
         audioChunksRef.current.push(e.data);
       };
 
-      // 녹음이 종료되면 지금까지 모은 오디오 조각들을 하나로 하벼서 Blob으로 만듦
-      // Blob을 브라우저가 이해할 수 있는 가상 URL로 변환
-      mediaRecorder.onstop = () => {
-        const blob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
-        setAudioBlob(blob);
-      };
-
       // 실제 녹음을 시작함
       mediaRecorder.start();
       setIsRecording(true);
@@ -39,9 +32,19 @@ export const useAudioRecorder = () => {
   };
 
   // 녹음 중단
-  const stopRecording = () => {
-    audioRecorderRef.current?.stop();
-    setIsRecording(false);
+  const stopRecording = (): Promise<Blob> => {
+    return new Promise((resolve) => {
+      if (!audioRecorderRef.current) return;
+
+      audioRecorderRef.current.onstop = () => {
+        const blob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+        setAudioBlob(blob);
+        resolve(blob);
+      };
+
+      audioRecorderRef.current?.stop();
+      setIsRecording(false);
+    });
   };
 
   return { isRecording, audioBlob, startRecording, stopRecording };

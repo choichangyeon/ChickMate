@@ -23,15 +23,10 @@ export const useAudioWithTimer = (duration: number) => {
     startTimer();
   };
 
-  const stopRecordingWithTimer = () => {
-    stopRecording();
+  const stopRecordingWithTimer = async () => {
+    const blob = await stopRecording();
     stopTimer();
-    if (audioBlob) {
-      transcribeAudio(audioBlob);
-    }
-  };
 
-  const transcribeAudio = async (blob: Blob) => {
     try {
       const text = await postSpeechToText({ blob });
       setTranscribedText(text);

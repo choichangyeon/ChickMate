@@ -6,7 +6,7 @@ const OnBoarding = async () => {
   const session = await getServerSession(authOptions);
 
   return (
-    <div className='flex h-[100vh] w-full items-center justify-center bg-white pl-20'>
+    <div className='flex h-[100vh] w-full items-center justify-center bg-white'>
       <div className='flex w-[70%] flex-col justify-center'>
         <div className='mb-9 flex flex-col gap-2'>
           <p className='text-4xl font-bold'>오늘도 힘차게 성장해 볼까요?</p>

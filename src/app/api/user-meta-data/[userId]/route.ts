@@ -2,25 +2,49 @@ import { AUTH_MESSAGE, USER_META_DATA_FORM_MESSAGE } from '@/constants/message-c
 import { prisma } from '@/lib/prisma';
 import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
+import type { User } from '@prisma/client';
 
+import { ENV } from '@/constants/env-constants';
 type Props = {
   params: {
-    userId: string;
+    userId: User['id'];
   };
 };
 
+const { NEXTAUTH_SECRET } = ENV;
 const {
-  API: { POST_DATA_ERROR },
+  API: { POST_DATA_ERROR, GET_DATA_ERROR },
 } = USER_META_DATA_FORM_MESSAGE;
 
 const {
   ERROR: { EXPIRED_TOKEN },
 } = AUTH_MESSAGE;
 
-export const POST = async (request: NextRequest, { params }: Props) => {
+export const GET = async (request: NextRequest, { params }: Props): Promise<NextResponse> => {
   try {
-    const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+    const { userId } = params;
+    if (!userId) return NextResponse.json({ message: EXPIRED_TOKEN }, { status: 401 });
 
+    const userData = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (!userData) return NextResponse.json({ data: {} }, { status: 200 });
+    return NextResponse.json({ data: userData.userMetaData }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: GET_DATA_ERROR,
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+};
+
+export const POST = async (request: NextRequest, { params }: Props): Promise<NextResponse> => {
+  try {
+    const token = await getToken({ req: request, secret: NEXTAUTH_SECRET });
     if (!token) return NextResponse.json({ message: EXPIRED_TOKEN }, { status: 401 });
     const { userId } = params;
     const payload = await request.json();

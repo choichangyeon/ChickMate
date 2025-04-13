@@ -1,10 +1,12 @@
-import UserMetaDataModal from '@/features/user-meta-data/user-meta-data-modal';
+import TabsField from '@/features/my-page/tabs-field';
+import ViewingField from '@/features/my-page/viewing-field';
 
 const MyPage = () => {
   return (
-    <div className='pl-28'>
-      <UserMetaDataModal />
-    </div>
+    <article className='flex items-center gap-2 px-24'>
+      <ViewingField />
+      <TabsField />
+    </article>
   );
 };
 

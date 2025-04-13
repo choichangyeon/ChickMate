@@ -1,76 +1,26 @@
 'use client';
-import { PATH } from '@/constants/path-constant';
-import { DEFAULT, USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
-import type { SelectBoxType } from '@/types/select-box';
-import { type UserMetaDataType } from '@/types/user-meta-data-type';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useCallback, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useSession } from 'next-auth/react';
+import ErrorComponent from '@/components/common/error-component';
 import { academicData, jobData, typeData } from '@/features/user-meta-data/data/user-meta-data';
-import { userMetaFormSchema, UserMetaSchema } from '@/features/user-meta-data/data/user-meta-form-schema';
-import useMetaDataMutation from '@/features/user-meta-data/hooks/use-meta-data-mutation';
 import useRegionsQuery from '@/features/user-meta-data/hooks/use-regions-query';
 import SingleSelectField from '@/features/user-meta-data/single-select-field';
-import type { User } from '@/types/user';
-
-export type onSelectType = (key: keyof UserMetaDataType, value: SelectBoxType['value']) => void;
+import { useMetaDataForm } from '@/features/user-meta-data/hooks/use-meta-data-form';
+import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 
 const { TYPE, EDUCATION, JOB, MAIN_REGION, ETC } = USER_META_DATA_KEY;
-const {
-  AUTH: { SIGN_IN },
-} = PATH;
-type Props = {
-  user: {
-    id: User['id'] | null;
-    email?: User['email'] | null;
-    image?: User['image'] | null;
-    name?: User['name'] | null;
-  };
-  initMetaData?: UserMetaDataType;
-};
 
-const UserMetaDataForm = ({ user, initMetaData }: Props) => {
-  const userId = user.id;
-  if (!userId) return null; //부모컴포넌트에서 userId가 없으면 Return하기 때문에 실행될 일이 없음...
-  const FORM_TYPE = initMetaData ? '수정' : '작성';
+const UserMetaDataForm = () => {
+  const { data } = useSession();
+  const userId = data?.user?.id;
+
+  if (!userId) return <ErrorComponent />;
+
+  const { watch, register, errors, handleSubmit, handleOnSubmit, handleSelect, isMetaDataPending, FORM_TYPE } =
+    useMetaDataForm(userId);
+
   const { data: regions = [], isPending } = useRegionsQuery();
-  const { mutate, error } = useMetaDataMutation(userId);
-  const handleSelect = useCallback((key: keyof UserMetaDataType, selected: SelectBoxType['value']) => {
-    setValue(key, selected);
-    trigger(key);
-  }, []);
 
-  useEffect(() => {
-    if (error) {
-      alert(error.message);
-      window.location.replace(SIGN_IN);
-    }
-  }, [error]);
-
-  const {
-    setValue,
-    watch,
-    trigger,
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm<UserMetaSchema>({
-    defaultValues: {
-      [TYPE]: initMetaData?.[TYPE] ?? DEFAULT,
-      [EDUCATION]: initMetaData?.[EDUCATION] ?? DEFAULT,
-      [JOB]: initMetaData?.[JOB] ?? DEFAULT,
-      [MAIN_REGION]: initMetaData?.[MAIN_REGION] ?? DEFAULT,
-      [ETC]: initMetaData?.[ETC] ?? null,
-    },
-    mode: 'onBlur',
-    resolver: zodResolver(userMetaFormSchema),
-  });
-
-  const handleOnSubmit = (values: UserMetaDataType) => {
-    mutate(values);
-  };
-
-  if (isPending) return <div>로딩 중..</div>;
+  if (isPending || isMetaDataPending) return <div>로딩 중..</div>;
 
   return (
     <form onSubmit={handleSubmit(handleOnSubmit)}>

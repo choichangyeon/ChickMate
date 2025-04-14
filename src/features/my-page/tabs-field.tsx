@@ -1,9 +1,13 @@
-import Typography from '@/components/ui/typography';
+import ListByTab from '@/features/my-page/list-by-tab';
+import TabButtons from '@/features/my-page/tab-buttons';
 
 const TabsField = () => {
   return (
-    <section className='w-1/2 border-2'>
-      <Typography as='h3'>여기는 탭 버튼 3개가 들어갈 자리입니다~!~!</Typography>
+    <section className='w-1/2 rounded-t-lg border'>
+      <TabButtons />
+      <div className='p-8'>
+        <ListByTab />
+      </div>
     </section>
   );
 };

@@ -3,7 +3,12 @@ import { Message } from '@/types/message';
 export const INTERVIEW_TYPE = {
   PRESSURE: 'pressure',
   CALM: 'calm',
-};
+} as const;
+
+export const INTERVIEW_TYPE_KR = {
+  pressure: '불타는 면접관',
+  calm: '햇살 면접관',
+} as const;
 
 export const INTERVIEW_CONVERT_OPTIONS = {
   TTS_OPTIONS: {

@@ -41,6 +41,7 @@ export const ROUTE_HANDLER_PATH = {
   },
   USER: {
     META_DATA: '/api/user-meta-data',
+    INTERVIEW_HISTORY: '/api/interview-history',
   },
   REGIONS: '/api/regions',
   JOB: {

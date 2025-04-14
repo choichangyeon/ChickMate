@@ -1,21 +1,18 @@
 'use client';
 
 import Typography from '@/components/ui/typography';
-import { useAudioWithTimer } from '@/features/interview/hooks/use-audio-with-timer';
-import type { InterviewHistoryWithResume } from '@/types/interview';
 
 type Props = {
-  interviewHistory: InterviewHistoryWithResume;
+  isRecording: boolean;
+  formattedTime: {
+    minutes: string;
+    seconds: string;
+  };
+  startRecordingWithTimer: () => void;
+  stopRecordingWithTimer: () => void;
 };
 
-const Timer = ({ interviewHistory }: Props) => {
-  const MINUTES_IN_MS = 1 * 60 * 1000;
-
-  const { isRecording, formattedTime, startRecordingWithTimer, stopRecordingWithTimer } = useAudioWithTimer(
-    MINUTES_IN_MS,
-    interviewHistory
-  );
-
+const Timer = ({ isRecording, formattedTime, startRecordingWithTimer, stopRecordingWithTimer }: Props) => {
   const handleButtonClick = () => {
     isRecording ? stopRecordingWithTimer() : startRecordingWithTimer();
   };

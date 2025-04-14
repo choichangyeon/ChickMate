@@ -20,5 +20,6 @@ export const useJobPostingQuery = ({ userId }: Props) => {
       return getJobByUserMetaData(userMetaData);
     },
     staleTime: AN_HOUR,
+    enabled: !!userId,
   });
 };

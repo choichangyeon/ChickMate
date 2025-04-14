@@ -12,12 +12,12 @@ export const metadata: Metadata = {
 };
 
 const ResumePage = async () => {
-  const { RESUME } = QUERY_KEY;
+  const { RESUME_DRAFT } = QUERY_KEY;
 
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: [RESUME],
+    queryKey: [RESUME_DRAFT],
     queryFn: () => serverActionWithSentry(getDraftResumeList),
   });
 

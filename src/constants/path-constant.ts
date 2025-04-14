@@ -11,6 +11,11 @@ export const PATH = {
     ROOT: '/resume',
     DETAIL: (id: number) => `/resume/${id}`,
   },
+  INTERVIEW: {
+    ROOT: '/interview',
+    START: '/interview/start',
+    LIVE: (id: number) => `/interview/live/${id}`,
+  },
 };
 
 export const ROUTE_HANDLER_PATH = {
@@ -22,6 +27,7 @@ export const ROUTE_HANDLER_PATH = {
     STT: '/api/ai/stt',
     TTS: '/api/ai/tts',
     INTERVIEW: '/api/ai/interview',
+    INTERVIEW_START: (id: number) => `/api/ai/interview/${id}`,
   },
   RESUME: {
     ROOT: '/api/resume',

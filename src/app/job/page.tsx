@@ -1,6 +1,5 @@
 import BookmarkComponent from '@/features/job/bookmark-component';
 import JobPostingCard from '@/components/common/job-posting-card';
-import ResumeCard from '@/components/common/resume-card';
 
 const JobPage = () => {
   return (
@@ -9,7 +8,6 @@ const JobPage = () => {
       <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
       <br />
       <br />
-      <ResumeCard resume={mockResume}></ResumeCard>
       <BookmarkComponent jobPostingId={1} />
     </div>
   );
@@ -35,13 +33,3 @@ const mockJobPosting = {
   createdAt: new Date(),
 };
 
-const mockResume = {
-  id: 1,
-  title: '이력서 제목 조금 더 길게 작성해보자 하하하',
-  userId: 'userId',
-  status: 1,
-  content: '이력서 내용',
-  tryCount: 0,
-  createdAt: new Date(),
-  updatedAt: new Date(),
-};

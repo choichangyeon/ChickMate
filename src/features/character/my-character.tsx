@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { Character } from '@prisma/client';
 import { Session } from 'next-auth';
-import { defaultCharacter } from './data/character-data';
+import { defaultCharacter } from '@/features/character/data/character-data';
 import Typography from '@/components/ui/typography';
 import CharacterExpBar from '@/features/character/character-exp-bar';
 import { useCharacterCard } from './hooks/use-character-card';

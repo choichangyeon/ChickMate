@@ -7,9 +7,9 @@ import CharacterExpBar from '@/features/character/character-exp-bar';
 import Typography from '@/components/ui/typography';
 import { Session } from 'next-auth';
 import ScreenOverlay from '@/components/ui/screen-overlay';
-import { useCharacterCard } from './hooks/use-character-card';
-import CharacterDetailModal from './character-detail-modal';
-import CreateCharacterModal from './create-character-modal';
+import { useCharacterCard } from '@/features/character/hooks/use-character-card';
+import CharacterDetailModal from '@/features/character/character-detail-modal';
+import CreateCharacterModal from '@/features/character/create-character-modal';
 
 type Props = {
   characterData?: Character;

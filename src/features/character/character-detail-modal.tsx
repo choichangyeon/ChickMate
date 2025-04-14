@@ -1,13 +1,13 @@
 'use client';
 
 import Modal from '@/components/ui/modal';
-import MyCharacter from './my-character';
+import MyCharacter from '@/features/character/my-character';
 import { Session } from 'next-auth';
-import { useGetCharacterQuery } from './hooks/use-get-character-query';
-import { useCharacterStoreSync } from './hooks/use-character-store-sync';
+import { useGetCharacterQuery } from '@/features/character/hooks/use-get-character-query';
+import { useCharacterStoreSync } from '@/features/character/hooks/use-character-store-sync';
 import { useState } from 'react';
 import { MODAL_ID } from '@/constants/modal-id-constants';
-import CharacterHistoryList from './character-history';
+import CharacterHistoryList from '@/features/character/character-history';
 
 type Props = {
   session: Session;

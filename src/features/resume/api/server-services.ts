@@ -8,7 +8,7 @@ import { RESUME_STATUS } from '@/constants/resume-constants';
 
 /**
  * 임시 저장된 자소서 불러오기 요청
- * @returns draftResumeList 임시 저장된 자소서 리스트
+ * @returns data 임시 저장된 자소서 리스트
  */
 export const getDraftResumeList = async () => {
   const { DRAFT } = RESUME_STATUS;

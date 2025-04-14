@@ -28,9 +28,9 @@ export const POST = async (request: NextRequest) => {
       return NextResponse.json({ message: AI_REQUEST_FAILURE }, { status: 400 });
     }
 
-    const text = res.choices[0].message.content;
+    const response = res.choices[0].message.content;
 
-    return NextResponse.json({ data: text }, { status: 200 });
+    return NextResponse.json({ response }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: AI_SERVER_ERROR }, { status: 500 });
   }

@@ -92,19 +92,19 @@ type MessageListProps = {
 };
 
 export const getOpenAIResponse = async ({ messageList }: MessageListProps): Promise<Message[]> => {
-  const res = await fetchWithSentry(INTERVIEW, {
+  const { response: question } = await fetchWithSentry(INTERVIEW, {
     method: POST,
     body: JSON.stringify({ messageList: messageList }),
   });
 
-  const { text } = await res.json();
+  console.log(question);
 
   messageList.push({
     role: 'assistant',
     content: [
       {
         type: 'text',
-        text: text,
+        text: question,
       },
     ],
   });

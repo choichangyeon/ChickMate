@@ -3,7 +3,6 @@ import { getInterviewHistory } from '@/features/interview/api/server-services';
 import CameraView from '@/features/interview/camera-view';
 import Timer from '@/features/interview/timer';
 import type { RouteParams } from '@/types/route-params';
-import { InterviewHistory } from '@prisma/client';
 
 const InterviewPage = async ({ params }: RouteParams) => {
   const interviewId = Number(params.id);
@@ -35,7 +34,8 @@ const InterviewPage = async ({ params }: RouteParams) => {
             </Typography>
           </div>
         </div>
-        <Timer interviewHistory={interviewHistory} />
+        {/** 임시 처리 */}
+        {interviewHistory && <Timer interviewHistory={interviewHistory} />}
       </section>
     </main>
   );

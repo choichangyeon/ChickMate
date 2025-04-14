@@ -2,10 +2,10 @@
 
 import Typography from '@/components/ui/typography';
 import { useAudioWithTimer } from '@/features/interview/hooks/use-audio-with-timer';
-import { InterviewHistory } from '@prisma/client';
+import type { InterviewHistoryWithResume } from '@/types/interview';
 
 type Props = {
-  interviewHistory: InterviewHistory | null;
+  interviewHistory: InterviewHistoryWithResume;
 };
 
 const Timer = ({ interviewHistory }: Props) => {

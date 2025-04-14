@@ -14,9 +14,7 @@ const { EXPIRED_TOKEN } = AUTH_MESSAGE.ERROR;
 const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
 const { DB_SERVER_ERROR, DB_REQUEST_ERROR } = DB_MESSAGE.ERROR;
 const { USER_ID_VALIDATION } = DB_MESSAGE.VALIDATION;
-const {NOT_FOUND, FORBIDDEN, PATCH_SERVER_ERROR} = INTERVIEW_MESSAGE
-
-
+const { NOT_FOUND, FORBIDDEN, PATCH_SERVER_ERROR, GET_SERVER_ERROR } = INTERVIEW_MESSAGE;
 
 export const POST = async (request: NextRequest, { params }: RouteParams) => {
   try {
@@ -55,17 +53,15 @@ export const POST = async (request: NextRequest, { params }: RouteParams) => {
  */
 export const PATCH = async (request: NextRequest, { params }: RouteParams) => {
   try {
-    
     const token = await getToken({ req: request, secret: NEXTAUTH_SECRET });
     if (!token) return NextResponse.json({ message: EXPIRED_TOKEN }, { status: 401 });
-    
+
     const session = await getServerSession(authOptions);
     if (!session || !session.user) {
       return NextResponse.json({ message: AUTH_REQUIRED }, { status: 401 });
     }
 
-    const { id: interviewId } = params;
-    const id = Number(interviewId);
+    const id = Number(params.id);
 
     const body: InterviewQnAData = await request.json();
 
@@ -94,5 +90,37 @@ export const PATCH = async (request: NextRequest, { params }: RouteParams) => {
     return NextResponse.json({ response }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: PATCH_SERVER_ERROR }, { status: 500 });
+  }
+};
+
+/**
+ * 원하는 인터뷰 기록 조회 요청
+ */
+export const GET = async (request: NextRequest, { params }: RouteParams) => {
+  const interviewId = Number(params.id);
+
+  try {
+    const token = await getToken({ req: request, secret: NEXTAUTH_SECRET });
+    if (!token) return NextResponse.json({ message: EXPIRED_TOKEN }, { status: 401 });
+
+    const session = await getServerSession(authOptions);
+    if (!session || !session.user) {
+      return NextResponse.json({ message: AUTH_REQUIRED }, { status: 401 });
+    }
+
+    const response = await prisma.interviewHistory.findUnique({
+      where: {
+        userId: session.user.id,
+        id: interviewId,
+      },
+    });
+
+    if (!response) {
+      return NextResponse.json({ message: NOT_FOUND }, { status: 404 });
+    }
+
+    return NextResponse.json({ response });
+  } catch (error) {
+    return NextResponse.json({ message: GET_SERVER_ERROR }, { status: 500 });
   }
 };

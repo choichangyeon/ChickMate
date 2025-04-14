@@ -19,12 +19,19 @@ const InterviewPromptWithTimer = ({ session, interviewHistory }: Props) => {
 
   const AIquestion = messageList[messageList.length - 1].content[0].text;
 
+  // const question = messageList[messageList.length - 1].content[0].text;
+  // const answer = messageList[messageList.length].content[0].text;
+
+  const isFinalQuestionAsked = messageList.length === 17;
+
   return (
     <section className='flex gap-5'>
       <div className='flex flex-col items-start gap-4'>
         <div>불타는 면접관</div>
         <div className='px-16'>
-          {messageList.length === 1 ? (
+          {isFinalQuestionAsked ? (
+            '면접보시느라 고생 많으셨습니다.'
+          ) : messageList.length === 1 ? (
             <Typography color='gray-700'>안녕하세요 {session.user.name}님 간단한 자기소개 부탁드립니다.</Typography>
           ) : (
             AIquestion
@@ -36,6 +43,7 @@ const InterviewPromptWithTimer = ({ session, interviewHistory }: Props) => {
         formattedTime={formattedTime}
         startRecordingWithTimer={startRecordingWithTimer}
         stopRecordingWithTimer={stopRecordingWithTimer}
+        messageList={messageList}
       />
     </section>
   );

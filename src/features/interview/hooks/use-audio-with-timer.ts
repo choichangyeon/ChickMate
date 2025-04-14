@@ -13,7 +13,6 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
   const type = interviewType === 'calm' ? CALM_PROMPT : PRESSURE_PROMPT;
 
   /** state */
-  // const [transcribedText, setTranscribedText] = useState('');
   const init_state: Message[] = [
     {
       role: 'system',
@@ -37,7 +36,6 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
 
   const startRecordingWithTimer = () => {
     startRecording();
-    // setTranscribedText('');
     startTimer();
   };
 
@@ -45,9 +43,9 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
     stopTimer();
     const blob = await stopRecording();
 
+    // 사용자 음성을 텍스트로 변환해주는 로직
     try {
       const answerText = await postSpeechToText({ blob });
-      console.log(answerText);
       getOpenAIInterviewContent(answerText);
     } catch (error) {
       if (error instanceof Error) {
@@ -56,6 +54,7 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
     }
   };
 
+  // AI 면접관이랑 면접 보는 로직
   const getOpenAIInterviewContent = async (answerText: string) => {
     try {
       const updatedMessageList: Message[] = [
@@ -72,7 +71,6 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
       ];
       const response = await getOpenAIResponse({ messageList: updatedMessageList });
       setMessageList(response);
-      console.log(response);
     } catch (error) {
       if (error instanceof Error) {
         alert(error);
@@ -81,6 +79,7 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
   };
 
   return {
+    messageList,
     isRecording,
     timeLeft,
     formattedTime: formatTime(),

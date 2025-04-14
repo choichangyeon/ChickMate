@@ -28,11 +28,10 @@ const BookmarkComponent = ({ jobPostingId }: Props) => {
   if (error) return <div>error</div>;
 
   return (
-    <div>
-      BookmarkComponent
+    <section>
       <button onClick={handleClick}>북마크 테스트</button>
       <button onClick={handleClickTest}>useState</button>
-    </div>
+    </section>
   );
 };
 

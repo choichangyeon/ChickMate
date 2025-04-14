@@ -2,12 +2,14 @@ import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { INTERVIEW_CONVERT_OPTIONS, INTERVIEW_TYPE, INTERVIEW_VOICE_OPTIONS } from '@/constants/interview-constants';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
-import { Message } from '@/types/message';
+import type { Message } from '@/types/message';
+import type { InterviewQnAData } from '@/types/interview';
 
-const { TTS, STT, INTERVIEW, INTERVIEW_START } = ROUTE_HANDLER_PATH.AI;
+const { TTS, STT, INTERVIEW, INTERVIEW_START, INTERVIEW_LIVE } = ROUTE_HANDLER_PATH.AI;
 const { CALM_OPTIONS, PRESSURE_OPTIONS } = INTERVIEW_VOICE_OPTIONS;
 const { TTS_OPTIONS, STT_OPTIONS } = INTERVIEW_CONVERT_OPTIONS;
-const { POST } = API_METHOD;
+const { POST, PATCH } = API_METHOD;
+const { JSON_HEADER } = API_HEADER;
 
 /**
  * @function textToSpeech
@@ -88,7 +90,9 @@ type MessageListProps = {
   messageList: Message[];
 };
 
-export const getOpenAIResponse = async ({ messageList }: MessageListProps): Promise<Message[]> => {
+export const getOpenAIResponse = async ({
+  messageList,
+}: MessageListProps): Promise<{ messageList: Message[]; question: string }> => {
   const { response: question } = await fetchWithSentry(INTERVIEW, {
     method: POST,
     body: JSON.stringify({ messageList: messageList }),
@@ -104,12 +108,7 @@ export const getOpenAIResponse = async ({ messageList }: MessageListProps): Prom
     ],
   });
 
-  return messageList;
-};
-
-type InterviewProps = {
-  resumeId: number;
-  interviewType: string;
+  return { messageList, question };
 };
 
 /**
@@ -118,9 +117,12 @@ type InterviewProps = {
  * @param interviewType
  * @returns id 인터뷰 ID
  */
-export const postInterview = async ({ resumeId, interviewType }: InterviewProps): Promise<number> => {
-  const { JSON_HEADER } = API_HEADER;
+type InterviewProps = {
+  resumeId: number;
+  interviewType: string;
+};
 
+export const postInterview = async ({ resumeId, interviewType }: InterviewProps): Promise<number> => {
   const { response } = await fetchWithSentry(INTERVIEW_START(resumeId), {
     method: POST,
     headers: JSON_HEADER,
@@ -135,4 +137,19 @@ export const postInterview = async ({ resumeId, interviewType }: InterviewProps)
   return id;
 };
 
-export const patchInterviewHistory = async () => {};
+/** DB에 인터뷰 기록 업데이트하는 요청
+ * @param interviewId 인터뷰 기록 ID
+ * @param data 면접 질문/답변 1쌍
+ */
+type interviewHistoryProps = {
+  interviewId: number;
+  data: InterviewQnAData;
+};
+
+export const patchInterviewHistory = async ({ interviewId, data }: interviewHistoryProps) => {
+  await fetchWithSentry(INTERVIEW_LIVE(interviewId), {
+    method: PATCH,
+    headers: JSON_HEADER,
+    body: JSON.stringify(data),
+  });
+};

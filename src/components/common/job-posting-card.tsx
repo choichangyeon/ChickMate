@@ -6,48 +6,58 @@ import Bookmark from '@/features/job/bookmark';
 import { formatDate } from '@/utils/format-date';
 import { JobPosting } from '@prisma/client';
 import clsx from 'clsx';
+import Button from '@/components/ui/button';
+import { formatRemainDay } from '@/utils/format-remain-day';
 
 type Props = {
   jobPosting: JobPosting;
-  children?: React.ReactNode;
-  // TODO: iconButton type 수정
-  iconButton?: boolean;
 };
 
-const JobPostingCard = ({ jobPosting, iconButton, children }: Props) => {
+const JobPostingCard = ({ jobPosting }: Props) => {
   const { company, title, experienceType, expiredAt, postedAt, id, url } = jobPosting;
   const postedAtDate = formatDate({ input: postedAt });
   const expiredAtDate = formatDate({ input: expiredAt });
+  const remainDay = formatRemainDay(expiredAt);
+
   return (
-    <Card className='min-w-96 self-stretch p-8'>
-      <div>
-        <div className='flex flex-row justify-between'>
-          <Typography weight='bold' color='gray-500'>
-            {company}
-          </Typography>
-          {iconButton && (
-            // TODO: iconButton component 적용
+    <Card className='h-full min-w-96 p-8'>
+      <article className='flex flex-col justify-between'>
+        <section className='h-24'>
+          <div className='flex flex-row justify-between'>
+            <Typography weight='bold' color='gray-500'>
+              {company}
+            </Typography>
+            {/* TODO: iconButton component 적용 */}
             <Bookmark jobPostingId={id} />
+          </div>
+          <Typography as='h3' weight='bold' lineClamp='2'>
+            {title}
+          </Typography>
+          <div className='flex flex-row items-center gap-4'>
+            <Typography size='sm' color='gray-500'>
+              {experienceType}
+            </Typography>
+            <Typography size='sm' color='gray-500'>
+              {postedAtDate}~{expiredAtDate}
+            </Typography>
+          </div>
+        </section>
+        <section className={badgeClassName}>
+          <Typography color='primary-600' weight='bold' size='xl'>
+            D-{remainDay}
+          </Typography>
+          {/* TODO: 수정되는 버튼 사용 예정 */}
+          {url && (
+            <Button link href={url} variant='outline'>
+              바로 가기
+            </Button>
           )}
-        </div>
-        <Typography as='h3' weight='bold' lineClamp='2'>
-          {title}
-        </Typography>
-        <div className='flex flex-row items-center gap-4'>
-          <Typography size='sm' color='gray-500'>
-            {experienceType}
-          </Typography>
-          <Typography size='sm' color='gray-500'>
-            {postedAtDate}~{expiredAtDate}
-          </Typography>
-        </div>
-      </div>
-      {/* TODO: badge area */}
-      <div className={badgeClassName}>{children} </div>
+        </section>
+      </article>
     </Card>
   );
 };
 
-const badgeClassName = clsx('flex gap-4');
+const badgeClassName = clsx('flex justify-between');
 
 export default JobPostingCard;

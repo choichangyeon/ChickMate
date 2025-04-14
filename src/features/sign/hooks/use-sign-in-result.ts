@@ -9,8 +9,6 @@ import { useGetCharacterQuery } from '@/features/character/hooks/use-get-charact
 import { useCharacterStoreSync } from '@/features/character/hooks/use-character-store-sync';
 import { useCharacterStore } from '@/store/use-character-store';
 
-// import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
-
 const { SIGN_IN_SUCCESS, SIGN_IN_FAILED, SOCIAL_SIGN_IN_EXIST_ERROR, SOCIAL_SIGN_IN_FAILED } = AUTH_MESSAGE.RESULT;
 
 const NEXT_AUTH_STATUS = {
@@ -33,7 +31,6 @@ const { LOGIN } = CHARACTER_HISTORY_KEY;
 export const useSignInResult = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  // const sanitizedParams = sanitizeQueryParams(searchParams);
   const path = searchParams.get(UNAUTH);
   const error = searchParams.get(ERROR);
   const { status } = useSession();
@@ -44,7 +41,7 @@ export const useSignInResult = () => {
   const { handleExperienceUp } = useExperienceUp();
 
   useEffect(() => {
-    if (status === AUTHENTICATED && characterId !== null) {
+    if (status === AUTHENTICATED) {
       if (!!path) {
         signOut({ redirect: false }).then(() => {
           router.replace(pathname);
@@ -53,11 +50,13 @@ export const useSignInResult = () => {
         return;
       }
       alert(SIGN_IN_SUCCESS);
-      console.log(1);
-      handleExperienceUp(LOGIN);
       router.replace(ON_BOARDING);
+
+      if (characterId !== null) {
+        handleExperienceUp(LOGIN);
+      }
     }
-  }, [status, router, path, characterId]);
+  }, [status, router, path]);
 
   useEffect(() => {
     if (!error) return;

@@ -1,3 +1,5 @@
+import { Message } from "@/types/message";
+
 export const INTERVIEW_TYPE = {
   PRESSURE: 'pressure',
   CALM: 'calm',
@@ -30,7 +32,7 @@ export const INTERVIEW_VOICE_OPTIONS = {
   },
 };
 
-export const INTERVIEW_PROMPT = {
+export const INTERVIEW_PROMPT:Record<string,Message> = {
   CALM_PROMPT: {
     'role': 'system',
     'content': [

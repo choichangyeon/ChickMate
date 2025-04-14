@@ -3,7 +3,6 @@ import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { INTERVIEW_CONVERT_OPTIONS, INTERVIEW_TYPE, INTERVIEW_VOICE_OPTIONS } from '@/constants/interview-constants';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
 import { Message } from '@/types/message';
-import { Resume } from '@prisma/client';
 
 const { TTS, STT, INTERVIEW, INTERVIEW_START } = ROUTE_HANDLER_PATH.AI;
 const { CALM_OPTIONS, PRESSURE_OPTIONS } = INTERVIEW_VOICE_OPTIONS;

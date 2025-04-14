@@ -24,8 +24,7 @@ export const getInterviewHistory = async (interviewId: number) => {
         userId: session.user.id,
         id: interviewId,
       },
-      select: {
-        id: true,
+      include: {
         resume: {
           select: {
             content: true,

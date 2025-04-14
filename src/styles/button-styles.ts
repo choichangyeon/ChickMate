@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority';
 
-export const buttonVariants = cva('px-4 py-2 rounded-3xl', {
+export const buttonVariants = cva('', {
   variants: {
     variant: {
       contained: 'text-cool-gray-50 bg-primary-orange-600',
@@ -15,6 +15,15 @@ export const buttonVariants = cva('px-4 py-2 rounded-3xl', {
     disabled: {
       true: 'opacity-80 cursor-not-allowed text-cool-gray-300',
       false: '',
+    },
+    size: {
+      large: 'px-[52px] py-[2px]',
+      medium: 'px-5 py-1',
+      small: 'px-4 py-[2px]',
+    },
+    square: {
+      true: 'rounded',
+      false: 'rounded-3xl',
     },
   },
   compoundVariants: [

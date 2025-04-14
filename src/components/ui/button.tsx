@@ -5,6 +5,8 @@ type ButtonBaseProps = {
   children: React.ReactNode;
   variant?: 'outline' | 'ghost' | 'contained';
   color?: 'primary' | 'secondary' | 'dark';
+  size?: 'large' | 'medium' | 'small';
+  square?: boolean;
 };
 type ButtonProps = ButtonBaseProps & {
   link?: false;
@@ -21,11 +23,11 @@ type LinkButtonProps = ButtonBaseProps & {
 };
 
 const Button = (props: ButtonProps | LinkButtonProps) => {
-  const { children, color = 'primary', variant = 'contained', link } = props;
+  const { children, color = 'primary', variant = 'contained', link, size = 'medium', square = false } = props;
 
   if (link) {
     return (
-      <Link href={props.href} className={buttonVariants({ variant, color })}>
+      <Link href={props.href} className={buttonVariants({ variant, color, size, square })}>
         {children}
       </Link>
     );
@@ -33,7 +35,12 @@ const Button = (props: ButtonProps | LinkButtonProps) => {
 
   const { type = 'button', onClick, disabled } = props;
   return (
-    <button type={type} className={buttonVariants({ variant, color, disabled })} onClick={onClick} disabled={disabled}>
+    <button
+      type={type}
+      className={buttonVariants({ variant, color, size, square })}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
     </button>
   );

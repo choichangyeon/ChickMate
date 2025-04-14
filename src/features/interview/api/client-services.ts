@@ -19,7 +19,6 @@ const { POST } = API_METHOD;
  * @param instruction  - 목소리 형식 default = calm
  * @returns {void}
  */
-
 type TtsProps = {
   text: string;
   type: string;
@@ -57,7 +56,6 @@ export const postTextToSpeech = async ({ text, type }: TtsProps): Promise<void> 
  * @param language - default('ko')
  * @returns {text}
  */
-
 type SttProps = {
   blob: Blob;
 };
@@ -86,7 +84,6 @@ export const postSpeechToText = async ({ blob }: SttProps): Promise<string> => {
  * @param messageList - 사용자와 모델간의 대화 리스트
  * @returns {Message[]}
  */
-
 type MessageListProps = {
   messageList: Message[];
 };
@@ -96,8 +93,6 @@ export const getOpenAIResponse = async ({ messageList }: MessageListProps): Prom
     method: POST,
     body: JSON.stringify({ messageList: messageList }),
   });
-
-  console.log(question);
 
   messageList.push({
     role: 'assistant',
@@ -117,6 +112,12 @@ type InterviewProps = {
   interviewType: string;
 };
 
+/**
+ * DB에 인터뷰 기록 등록하는 요청
+ * @param resumeId 자소서 ID
+ * @param interviewType
+ * @returns id 인터뷰 ID
+ */
 export const postInterview = async ({ resumeId, interviewType }: InterviewProps): Promise<number> => {
   const { JSON_HEADER } = API_HEADER;
 
@@ -133,3 +134,5 @@ export const postInterview = async ({ resumeId, interviewType }: InterviewProps)
 
   return id;
 };
+
+export const patchInterviewHistory = async () => {};

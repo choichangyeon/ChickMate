@@ -31,7 +31,7 @@ export const postTextToSpeech = async ({ text, type }: TtsProps): Promise<void> 
   const { PRESSURE } = INTERVIEW_TYPE;
   const { VOICE, SPEED, INSTRUCTION } = type === PRESSURE ? PRESSURE_OPTIONS : CALM_OPTIONS;
   const { JSON_HEADER } = API_HEADER;
-  const res = await fetchWithSentry(TTS, {
+  const { response: audioUrl } = await fetchWithSentry(TTS, {
     method: POST,
     headers: JSON_HEADER,
     body: JSON.stringify({
@@ -43,8 +43,6 @@ export const postTextToSpeech = async ({ text, type }: TtsProps): Promise<void> 
       instruction: INSTRUCTION,
     }),
   });
-
-  const { audioUrl } = await res.json();
 
   const audio = new Audio(audioUrl);
   await audio.play();

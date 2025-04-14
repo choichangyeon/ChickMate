@@ -27,8 +27,8 @@ const SelectInterviewerBox = () => {
   };
 
   return (
-    <div className='flex flex-row'>
-      <div className='mr-5 flex w-full items-start justify-start gap-5 self-stretch'>
+    <section className='flex flex-row'>
+      <aside className='mr-5 flex w-full items-start justify-start gap-5 self-stretch'>
         <div
           onClick={() => setInterviewType(CALM)}
           className='flex w-full items-center justify-center self-stretch rounded-lg bg-primary-orange-600 outline outline-1 outline-cool-gray-300'
@@ -41,7 +41,7 @@ const SelectInterviewerBox = () => {
         >
           <Image src={`/assets/character/card/yellow-level3.png`} alt='불타는 면접관' width={220} height={220} />
         </div>
-      </div>
+      </aside>
       <aside className='flex h-80 w-96 flex-shrink-0 flex-col items-center justify-center overflow-hidden rounded-lg bg-emerald-900/0 outline outline-1 outline-offset-[-1px] outline-yellow-500'>
         <div className='mb-4'>
           {/* TODO: 이 부분은 면접관을 설명하는 부분, 추후 수정 가능 */}
@@ -77,7 +77,7 @@ const SelectInterviewerBox = () => {
         </Button> */}
         <button onClick={handleClickSetInterviewType}>면접 시작하기 버튼</button>
       </aside>
-    </div>
+    </section>
   );
 };
 

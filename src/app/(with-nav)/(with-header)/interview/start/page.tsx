@@ -18,26 +18,26 @@ const InterviewStartPage = async () => {
   });
   return (
     <main className='px-12 py-8'>
-      <section className='mb-8'>
-        <div className='mb-4 flex flex-row'>
+      <article className='mb-8'>
+        <section className='mb-4 flex flex-row'>
           <Typography as='h2' size='2xl' weight='bold'>
             면접 볼&nbsp;
             <span className='text-primary-orange-600'>ChickMate</span>를 제출하세요
           </Typography>
-        </div>
+        </section>
         <SelectInterviewerBox />
-      </section>
-      <section>
-        <div className='mb-4 flex flex-row'>
+      </article>
+      <article>
+        <section className='mb-4 flex flex-row'>
           <Typography as='h2' size='2xl' weight='bold'>
             면접 볼&nbsp;
             <span className='text-primary-orange-600'>자소서</span>를 제출하세요
           </Typography>
-        </div>
+        </section>
         <HydrationBoundary state={dehydrate(queryClient)}>
           <ResumeCardsBox />
         </HydrationBoundary>
-      </section>
+      </article>
     </main>
   );
 };

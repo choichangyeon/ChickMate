@@ -22,7 +22,7 @@ const ResumeCardsBox = () => {
   if (resumeList.length === 0) return <div>no data 1</div>;
 
   return (
-    <div className='flex max-w-[100vw] flex-row flex-nowrap gap-5 overflow-x-auto scrollbar-hide'>
+    <section className='flex max-w-[100vw] flex-row flex-nowrap gap-5 overflow-x-auto scrollbar-hide'>
       {resumeList.map((resume) => (
         <ResumeCard
           key={resume.id}
@@ -32,7 +32,7 @@ const ResumeCardsBox = () => {
           onSelect={() => setResume(resume.id)}
         />
       ))}
-    </div>
+    </section>
   );
 };
 

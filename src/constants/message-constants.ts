@@ -101,6 +101,13 @@ export const CHARACTER_MESSAGE = {
   PATCH: {
     PATCH_DATA_FAILED: '경험치 획득에 실패했습니다.',
     PATCH_DATA_VALIDATION_ERROR: '유효하지 않은 히스토리입니다.',
-    PATCH_ALREADY: '더 이상 경험치를 획득할 수 없습니다.'
+    PATCH_ALREADY: '더 이상 경험치를 획득할 수 없습니다.',
   },
+};
+
+export const HISTORY_MESSAGE = {
+  VALIDATION: {
+    QUERY_PARAMS_TYPE: 'page 또는 limit이 유효하지 않습니다.',
+  },
+  GET_SERVER_ERROR: '히스토리를 불러올 수 없습니다.',
 };

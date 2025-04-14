@@ -16,12 +16,13 @@ const { AN_HOUR } = STALE_TIME;
 const JobPage = async () => {
   const queryClient = new QueryClient();
   const session = await getServerSession(authOptions);
-  const user = session?.user ?? null;
+  if (!session) return null;
+  const user = session.user;
 
   await queryClient.prefetchQuery({
     queryKey: [JOB_POSTING],
     queryFn: async () => {
-      const userMetaData: UserMetaDataType = await getUserMetaData(user?.id);
+      const userMetaData: UserMetaDataType = await getUserMetaData(user.id);
       return getJobByUserMetaData(userMetaData);
     },
     staleTime: AN_HOUR,

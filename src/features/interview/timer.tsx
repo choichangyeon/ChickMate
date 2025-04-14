@@ -1,6 +1,11 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import Typography from '@/components/ui/typography';
+import { PATH } from '@/constants/path-constant';
+import type { Message } from '@/types/message';
+
+const { MY_PAGE } = PATH;
 
 type Props = {
   isRecording: boolean;
@@ -10,12 +15,21 @@ type Props = {
   };
   startRecordingWithTimer: () => void;
   stopRecordingWithTimer: () => void;
+  messageList: Message[];
 };
 
-const Timer = ({ isRecording, formattedTime, startRecordingWithTimer, stopRecordingWithTimer }: Props) => {
+const Timer = ({ isRecording, formattedTime, startRecordingWithTimer, stopRecordingWithTimer, messageList }: Props) => {
+  const router = useRouter();
+
   const handleButtonClick = () => {
     isRecording ? stopRecordingWithTimer() : startRecordingWithTimer();
   };
+
+  const handleCompletedButtonClick = () => {
+    router.push(MY_PAGE);
+  };
+
+  const isFinalQuestionAsked = messageList.length === 17;
 
   return (
     <div className='flex h-[220px] w-[526px] flex-shrink-0 flex-col items-center justify-center gap-4 border-2 p-6'>
@@ -31,7 +45,11 @@ const Timer = ({ isRecording, formattedTime, startRecordingWithTimer, stopRecord
         </Typography>
       </div>
       <div>
-        <button onClick={handleButtonClick}>{isRecording ? '답변 완료하기' : '말하기'}</button>
+        {isFinalQuestionAsked ? (
+          <button onClick={handleCompletedButtonClick}>면접 완료하기</button>
+        ) : (
+          <button onClick={handleButtonClick}>{isRecording ? '답변 완료하기' : '말하기'}</button>
+        )}
       </div>
     </div>
   );

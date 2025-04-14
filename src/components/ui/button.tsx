@@ -4,21 +4,25 @@ import Link from 'next/link';
 type ButtonBaseProps = {
   children: React.ReactNode;
   variant?: 'outline' | 'ghost' | 'contained';
-  color?: 'primary' | 'secondary';
+  color?: 'primary' | 'secondary' | 'dark';
 };
 type ButtonProps = ButtonBaseProps & {
   link?: false;
   type?: 'button' | 'submit' | 'reset';
   href?: never;
+  disabled?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 type LinkButtonProps = ButtonBaseProps & {
   link: true;
   href: string;
   type?: never;
+  onClick?: never;
 };
 
 const Button = (props: ButtonProps | LinkButtonProps) => {
-  const { children, color = 'primary', variant = 'contained', link, type = 'button' } = props;
+  const { children, color = 'primary', variant = 'contained', link } = props;
+
   if (link) {
     return (
       <Link href={props.href} className={buttonVariants({ variant, color })}>
@@ -26,8 +30,10 @@ const Button = (props: ButtonProps | LinkButtonProps) => {
       </Link>
     );
   }
+
+  const { type = 'button', onClick, disabled } = props;
   return (
-    <button type={type} className={buttonVariants({ variant, color })}>
+    <button type={type} className={buttonVariants({ variant, color, disabled })} onClick={onClick} disabled={disabled}>
       {children}
     </button>
   );

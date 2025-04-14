@@ -9,7 +9,7 @@ type Props = {
 };
 
 const BookmarkComponent = ({ jobPostingId }: Props) => {
-  const { data: isBookmarked, isLoading, error } = useBookmarkQuery({ jobPostingId });
+  const { data: isBookmarked } = useBookmarkQuery({ jobPostingId });
   const { mutate } = useBookmarkMutation({ jobPostingId });
   const [isMarked, setIsMarked] = useState<boolean | undefined>(isBookmarked);
 
@@ -17,22 +17,10 @@ const BookmarkComponent = ({ jobPostingId }: Props) => {
     setIsMarked(isBookmarked);
   }, [isBookmarked]);
 
+  // TODO : 이후에 북마크 UI 적용 코드 수정
   const handleClick = () => mutate(isMarked!);
 
-  // 북마크 여부 확인 코드 - TODO : 이후에 북마크 UI 적용 코드 수정
-  const handleClickTest = () => {
-    console.log(isMarked);
-  };
-
-  if (isLoading) return <div>...loading</div>;
-  if (error) return <div>error</div>;
-
-  return (
-    <section>
-      <button onClick={handleClick}>북마크 테스트</button>
-      <button onClick={handleClickTest}>useState</button>
-    </section>
-  );
+  return <button onClick={handleClick}>북마크</button>;
 };
 
 export default BookmarkComponent;

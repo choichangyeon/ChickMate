@@ -29,22 +29,23 @@ export const PATCH = async (request: NextRequest) => {
 
     const historyToKor = CHARACTER_HISTORY_KOR[history as keyof typeof CHARACTER_HISTORY];
 
-    if (history === LOGIN) {
-      const todayStart = new Date();
-      todayStart.setHours(0, 0, 0, 0);
+    // 로그인 시 경험치 획득 로직
+    // if (history === LOGIN) {
+    //   const todayStart = new Date();
+    //   todayStart.setHours(0, 0, 0, 0);
 
-      const alreadyLoggedIn = await prisma.characterHistory.findFirst({
-        where: {
-          characterId,
-          history: historyToKor,
-          createdAt: { gte: todayStart },
-        },
-      });
+    //   const alreadyLoggedIn = await prisma.characterHistory.findFirst({
+    //     where: {
+    //       characterId,
+    //       history: historyToKor,
+    //       createdAt: { gte: todayStart },
+    //     },
+    //   });
 
-      if (alreadyLoggedIn) {
-        return NextResponse.json({ message: PATCH_ALREADY }, { status: 200 });
-      }
-    }
+    //   if (alreadyLoggedIn) {
+    //     return NextResponse.json({ message: PATCH_ALREADY }, { status: 200 });
+    //   }
+    // }
 
     const [updated] = await prisma.$transaction([
       prisma.character.update({

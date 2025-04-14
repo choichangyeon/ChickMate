@@ -35,10 +35,11 @@ export const useSignInResult = () => {
   const error = searchParams.get(ERROR);
   const { status } = useSession();
   const pathname = usePathname();
-  const { data: characterData } = useGetCharacterQuery();
-  useCharacterStoreSync(characterData);
-  const characterId = useCharacterStore((state) => state.characterId);
-  const { handleExperienceUp } = useExperienceUp();
+  // 로그인 시 경험치 생략
+  // const { data: characterData } = useGetCharacterQuery();
+  // useCharacterStoreSync(characterData);
+  // const characterId = useCharacterStore((state) => state.characterId);
+  // const { handleExperienceUp } = useExperienceUp();
 
   useEffect(() => {
     if (status === AUTHENTICATED) {
@@ -52,9 +53,9 @@ export const useSignInResult = () => {
       alert(SIGN_IN_SUCCESS);
       router.replace(ON_BOARDING);
 
-      if (characterId !== null) {
-        handleExperienceUp(LOGIN);
-      }
+      // if (characterId !== null) {
+      //   handleExperienceUp(LOGIN);
+      // }
     }
   }, [status, router, path]);
 

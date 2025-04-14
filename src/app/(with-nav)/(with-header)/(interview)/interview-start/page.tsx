@@ -1,9 +1,22 @@
 import SelectInterviewerBox from '@/features/interview/select-interviewer-box';
 import Typography from '@/components/ui/typography';
 import ResumeCardsBox from '@/features/interview/resume-cards-box';
+import { QUERY_KEY } from '@/constants/query-key';
+import { QueryClient, HydrationBoundary, dehydrate } from '@tanstack/react-query';
+import { getResumeList } from '@/features/resume/api/client-services';
+import { RESUME_STATUS } from '@/constants/resume-constants';
 
-const InterviewStartPage = () => {
+const InterviewStartPage = async () => {
   // TODO: prefetch user resume datadata
+  const { RESUME_SUBMIT } = QUERY_KEY;
+  const { SUBMIT } = RESUME_STATUS;
+
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: [RESUME_SUBMIT],
+    queryFn: () => getResumeList(SUBMIT),
+  });
   return (
     <main className='px-12 py-8'>
       <section className='mb-8'>
@@ -32,7 +45,9 @@ const InterviewStartPage = () => {
             를 제출하세요
           </Typography>
         </div>
-        <ResumeCardsBox />
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <ResumeCardsBox />
+        </HydrationBoundary>
       </section>
     </main>
   );

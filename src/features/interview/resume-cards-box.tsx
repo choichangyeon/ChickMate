@@ -2,20 +2,28 @@
 import ResumeCard from '@/components/common/resume-card';
 import { useEffect } from 'react';
 import useResumeStore from '@/features/interview/hooks/use-resume-store';
+import { useSubmitResumesQuery } from '@/hooks/queries/use-submit-resumes-query';
 
 const ResumeCardsBox = () => {
   const { id: selectedId, setResume } = useResumeStore();
+  const { data: resumeList, isLoading, isError } = useSubmitResumesQuery();
 
-  // TODO: mock data 삭제 후, 실제 데이터로 교체 & 무한 스크롤 구현
   useEffect(() => {
-    if (selectedId === null && mockList.length > 0) {
-      setResume(mockList[0].id);
+    if (selectedId === null && isLoading === false) {
+      if (resumeList && resumeList.length > 0) {
+        setResume(resumeList[0].id);
+      }
     }
-  }, []);
+  }, [resumeList]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError || !resumeList) return <div>Error...</div>;
+  // TODO: 자소서 작성 페이지 라우팅 UI 구현
+  if (resumeList.length === 0) return <div>no data 1</div>;
 
   return (
     <div className='flex max-w-[100vw] flex-row flex-nowrap gap-5 overflow-x-auto scrollbar-hide'>
-      {mockList.map((resume) => (
+      {resumeList.map((resume) => (
         <ResumeCard
           key={resume.id}
           resume={resume}
@@ -29,86 +37,3 @@ const ResumeCardsBox = () => {
 };
 
 export default ResumeCardsBox;
-
-const mockList = [
-  {
-    id: 1,
-    title: '이력서 제목 조금 더 길게 작성해보자 하하하',
-    userId: 'userId',
-    status: 1,
-    content: '이력서 내용',
-    tryCount: 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 2,
-    title: '이력서 제목 조금 더 길게 작성해보자 하하하',
-    userId: 'userId',
-    status: 1,
-    content: '이력서 내용',
-    tryCount: 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 3,
-    title: '이력서 제목 조금 더 길게 작성해보자 하하하',
-    userId: 'userId',
-    status: 1,
-    content: '이력서 내용',
-    tryCount: 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 4,
-    title: '이력서 제목 조금 더 길게 작성해보자 하하하',
-    userId: 'userId',
-    status: 1,
-    content: '이력서 내용',
-    tryCount: 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 5,
-    title: '이력서 제목 조금 더 길게 작성해보자 하하하',
-    userId: 'userId',
-    status: 1,
-    content: '이력서 내용',
-    tryCount: 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 6,
-    title: '이력서 제목 조금 더 길게 작성해보자 하하하',
-    userId: 'userId',
-    status: 1,
-    content: '이력서 내용',
-    tryCount: 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 7,
-    title: '이력서 제목 조금 더 길게 작성해보자 하하하',
-    userId: 'userId',
-    status: 1,
-    content: '이력서 내용',
-    tryCount: 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 8,
-    title: '이력서 제목 조금 더 길게 작성해보자 하하하',
-    userId: 'userId',
-    status: 1,
-    content: '이력서 내용',
-    tryCount: 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-];

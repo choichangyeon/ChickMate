@@ -8,7 +8,7 @@ type Props = {
   jobPostingId: number;
 };
 
-const BookmarkComponent = ({ jobPostingId }: Props) => {
+const Bookmark = ({ jobPostingId }: Props) => {
   const { data: isBookmarked } = useBookmarkQuery({ jobPostingId });
   const { mutate } = useBookmarkMutation({ jobPostingId });
   const [isMarked, setIsMarked] = useState<boolean | undefined>(isBookmarked);
@@ -23,4 +23,4 @@ const BookmarkComponent = ({ jobPostingId }: Props) => {
   return <button onClick={handleClick}>북마크</button>;
 };
 
-export default BookmarkComponent;
+export default Bookmark;

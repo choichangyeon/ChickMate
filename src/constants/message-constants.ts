@@ -100,5 +100,7 @@ export const CHARACTER_MESSAGE = {
   },
   PATCH: {
     PATCH_DATA_FAILED: '경험치 획득에 실패했습니다.',
+    PATCH_DATA_VALIDATION_ERROR: '유효하지 않은 히스토리입니다.',
+    PATCH_ALREADY: '더 이상 경험치를 획득할 수 없습니다.'
   },
 };

@@ -1,28 +1,28 @@
-import { CHARACTER_HISTORY, CHARACTER_HISTORY_KEY, CHARACTER_HISTORY_KOR } from '@/constants/character-constants'; // HISTORY 객체를 가져옵니다.
+import { CHARACTER_HISTORY, CHARACTER_HISTORY_KEY, CHARACTER_HISTORY_KOR } from '@/constants/character-constants';
+import { ENV } from '@/constants/env-constants';
 import { AUTH_MESSAGE, CHARACTER_MESSAGE } from '@/constants/message-constants';
 import { prisma } from '@/lib/prisma';
-import { authOptions } from '@/utils/auth-option';
-import { getServerSession } from 'next-auth';
+import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
 
-const { PATCH_DATA_FAILED } = CHARACTER_MESSAGE.PATCH;
-const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
+const { PATCH_DATA_FAILED, PATCH_DATA_VALIDATION_ERROR, PATCH_ALREADY } = CHARACTER_MESSAGE.PATCH;
 const { LOGIN, RESUME_SUBMISSION, INTERVIEW_COMPLETION, JOB_BOOKMARK, GENERAL_HISTORY } = CHARACTER_HISTORY_KEY;
+const { NEXTAUTH_SECRET } = ENV;
+const {
+  ERROR: { EXPIRED_TOKEN },
+} = AUTH_MESSAGE;
 
 export const PATCH = async (request: NextRequest) => {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session || !session.user) {
-      return NextResponse.json({ message: AUTH_REQUIRED }, { status: 401 });
-    }
+    const token = await getToken({ req: request, secret: NEXTAUTH_SECRET });
+    if (!token) return NextResponse.json({ message: EXPIRED_TOKEN }, { status: 401 });
 
     const { characterId, history } = await request.json();
 
     const historyData = CHARACTER_HISTORY[history as keyof typeof CHARACTER_HISTORY];
 
     if (!historyData) {
-      return NextResponse.json({ message: '유효하지 않은 히스토리입니다.' }, { status: 400 });
+      return NextResponse.json({ message: PATCH_DATA_VALIDATION_ERROR }, { status: 400 });
     }
 
     const amount = historyData.amount;
@@ -42,7 +42,7 @@ export const PATCH = async (request: NextRequest) => {
       });
 
       if (alreadyLoggedIn) {
-        return NextResponse.json({ message: '오늘은 이미 로그인 보상을 받았습니다.' }, { status: 200 });
+        return NextResponse.json({ message: PATCH_ALREADY }, { status: 200 });
       }
     }
 
@@ -60,7 +60,7 @@ export const PATCH = async (request: NextRequest) => {
       }),
     ]);
 
-    return NextResponse.json({ updated }, { status: 200 });
+    return NextResponse.json({ response: updated }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: PATCH_DATA_FAILED }, { status: 500 });
   }

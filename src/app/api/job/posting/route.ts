@@ -4,7 +4,6 @@ import { prisma } from '@/lib/prisma';
 import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
 import { JobPosting } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
-import { mainRegion } from '../../../../features/user-meta-data/data/user-meta-data';
 
 /**
  * GET

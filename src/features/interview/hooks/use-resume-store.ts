@@ -1,18 +1,18 @@
 import { create } from 'zustand';
 
 type resumeState = {
-  id: number | null;
+  resumeId: number | null;
   setResume: (value: number) => void;
 };
 
 const initialState: resumeState = {
-  id: null,
+  resumeId: null,
   setResume: () => {},
 };
 
 const useResumeStore = create<resumeState>()((set) => ({
-  id: initialState.id,
-  setResume: (id) => set({ id }),
+  resumeId: initialState.resumeId,
+  setResume: (resumeId) => set({ resumeId }),
 }));
 
 export default useResumeStore;

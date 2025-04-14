@@ -1,8 +1,13 @@
 import Typography from '@/components/ui/typography';
+import { getInterviewHistory } from '@/features/interview/api/server-services';
 import CameraView from '@/features/interview/camera-view';
 import Timer from '@/features/interview/timer';
+import type { RouteParams } from '@/types/route-params';
 
-const InterviewPage = () => {
+const InterviewPage = async ({ params }: RouteParams) => {
+  const interviewId = Number(params.id);
+  const interviewHistory = await getInterviewHistory(interviewId);
+
   return (
     <main className='flex flex-col gap-8'>
       <section className='flex w-full flex-col gap-4'>

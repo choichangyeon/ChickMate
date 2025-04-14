@@ -14,12 +14,13 @@ const FORMAT_FORMDATA = {
   LANGUAGE: 'language',
 };
 
+const { NOT_FILE, SERVER_ERROR } = AI_MESSAGE.STT;
+const { FILE, MODEL, LANGUAGE } = FORMAT_FORMDATA;
+
 /**
  * POST 요청 함수
  */
 export const POST = async (request: NextRequest) => {
-  const { NOT_FILE, SERVER_ERROR } = AI_MESSAGE.STT;
-  const { FILE, MODEL, LANGUAGE } = FORMAT_FORMDATA;
   try {
     const formData = await request.formData();
     const file = formData.get(FILE) as File;
@@ -30,13 +31,13 @@ export const POST = async (request: NextRequest) => {
       return NextResponse.json({ message: NOT_FILE }, { status: 400 });
     }
 
-    const { text } = await openAi.audio.transcriptions.create({
+    const { text: response } = await openAi.audio.transcriptions.create({
       file,
       model,
       language,
     });
 
-    return NextResponse.json({ data: text }, { status: 200 });
+    return NextResponse.json({ response }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: SERVER_ERROR }, { status: 500 });
   }

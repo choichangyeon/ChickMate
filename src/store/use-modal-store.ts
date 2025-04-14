@@ -1,3 +1,4 @@
+import { boolean } from 'zod';
 import { create } from 'zustand';
 
 type Modal = {
@@ -5,14 +6,20 @@ type Modal = {
   isModalOpen: boolean;
 };
 
-type ModalStore = {
+type ModalState = {
   modalList: Modal[];
   getIsModalOpen: (id: string) => boolean;
   toggleModal: (id: string) => void;
 };
 
-export const useModalStore = create<ModalStore>()((set, get) => ({
+const initialState: ModalState = {
   modalList: [],
+  getIsModalOpen: () => true || false,
+  toggleModal: () => {},
+};
+
+export const useModalStore = create<ModalState>()((set, get) => ({
+  modalList: initialState.modalList,
   getIsModalOpen: (modalId) => get().modalList.find((modal) => modal.id === modalId)?.isModalOpen || false,
   toggleModal: (id) =>
     set((state) => {

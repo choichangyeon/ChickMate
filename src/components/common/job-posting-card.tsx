@@ -2,7 +2,7 @@
 
 import Card from '@/components/ui/card';
 import Typography from '@/components/ui/typography';
-import BookmarkComponent from '@/features/job/bookmark-component';
+import Bookmark from '@/features/job/bookmark';
 import { formatDate } from '@/utils/format-date';
 import { JobPosting } from '@prisma/client';
 import clsx from 'clsx';
@@ -15,19 +15,21 @@ type Props = {
 };
 
 const JobPostingCard = ({ jobPosting, iconButton, children }: Props) => {
-  const { company, title, experienceType, expiredAt, postedAt, id } = jobPosting;
+  const { company, title, experienceType, expiredAt, postedAt, id, url } = jobPosting;
   const postedAtDate = formatDate({ input: postedAt });
   const expiredAtDate = formatDate({ input: expiredAt });
   return (
-    <Card>
-      {iconButton && (
-        // TODO: iconButton component 적용
-        <BookmarkComponent jobPostingId={id} />
-      )}
+    <Card className='min-w-96 self-stretch p-8'>
       <div>
-        <Typography weight='bold' color='gray-500'>
-          {company}
-        </Typography>
+        <div className='flex flex-row justify-between'>
+          <Typography weight='bold' color='gray-500'>
+            {company}
+          </Typography>
+          {iconButton && (
+            // TODO: iconButton component 적용
+            <Bookmark jobPostingId={id} />
+          )}
+        </div>
         <Typography as='h3' weight='bold' lineClamp='2'>
           {title}
         </Typography>

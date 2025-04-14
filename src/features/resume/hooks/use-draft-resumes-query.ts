@@ -5,12 +5,12 @@ import { getResumeList } from '@/features/resume/api/client-services';
 import { RESUME_STATUS } from '@/constants/resume-constants';
 
 export const useDraftResumesQuery = () => {
-  const { RESUME } = QUERY_KEY;
+  const { RESUME_DRAFT } = QUERY_KEY;
   const { MIN } = STALE_TIME;
   const { DRAFT } = RESUME_STATUS;
 
   return useQuery({
-    queryKey: [RESUME],
+    queryKey: [RESUME_DRAFT],
     queryFn: () => getResumeList(DRAFT),
     staleTime: MIN,
   });

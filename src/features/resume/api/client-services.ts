@@ -58,16 +58,16 @@ export const autoSaveResume = async ({ resumeId, data }: Props) => {
 /**
  * DB에서 자소서 리스트 불러오는 요청
  * @param {Number} status 저장 상태(등록/임시 저장)
- * @returns draftResumes 임시 저장된 자소서 리스트
+ * @returns resumes 상태에 따른 자소서 리스트
  */
 export const getResumeList = async (status: number): Promise<Resume[]> => {
   const url = `${ROOT}?status=${status}`;
 
-  const { response: draftResumes } = await fetchWithSentry(url, {
+  const { response: resumes } = await fetchWithSentry(url, {
     method: GET,
   });
 
-  return draftResumes;
+  return resumes;
 };
 
 /**

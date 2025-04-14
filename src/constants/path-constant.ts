@@ -11,6 +11,11 @@ export const PATH = {
     ROOT: '/resume',
     DETAIL: (id: number) => `/resume/${id}`,
   },
+  INTERVIEW: {
+    ROOT: '/interview',
+    START: '/interview/start',
+    LIVE: (id: number) => `/interview/live/${id}`,
+  },
 };
 
 export const ROUTE_HANDLER_PATH = {

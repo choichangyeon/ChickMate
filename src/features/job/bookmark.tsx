@@ -10,7 +10,7 @@ type Props = {
 
 const Bookmark = ({ jobPostingId }: Props) => {
   const { data: isBookmarked } = useBookmarkQuery({ jobPostingId });
-  const { mutate } = useBookmarkMutation({ jobPostingId });
+  const { mutate: bookmarkMutate } = useBookmarkMutation({ jobPostingId });
   const [isMarked, setIsMarked] = useState<boolean | undefined>(isBookmarked);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const Bookmark = ({ jobPostingId }: Props) => {
   }, [isBookmarked]);
 
   // TODO : 이후에 북마크 UI 적용 코드 수정
-  const handleClick = () => mutate(isMarked!);
+  const handleClick = () => bookmarkMutate(isMarked!);
 
   return <button onClick={handleClick}>북마크</button>;
 };

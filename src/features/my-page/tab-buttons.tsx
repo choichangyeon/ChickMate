@@ -45,7 +45,9 @@ const TabButtons = ({ tabCounts }: Props) => {
           <button className='w-full' onClick={() => handleChangeTab(tab.id)}>
             {tab.title}
             {tabCounts[tab.id] !== 0 && (
-              <span className='mx-1 rounded bg-cool-gray-900 p-1 text-xs text-cool-gray-50'>{tabCounts[tab.id]}개</span>
+              <span className='mx-1 rounded-xl bg-cool-gray-900 px-[10px] py-[2px] text-xs text-cool-gray-50'>
+                {tabCounts[tab.id]}개
+              </span>
             )}
           </button>
         </li>

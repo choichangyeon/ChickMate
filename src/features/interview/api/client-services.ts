@@ -111,5 +111,3 @@ export const getOpenAIResponse = async ({ messageList }: MessageListProps): Prom
 
   return messageList;
 };
-
-export const postTranscribedText = async () => {};

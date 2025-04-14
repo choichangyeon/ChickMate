@@ -7,7 +7,9 @@ import { INTERVIEW_PROMPT, resume } from '@/constants/interview-constants';
 
 const InterviewComponent = () => {
   const { CALM_PROMPT, PRESSURE_PROMPT } = INTERVIEW_PROMPT;
-  const init_state: Message[] = [{ role: 'system', content: `지원자의 자기소개서: ${resume}` }];
+  const init_state: Message[] = [
+    { role: 'system', content: [...CALM_PROMPT.content, { type: 'text', text: `지원자의 자기소개서: ${resume}` }] },
+  ];
   const [messageList, setMessageList] = useState<Message[]>(init_state);
   const [message, setMessage] = useState<string>('');
 

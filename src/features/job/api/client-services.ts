@@ -23,14 +23,12 @@ export const getJobByUserMetaData = async (userMetaData: UserMetaDataProps): Pro
   });
   const url = `${POSTING}?${queryParams}`;
 
-  const res = await fetchWithSentry(url, {
+  const { response } = await fetchWithSentry(url, {
     method: GET,
     headers: JSON_HEADER,
   });
 
-  const jobPostingList: JobPosting[] = res.data;
-
-  console.log(jobPostingList);
+  const jobPostingList: JobPosting[] = response;
 
   return jobPostingList;
 };

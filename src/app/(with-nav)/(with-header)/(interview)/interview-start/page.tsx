@@ -7,7 +7,6 @@ import { getResumeList } from '@/features/resume/api/client-services';
 import { RESUME_STATUS } from '@/constants/resume-constants';
 
 const InterviewStartPage = async () => {
-  // TODO: prefetch user resume datadata
   const { RESUME_SUBMIT } = QUERY_KEY;
   const { SUBMIT } = RESUME_STATUS;
 

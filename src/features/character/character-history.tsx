@@ -9,8 +9,6 @@ type Props = {
 
 const ITEMS_PER_PAGE = 5;
 
-// 추후 무한 스크롤 변경
-
 const CharacterHistoryList = ({ characterData }: Props) => {
   const [page, setPage] = useState<number>(1);
 

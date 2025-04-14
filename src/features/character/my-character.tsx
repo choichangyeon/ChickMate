@@ -49,8 +49,12 @@ const MyCharacter = ({ session, characterData = defaultCharacter, overlayText, r
                       </Typography>
                     </div>
                     <div className='text-secondary-yellow'>
-                      <Typography weight='bold' color='secondary-yellow'>{remainingExp} 경험치만 더 쌓으면</Typography>
-                      <Typography weight='bold' color='secondary-yellow'>레벨이 올라요!</Typography>
+                      <Typography weight='bold' color='secondary-yellow'>
+                        {remainingExp} 경험치만 더 쌓으면
+                      </Typography>
+                      <Typography weight='bold' color='secondary-yellow'>
+                        레벨이 올라요!
+                      </Typography>
                     </div>
                   </div>
                   <CharacterExpBar type='main' percent={percent} />

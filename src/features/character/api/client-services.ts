@@ -11,10 +11,10 @@ const { JSON_HEADER } = API_HEADER;
  * 현재 로그인된 사용자의 캐릭터 정보를 가져옵니다.
  * @async
  * @function getCharacterByUserId
- * @returns {Promise<Character & { characterHistories: CharacterHistory[] }>} 캐릭터 정보와 관련된 히스토리가 담긴 Promise 객체
+ * @returns {Promise<Character>} 캐릭터 정보와 관련된 히스토리가 담긴 Promise 객체
  * @throws {Error}
  */
-export const getCharacterByUserId = async (): Promise<Character & { characterHistories: CharacterHistory[] }> => {
+export const getCharacterByUserId = async (): Promise<Character> => {
   const { response } = await fetchWithSentry(INFO, {
     method: GET,
     headers: JSON_HEADER,

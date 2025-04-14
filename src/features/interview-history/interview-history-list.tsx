@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import ErrorComponent from '@/components/common/error-component';
 import { INTERVIEW_TYPE, INTERVIEW_TYPE_KR } from '@/constants/interview-constants';
 import { useHistoryQuery } from '@/features/interview-history/hook/use-history-query';
+import EmptyInterviewList from '@/features/interview-history/empty-interview-list';
 
 const { CALM, PRESSURE } = INTERVIEW_TYPE;
 
@@ -21,13 +22,7 @@ const InterviewHistoryList = () => {
 
   if (isPending) return <div className='text-center'>로딩 중..</div>;
   if (isError) return <ErrorComponent />;
-  if (!histories || histories.length === 0)
-    return (
-      <div className='text-center text-cool-gray-500'>
-        면접 결과가 없습니다.
-        <br /> 면접을 먼저 진행해 주세요.
-      </div>
-    );
+  if (!histories || histories.length === 0) return <EmptyInterviewList />;
   return (
     <ul>
       {histories.map((history, index) => (

@@ -6,17 +6,26 @@ import { INTERVIEW_TYPE } from '@/constants/interview-constants';
 import Image from 'next/image';
 import { useState } from 'react';
 import useResumeStore from '@/features/interview/hooks/use-resume-store';
+import { postInterview } from '@/features/interview/api/client-services';
+import { useRouter } from 'next/navigation';
+import { PATH } from '@/constants/path-constant';
 
 const { CALM, PRESSURE } = INTERVIEW_TYPE;
+const { LIVE } = PATH.INTERVIEW;
 
 const SelectInterviewerBox = () => {
   const [interviewType, setInterviewType] = useState<string>(CALM);
-  const { id } = useResumeStore();
-  const handleClickSetInterviewType = () => {
-    // TODO: 민조님 여기서 interview-live에서 필요한 정보를 보내는 로직을 구현해주세요
-    // id는 자소서의 id입니다!
-    console.log(id);
+  const router = useRouter();
+  const { resumeId } = useResumeStore();
+
+  const handleClickSetInterviewType = async () => {
+    if (resumeId) {
+      const interviewId = await postInterview({ resumeId, interviewType });
+      // 동적 라우팅 페이지 라우팅
+      router.push(`${LIVE(interviewId)}`);
+    }
   };
+
   return (
     <div className='flex flex-row'>
       <div className='mr-5 flex w-full items-start justify-start gap-5 self-stretch'>
@@ -62,10 +71,11 @@ const SelectInterviewerBox = () => {
             </>
           )}
         </div>
-        {/* TODO: 버튼 로직 구현 */}
-        <Button color='secondary' variant='outline' link href='/interview-live'>
+        {/* TODO: 버튼 onClick 속성 추가시 변경 */}
+        {/* <Button color='secondary' variant='outline' link href='/interview-live'>
           <Typography weight='bold'>면접 시작하기</Typography>
-        </Button>
+        </Button> */}
+        <button onClick={handleClickSetInterviewType}>면접 시작하기 버튼</button>
       </aside>
     </div>
   );

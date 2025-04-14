@@ -1,4 +1,5 @@
-export type InterviewData = {
+export type InterviewQnA = {
+  id: string;
   question: string;
   answer: string;
 };

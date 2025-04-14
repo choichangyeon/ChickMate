@@ -3,6 +3,7 @@ import { getInterviewHistory } from '@/features/interview/api/server-services';
 import CameraView from '@/features/interview/camera-view';
 import Timer from '@/features/interview/timer';
 import type { RouteParams } from '@/types/route-params';
+import { InterviewHistory } from '@prisma/client';
 
 const InterviewPage = async ({ params }: RouteParams) => {
   const interviewId = Number(params.id);
@@ -31,10 +32,10 @@ const InterviewPage = async ({ params }: RouteParams) => {
               이 답변이 정말 최선인가요? 확인차 질문드립니다. 해당 부분에 대해서 말씀해주세요 자소서 내용중에 어처구니
               없는 내용이 있어 해당 부분에 관해 질문드리겠습니다 이러이러한 내용을 적어주셨는데 이 답변이 정말
               최선인가요? 확인차 질문드립니다. 해당 부분에 대해서 말씀해주세요
-            </Typography>{' '}
+            </Typography>
           </div>
         </div>
-        <Timer />
+        <Timer interviewHistory={interviewHistory} />
       </section>
     </main>
   );

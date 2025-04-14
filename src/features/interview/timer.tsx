@@ -2,12 +2,19 @@
 
 import Typography from '@/components/ui/typography';
 import { useAudioWithTimer } from '@/features/interview/hooks/use-audio-with-timer';
+import { InterviewHistory } from '@prisma/client';
 
-const Timer = () => {
+type Props = {
+  interviewHistory: InterviewHistory | null;
+};
+
+const Timer = ({ interviewHistory }: Props) => {
   const MINUTES_IN_MS = 1 * 60 * 1000;
 
-  const { isRecording, formattedTime, startRecordingWithTimer, stopRecordingWithTimer } =
-    useAudioWithTimer(MINUTES_IN_MS);
+  const { isRecording, formattedTime, startRecordingWithTimer, stopRecordingWithTimer } = useAudioWithTimer(
+    MINUTES_IN_MS,
+    interviewHistory
+  );
 
   const handleButtonClick = () => {
     isRecording ? stopRecordingWithTimer() : startRecordingWithTimer();

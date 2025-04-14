@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { useAudioRecorder } from '@/features/interview/hooks/use-audio-recorder';
 import { useTimer } from '@/features/interview/hooks/use-timer';
 import { postSpeechToText } from '@/features/interview/api/client-services';
+import { InterviewHistory } from '@prisma/client';
 
-export const useAudioWithTimer = (duration: number) => {
+export const useAudioWithTimer = (duration: number, interviewHistory: InterviewHistory | null) => {
   const [transcribedText, setTranscribedText] = useState('');
 
   const { isRecording, startRecording, stopRecording } = useAudioRecorder();

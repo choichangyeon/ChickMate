@@ -3,8 +3,9 @@ import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { INTERVIEW_CONVERT_OPTIONS, INTERVIEW_TYPE, INTERVIEW_VOICE_OPTIONS } from '@/constants/interview-constants';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
 import { Message } from '@/types/message';
+import { Resume } from '@prisma/client';
 
-const { TTS, STT, INTERVIEW } = ROUTE_HANDLER_PATH.AI;
+const { TTS, STT, INTERVIEW, INTERVIEW_START } = ROUTE_HANDLER_PATH.AI;
 const { CALM_OPTIONS, PRESSURE_OPTIONS } = INTERVIEW_VOICE_OPTIONS;
 const { TTS_OPTIONS, STT_OPTIONS } = INTERVIEW_CONVERT_OPTIONS;
 const { POST } = API_METHOD;
@@ -112,4 +113,26 @@ export const getOpenAIResponse = async ({ messageList }: MessageListProps): Prom
   });
 
   return messageList;
+};
+
+type InterviewProps = {
+  resumeId: number;
+  interviewType: string;
+};
+
+export const postInterview = async ({ resumeId, interviewType }: InterviewProps): Promise<number> => {
+  const { JSON_HEADER } = API_HEADER;
+
+  const { response } = await fetchWithSentry(INTERVIEW_START(resumeId), {
+    method: POST,
+    headers: JSON_HEADER,
+    body: JSON.stringify({
+      resumeId,
+      interviewType,
+    }),
+  });
+
+  const { id } = response;
+
+  return id;
 };

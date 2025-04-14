@@ -50,6 +50,7 @@ export const ROUTE_HANDLER_PATH = {
   CHARACTER: {
     INFO: '/api/character',
     EXPERIENCE: '/api/character/experience',
+    HISTORY: (id: number) => `/api/character/history/${id}`,
   },
 };
 

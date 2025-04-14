@@ -3,6 +3,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 const typographyVariant = cva('', {
   variants: {
     size: {
+      xs: 'text-xs',
       sm: 'text-sm',
       md: 'text-base',
       lg: 'text-lg',

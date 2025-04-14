@@ -1,19 +1,24 @@
+import Typography from '@/components/ui/typography';
 import clsx from 'clsx';
 import React from 'react';
 
 type Props = {
-  percent: number;
   type: 'main' | 'header';
+  percent: number;
 };
 
 const CharacterExpBar = ({ percent, type }: Props) => {
-  const height = type === 'header' ? 'h-1' : 'h-2';
-  const rounded = type === 'header' ? 'rounded' : 'rounded-md';
+  const size = type === 'main' ? 'sm' : 'xs';
   const width = `w-[${percent}%]`;
 
   return (
-    <div className={clsx('w-full overflow-hidden bg-gray-300', height, rounded)}>
-      <div className={clsx('bg-green-500 transition-all duration-300', height, rounded, width)} />
+    <div className='flex w-full items-center gap-2'>
+      <Typography size={size} color='gray-500' weight='bold'>
+        EXP
+      </Typography>
+      <div className={clsx('h-1 flex-1 overflow-hidden rounded-2xl bg-gray-300')}>
+        <div className={clsx('h-1 bg-green-500 transition-all duration-300', width)} />
+      </div>
     </div>
   );
 };

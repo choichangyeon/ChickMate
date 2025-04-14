@@ -16,6 +16,7 @@ export const PATH = {
     START: '/interview/start',
     LIVE: (id: number) => `/interview/live/${id}`,
   },
+  JOB: '/job',
 };
 
 export const ROUTE_HANDLER_PATH = {

@@ -24,7 +24,7 @@ const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <Nav user={user} />
-      <main className='flex-1'>{children}</main>
+      <main className='max-h-[100dvh] flex-1 overflow-scroll'>{children}</main>
     </HydrationBoundary>
   );
 };

@@ -19,11 +19,12 @@ const MainCharacter = ({ session }: Props) => {
 
   if (!session) return <MainCharacterCard overlayText={NEED_LOGIN} />;
 
-  if (isPending) return <MainCharacterCard overlayText={GET_DATA_LOADING} />;
+  if (isPending) return <MainCharacterCard overlayText={GET_DATA_LOADING} session={session} />;
 
-  if (isError || !characterData) return <MainCharacterCard requiredModal overlayText={GET_DATA_NULL} />;
+  if (isError || !characterData)
+    return <MainCharacterCard requiredModal overlayText={GET_DATA_NULL} session={session} />;
 
-  if (characterData) return <MainCharacterCard characterData={characterData} />;
+  if (characterData) return <MainCharacterCard characterData={characterData} session={session} />;
 };
 
 export default MainCharacter;

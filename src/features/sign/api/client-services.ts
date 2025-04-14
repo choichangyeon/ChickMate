@@ -1,3 +1,4 @@
+import { API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
 
@@ -9,12 +10,6 @@ type Props = {
 
 const { AUTH } = ROUTE_HANDLER_PATH;
 const { SIGN_UP } = AUTH;
-
-// 추후 merge 시 변경할 부분
-const API_METHOD = {
-  POST: 'POST',
-};
-
 const { POST } = API_METHOD;
 
 /**

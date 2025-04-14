@@ -2,7 +2,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { getTitleFromPath } from './utils/getTitleFromPath';
+import { getTitleFromPath } from '@/features/layout/utils/getTitleFromPath';
 import Typography from '@/components/ui/typography';
 
 export const HeaderTitle = () => {

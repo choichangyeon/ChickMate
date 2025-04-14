@@ -4,7 +4,7 @@ import { getJobByUserMetaData } from '@/features/job/api/client-services';
 import BookmarkComponent from '@/features/job/bookmark-component';
 // import { useJobPostingQuery } from '@/features/job/hooks/use-job-posting-query';
 import JobPostingCard from '@/components/common/job-posting-card';
-import { getUserMetaData } from '@/features/user-meta-data/api/server-services';
+import { getUserMetaData } from '@/features/user-meta-data/api/client-services';
 import { UserMetaDataType } from '@/types/user-meta-data-type';
 import { authOptions } from '@/utils/auth-option';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
@@ -15,12 +15,12 @@ const { AN_HOUR } = STALE_TIME;
 
 const JobPage = async () => {
   const queryClient = new QueryClient();
+  const session = await getServerSession(authOptions);
+  const user = session?.user ?? null;
 
   await queryClient.prefetchQuery({
     queryKey: [JOB_POSTING],
     queryFn: async () => {
-      const session = await getServerSession(authOptions);
-      const user = session?.user ?? null;
       const userMetaData: UserMetaDataType = await getUserMetaData(user?.id);
       return getJobByUserMetaData(userMetaData);
     },

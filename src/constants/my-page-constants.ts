@@ -1,5 +1,5 @@
 export const TABS = {
-  HISTORY: 'interviewHistorys',
+  HISTORY: 'interviewHistories',
   BOOKMARK: 'userSelectedJobs',
   RESUME: 'resumes',
 } as const;

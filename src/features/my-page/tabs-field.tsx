@@ -13,7 +13,7 @@ const TabsField = async () => {
       _count: {
         select: {
           resumes: true,
-          interviewHistorys: true,
+          interviewHistories: true,
           userSelectedJobs: true,
         },
       },
@@ -22,7 +22,7 @@ const TabsField = async () => {
 
   const tabCounts = result?._count ?? {
     resumes: 0,
-    interviewHistorys: 0,
+    interviewHistories: 0,
     userSelectedJobs: 0,
   };
 

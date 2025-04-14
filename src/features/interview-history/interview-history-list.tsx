@@ -33,7 +33,15 @@ const InterviewHistoryList = () => {
       {histories.map((history, index) => (
         <li
           key={`interview_list_${history.id}`}
-          className={clsx('flex items-center justify-between py-2', histories.length !== index + 1 && 'border-b')}
+          className={clsx(
+            'flex cursor-pointer items-center justify-between py-2',
+            histories.length !== index + 1 && 'border-b',
+            history.isFeedbackCompleted && 'cursor-auto'
+          )}
+          onClick={() => {
+            console.log('왼쪽 페이지 렌더링');
+          }}
+          aria-disabled={history.isFeedbackCompleted}
         >
           <div>
             <span className='text-md block font-bold text-cool-gray-900'>{history.resumeTitle}</span>

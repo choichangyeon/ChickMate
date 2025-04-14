@@ -24,7 +24,7 @@ const tabs = [
 type Props = {
   tabCounts: {
     resumes: number;
-    interviewHistorys: number;
+    interviewHistories: number;
     userSelectedJobs: number;
   };
 };

@@ -1,7 +1,7 @@
 'use client';
 import clsx from 'clsx';
-import { useSession } from 'next-auth/react';
 import type { InterviewHistory, User } from '@prisma/client';
+import { useSession } from 'next-auth/react';
 import ErrorComponent from '@/components/common/error-component';
 import { INTERVIEW_TYPE, INTERVIEW_TYPE_KR } from '@/constants/interview-constants';
 import { useHistoryQuery } from '@/features/interview-history/hook/use-history-query';
@@ -9,11 +9,12 @@ import { useHistoryQuery } from '@/features/interview-history/hook/use-history-q
 const { CALM, PRESSURE } = INTERVIEW_TYPE;
 
 const getInterviewer = (type: InterviewHistory['interviewType']) => {
-  return type === CALM ? INTERVIEW_TYPE_KR[CALM] : INTERVIEW_TYPE_KR[PRESSURE];
+  return type === CALM ? `${INTERVIEW_TYPE_KR[CALM]} ☀️` : `${INTERVIEW_TYPE_KR[PRESSURE]} 🔥`;
 };
 
 const InterviewHistoryList = () => {
   const { data } = useSession();
+
   const userId: User['id'] | undefined = data?.user?.id;
 
   const { data: histories, isPending, isError } = useHistoryQuery(userId);
@@ -39,7 +40,7 @@ const InterviewHistoryList = () => {
             <span className='text-sm'>{getInterviewer(history.interviewType)}</span>
           </div>
           <div>
-            <span className='text-md block text-center text-primary-orange-600'>
+            <span className='text-md block text-right text-primary-orange-600'>
               {history.isFeedbackCompleted ? '평가 완료' : '평가 중'}
             </span>
             <span className='text-sm'>{history.createdDate}</span>

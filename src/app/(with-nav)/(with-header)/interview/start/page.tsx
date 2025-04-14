@@ -22,12 +22,7 @@ const InterviewStartPage = async () => {
         <div className='mb-4 flex flex-row'>
           <Typography as='h2' size='2xl' weight='bold'>
             면접 볼&nbsp;
-          </Typography>
-          <Typography as='h2' size='2xl' weight='bold' color='primary-600'>
-            ChickMate
-          </Typography>
-          <Typography as='h2' size='2xl' weight='bold'>
-            를 제출하세요
+            <span className='text-primary-orange-600'>ChickMate</span>를 제출하세요
           </Typography>
         </div>
         <SelectInterviewerBox />
@@ -36,12 +31,7 @@ const InterviewStartPage = async () => {
         <div className='mb-4 flex flex-row'>
           <Typography as='h2' size='2xl' weight='bold'>
             면접 볼&nbsp;
-          </Typography>
-          <Typography as='h2' size='2xl' weight='bold' color='primary-600'>
-            자소서
-          </Typography>
-          <Typography as='h2' size='2xl' weight='bold'>
-            를 제출하세요
+            <span className='text-primary-orange-600'>자소서</span>를 제출하세요
           </Typography>
         </div>
         <HydrationBoundary state={dehydrate(queryClient)}>

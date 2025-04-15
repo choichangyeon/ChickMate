@@ -1,7 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAudioRecorder } from '@/features/interview/hooks/use-audio-recorder';
 import { useTimer } from '@/features/interview/hooks/use-timer';
-import { getOpenAIResponse, postSpeechToText, postTextToSpeech } from '@/features/interview/api/client-services';
+import {
+  getOpenAIResponse,
+  patchInterviewHistory,
+  postSpeechToText,
+  postTextToSpeech,
+} from '@/features/interview/api/client-services';
 import { INTERVIEW_PROMPT } from '@/constants/interview-constants';
 import type { Message } from '@/types/message';
 import type { InterviewHistoryWithResume } from '@/types/interview';
@@ -9,8 +14,12 @@ import type { InterviewHistoryWithResume } from '@/types/interview';
 const { CALM_PROMPT, PRESSURE_PROMPT } = INTERVIEW_PROMPT;
 
 export const useAudioWithTimer = (duration: number, interviewHistory: InterviewHistoryWithResume) => {
-  const { interviewType, resume } = interviewHistory;
+  const { interviewType, resume, id } = interviewHistory;
   const type = interviewType === 'calm' ? CALM_PROMPT : PRESSURE_PROMPT;
+  const [interviewQnA, setInterviewQnA] = useState({
+    question: '간단한 자기소개 부탁드립니다',
+    answer: '',
+  });
 
   /** state */
   const init_state: Message[] = [
@@ -47,6 +56,16 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
     try {
       const answerText = await postSpeechToText({ blob });
       getOpenAIInterviewContent(answerText);
+      const data = { question: interviewQnA.question, answer: answerText };
+      const interview = await patchInterviewHistory({ interviewId: id, data });
+
+      if (interview.content.length === 8) {
+        return;
+      }
+
+      setInterviewQnA((prev) => {
+        return { ...prev, answer: answerText };
+      });
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);
@@ -71,6 +90,7 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
       ];
       const { messageList: newMessageList, question } = await getOpenAIResponse({ messageList: updatedMessageList });
       setMessageList(newMessageList);
+      setInterviewQnA((prev) => ({ ...prev, question }));
 
       await postTextToSpeech({
         text: question,
@@ -82,6 +102,10 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
       }
     }
   };
+
+  useEffect(() => {
+    console.log(interviewQnA);
+  }, [interviewQnA]);
 
   return {
     messageList,

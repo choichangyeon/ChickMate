@@ -145,9 +145,11 @@ type interviewHistoryProps = {
 };
 
 export const patchInterviewHistory = async ({ interviewId, data }: interviewHistoryProps) => {
-  await fetchWithSentry(INTERVIEW_LIVE(interviewId), {
+  const { response: interview } = await fetchWithSentry(INTERVIEW_LIVE(interviewId), {
     method: PATCH,
     headers: JSON_HEADER,
     body: JSON.stringify(data),
   });
+
+  return interview;
 };

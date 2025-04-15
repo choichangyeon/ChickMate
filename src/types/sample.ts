@@ -1,0 +1,3 @@
+type Sample = {
+  sample: string;
+};

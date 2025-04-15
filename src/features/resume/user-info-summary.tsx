@@ -1,5 +1,7 @@
 const UserInfoSummary = () => {
-  return <div>UserInfoSummary</div>;
+  return (
+    <section className='border-cool-gray-200 bg-cool-gray-10 w-[416px] rounded-lg border-2'>UserInfoSummary</section>
+  );
 };
 
 export default UserInfoSummary;

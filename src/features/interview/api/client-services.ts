@@ -2,13 +2,15 @@ import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { INTERVIEW_CONVERT_OPTIONS, INTERVIEW_TYPE, INTERVIEW_VOICE_OPTIONS } from '@/constants/interview-constants';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
-import { Message } from '@/types/message';
-import { Resume } from '@prisma/client';
+import type { Message } from '@/types/message';
+import type { InterviewQnAData } from '@/types/interview';
+import type { InterviewHistory } from '@prisma/client';
 
-const { TTS, STT, INTERVIEW, INTERVIEW_START } = ROUTE_HANDLER_PATH.AI;
+const { TTS, STT, INTERVIEW, INTERVIEW_START, INTERVIEW_LIVE } = ROUTE_HANDLER_PATH.AI;
 const { CALM_OPTIONS, PRESSURE_OPTIONS } = INTERVIEW_VOICE_OPTIONS;
 const { TTS_OPTIONS, STT_OPTIONS } = INTERVIEW_CONVERT_OPTIONS;
-const { POST } = API_METHOD;
+const { POST, PATCH } = API_METHOD;
+const { JSON_HEADER } = API_HEADER;
 
 /**
  * @function textToSpeech
@@ -20,7 +22,6 @@ const { POST } = API_METHOD;
  * @param instruction  - 목소리 형식 default = calm
  * @returns {void}
  */
-
 type TtsProps = {
   text: string;
   type: string;
@@ -31,7 +32,7 @@ export const postTextToSpeech = async ({ text, type }: TtsProps): Promise<void> 
   const { PRESSURE } = INTERVIEW_TYPE;
   const { VOICE, SPEED, INSTRUCTION } = type === PRESSURE ? PRESSURE_OPTIONS : CALM_OPTIONS;
   const { JSON_HEADER } = API_HEADER;
-  const res = await fetchWithSentry(TTS, {
+  const { response: audioUrl } = await fetchWithSentry(TTS, {
     method: POST,
     headers: JSON_HEADER,
     body: JSON.stringify({
@@ -43,8 +44,6 @@ export const postTextToSpeech = async ({ text, type }: TtsProps): Promise<void> 
       instruction: INSTRUCTION,
     }),
   });
-
-  const { audioUrl } = await res.json();
 
   const audio = new Audio(audioUrl);
   await audio.play();
@@ -58,7 +57,6 @@ export const postTextToSpeech = async ({ text, type }: TtsProps): Promise<void> 
  * @param language - default('ko')
  * @returns {text}
  */
-
 type SttProps = {
   blob: Blob;
 };
@@ -87,40 +85,42 @@ export const postSpeechToText = async ({ blob }: SttProps): Promise<string> => {
  * @param messageList - 사용자와 모델간의 대화 리스트
  * @returns {Message[]}
  */
-
 type MessageListProps = {
   messageList: Message[];
 };
 
-export const getOpenAIResponse = async ({ messageList }: MessageListProps): Promise<Message[]> => {
-  const res = await fetchWithSentry(INTERVIEW, {
+export const getOpenAIResponse = async ({
+  messageList,
+}: MessageListProps): Promise<{ messageList: Message[]; question: string }> => {
+  const { response: question } = await fetchWithSentry(INTERVIEW, {
     method: POST,
     body: JSON.stringify({ messageList: messageList }),
   });
-
-  const { text } = await res.json();
 
   messageList.push({
     role: 'assistant',
     content: [
       {
         type: 'text',
-        text: text,
+        text: question,
       },
     ],
   });
-
-  return messageList;
+  return { messageList, question };
 };
 
+/**
+ * DB에 인터뷰 기록 등록하는 요청
+ * @param resumeId 자소서 ID
+ * @param interviewType
+ * @returns id 인터뷰 ID
+ */
 type InterviewProps = {
   resumeId: number;
   interviewType: string;
 };
 
 export const postInterview = async ({ resumeId, interviewType }: InterviewProps): Promise<number> => {
-  const { JSON_HEADER } = API_HEADER;
-
   const { response } = await fetchWithSentry(INTERVIEW_START(resumeId), {
     method: POST,
     headers: JSON_HEADER,
@@ -133,4 +133,28 @@ export const postInterview = async ({ resumeId, interviewType }: InterviewProps)
   const { id } = response;
 
   return id;
+};
+
+/** DB에 인터뷰 기록 업데이트하는 요청
+ * @param interviewId 인터뷰 기록 ID
+ * @param data 면접 질문/답변 1쌍
+ */
+type interviewHistoryProps = {
+  interviewId: number;
+  content?: InterviewQnAData | {};
+  feedback?: InterviewHistory['feedback'] | {};
+};
+
+export const patchInterviewHistory = async ({
+  interviewId,
+  content = undefined,
+  feedback = undefined,
+}: interviewHistoryProps) => {
+  const { response: interview } = await fetchWithSentry(INTERVIEW_LIVE(interviewId), {
+    method: PATCH,
+    headers: JSON_HEADER,
+    body: JSON.stringify({ content, feedback }),
+  });
+
+  return interview;
 };

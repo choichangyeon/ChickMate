@@ -1,6 +1,6 @@
 export type Message = {
   role: 'system' | 'assistant' | 'user';
-  content: Content[] | string;
+  content: Content[];
 };
 
 export type Content = {

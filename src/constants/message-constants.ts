@@ -111,3 +111,10 @@ export const HISTORY_MESSAGE = {
   },
   GET_SERVER_ERROR: '히스토리를 불러올 수 없습니다.',
 };
+
+export const INTERVIEW_MESSAGE = {
+  NOT_FOUND: '해당 인터뷰 히스토리를 찾을 수 없습니다.',
+  FORBIDDEN: '해당 인터뷰 히스토리를 수정할 권한이 없습니다.',
+  PATCH_SERVER_ERROR: '인터뷰 히스토리 수정에 실패했습니다.',
+  GET_SERVER_ERROR: '인터뷰 히스토리를 가져오는데 실패했습니다.',
+};

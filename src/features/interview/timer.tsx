@@ -1,17 +1,40 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import Typography from '@/components/ui/typography';
-import { useAudioWithTimer } from '@/features/interview/hooks/use-audio-with-timer';
+import { PATH } from '@/constants/path-constant';
+import type { Message } from '@/types/message';
+import { useExperienceUp } from '../character/hooks/use-experience-up';
+import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 
-const Timer = () => {
-  const MINUTES_IN_MS = 1 * 60 * 1000;
+const { MY_PAGE } = PATH;
+const { INTERVIEW_COMPLETION } = CHARACTER_HISTORY_KEY;
 
-  const { isRecording, formattedTime, startRecordingWithTimer, stopRecordingWithTimer } =
-    useAudioWithTimer(MINUTES_IN_MS);
+type Props = {
+  isRecording: boolean;
+  formattedTime: {
+    minutes: string;
+    seconds: string;
+  };
+  startRecordingWithTimer: () => void;
+  stopRecordingWithTimer: () => void;
+  messageList: Message[];
+};
+
+const Timer = ({ isRecording, formattedTime, startRecordingWithTimer, stopRecordingWithTimer, messageList }: Props) => {
+  const router = useRouter();
+  const { handleExperienceUp } = useExperienceUp();
 
   const handleButtonClick = () => {
     isRecording ? stopRecordingWithTimer() : startRecordingWithTimer();
   };
+
+  const handleCompletedButtonClick = async () => {
+    handleExperienceUp(INTERVIEW_COMPLETION);
+    router.push(MY_PAGE);
+  };
+
+  const isFinalQuestionAsked = messageList.length >= 2 && messageList[1].role === 'assistant';
 
   return (
     <div className='flex h-[220px] w-[526px] flex-shrink-0 flex-col items-center justify-center gap-4 border-2 p-6'>
@@ -27,7 +50,11 @@ const Timer = () => {
         </Typography>
       </div>
       <div>
-        <button onClick={handleButtonClick}>{isRecording ? '답변 완료하기' : '말하기'}</button>
+        {isFinalQuestionAsked ? (
+          <button onClick={handleCompletedButtonClick}>면접 완료하기</button>
+        ) : (
+          <button onClick={handleButtonClick}>{isRecording ? '답변 완료하기' : '말하기'}</button>
+        )}
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ import type { Message } from '@/types/message';
 import type { InterviewHistoryWithResume } from '@/types/interview';
 
 const { CALM_PROMPT, PRESSURE_PROMPT } = INTERVIEW_PROMPT;
-const LIMIT_COUNT = 17;
+const LIMIT_COUNT = 5;
 
 export const useAudioWithTimer = (duration: number, interviewHistory: InterviewHistoryWithResume) => {
   const { interviewType, resume, id } = interviewHistory;
@@ -89,12 +89,13 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
 
       if (messageList.length === LIMIT_COUNT) {
         await patchInterviewHistory({ interviewId: id, feedback: question });
+      } else {
+        // AI 면접관 텍스트를 음성으로 출력하는 로직
+        await postTextToSpeech({
+          text: question,
+          type: interviewType,
+        });
       }
-
-      await postTextToSpeech({
-        text: question,
-        type: interviewType,
-      });
     } catch (error) {
       if (error instanceof Error) {
         alert(error);

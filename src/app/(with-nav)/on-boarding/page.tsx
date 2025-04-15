@@ -17,7 +17,7 @@ const OnBoarding = async () => {
         </div>
 
         {/* ----- 본문 영역 ----- */}
-        <div className='flex h-96 items-center justify-between gap-5'>
+        <div className='flex h-[398px] items-center justify-between gap-5'>
           <div className='flex h-full flex-1 flex-col justify-between'>
             {onBoardingList.map((list, index) => (
               <ListCard key={`on_boarding_list_${index}`} {...list} />

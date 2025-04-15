@@ -25,9 +25,9 @@ export const getRegions = async (): Promise<MainRegion[]> => {
  * @param userId - 현재 로그인 중인 사용자의 id
  * @returns user의 metadata
  */
-export const getUserMetaData = async (userId: User['id']): Promise<UserMetaDataType[]> => {
-  const res = await fetchWithSentry(`${META_DATA}/${userId}`);
-  return res.data;
+export const getUserMetaData = async (userId: User['id']): Promise<UserMetaDataType> => {
+  const { data } = await fetchWithSentry(`${META_DATA}/${userId}`);
+  return data;
 };
 
 /**

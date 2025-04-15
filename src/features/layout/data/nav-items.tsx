@@ -7,10 +7,10 @@ export type NavItems = {
   class?: string;
 };
 
-const { ON_BOARDING, AUTH, MY_PAGE, RESUME } = PATH;
+const { ON_BOARDING, AUTH, MY_PAGE, RESUME, JOB } = PATH;
 export const Private_Nav_Items: NavItems[] = [
   {
-    path: '/채용공고',
+    path: JOB,
     type: 'link',
     name: '채용공고',
     icons: '',

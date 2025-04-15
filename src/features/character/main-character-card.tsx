@@ -36,10 +36,10 @@ const MainCharacterCard = ({
     <>
       <div
         onClick={handleClickCard}
-        className='relative flex h-96 min-w-72 cursor-pointer flex-col justify-between overflow-hidden rounded-lg border-2 p-8'
+        className='relative flex h-full min-w-72 cursor-pointer flex-col justify-between overflow-hidden rounded-lg border-2 p-8'
       >
         {isDefault && <ScreenOverlay overlayText={overlayText!} />}
-        <div className={`${isDefault && 'opacity-60'} flex h-full flex-col justify-between`}>
+        <div className={`${isDefault && 'opacity-60'} flex flex-col justify-between`}>
           {/* 추후 이미지로 대체 예정 div wrapper 필요 없음 */}
           <div className='min-w-60'>
             <Image

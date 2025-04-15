@@ -1,8 +1,8 @@
+import { getServerSession } from 'next-auth';
 import MainCharacter from '@/features/character/main-character';
 import { onBoardingList } from '@/features/on-boarding/data/on-boarding-list';
 import ListCard from '@/features/on-boarding/list-card';
 import { authOptions } from '@/utils/auth-option';
-import { getServerSession } from 'next-auth';
 
 const OnBoarding = async () => {
   const session = await getServerSession(authOptions);
@@ -20,7 +20,7 @@ const OnBoarding = async () => {
         <div className='flex h-96 items-center justify-between gap-5'>
           <div className='flex h-full flex-1 flex-col justify-between'>
             {onBoardingList.map((list, index) => (
-              <ListCard key={`on_boarding_list_${index}`} title={list.title} content={list.content} icon={list.icon} />
+              <ListCard key={`on_boarding_list_${index}`} {...list} />
             ))}
           </div>
 

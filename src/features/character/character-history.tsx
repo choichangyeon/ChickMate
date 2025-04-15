@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import Typography from '@/components/ui/typography';
 import { formatDate } from '@/utils/format-date';
 import { Character } from '@prisma/client';
-import { useCharacterHistoryInfiniteQuery } from './hooks/use-character-history-infinite-query';
+import { useCharacterHistoryInfiniteQuery } from '@/features/character/hooks/use-character-history-infinite-query';
 import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
 
 type Props = {

@@ -7,6 +7,116 @@
   --foreground: #171717;
 }
 
+@layer utilities {
+  /* Primary Orange Text Colors */
+  .text-primary-orange-600 {
+    color: #e55a27;
+  }
+  .text-primary-orange-700 {
+    color: #c2410c;
+  }
+
+  /* Secondary Colors Text */
+  .text-secondary-amber {
+    color: #fbbf24;
+  }
+  .text-secondary-yellow {
+    color: #fde047;
+  }
+
+  /* Cool Gray Text Colors */
+  .text-cool-gray-900 {
+    color: #111827;
+  }
+  .text-cool-gray-700 {
+    color: #374151;
+  }
+  .text-cool-gray-500 {
+    color: #6b7280;
+  }
+  .text-cool-gray-300 {
+    color: #d1d5db;
+  }
+  .text-cool-gray-100 {
+    color: #f3f4f6;
+  }
+  .text-cool-gray-50 {
+    color: #f9fafb;
+  }
+
+  /* Primary Orange Background Colors */
+  .bg-primary-orange-600 {
+    background-color: #e55a27;
+  }
+  .bg-primary-orange-700 {
+    background-color: #c2410c;
+  }
+
+  /* Secondary Colors Background */
+  .bg-secondary-amber {
+    background-color: #fbbf24;
+  }
+  .bg-secondary-yellow {
+    background-color: #fde047;
+  }
+
+  /* Cool Gray Background Colors */
+  .bg-cool-gray-900 {
+    background-color: #111827;
+  }
+  .bg-cool-gray-700 {
+    background-color: #374151;
+  }
+  .bg-cool-gray-500 {
+    background-color: #6b7280;
+  }
+  .bg-cool-gray-300 {
+    background-color: #d1d5db;
+  }
+  .bg-cool-gray-100 {
+    background-color: #f3f4f6;
+  }
+  .bg-cool-gray-50 {
+    background-color: #f9fafb;
+  }
+
+  /* Primary Orange Border Colors */
+  .border-primary-orange-600 {
+    border-color: #e55a27;
+  }
+  .border-primary-orange-700 {
+    border-color: #c2410c;
+  }
+
+  /* Secondary Colors Border */
+  .border-secondary-amber {
+    border-color: #fbbf24;
+  }
+  .border-secondary-yellow {
+    border-color: #fde047;
+  }
+
+  /* Cool Gray Border Colors */
+  .border-cool-gray-900 {
+    border-color: #111827;
+  }
+  .border-cool-gray-700 {
+    border-color: #374151;
+  }
+  .border-cool-gray-500 {
+    border-color: #6b7280;
+  }
+  .border-cool-gray-300 {
+    border-color: #d1d5db;
+  }
+  .border-cool-gray-100 {
+    border-color: #f3f4f6;
+  }
+  .border-cool-gray-50 {
+    border-color: #f9fafb;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;

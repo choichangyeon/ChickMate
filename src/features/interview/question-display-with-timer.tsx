@@ -17,9 +17,6 @@ const QuestionDisplayWithTimer = ({ interviewHistory }: Props) => {
   const { isRecording, formattedTime, startRecordingWithTimer, stopRecordingWithTimer, messageList } =
     useAudioWithTimer(MINUTES_IN_MS, interviewHistory);
 
-  // const question = messageList[messageList.length - 1].content[0].text;
-  // const answer = messageList[messageList.length].content[0].text;
-
   return (
     <section className='flex gap-5'>
       <QuestionDisplay messageList={messageList} />

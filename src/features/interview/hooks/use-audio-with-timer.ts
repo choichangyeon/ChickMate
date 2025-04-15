@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useAudioRecorder } from '@/features/interview/hooks/use-audio-recorder';
 import { useTimer } from '@/features/interview/hooks/use-timer';
 import {
@@ -43,11 +43,13 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
     onTimerComplete: handleTimerComplete,
   });
 
+  // 녹음 시작
   const startRecordingWithTimer = () => {
     startRecording();
     startTimer();
   };
 
+  // 녹음 중단 (사용자 음성 -> 텍스트 변환 + DB에 저장)
   const stopRecordingWithTimer = async () => {
     stopTimer();
     const blob = await stopRecording();
@@ -56,6 +58,7 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
     try {
       const answerText = await postSpeechToText({ blob });
       getOpenAIInterviewContent(answerText);
+
       const data = { question: interviewQnA.question, answer: answerText };
       const interview = await patchInterviewHistory({ interviewId: id, data });
 
@@ -102,10 +105,6 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
       }
     }
   };
-
-  useEffect(() => {
-    console.log(interviewQnA);
-  }, [interviewQnA]);
 
   return {
     messageList,

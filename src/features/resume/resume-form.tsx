@@ -10,6 +10,7 @@ import QuestionAnswerField from '@/features/resume/question-answer-field';
 import DraftResumesModal from '@/features/resume/draft-resumes-modal';
 import type { Field } from '@/types/resume';
 import type { Resume } from '@prisma/client';
+import Button from '@/components/ui/button';
 
 const { DRAFT_RESUME } = MODAL_ID;
 
@@ -56,20 +57,41 @@ const ResumeForm = () => {
 
   /** UI */
   return (
-    <form onSubmit={handleSubmit} className='flex flex-col gap-8'>
-      <input type='text' value={title} onChange={handleTitleChange} placeholder='제목을 입력해주세요.' required />
+    <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+      <div className='relative w-full'>
+        <input
+          type='text'
+          value={title}
+          onChange={handleTitleChange}
+          placeholder='자소서 제목을 작성해주세요.'
+          required
+          className='border-cool-gray-200 h-[64px] w-full rounded-lg border-2 px-8 py-4 pr-52 text-xl font-bold placeholder-cool-gray-300 focus:outline-none'
+        />
+        <button
+          type='button'
+          onClick={handleAddField}
+          className='absolute right-4 top-1/2 w-[174px] -translate-y-1/2 rounded-3xl border border-cool-gray-900 bg-transparent px-5 py-1 font-bold text-cool-gray-900'
+        >
+          질문 추가 +
+        </button>
+      </div>
       {fieldList.map((field) => {
         return (
           <QuestionAnswerField key={field.id} field={field} onChange={handleFieldChange} onDelete={handleDeleteField} />
         );
       })}
-      <button type='button' onClick={handleAddField}>
-        추가하기
-      </button>
-      <Typography>{autoSaveStatus}</Typography>
-      <button type='button' onClick={handleDraftResumeListClick}>
-        임시 저장된 글 | {draftResumeList?.length ?? 0}
-      </button>
+
+      <div className='flex justify-between'>
+        <div className='flex gap-8'>
+          <Button variant='outline' color='dark' size='large' type='button' onClick={handleDraftResumeListClick}>
+            임시 저장된 글 | {draftResumeList?.length ?? 0}
+          </Button>
+          <Button variant='outline' color='dark' size='large' type='submit'>
+            작성 완료
+          </Button>
+        </div>
+        <Typography color='gray-500'>{autoSaveStatus}</Typography>
+      </div>
 
       {isModalOpen && (
         <DraftResumesModal
@@ -80,7 +102,6 @@ const ResumeForm = () => {
           setResumeId={setResumeId}
         />
       )}
-      <button type='submit'>작성 완료</button>
     </form>
   );
 };

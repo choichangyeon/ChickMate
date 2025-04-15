@@ -10,8 +10,13 @@ const InterviewPage = async ({ params }: RouteParams) => {
   const session = await getServerSession(authOptions);
   const interviewId = Number(params.id);
   const interviewHistory = await getInterviewHistory(interviewId);
+  console.log(interviewHistory);
 
-  if (!session) return null;
+  if (!session || !interviewHistory) return null;
+
+  if (interviewHistory.feedback) {
+    return <div>이미 완료된 면접입니다.</div>;
+  }
 
   return (
     <main className='flex flex-col gap-8'>
@@ -26,7 +31,7 @@ const InterviewPage = async ({ params }: RouteParams) => {
           <CameraView />
         </div>
       </section>
-      {interviewHistory && <QuestionDisplayWithTimer session={session} interviewHistory={interviewHistory} />}
+      <QuestionDisplayWithTimer session={session} interviewHistory={interviewHistory} />
     </main>
   );
 };

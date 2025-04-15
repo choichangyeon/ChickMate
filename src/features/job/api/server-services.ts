@@ -25,8 +25,10 @@ export const getJobByUserMetaData = async (): Promise<JobPosting[]> => {
     where: { id: userId },
   });
 
+  if (!userData) return [];
+
   // TODO : mainRegion -> location으로 바꾸기
-  const { educationLevel, mainRegion, experienceType, jobType } = userData?.userMetaData as UserMetaDataType;
+  const { educationLevel, mainRegion, experienceType, jobType } = userData.userMetaData as UserMetaDataType;
 
   const response: JobPosting[] = await prisma.jobPosting.findMany({
     where: {

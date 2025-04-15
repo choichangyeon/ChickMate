@@ -41,7 +41,7 @@ const { LOGIN, RESUME_SUBMISSION, INTERVIEW_COMPLETION, JOB_BOOKMARK, GENERAL_HI
 export const CHARACTER_HISTORY = {
   [LOGIN]: { amount: 10 },
   [RESUME_SUBMISSION]: { amount: 50 },
-  [INTERVIEW_COMPLETION]: { amount: 100 },
+  [INTERVIEW_COMPLETION]: { amount: 80 },
   [JOB_BOOKMARK]: { amount: 5 },
   // 테스트용
   [GENERAL_HISTORY]: { amount: 10 },

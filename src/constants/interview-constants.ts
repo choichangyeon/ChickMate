@@ -53,7 +53,7 @@ export const INTERVIEW_PROMPT: Record<string, Message> = {
   },
 };
 
-export const FEEDBACK_PROMPT = {
+export const FEEDBACK_PROMPT: Message = {
   'role': 'system',
   'content': [
     {

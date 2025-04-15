@@ -47,9 +47,13 @@ const JobPostingCard = ({ jobPosting }: Props) => {
             D-{remainDay}
           </Typography>
           {/* TODO: 수정되는 버튼 사용 예정 */}
-          {url && (
-            <Button link href={url} variant='outline'>
+          {url ? (
+            <Button link href={url} variant='outline' color='dark' square>
               바로 가기
+            </Button>
+          ) : (
+            <Button disabled variant='outline' color='dark' square>
+              페이지 접근 불가
             </Button>
           )}
         </section>

@@ -16,15 +16,16 @@ const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = session?.user as User;
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: [CHARACTER],
-    queryFn: () => serverActionWithSentry(getCharacterByUserId),
-  });
-
-  await queryClient.prefetchQuery({
-    queryKey: [META_DATA],
-    queryFn: () => serverActionWithSentry(getUserMetaData),
-  });
+  await Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: [CHARACTER],
+      queryFn: () => serverActionWithSentry(getCharacterByUserId),
+    }),
+    queryClient.prefetchQuery({
+      queryKey: [META_DATA],
+      queryFn: () => serverActionWithSentry(getUserMetaData),
+    }),
+  ]);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

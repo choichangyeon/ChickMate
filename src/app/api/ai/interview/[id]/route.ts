@@ -7,7 +7,7 @@ import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
 import type { RouteParams } from '@/types/route-params';
 import type { InterviewQnAData } from '@/types/interview';
-import type { JsonArray } from '@prisma/client/runtime/library';
+import type { InterviewHistory } from '@prisma/client';
 
 const { NEXTAUTH_SECRET } = ENV;
 const { EXPIRED_TOKEN } = AUTH_MESSAGE.ERROR;
@@ -50,7 +50,13 @@ export const POST = async (request: NextRequest, { params }: RouteParams) => {
  * 인터뷰 질문/답변 업데이트하는 요청
  * @param request 인터뷰 질문/답변 1쌍
  * @param params interviewId
+ *
  */
+type InterviewData = {
+  content?: InterviewQnAData | {};
+  feedback?: InterviewHistory['feedback'] | {};
+};
+
 export const PATCH = async (request: NextRequest, { params }: RouteParams) => {
   try {
     const token = await getToken({ req: request, secret: NEXTAUTH_SECRET });
@@ -62,15 +68,11 @@ export const PATCH = async (request: NextRequest, { params }: RouteParams) => {
     }
 
     const id = Number(params.id);
-
-    const body: InterviewQnAData = await request.json();
+    const { content, feedback }: InterviewData = await request.json();
 
     const interviewHistory = await prisma.interviewHistory.findUnique({
       where: { id },
     });
-
-    const prevContent = (interviewHistory?.content as JsonArray) || [];
-    const updateContent = [...prevContent, body];
 
     if (!interviewHistory) {
       return NextResponse.json({ message: NOT_FOUND }, { status: 404 });
@@ -79,12 +81,24 @@ export const PATCH = async (request: NextRequest, { params }: RouteParams) => {
       return NextResponse.json({ message: FORBIDDEN }, { status: 403 });
     }
 
+    const updateData: { userId: string; content?: {}; feedback?: {} } = {
+      userId: session.user.id,
+    };
+
+    // content 있을 때만 기존 content에 이어 붙이기
+    if (content) {
+      const prevContent = Array.isArray(interviewHistory.content) ? interviewHistory.content : [];
+      updateData.content = [...prevContent, content];
+    }
+
+    // feedback 있을 때만 업데이트
+    if (feedback) {
+      updateData.feedback = feedback;
+    }
+
     const response = await prisma.interviewHistory.update({
       where: { id },
-      data: {
-        userId: session.user.id,
-        content: updateContent,
-      },
+      data: updateData,
     });
 
     return NextResponse.json({ response }, { status: 200 });

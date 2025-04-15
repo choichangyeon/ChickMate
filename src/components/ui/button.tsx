@@ -13,6 +13,7 @@ type ButtonProps = ButtonBaseProps & {
   type?: 'button' | 'submit' | 'reset';
   href?: never;
   disabled?: boolean;
+  target?: never;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 type LinkButtonProps = ButtonBaseProps & {
@@ -20,14 +21,23 @@ type LinkButtonProps = ButtonBaseProps & {
   href: string;
   type?: never;
   onClick?: never;
+  target?: '_self' | '_blank' | '_parent' | '_top';
 };
 
 const Button = (props: ButtonProps | LinkButtonProps) => {
-  const { children, color = 'primary', variant = 'contained', link, size = 'medium', square = false } = props;
+  const {
+    children,
+    color = 'primary',
+    variant = 'contained',
+    link,
+    size = 'medium',
+    square = false,
+    target = '_self',
+  } = props;
 
   if (link) {
     return (
-      <Link href={props.href} className={buttonVariants({ variant, color, size, square })}>
+      <Link href={props.href} target={target} className={buttonVariants({ variant, color, size, square })}>
         {children}
       </Link>
     );

@@ -2,16 +2,19 @@
 
 import JobPostingCard from '@/components/common/job-posting-card';
 import { useJobPostingQuery } from '@/features/job/hooks/use-job-posting-query';
+import { UseMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-query';
 
 type Props = {
   userId: string;
 };
 
-const JobPostingsBox = (userId: Props) => {
-  const { data: jobPostingList, isLoading, isError } = useJobPostingQuery(userId);
+const JobPostingsBox = ({ userId }: Props) => {
+  const { data: userMetaData } = UseMetaDataQuery({ userId });
+  const { data: jobPostingList, isLoading, isError } = useJobPostingQuery({ userMetaData });
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
+
   // if (!jobPostingList || jobPostingList.length === 0) {
   //   // TODO: 비어있는 UI 구현 -> 민철님에게 요청 완료
   //   return <section>ss</section>;

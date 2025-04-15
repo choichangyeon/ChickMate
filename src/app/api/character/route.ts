@@ -20,9 +20,6 @@ export const GET = async () => {
 
     const response = await prisma.character.findFirst({
       where: { userId },
-      include: {
-        characterHistories: true,
-      },
     });
 
     return NextResponse.json({ response }, { status: 200 });

@@ -14,7 +14,7 @@ type Props = {
 export const useJobPostingQuery = ({ userMetaData }: Props) => {
   return useQuery({
     queryKey: [JOB_POSTING],
-    queryFn: async () => getJobByUserMetaData(userMetaData!),
+    queryFn: () => getJobByUserMetaData(userMetaData!),
     staleTime: AN_HOUR,
     enabled: !!userMetaData,
   });

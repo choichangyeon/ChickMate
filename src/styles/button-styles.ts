@@ -4,8 +4,8 @@ export const buttonVariants = cva('', {
   variants: {
     variant: {
       contained: 'text-cool-gray-50 bg-primary-orange-600',
-      outline: 'border border-secondary-amber bg-transparent',
-      ghost: 'border-none bg-transparent  hover:text-cool-gray-50 hover:bg-secondary-amber',
+      outline: 'border bg-transparent',
+      ghost: 'border-none bg-transparent hover:text-cool-gray-50',
     },
     color: {
       primary: '',

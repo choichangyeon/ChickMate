@@ -14,7 +14,6 @@ import type { InterviewHistoryWithResume } from '@/types/interview';
 const { CALM_PROMPT, PRESSURE_PROMPT } = INTERVIEW_PROMPT;
 
 export const LIMIT_COUNT = 5;
-export const FEEDBACK_COUNT = LIMIT_COUNT + 1;
 
 export const useAudioWithTimer = (duration: number, interviewHistory: InterviewHistoryWithResume) => {
   const { interviewType, resume, id } = interviewHistory;

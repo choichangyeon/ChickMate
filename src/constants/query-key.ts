@@ -6,4 +6,5 @@ export const QUERY_KEY = {
   REGIONS: 'regions',
   META_DATA: 'meta-data',
   JOB_POSTING: 'job-posting',
+  CHARACTER_HISTORIES: 'characterHistories'
 };

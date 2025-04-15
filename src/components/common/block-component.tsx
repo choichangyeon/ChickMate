@@ -8,7 +8,7 @@ type Props = {
   secondLine: string;
   thirdLine: string;
   buttonName: string;
-  href: string;
+  href?: string;
 };
 
 const defaultClassName = 'w-full flex flex-col justify-center items-center gap-4';
@@ -26,9 +26,15 @@ const BlockComponent = (props: Props) => {
         </Typography>
         <Typography size='sm'>{thirdLine}</Typography>
       </div>
-      <Button variant='outline' color='dark' link href={href}>
-        <Typography weight='bold'>{buttonName}</Typography>
-      </Button>
+      {href ? (
+        <Button variant='outline' color='dark' link href={href}>
+          <Typography weight='bold'>{buttonName}</Typography>
+        </Button>
+      ) : (
+        <Button variant='outline' color='dark'>
+          <Typography weight='bold'>{buttonName}</Typography>
+        </Button>
+      )}
     </section>
   );
 };

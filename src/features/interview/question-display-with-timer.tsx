@@ -13,7 +13,7 @@ type Props = {
   interviewHistory: InterviewHistoryWithResume;
 };
 
-const QuestionDisplayWithTimer = ({ session, interviewHistory }: Props) => {
+const QuestionDisplayWithTimer = ({ interviewHistory }: Props) => {
   const { isRecording, formattedTime, startRecordingWithTimer, stopRecordingWithTimer, messageList } =
     useAudioWithTimer(MINUTES_IN_MS, interviewHistory);
 

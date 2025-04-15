@@ -1,8 +1,5 @@
 import Typography from '@/components/ui/typography';
 import type { Message } from '@/types/message';
-import { FEEDBACK_COUNT, LIMIT_COUNT } from './hooks/use-audio-with-timer';
-
-const INTERVIEW_LIMIT = 10;
 
 type Props = {
   messageList: Message[];

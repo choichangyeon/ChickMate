@@ -4,8 +4,6 @@ import { useRouter } from 'next/navigation';
 import Typography from '@/components/ui/typography';
 import { PATH } from '@/constants/path-constant';
 import type { Message } from '@/types/message';
-import { FEEDBACK_COUNT, LIMIT_COUNT } from './hooks/use-audio-with-timer';
-import { patchInterviewHistory } from './api/client-services';
 
 const { MY_PAGE } = PATH;
 

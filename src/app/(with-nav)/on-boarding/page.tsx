@@ -9,7 +9,7 @@ const OnBoarding = async () => {
 
   return (
     <main className='flex h-[100dvh] w-full items-center justify-center'>
-      <div className='flex w-[62%] max-w-[1000px] flex-col justify-center'>
+      <div className='flex w-[62%] max-w-[893px] flex-col justify-center'>
         {/* ----- Intro 영역 ----- */}
         <div className='mb-9'>
           <div className='text-3xl font-bold'>오늘도 힘차게 성장해 볼까요?</div>

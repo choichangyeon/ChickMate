@@ -4,6 +4,7 @@ import { INTERVIEW_CONVERT_OPTIONS, INTERVIEW_TYPE, INTERVIEW_VOICE_OPTIONS } fr
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
 import type { Message } from '@/types/message';
 import type { InterviewQnAData } from '@/types/interview';
+import type { InterviewHistory } from '@prisma/client';
 
 const { TTS, STT, INTERVIEW, INTERVIEW_START, INTERVIEW_LIVE } = ROUTE_HANDLER_PATH.AI;
 const { CALM_OPTIONS, PRESSURE_OPTIONS } = INTERVIEW_VOICE_OPTIONS;
@@ -105,7 +106,6 @@ export const getOpenAIResponse = async ({
       },
     ],
   });
-
   return { messageList, question };
 };
 
@@ -141,14 +141,19 @@ export const postInterview = async ({ resumeId, interviewType }: InterviewProps)
  */
 type interviewHistoryProps = {
   interviewId: number;
-  data: InterviewQnAData;
+  content?: InterviewQnAData | {};
+  feedback?: InterviewHistory['feedback'] | {};
 };
 
-export const patchInterviewHistory = async ({ interviewId, data }: interviewHistoryProps) => {
+export const patchInterviewHistory = async ({
+  interviewId,
+  content = undefined,
+  feedback = undefined,
+}: interviewHistoryProps) => {
   const { response: interview } = await fetchWithSentry(INTERVIEW_LIVE(interviewId), {
     method: PATCH,
     headers: JSON_HEADER,
-    body: JSON.stringify(data),
+    body: JSON.stringify({ content, feedback }),
   });
 
   return interview;

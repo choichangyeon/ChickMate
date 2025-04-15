@@ -25,6 +25,7 @@ const config: Config = {
           200: '##E5E7EB',
           100: '#F3F4F6',
           50: '#F9FAFB',
+          10: '#FAFBFC',
         },
         background: 'var(--background)',
         foreground: 'var(--foreground)',

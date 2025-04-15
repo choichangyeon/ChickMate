@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss';
-import scrollbarHide  from 'tailwind-scrollbar-hide';
+import scrollbarHide from 'tailwind-scrollbar-hide';
 
 const config: Config = {
   content: [
@@ -22,6 +22,7 @@ const config: Config = {
           700: '#374151',
           500: '#6B7280',
           300: '#D1D5DB',
+          200: '##E5E7EB',
           100: '#F3F4F6',
           50: '#F9FAFB',
         },

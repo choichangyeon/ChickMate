@@ -3,7 +3,7 @@ import Typography from '@/components/ui/typography';
 import Button from '@/components/ui/button';
 
 type Props = {
-  className: string;
+  className?: string;
   firstLine: string;
   secondLine: string;
   thirdLine: string;
@@ -17,7 +17,7 @@ const BlockComponent = (props: Props) => {
   const { className, firstLine, secondLine, thirdLine, buttonName, href } = props;
   return (
     <section className={clsx(className, defaultClassName)}>
-      <div>
+      <div className='flex flex-col items-center justify-center'>
         <Typography as='h3' color='primary-600' weight='bold'>
           {firstLine}
         </Typography>
@@ -26,7 +26,7 @@ const BlockComponent = (props: Props) => {
         </Typography>
         <Typography size='sm'>{thirdLine}</Typography>
       </div>
-      <Button link href={href}>
+      <Button variant='outline' color='dark' link href={href}>
         <Typography weight='bold'>{buttonName}</Typography>
       </Button>
     </section>

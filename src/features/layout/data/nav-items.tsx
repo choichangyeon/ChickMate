@@ -7,7 +7,9 @@ export type NavItems = {
   class?: string;
 };
 
-const { ON_BOARDING, AUTH, MY_PAGE, RESUME, JOB } = PATH;
+
+const { ON_BOARDING, AUTH, MY_PAGE, RESUME, INTERVIEW, JOB } = PATH;
+
 export const Private_Nav_Items: NavItems[] = [
   {
     path: JOB,
@@ -24,9 +26,9 @@ export const Private_Nav_Items: NavItems[] = [
     class: 'mb-2',
   },
   {
-    path: '/히스토리',
+    path: INTERVIEW.START,
     type: 'link',
-    name: '히스토리',
+    name: 'AI 면접',
     icons: '',
     class: 'mb-2',
   },

@@ -43,7 +43,7 @@ const QuestionAnswerField = ({ field, onChange, onDelete }: Props) => {
         maxLength={MAX_ANSWER_LENGTH}
         placeholder='답변을 입력하세요.'
         required
-        className='h-full font-normal text-cool-gray-900 placeholder-cool-gray-300 scrollbar-hide focus:outline-none'
+        className='h-full resize-none font-normal text-cool-gray-900 placeholder-cool-gray-300 scrollbar-hide focus:outline-none'
       />
       <div className='flex justify-end'>
         <Typography color='gray-500'>{answer.length}/1000</Typography>

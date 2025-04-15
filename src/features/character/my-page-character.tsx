@@ -1,3 +1,5 @@
+'use client';
+
 import { useCharacterStoreSync } from '@/features/character/hooks/use-character-store-sync';
 import { useGetCharacterQuery } from '@/features/character/hooks/use-get-character-query';
 import MyPageCharacterCard from '@/features/character/my-page-character-card';

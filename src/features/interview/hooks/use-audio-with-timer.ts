@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAudioRecorder } from '@/features/interview/hooks/use-audio-recorder';
 import { useTimer } from '@/features/interview/hooks/use-timer';
-import { getOpenAIResponse, postSpeechToText } from '@/features/interview/api/client-services';
+import { getOpenAIResponse, postSpeechToText, postTextToSpeech } from '@/features/interview/api/client-services';
 import { INTERVIEW_PROMPT } from '@/constants/interview-constants';
 import type { Message } from '@/types/message';
 import type { InterviewHistoryWithResume } from '@/types/interview';
@@ -69,8 +69,13 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
           ],
         },
       ];
-      const response = await getOpenAIResponse({ messageList: updatedMessageList });
-      setMessageList(response);
+      const { messageList: newMessageList, question } = await getOpenAIResponse({ messageList: updatedMessageList });
+      setMessageList(newMessageList);
+
+      await postTextToSpeech({
+        text: question,
+        type: interviewType,
+      });
     } catch (error) {
       if (error instanceof Error) {
         alert(error);

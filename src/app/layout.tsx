@@ -1,7 +1,8 @@
-import AuthProvider from '@/provider/auth-provider';
-import { RQProvider } from '@/provider/react-query-provider';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import clsx from 'clsx';
+import AuthProvider from '@/provider/auth-provider';
+import { RQProvider } from '@/provider/react-query-provider';
 import './global-style.css';
 
 const suit = localFont({
@@ -24,7 +25,7 @@ const RootLayout = ({
       <body>
         <AuthProvider>
           <RQProvider>
-            <div className={`${suit.className} flex min-h-[100dvh]`}>{children}</div>
+            <div className={clsx('mx-[auto] flex min-h-[100dvh]', suit.className)}>{children}</div>
           </RQProvider>
         </AuthProvider>
       </body>

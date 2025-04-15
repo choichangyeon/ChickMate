@@ -45,7 +45,7 @@ export const GET = async (request: NextRequest, { params }: RouteParams) => {
     });
 
     // 다음 페이지가 있을 경우 다음 페이지 번호 반환
-    const nextPage = pageNumber * limitNumber < totalCount ? page + 1 : null;
+    const nextPage = pageNumber * limitNumber < totalCount ? pageNumber + 1 : null;
 
     return NextResponse.json(
       {

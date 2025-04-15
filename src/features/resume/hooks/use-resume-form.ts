@@ -8,20 +8,20 @@ import { usePreventPageUnload } from '@/features/resume/hooks/use-prevent-page-l
 import { autoSaveResume, submitResume } from '@/features/resume/api/client-services';
 import useDebounce from '@/hooks/customs/use-debounce';
 import type { Field } from '@/types/resume';
+import type { Resume } from '@prisma/client';
 
-export const useResumeForm = () => {
+const { MY_PAGE } = PATH;
+const { DEFAULT } = DELAY_TIME;
+const { SAVING, SAVED } = AUTO_SAVE_STATUS;
+
+export const useResumeForm = (resume?: Resume) => {
   const router = useRouter();
-
-  /** constant */
-  const { MY_PAGE } = PATH;
-  const { DEFAULT } = DELAY_TIME;
-  const { SAVING, SAVED } = AUTO_SAVE_STATUS;
 
   /** state */
   const [isDirty, setIsDirty] = useState<boolean>(false);
-  const [title, setTitle] = useState<string>('');
-  const [fieldList, setFieldList] = useState<Field[]>(defaultQuestionList);
-  const [resumeId, setResumeId] = useState<number | null>(null);
+  const [title, setTitle] = useState<string>(resume?.title || '');
+  const [fieldList, setFieldList] = useState<Field[]>((resume?.content as Field[]) || defaultQuestionList);
+  const [resumeId, setResumeId] = useState<number | null>(resume?.id || null);
   const [autoSaveStatus, setAutoSaveStatus] = useState<string>(SAVING);
 
   /** function */

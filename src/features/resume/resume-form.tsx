@@ -9,12 +9,16 @@ import { useResumeForm } from '@/features/resume/hooks/use-resume-form';
 import { useDraftResumesQuery } from '@/features/resume/hooks/use-draft-resumes-query';
 import QuestionAnswerField from '@/features/resume/question-answer-field';
 import DraftResumesModal from '@/features/resume/draft-resumes-modal';
-import type { Field } from '@/types/resume';
+import type { Field, ResumeData } from '@/types/resume';
 import type { Resume } from '@prisma/client';
 
 const { DRAFT_RESUME } = MODAL_ID;
 
-const ResumeForm = () => {
+type Props = {
+  resume?: Resume;
+};
+
+const ResumeForm = ({ resume }: Props) => {
   const toggleModal = useModalStore((state) => state.toggleModal);
   const isModalOpen = useModalStore((state) => state.getIsModalOpen(DRAFT_RESUME));
 
@@ -32,7 +36,7 @@ const ResumeForm = () => {
     handleAddField,
     handleDeleteField,
     handleSubmit,
-  } = useResumeForm();
+  } = useResumeForm(resume);
 
   const { data: draftResumeList, isError, refetch } = useDraftResumesQuery();
 
@@ -82,14 +86,20 @@ const ResumeForm = () => {
       })}
 
       <div className='flex justify-between'>
-        <div className='flex gap-8'>
-          <Button variant='outline' color='dark' size='large' type='button' onClick={handleDraftResumeListClick}>
-            임시 저장된 글 | {draftResumeList?.length ?? 0}
-          </Button>
+        {resume ? (
           <Button variant='outline' color='dark' size='large' type='submit'>
-            작성 완료
+            수정 완료
           </Button>
-        </div>
+        ) : (
+          <div className='flex gap-8'>
+            <Button variant='outline' color='dark' size='large' type='button' onClick={handleDraftResumeListClick}>
+              임시 저장된 글 | {draftResumeList?.length ?? 0}
+            </Button>
+            <Button variant='outline' color='dark' size='large' type='submit'>
+              작성 완료
+            </Button>
+          </div>
+        )}
         <Typography color='gray-500'>{autoSaveStatus}</Typography>
       </div>
 

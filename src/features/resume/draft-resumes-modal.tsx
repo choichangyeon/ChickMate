@@ -3,10 +3,12 @@
 import { Dispatch, SetStateAction } from 'react';
 import Modal from '@/components/ui/modal';
 import Typography from '@/components/ui/typography';
+import type { Resume } from '@prisma/client';
 import { MODAL_ID } from '@/constants/modal-id-constants';
 import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
-import type { Resume } from '@prisma/client';
 import Trash from '@/components/icons/trash';
+
+const { DRAFT_RESUME } = MODAL_ID;
 
 type Props = {
   draftResumeList: Resume[] | undefined;
@@ -17,8 +19,6 @@ type Props = {
 };
 
 const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResumeId, setResumeId }: Props) => {
-  const { DRAFT_RESUME } = MODAL_ID;
-
   const { mutate: deleteResumeMutate } = useDeleteResumeMutation();
 
   const handleDeleteResume = (resumeId: number) => {

@@ -4,8 +4,11 @@ import { useRouter } from 'next/navigation';
 import Typography from '@/components/ui/typography';
 import { PATH } from '@/constants/path-constant';
 import type { Message } from '@/types/message';
+import { useExperienceUp } from '../character/hooks/use-experience-up';
+import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 
 const { MY_PAGE } = PATH;
+const { INTERVIEW_COMPLETION } = CHARACTER_HISTORY_KEY;
 
 type Props = {
   isRecording: boolean;
@@ -20,12 +23,14 @@ type Props = {
 
 const Timer = ({ isRecording, formattedTime, startRecordingWithTimer, stopRecordingWithTimer, messageList }: Props) => {
   const router = useRouter();
+  const { handleExperienceUp } = useExperienceUp();
 
   const handleButtonClick = () => {
     isRecording ? stopRecordingWithTimer() : startRecordingWithTimer();
   };
 
   const handleCompletedButtonClick = async () => {
+    handleExperienceUp(INTERVIEW_COMPLETION);
     router.push(MY_PAGE);
   };
 

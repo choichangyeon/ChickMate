@@ -7,7 +7,7 @@ import {
   postSpeechToText,
   postTextToSpeech,
 } from '@/features/interview/api/client-services';
-import { FEEDBACK_PROMPT, INTERVIEW_PROMPT } from '@/constants/interview-constants';
+import { FEEDBACK_PROMPT, INTERVIEW_PROMPT, USER_PROMPT } from '@/constants/interview-constants';
 import type { Message } from '@/types/message';
 import type { InterviewHistoryWithResume } from '@/types/interview';
 
@@ -84,31 +84,18 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
     try {
       console.log('메시지 길이 ', messageList.length);
       const updatedMessageList: Message[] =
-        messageList.length < LIMIT_COUNT
-          ? [
-              ...messageList,
-              {
-                role: 'user',
-                content: [
-                  {
-                    type: 'text',
-                    text: answerText,
-                  },
-                ],
-              },
-            ]
-          : [FEEDBACK_PROMPT];
+        messageList.length < LIMIT_COUNT ? [...messageList, USER_PROMPT(answerText)] : [FEEDBACK_PROMPT];
 
       const { messageList: newMessageList, question } = await getOpenAIResponse({ messageList: updatedMessageList });
       setMessageList(newMessageList);
       setInterviewQnA((prev) => ({ ...prev, question }));
 
-      console.log('질문 답변 ', messageList);
+      // console.log('질문 답변 ', messageList);
 
-      console.log('QnA ', interviewQnA);
+      // console.log('QnA ', interviewQnA);
 
       if (messageList.length === LIMIT_COUNT) {
-        console.log('패치 보낼때 ', messageList);
+        // console.log('패치 보낼때 ', messageList);
         await patchInterviewHistory({ interviewId: id, feedback: question });
       }
       // await postTextToSpeech({

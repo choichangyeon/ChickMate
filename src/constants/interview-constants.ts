@@ -53,6 +53,16 @@ export const INTERVIEW_PROMPT: Record<string, Message> = {
   },
 };
 
+export const USER_PROMPT = (answerText: string): Message => ({
+  'role': 'user',
+  'content': [
+    {
+      'type': 'text',
+      'text': answerText,
+    },
+  ],
+});
+
 export const FEEDBACK_PROMPT: Message = {
   'role': 'system',
   'content': [

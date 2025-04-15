@@ -10,7 +10,6 @@ const InterviewPage = async ({ params }: RouteParams) => {
   const session = await getServerSession(authOptions);
   const interviewId = Number(params.id);
   const interviewHistory = await getInterviewHistory(interviewId);
-  console.log(interviewHistory);
 
   if (!session || !interviewHistory) return null;
 

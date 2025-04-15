@@ -1,8 +1,8 @@
 import { DB_MESSAGE } from '@/constants/message-constants';
 import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 import { prisma } from '@/lib/prisma';
+import { JobPosting } from '@/types/job-posting';
 import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
-import { JobPosting } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 /**

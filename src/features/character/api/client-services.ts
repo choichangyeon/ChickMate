@@ -88,24 +88,26 @@ export type GetProps = {
  * @param {number} props.characterId - 히스토리를 가져올 캐릭터의 ID
  * @param {number} props.pageParam - 가져올 페이지 번호
  * @param {number} props.limit - 한 페이지에 표시할 항목 수
- * @returns {Promise<CharacterHistory[]>} - 캐릭터 히스토리 목록을 담은 Promise 객체
+ * @returns {Promise<{histories: CharacterHistory[], nextPage: number | null}>} - 캐릭터 히스토리 목록과 다음 페이지 번호를 담은 Promise 객체
  * @throws {Error} 요청 실패 시 에러를 던집니다
  */
 export const getCharacterHistories = async ({
   characterId,
   pageParam,
   limit,
-}: GetProps): Promise<CharacterHistory[]> => {
+}: GetProps): Promise<{ histories: CharacterHistory[]; nextPage: number | null }> => {
   const queryParams = new URLSearchParams({
     page: String(pageParam),
     limit: String(limit),
   });
   const url = `${HISTORY(characterId)}?${queryParams}`;
 
-  const response = await fetchWithSentry(url, {
+  const { response } = await fetchWithSentry(url, {
     method: GET,
     headers: JSON_HEADER,
   });
-
-  return response;
+  return {
+    histories: response.histories,
+    nextPage: response.nextPage,
+  };
 };

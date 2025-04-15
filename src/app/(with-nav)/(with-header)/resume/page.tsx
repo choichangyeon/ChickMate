@@ -5,6 +5,7 @@ import { serverActionWithSentry } from '@/utils/server-action-with-sentry';
 import ResumeForm from '@/features/resume/resume-form';
 import UserInfoSummary from '@/features/resume/user-info-summary';
 import { getDraftResumeList } from '@/features/resume/api/server-services';
+import Typography from '@/components/ui/typography';
 
 export const metadata: Metadata = {
   title: '자기소개서 작성',
@@ -23,10 +24,15 @@ const ResumePage = async () => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className='flex gap-2'>
-        <ResumeForm />
+      <main className='flex w-full gap-2 px-[50px] py-8'>
+        <section className='flex w-full flex-col gap-4'>
+          <Typography size='2xl' weight='bold'>
+            <span className='text-primary-orange-600'>자소서</span>를 작성 해 볼까요?
+          </Typography>
+          <ResumeForm />
+        </section>
         <UserInfoSummary />
-      </div>
+      </main>
     </HydrationBoundary>
   );
 };

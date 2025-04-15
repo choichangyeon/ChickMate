@@ -18,10 +18,10 @@ const BlockComponent = (props: Props) => {
   return (
     <section className={clsx(className, defaultClassName)}>
       <div className='flex flex-col items-center justify-center'>
-        <Typography as='h3' color='primary-600' weight='bold'>
+        <Typography color='primary-600' weight='bold'>
           {firstLine}
         </Typography>
-        <Typography as='h2' size='2xl' weight='bold'>
+        <Typography size='2xl' weight='bold'>
           {secondLine}
         </Typography>
         <Typography size='sm'>{thirdLine}</Typography>

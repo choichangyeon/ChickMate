@@ -1,19 +1,18 @@
 import { useState } from 'react';
 import { useAudioRecorder } from '@/features/interview/hooks/use-audio-recorder';
 import { useTimer } from '@/features/interview/hooks/use-timer';
+import { FEEDBACK_PROMPT, INTERVIEW_PROMPT, USER_PROMPT } from '@/constants/interview-constants';
 import {
   getOpenAIResponse,
   patchInterviewHistory,
   postSpeechToText,
   postTextToSpeech,
 } from '@/features/interview/api/client-services';
-import { FEEDBACK_PROMPT, INTERVIEW_PROMPT, USER_PROMPT } from '@/constants/interview-constants';
 import type { Message } from '@/types/message';
 import type { InterviewHistoryWithResume } from '@/types/interview';
 
 const { CALM_PROMPT, PRESSURE_PROMPT } = INTERVIEW_PROMPT;
-
-export const LIMIT_COUNT = 5;
+const LIMIT_COUNT = 17;
 
 export const useAudioWithTimer = (duration: number, interviewHistory: InterviewHistoryWithResume) => {
   const { interviewType, resume, id } = interviewHistory;
@@ -81,7 +80,6 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
   // AI 면접관이랑 면접 보는 로직
   const getOpenAIInterviewContent = async (answerText: string) => {
     try {
-      console.log('메시지 길이 ', messageList.length);
       const updatedMessageList: Message[] =
         messageList.length < LIMIT_COUNT ? [...messageList, USER_PROMPT(answerText)] : [FEEDBACK_PROMPT];
 
@@ -89,18 +87,14 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
       setMessageList(newMessageList);
       setInterviewQnA((prev) => ({ ...prev, question }));
 
-      // console.log('질문 답변 ', messageList);
-
-      // console.log('QnA ', interviewQnA);
-
       if (messageList.length === LIMIT_COUNT) {
-        // console.log('패치 보낼때 ', messageList);
         await patchInterviewHistory({ interviewId: id, feedback: question });
       }
-      // await postTextToSpeech({
-      //   text: question,
-      //   type: interviewType,
-      // });
+
+      await postTextToSpeech({
+        text: question,
+        type: interviewType,
+      });
     } catch (error) {
       if (error instanceof Error) {
         alert(error);

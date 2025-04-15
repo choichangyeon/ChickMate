@@ -1,3 +1,4 @@
+import { getServerSession } from 'next-auth';
 import TabsField from '@/features/my-page/tabs-field';
 import ViewingField from '@/features/my-page/viewing-field';
 import { authOptions } from '@/utils/auth-option';
@@ -11,7 +12,7 @@ const MyPage = async () => {
   return (
     <article className='flex w-full items-center gap-2 px-12 py-8'>
       <ViewingField session={session} />
-      <TabsField />
+      <TabsField userId={session?.user.id} />
     </article>
   );
 };

@@ -1,12 +1,12 @@
+import { prisma } from '@/lib/prisma';
 import ListByTab from '@/features/my-page/list-by-tab';
 import TabButtons from '@/features/my-page/tab-buttons';
-import { prisma } from '@/lib/prisma';
-import { authOptions } from '@/utils/auth-option';
-import { getServerSession } from 'next-auth';
 
-const TabsField = async () => {
-  const session = await getServerSession(authOptions);
-  const userId = session?.user.id;
+import type { User } from '@prisma/client';
+type Props = {
+  userId: User['id'];
+};
+const TabsField = async ({ userId }: Props) => {
   const result = await prisma.user.findUnique({
     where: { id: userId },
     select: {

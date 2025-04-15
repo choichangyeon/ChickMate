@@ -9,11 +9,11 @@ const OnBoarding = async () => {
 
   return (
     <main className='flex h-[100dvh] w-full items-center justify-center'>
-      <div className='flex w-[62%] flex-col justify-center'>
+      <div className='flex w-[62%] max-w-[1000px] flex-col justify-center'>
         {/* ----- Intro 영역 ----- */}
         <div className='mb-9'>
           <div className='text-3xl font-bold'>오늘도 힘차게 성장해 볼까요?</div>
-          <div className='text-cool-gray-500 text-xl'>우리는 언제 불닭이 될 수 있을까?</div>
+          <div className='text-xl text-cool-gray-500'>우리는 언제 불닭이 될 수 있을까?</div>
         </div>
 
         {/* ----- 본문 영역 ----- */}

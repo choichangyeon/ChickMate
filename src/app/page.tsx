@@ -5,7 +5,7 @@ import { PATH } from '@/constants/path-constant';
 const { ON_BOARDING } = PATH;
 const Home = () => {
   return (
-    <main className='flex w-screen flex-col items-center justify-center bg-[url("/assets/background.png")] bg-cover bg-center'>
+    <main className='flex w-screen flex-col items-center justify-center bg-[url("/assets/background.png"),url("/assets/sub_background.png")] bg-cover bg-center'>
       <div className='mb-7 break-words text-6xl font-thin'>
         우리는 언제 불닭이 될 수 있을까?
         <br />

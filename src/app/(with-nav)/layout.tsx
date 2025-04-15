@@ -3,22 +3,29 @@ import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query
 import { QUERY_KEY } from '@/constants/query-key';
 import { getCharacterByUserId } from '@/features/character/api/server-services';
 import { Nav } from '@/features/layout/nav';
-import { User } from '@/types/user';
+import type{ User } from '@/types/user';
 import { authOptions } from '@/utils/auth-option';
 import { serverActionWithSentry } from '@/utils/server-action-with-sentry';
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
+import { getUserMetaData } from '@/features/user-meta-data/api/server-services';
 
-const { CHARACTER } = QUERY_KEY;
+const { CHARACTER, META_DATA } = QUERY_KEY;
 
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getServerSession(authOptions);
   const user = session?.user as User;
-
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: [CHARACTER],
-    queryFn: () => serverActionWithSentry(getCharacterByUserId),
-  });
+  await Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: [CHARACTER],
+      queryFn: () => serverActionWithSentry(getCharacterByUserId),
+    }),
+    queryClient.prefetchQuery({
+      queryKey: [META_DATA],
+      queryFn: () => serverActionWithSentry(getUserMetaData),
+    }),
+  ]);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

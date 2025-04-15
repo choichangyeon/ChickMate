@@ -1,55 +1,50 @@
+'use client';
+
 import Typography from '@/components/ui/typography';
 import { formatDate } from '@/utils/format-date';
-import { Character, CharacterHistory } from '@prisma/client';
-import React, { useState } from 'react';
+import { Character } from '@prisma/client';
+import { useCharacterHistoryInfiniteQuery } from '@/features/character/hooks/use-character-history-infinite-query';
+import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
 
 type Props = {
-  characterData: Character & { characterHistories: CharacterHistory[] };
+  characterData: Character;
 };
 
-const ITEMS_PER_PAGE = 5;
-
-// 추후 무한 스크롤 변경
-
 const CharacterHistoryList = ({ characterData }: Props) => {
-  const [page, setPage] = useState<number>(1);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending, isError } = useCharacterHistoryInfiniteQuery(
+    characterData.id
+  );
 
-  const totalItems = characterData.characterHistories.length;
-  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+  const targetRef = useInfiniteScroll({
+    fetchNextPage,
+    hasNextPage,
+  });
 
-  const paginatedHistories = characterData.characterHistories.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
+  if (isPending) return <div>로딩 중...</div>;
+  if (isError) return <div>에러 발생</div>;
 
-  const handlePageClick = (pageNumber: number) => {
-    setPage(pageNumber);
-  };
+  const characterHistories = data.pages.flatMap((page) => page.histories);
 
   return (
-    <div className='flex h-full w-full flex-col justify-between gap-4 p-8'>
-      <ul className='flex flex-col gap-4'>
-        {paginatedHistories.map((history) => (
-          <li key={history.id} className='flex w-full items-center justify-between'>
-            <div className='flex flex-col'>
-              <Typography size='xs' color='gray-500'>
-                {formatDate({ input: history.createdAt })}
-              </Typography>
-              <Typography size='xl'>{history.history}</Typography>
-            </div>
-            <Typography color='primary-600'>{history.experience} 경험치 획득!</Typography>
-          </li>
-        ))}
-      </ul>
-      <div className='flex items-center justify-center gap-2'>
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-          <button
-            key={pageNum}
-            onClick={() => handlePageClick(pageNum)}
-            className={`rounded-md border px-3 py-1 ${
-              page === pageNum ? 'bg-gray-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            {pageNum}
-          </button>
-        ))}
+    <div className='flex h-full w-full flex-col gap-4 p-8'>
+      <div className='flex max-h-[400px] flex-col gap-4 overflow-y-auto scroll-smooth pr-2 scrollbar-hide'>
+        <ul className='flex flex-col gap-4'>
+          {characterHistories.map((history: any) => (
+            <li key={history.id} className='flex w-full items-center justify-between'>
+              <div className='flex flex-col'>
+                <Typography size='xs' color='gray-500'>
+                  {formatDate({ input: history.createdAt })}
+                </Typography>
+                <Typography size='xl'>{history.history}</Typography>
+              </div>
+              <Typography color='primary-600'>{history.experience} 경험치 획득!</Typography>
+            </li>
+          ))}
+        </ul>
+
+        <div ref={targetRef} className='flex h-10 w-full items-center justify-center text-sm text-gray-400'>
+          {isFetchingNextPage && <span>로딩 중...</span>}
+        </div>
       </div>
     </div>
   );

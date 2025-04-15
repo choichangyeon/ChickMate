@@ -13,19 +13,20 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
   const { MAIN_REGION } = USER_META_DATA_KEY;
   try {
     // searchParams로 정보 가져오기
+    // TODO: mainRegion -> location으로 바꾸기
     const searchParams = request.nextUrl.searchParams;
-    const { educationLevel, location, experienceType, jobType } = sanitizeQueryParams(searchParams);
+    const { educationLevel, mainRegion, experienceType, jobType } = sanitizeQueryParams(searchParams);
 
     if (!searchParams) {
       return NextResponse.json({ message: DB_URL_ERROR }, { status: 400 });
     }
 
-    if (!educationLevel || !location || !experienceType || !jobType) {
+    if (!educationLevel || !mainRegion || !experienceType || !jobType) {
       return NextResponse.json({ message: DB_REQUEST_ERROR }, { status: 400 });
     }
 
-    const mainRegion = JSON.parse(location).mainRegion;
-    const data: JobPosting[] = await prisma.jobPosting.findMany({
+    // const mainRegion = JSON.parse(location).mainRegion;
+    const response: JobPosting[] = await prisma.jobPosting.findMany({
       where: {
         educationLevel,
         experienceType,
@@ -37,7 +38,7 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
       },
     });
 
-    return NextResponse.json({ data }, { status: 200 });
+    return NextResponse.json({ response }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: DB_SERVER_ERROR }, { status: 500 });
   }

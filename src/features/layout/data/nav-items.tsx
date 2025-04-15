@@ -7,7 +7,9 @@ export type NavItems = {
   class?: string;
 };
 
+
 const { ON_BOARDING, AUTH, MY_PAGE, RESUME, INTERVIEW, JOB } = PATH;
+
 export const Private_Nav_Items: NavItems[] = [
   {
     path: JOB,

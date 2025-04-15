@@ -1,5 +1,6 @@
 import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
+import { UserMetaDataType } from '@/types/user-meta-data-type';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
 import { JobPosting } from '@prisma/client';
 
@@ -9,29 +10,25 @@ const { POST, DELETE, GET } = API_METHOD;
 const EMPTY_LIST_NUMBER = 0;
 
 // TODO : userData 타입 지정하기
-type UserDataProps = {
-  educationLevel: string;
-  location: Record<string, string>;
-  experienceType: string;
-  jobType: string;
-};
-export const getJobByUserMetaData = async (userData: UserDataProps): Promise<JobPosting[]> => {
-  const { educationLevel, location, experienceType, jobType } = userData;
+type UserMetaDataProps = UserMetaDataType;
 
+export const getJobByUserMetaData = async (userMetaData: UserMetaDataProps): Promise<JobPosting[]> => {
+  // TODO : mainRegion -> location으로 바꾸기
+  const { educationLevel, mainRegion, experienceType, jobType } = userMetaData;
   const queryParams = new URLSearchParams({
     educationLevel,
-    location: JSON.stringify(location),
+    mainRegion,
     experienceType,
     jobType,
   });
   const url = `${POSTING}?${queryParams}`;
 
-  const res = await fetchWithSentry(url, {
+  const { response } = await fetchWithSentry(url, {
     method: GET,
     headers: JSON_HEADER,
   });
 
-  const jobPostingList: JobPosting[] = res.data;
+  const jobPostingList: JobPosting[] = response;
 
   return jobPostingList;
 };

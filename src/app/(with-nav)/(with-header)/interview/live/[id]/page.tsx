@@ -1,10 +1,10 @@
+import { getServerSession } from 'next-auth';
 import Typography from '@/components/ui/typography';
-import { getInterviewHistory } from '@/features/interview/api/server-services';
-import CameraView from '@/features/interview/camera-view';
 import { authOptions } from '@/utils/auth-option';
-import { getServerSession, Session } from 'next-auth';
+import CameraView from '@/features/interview/camera-view';
+import { getInterviewHistory } from '@/features/interview/api/server-services';
+import QuestionDisplayWithTimer from '@/features/interview/question-display-with-timer';
 import type { RouteParams } from '@/types/route-params';
-import InterviewPromptWithTimer from '@/features/interview/interview-prompt-with-timer';
 
 const InterviewPage = async ({ params }: RouteParams) => {
   const session = await getServerSession(authOptions);
@@ -26,7 +26,7 @@ const InterviewPage = async ({ params }: RouteParams) => {
           <CameraView />
         </div>
       </section>
-      {interviewHistory && <InterviewPromptWithTimer session={session} interviewHistory={interviewHistory} />}
+      {interviewHistory && <QuestionDisplayWithTimer session={session} interviewHistory={interviewHistory} />}
     </main>
   );
 };

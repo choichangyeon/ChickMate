@@ -3,8 +3,8 @@
 import { Session } from 'next-auth';
 import Typography from '@/components/ui/typography';
 import Timer from '@/features/interview/timer';
+import { useAudioWithTimer } from '@/features/interview/hooks/use-audio-with-timer';
 import type { InterviewHistoryWithResume } from '@/types/interview';
-import { useAudioWithTimer } from './hooks/use-audio-with-timer';
 
 const MINUTES_IN_MS = 1 * 60 * 1000;
 
@@ -13,7 +13,7 @@ type Props = {
   interviewHistory: InterviewHistoryWithResume;
 };
 
-const InterviewPromptWithTimer = ({ session, interviewHistory }: Props) => {
+const QuestionDisplayWithTimer = ({ session, interviewHistory }: Props) => {
   const { isRecording, formattedTime, startRecordingWithTimer, stopRecordingWithTimer, messageList } =
     useAudioWithTimer(MINUTES_IN_MS, interviewHistory);
 
@@ -49,4 +49,4 @@ const InterviewPromptWithTimer = ({ session, interviewHistory }: Props) => {
   );
 };
 
-export default InterviewPromptWithTimer;
+export default QuestionDisplayWithTimer;

@@ -19,7 +19,7 @@ const QuestionDisplayWithTimer = ({ interviewHistory }: Props) => {
 
   return (
     <section className='flex gap-5'>
-      <QuestionDisplay messageList={messageList} />
+      <QuestionDisplay messageList={messageList} interviewHistory={interviewHistory} />
       <Timer
         isRecording={isRecording}
         formattedTime={formattedTime}

@@ -1,5 +1,8 @@
 import Typography from '@/components/ui/typography';
 import type { Message } from '@/types/message';
+import { FEEDBACK_COUNT, LIMIT_COUNT } from './hooks/use-audio-with-timer';
+
+const INTERVIEW_LIMIT = 10;
 
 type Props = {
   messageList: Message[];
@@ -7,7 +10,7 @@ type Props = {
 
 const QuestionDisplay = ({ messageList }: Props) => {
   const AIquestion = messageList[messageList.length - 1].content[0].text;
-  const isFinalQuestionAsked = messageList.length === 17;
+  const isFinalQuestionAsked = messageList.length >= 2 && messageList[1].role === 'assistant';
 
   return (
     <div className='flex flex-col items-start gap-4'>

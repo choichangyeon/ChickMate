@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation';
 import Typography from '@/components/ui/typography';
 import { PATH } from '@/constants/path-constant';
 import type { Message } from '@/types/message';
+import { FEEDBACK_COUNT, LIMIT_COUNT } from './hooks/use-audio-with-timer';
+import { patchInterviewHistory } from './api/client-services';
 
 const { MY_PAGE } = PATH;
 
@@ -25,11 +27,11 @@ const Timer = ({ isRecording, formattedTime, startRecordingWithTimer, stopRecord
     isRecording ? stopRecordingWithTimer() : startRecordingWithTimer();
   };
 
-  const handleCompletedButtonClick = () => {
+  const handleCompletedButtonClick = async () => {
     router.push(MY_PAGE);
   };
 
-  const isFinalQuestionAsked = messageList.length === 17;
+  const isFinalQuestionAsked = messageList.length >= 2 && messageList[1].role === 'assistant';
 
   return (
     <div className='flex h-[220px] w-[526px] flex-shrink-0 flex-col items-center justify-center gap-4 border-2 p-6'>

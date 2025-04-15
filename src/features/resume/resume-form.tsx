@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import Typography from '@/components/ui/typography';
+import Button from '@/components/ui/button';
 import { MODAL_ID } from '@/constants/modal-id-constants';
 import { useModalStore } from '@/store/use-modal-store';
 import { useResumeForm } from '@/features/resume/hooks/use-resume-form';
@@ -10,7 +11,6 @@ import QuestionAnswerField from '@/features/resume/question-answer-field';
 import DraftResumesModal from '@/features/resume/draft-resumes-modal';
 import type { Field } from '@/types/resume';
 import type { Resume } from '@prisma/client';
-import Button from '@/components/ui/button';
 
 const { DRAFT_RESUME } = MODAL_ID;
 

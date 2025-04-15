@@ -25,13 +25,13 @@ export const useResumeForm = () => {
   const [autoSaveStatus, setAutoSaveStatus] = useState<string>(SAVING);
 
   /** function */
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLInputElement>) => {
     setTitle(event.target.value);
     setIsDirty(true);
     setAutoSaveStatus(SAVING);
   };
 
-  const handleFieldChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleFieldChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const { id, name, value } = event.target;
     setFieldList((prev) => prev.map((field) => (field.id === id ? { ...field, [name]: value } : field)));
     setIsDirty(true);

@@ -4,7 +4,7 @@ import type { Field } from '@/types/resume';
 
 type Props = {
   field: Field;
-  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   onDelete: (fieldId: string) => void;
 };
 
@@ -23,12 +23,11 @@ const QuestionAnswerField = ({ field, onChange, onDelete }: Props) => {
             <span className='font-semibold text-cool-gray-500'>질문 삭제</span> <Trash />
           </button>
         </div>
-        <textarea
+        <input
           id={String(id)}
           name='question'
           value={question}
           onChange={onChange}
-          rows={1}
           placeholder='질문을 입력하세요.'
           required
           className='resize-none text-xl font-normal text-cool-gray-900 scrollbar-hide focus:outline-none'

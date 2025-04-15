@@ -48,7 +48,7 @@ const JobPostingCard = ({ jobPosting }: Props) => {
           </Typography>
           {/* TODO: 수정되는 버튼 사용 예정 */}
           {url ? (
-            <Button link href={url} variant='outline' color='dark' square>
+            <Button target='_blank' link href={url} variant='outline' color='dark' square>
               바로 가기
             </Button>
           ) : (

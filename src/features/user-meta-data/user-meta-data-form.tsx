@@ -63,7 +63,7 @@ const UserMetaDataForm = () => {
         <input className='rounded-lg border border-cool-gray-200 px-4 py-2' id={ETC} type='text' {...register(ETC)} />
       </div>
       <div className='text-center'>
-        <Button variant='outline' color='dark'>
+        <Button variant='outline' color='dark' type='submit'>
           설정을 완료헀어요!
         </Button>
       </div>

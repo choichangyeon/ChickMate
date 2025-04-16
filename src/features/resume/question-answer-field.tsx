@@ -13,7 +13,7 @@ const QuestionAnswerField = ({ field, onChange, onDelete }: Props) => {
   const MAX_ANSWER_LENGTH = 1000;
 
   return (
-    <div className='border-cool-gray-200 flex h-[444px] w-full flex-col gap-4 rounded-lg border-2 p-8'>
+    <div className='flex h-[444px] w-full flex-col gap-4 rounded-lg border border-cool-gray-200 p-8'>
       <div className='flex flex-col gap-2'>
         <div className='flex w-full justify-between'>
           <Typography weight='normal' color='primary-600'>

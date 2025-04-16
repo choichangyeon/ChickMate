@@ -10,7 +10,7 @@ const openai = new OpenAI({
 const DEFAULT_COMPLETION_OPTIONS = {
   model: 'gpt-4o-mini',
   temperature: 1,
-  max_completion_tokens: 200,
+  max_completion_tokens: 2024,
   top_p: 1,
   store: false,
 };

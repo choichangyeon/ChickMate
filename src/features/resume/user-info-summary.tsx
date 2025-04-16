@@ -21,7 +21,7 @@ const UserInfoSummary = () => {
   ];
 
   return (
-    <section className='border-cool-gray-200 bg-cool-gray-10 w-[416px] shrink-0 rounded-lg border-2'>
+    <section className='w-[416px] shrink-0 rounded-lg border border-cool-gray-200 bg-cool-gray-10'>
       <div className='flex'>
         <Typography>내 정보</Typography>
         <Typography>북마크한 채용공고</Typography>

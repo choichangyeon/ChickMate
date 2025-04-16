@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useInterviewStore } from '@/store/use-interview-store';
 import { useAudioRecorder } from '@/features/interview/hooks/use-audio-recorder';
 import { useTimer } from '@/features/interview/hooks/use-timer';
 import { FEEDBACK_PROMPT, INTERVIEW_PROMPT, USER_PROMPT } from '@/constants/interview-constants';
@@ -12,31 +13,32 @@ import type { Message } from '@/types/message';
 import type { InterviewHistoryWithResume } from '@/types/interview';
 
 const { CALM_PROMPT, PRESSURE_PROMPT } = INTERVIEW_PROMPT;
-const LIMIT_COUNT = 5;
+const LIMIT_COUNT = 7;
 
 export const useAudioWithTimer = (duration: number, interviewHistory: InterviewHistoryWithResume) => {
   const { interviewType, resume, id } = interviewHistory;
   const type = interviewType === 'calm' ? CALM_PROMPT : PRESSURE_PROMPT;
-  const [interviewQnA, setInterviewQnA] = useState({
-    question: '간단한 자기소개 부탁드립니다',
-    answer: '',
-  });
-
-  /** state */
   const init_state: Message[] = [
     {
       role: 'system',
       content: [...type.content, { type: 'text', text: `지원자의 자기소개서: ${resume}` }],
     },
   ];
+  /** state */
+  const incrementQuestionIndex = useInterviewStore((state) => state.incrementQuestionIndex);
   const [messageList, setMessageList] = useState<Message[]>(init_state);
+  const [interviewQnA, setInterviewQnA] = useState({
+    question: '간단한 자기소개 부탁드립니다',
+    answer: '',
+  });
 
   /** hook */
   const { isRecording, startRecording, stopRecording } = useAudioRecorder();
 
   /** function */
-  const handleTimerComplete = () => {
+  const handleTimerComplete = async () => {
     stopRecording();
+    await stopRecordingWithTimer();
   };
 
   const { startTimer, stopTimer, timeLeft, formatTime } = useTimer({
@@ -70,6 +72,8 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
       setInterviewQnA((prev) => {
         return { ...prev, answer: answerText };
       });
+
+      incrementQuestionIndex();
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);

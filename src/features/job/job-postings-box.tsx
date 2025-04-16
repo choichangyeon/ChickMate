@@ -7,6 +7,7 @@ import { QUERY_KEY } from '@/constants/query-key';
 import { useJobPostingQuery } from '@/features/job/hooks/use-job-posting-query';
 import { UserMetaDataType } from '@/types/user-meta-data-type';
 import { useQueryClient } from '@tanstack/react-query';
+import { useMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-query';
 
 type Props = {
   userId: string;
@@ -16,8 +17,10 @@ const { META_DATA } = QUERY_KEY;
 const { MY_PAGE } = PATH;
 
 const JobPostingsBox = ({ userId }: Props) => {
-  const queryClient = useQueryClient();
-  const userMetaData = queryClient.getQueryData([META_DATA, userId]) as UserMetaDataType;
+  // TODO: 추후 변경 가능성 고려
+  // const queryClient = useQueryClient();
+  // const userMetaData = queryClient.getQueryData([META_DATA, userId]) as UserMetaDataType;
+  const { data: userMetaData } = useMetaDataQuery({ userId });
   const { data: jobPostingList, isLoading, isError } = useJobPostingQuery({ userMetaData });
 
   if (isLoading) return <div>Loading...</div>;

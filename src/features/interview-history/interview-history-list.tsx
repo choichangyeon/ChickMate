@@ -1,15 +1,15 @@
 'use client';
+import clsx from 'clsx';
 import ErrorComponent from '@/components/common/error-component';
 import { INTERVIEW_TYPE, INTERVIEW_TYPE_KR } from '@/constants/interview-constants';
+import { TABS } from '@/constants/my-page-constants';
 import { useInterviewHistoryInfiniteQuery } from '@/features/interview-history/hook/use-interview-history-infinite-query';
 import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
 import type { InterviewHistory, User } from '@prisma/client';
-import clsx from 'clsx';
+
 import { useSession } from 'next-auth/react';
-import EmptyInterviewList from './empty-interview-list';
-import { TABS } from '@/constants/my-page-constants';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import EmptyInterviewList from './empty-interview-list';
 const { CALM, PRESSURE } = INTERVIEW_TYPE;
 const { HISTORY } = TABS;
 
@@ -21,11 +21,6 @@ const InterviewHistoryList = () => {
   const { data: session } = useSession();
   const userId: User['id'] | undefined = session?.user?.id;
   const router = useRouter();
-
-  useEffect(() => {
-    const currentPath = window.location.pathname;
-    return () => router.replace(currentPath);
-  }, []);
 
   const { data, isPending, isError, fetchNextPage, hasNextPage, isFetchingNextPage } = useInterviewHistoryInfiniteQuery(
     userId!

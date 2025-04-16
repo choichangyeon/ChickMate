@@ -118,3 +118,9 @@ export const INTERVIEW_MESSAGE = {
   PATCH_SERVER_ERROR: '인터뷰 히스토리 수정에 실패했습니다.',
   GET_SERVER_ERROR: '인터뷰 히스토리를 가져오는데 실패했습니다.',
 };
+
+export const INTERVIEW_HISTORY = {
+  API: {
+    GET_ERROR: '면접 기록을 가져오는데 실패했습니다.',
+  },
+};

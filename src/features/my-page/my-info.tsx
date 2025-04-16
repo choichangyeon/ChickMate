@@ -7,7 +7,7 @@ import UserMetaDataModal from '@/features/user-meta-data/user-meta-data-modal';
 import Modal from '@/components/ui/modal';
 import { Session } from 'next-auth';
 import SettingFill from '@/components/icons/setting-fill';
-import { useMetaDataQuery } from '../user-meta-data/hooks/use-meta-data-query';
+import { useMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-query';
 import { UserMetaDataType } from '@/types/user-meta-data-type';
 import BlockComponent from '@/components/common/block-component';
 

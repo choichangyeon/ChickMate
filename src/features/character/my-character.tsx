@@ -46,9 +46,11 @@ const MyCharacter = ({ session, characterData = defaultCharacter, overlayText, r
                       <Typography weight='black' size='xl' color='primary-600'>
                         LV {level}
                       </Typography>
-                      <Typography weight='bold' size='xl'>
-                        {session && session.user.name}님
-                      </Typography>
+                      <div className='w-[72px] line-clamp-1'>
+                        <Typography weight='bold' size='xl'>
+                          {session && session.user.name}님
+                        </Typography>
+                      </div>
                     </div>
                     <div className='text-secondary-yellow'>
                       <Typography weight='bold' color='secondary-yellow' size='sm'>

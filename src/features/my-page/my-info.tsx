@@ -33,13 +33,11 @@ const fieldList: FieldList[] = [
 const MyInfo = ({ session }: Props) => {
   const { data, isPending, isError } = UseMetaDataQuery({ userId: session.user.id });
 
-  if (isPending) return <div>로딩 중...</div>;
-  if (isError) return <div>에러 발생...</div>;
-
   const toggleModal = useModalStore((state) => state.toggleModal);
   const isModalOpen = useModalStore((state) => state.getIsModalOpen(USER_META_DATA));
 
-  console.log(!data);
+  if (isPending) return <div>로딩 중...</div>;
+  if (isError) return <div>에러 발생...</div>;
 
   return (
     <div className='flex flex-1 flex-col gap-4 overflow-hidden'>
@@ -52,7 +50,8 @@ const MyInfo = ({ session }: Props) => {
         </button>
       </div>
       {/* 높이 조정 필요 */}
-      <ul className='flex h-full max-h-[35vh] flex-col gap-2 overflow-y-auto scrollbar-hide justify-center items-center'>
+      <ul className='flex max-h-[40vh] flex-col items-start gap-2 overflow-y-auto scrollbar-hide'>
+
         {!data ? (
           <BlockComponent
             firstLine='이런! 내 정보가 없어요!'
@@ -64,7 +63,7 @@ const MyInfo = ({ session }: Props) => {
         ) : (
           <>
             {fieldList.map(({ key, label }) => (
-              <li key={key} className='flex gap-5 rounded-lg border border-gray-200 p-4'>
+              <li key={key} className='flex w-full gap-5 rounded-lg border border-gray-200 p-4'>
                 <Typography size='xl' weight='bold' color='secondary-amber'>
                   {label}
                 </Typography>

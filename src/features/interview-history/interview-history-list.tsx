@@ -21,6 +21,12 @@ const InterviewHistoryList = () => {
   const { data: session } = useSession();
   const userId: User['id'] | undefined = session?.user?.id;
   const router = useRouter();
+
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    return () => router.replace(currentPath);
+  }, []);
+
   const { data, isPending, isError, fetchNextPage, hasNextPage, isFetchingNextPage } = useInterviewHistoryInfiniteQuery(
     userId!
   );
@@ -36,11 +42,6 @@ const InterviewHistoryList = () => {
   const handleGetDetailList = (historyId: InterviewHistory['id']) => {
     router.push(`?id=${historyId}&tab=${HISTORY}`);
   };
-
-  useEffect(() => {
-    const currentPath = window.location.pathname;
-    return () => router.replace(currentPath);
-  }, []);
 
   const histories = data.pages.flatMap((page) => page.histories);
   if (histories.length === 0) return <EmptyInterviewList />;

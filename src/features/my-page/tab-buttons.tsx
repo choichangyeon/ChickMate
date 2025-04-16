@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { TABS } from '@/constants/my-page-constants';
 import { useTabStore } from '@/store/use-tab-store';
 import type { Tabs } from '@/types/tab-type';
+import { useEffect } from 'react';
 
 const { BOOKMARK, RESUME, HISTORY } = TABS;
 
@@ -30,8 +31,11 @@ type Props = {
 };
 
 const TabButtons = ({ tabCounts }: Props) => {
-  const { setTab, tab: targetTab } = useTabStore();
+  const { setTab, tab: targetTab, resetTab } = useTabStore();
   const handleChangeTab = (newTab: Tabs) => setTab(newTab);
+  useEffect(() => {
+    return () => resetTab();
+  }, []);
   return (
     <ul className='flex h-12 items-center justify-evenly rounded-t-xl bg-cool-gray-100'>
       {tabs.map((tab) => (

@@ -2,8 +2,8 @@ import { SVGProps } from 'react';
 const FileDockSearchFill = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg width='72' height='73' viewBox='0 0 72 73' fill='none' xmlns='http://www.w3.org/2000/svg' {...props}>
-      <circle cx='52.5' cy='53' r='7.5' stroke='#222222' stroke-width='6' />
-      <path d='M63 63.5L58.5 59' stroke='#222222' stroke-width='6' stroke-linecap='round' />
+      <circle cx='52.5' cy='53' r='7.5' stroke='#222222' strokeWidth='6' />
+      <path d='M63 63.5L58.5 59' stroke='#222222' strokeWidth='6' strokeLinecap='round' />
       <path
         fillRule='evenodd'
         clipRule='evenodd'

@@ -39,9 +39,9 @@ const JobPostingsBox = ({ userId }: Props) => {
   return (
     // TODO: 무한 스크롤 구현
     <section className='flex flex-row flex-wrap gap-5 self-stretch scrollbar-hide'>
-      {/* {jobPostingList.map((jobPosting) => (
+      {jobPostingList.map((jobPosting) => (
         <JobPostingCard key={jobPosting.id} jobPosting={jobPosting}></JobPostingCard>
-      ))} */}
+      ))}
       <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
       <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
       <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>

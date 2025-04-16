@@ -49,7 +49,7 @@ const UserInfoSummary = ({ session }: Props) => {
       </div>
       <div className='flex flex-col gap-4 p-8'>
         {userDatalist.map((userData) => {
-          return <UserDataItem userData={userData} />;
+          return <UserDataItem key={userData.label} userData={userData} />;
         })}
       </div>
     </section>

@@ -12,3 +12,4 @@ export const ChatAlt2Fill = (props: SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
+

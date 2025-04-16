@@ -1,5 +1,38 @@
+'use client';
+
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/constants/query-key';
+import Typography from '@/components/ui/typography';
+import UserDataItem from '@/features/resume/user-data-item';
+import type { UserMetaDataType } from '@/types/user-meta-data-type';
+
+const { META_DATA } = QUERY_KEY;
+
 const UserInfoSummary = () => {
-  return <div>UserInfoSummary</div>;
+  const queryClient = useQueryClient();
+  const userMetaData = queryClient.getQueryData([META_DATA]) as UserMetaDataType;
+  const { experienceType, educationLevel, jobType, mainRegion } = userMetaData;
+
+  const userDatalist = [
+    { label: '경력', content: experienceType },
+    { label: '학력', content: educationLevel },
+    { label: '직무', content: jobType },
+    { label: '지역', content: mainRegion },
+  ];
+
+  return (
+    <section className='border-cool-gray-200 bg-cool-gray-10 w-[416px] shrink-0 rounded-lg border-2'>
+      <div className='flex'>
+        <Typography>내 정보</Typography>
+        <Typography>북마크한 채용공고</Typography>
+      </div>
+      <div className='flex flex-col gap-4 p-8'>
+        {userDatalist.map((userData) => {
+          return <UserDataItem userData={userData} />;
+        })}
+      </div>
+    </section>
+  );
 };
 
 export default UserInfoSummary;

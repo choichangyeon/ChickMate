@@ -2,40 +2,52 @@
 
 import BlockComponent from '@/components/common/block-component';
 import JobPostingCard from '@/components/common/job-posting-card';
-import { PATH } from '@/constants/path-constant';
 import { QUERY_KEY } from '@/constants/query-key';
 import { useJobPostingQuery } from '@/features/job/hooks/use-job-posting-query';
 import { UserMetaDataType } from '@/types/user-meta-data-type';
 import { useQueryClient } from '@tanstack/react-query';
-import { useMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-query';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   userId: string;
 };
 
 const { META_DATA } = QUERY_KEY;
-const { MY_PAGE } = PATH;
 
 const JobPostingsBox = ({ userId }: Props) => {
   // TODO: 추후 변경 가능성 고려
-  // const queryClient = useQueryClient();
-  // const userMetaData = queryClient.getQueryData([META_DATA, userId]) as UserMetaDataType;
-  const { data: userMetaData } = useMetaDataQuery({ userId });
-  const { data: jobPostingList, isLoading, isError } = useJobPostingQuery({ userMetaData });
+  const queryClient = useQueryClient();
+  const userMetaData = queryClient.getQueryData([META_DATA, userId]) as UserMetaDataType;
+  const { data: jobPostingList, isError, isPending } = useJobPostingQuery({ userMetaData });
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error...</div>;
+  if (isPending) {
+    // TODO: 로딩스피너
+    return <div>...Loading</div>;
+  }
 
+  if (isError) {
+    return (
+      <section className='flex h-[400px] flex-col items-center justify-center self-stretch'>
+        <BlockComponent
+          firstLine='이런! 사용자 정보를 설정하지 않았네요!'
+          secondLine='내 정보를 작성해볼까요?'
+          thirdLine='맞춤형 채용공고는 내 정보를 기반으로 진행됩니다'
+        />
+      </section>
+    );
+  }
+
+  const router = useRouter();
   if (!jobPostingList || jobPostingList.length === 0) {
     // TODO: 그 외에 아이콘 추가
     return (
       <section className='flex h-[400px] flex-col items-center justify-center self-stretch'>
         <BlockComponent
           firstLine='이런! 나에게 맞는 채용공고가 없어요!'
-          secondLine='내 정보를 수정해볼까요?'
+          secondLine='채용공고를 다시 요청할까요?'
           thirdLine='맞춤형 채용공고는 내 정보를 기반으로 진행됩니다'
-          buttonName='프로필 수정하기!'
-          href={MY_PAGE}
+          buttonName='채용공고 불러오기!'
+          onClick={() => router.refresh()}
         />
       </section>
     );

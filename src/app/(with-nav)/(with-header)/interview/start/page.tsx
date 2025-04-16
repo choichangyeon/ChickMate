@@ -23,7 +23,7 @@ const InterviewStartPage = async () => {
         <section className='mb-4 flex flex-row'>
           <Typography as='h2' size='2xl' weight='bold'>
             면접 볼&nbsp;
-            <span className='text-primary-orange-600'>ChickMate</span>를 제출하세요
+            <span className='text-primary-orange-600'>ChickMate</span>를 선택해 주세요
           </Typography>
         </section>
         <SelectInterviewerBox />
@@ -32,7 +32,7 @@ const InterviewStartPage = async () => {
         <section className='mb-4 flex flex-row'>
           <Typography as='h2' size='2xl' weight='bold'>
             면접 볼&nbsp;
-            <span className='text-primary-orange-600'>자소서</span>를 제출하세요
+            <span className='text-primary-orange-600'>자소서</span>를 선택해 주세요
           </Typography>
         </section>
         <HydrationBoundary state={dehydrate(queryClient)}>

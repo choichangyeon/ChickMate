@@ -9,6 +9,7 @@ import useResumeStore from '@/features/interview/hooks/use-resume-store';
 import { postInterview } from '@/features/interview/api/client-services';
 import { useRouter } from 'next/navigation';
 import { PATH } from '@/constants/path-constant';
+import { useInterviewStore } from '@/store/use-interview-store';
 
 const { CALM, PRESSURE } = INTERVIEW_TYPE;
 const { LIVE } = PATH.INTERVIEW;
@@ -17,10 +18,12 @@ const SelectInterviewerBox = () => {
   const [interviewType, setInterviewType] = useState<string>(CALM);
   const router = useRouter();
   const { resumeId } = useResumeStore();
+  const resetQuestionIndex = useInterviewStore((state) => state.resetQuestionIndex);
 
   const handleClickSetInterviewType = async () => {
     if (resumeId) {
       const interviewId = await postInterview({ resumeId, interviewType });
+      resetQuestionIndex();
       // 동적 라우팅 페이지 라우팅
       router.push(`${LIVE(interviewId)}`);
     }

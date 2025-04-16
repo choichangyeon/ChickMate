@@ -7,6 +7,7 @@ import type { Message } from '@/types/message';
 import { useExperienceUp } from '../character/hooks/use-experience-up';
 import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import Button from '@/components/ui/button';
+import { useInterviewStore } from '@/store/use-interview-store';
 
 const { MY_PAGE } = PATH;
 const { INTERVIEW_COMPLETION } = CHARACTER_HISTORY_KEY;
@@ -24,6 +25,7 @@ type Props = {
 
 const Timer = ({ isRecording, formattedTime, startRecordingWithTimer, stopRecordingWithTimer, messageList }: Props) => {
   const router = useRouter();
+  const resetQuestionIndex = useInterviewStore((state) => state.resetQuestionIndex);
   const { handleExperienceUp } = useExperienceUp();
 
   const handleButtonClick = () => {
@@ -32,6 +34,7 @@ const Timer = ({ isRecording, formattedTime, startRecordingWithTimer, stopRecord
 
   const handleCompletedButtonClick = async () => {
     handleExperienceUp(INTERVIEW_COMPLETION);
+    resetQuestionIndex();
     router.push(MY_PAGE);
   };
 

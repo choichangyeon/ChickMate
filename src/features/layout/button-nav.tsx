@@ -17,7 +17,7 @@ const ButtonNav = ({ menu }: Props) => {
     });
   };
 
-  return <button onClick={handleNavigate}>{menu?.icons}</button>;
+  return <button onClick={handleNavigate}>{menu?.icon}</button>;
 };
 
 export default ButtonNav;

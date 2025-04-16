@@ -11,7 +11,7 @@ export type NavItems = {
   path: string;
   name: string;
   type: 'link' | 'button';
-  icons?: React.ReactNode;
+  icon?: React.ReactNode;
   class?: string;
 };
 
@@ -22,35 +22,35 @@ export const Private_Nav_Items: NavItems[] = [
     path: JOB,
     type: 'link',
     name: '채용공고',
-    icons: <JobIcon />,
+    icon: <JobIcon />,
     class: 'mb-2',
   },
   {
     path: RESUME.ROOT,
     type: 'link',
     name: '자소서',
-    icons: <ResumeIcon />,
+    icon: <ResumeIcon />,
     class: 'mb-2',
   },
   {
     path: INTERVIEW.START,
     type: 'link',
     name: 'AI 면접',
-    icons: <InterviewIcon />,
+    icon: <InterviewIcon />,
     class: 'mb-2',
   },
   {
     path: MY_PAGE,
     type: 'link',
     name: '마이페이지',
-    icons: <MyPageIcon />,
+    icon: <MyPageIcon />,
   },
   {
     path: ON_BOARDING,
     type: 'button',
     name: '로그아웃',
     class: 'mt-auto',
-    icons: <LogoutIcon />,
+    icon: <LogoutIcon />,
   },
 ];
 
@@ -59,13 +59,13 @@ export const Public_Nav_Items: NavItems[] = [
     path: AUTH.SIGN_IN,
     name: '로그인',
     type: 'link',
-    icons: <SignInIcon />,
+    icon: <SignInIcon />,
     class: 'mb-2',
   },
   {
     path: AUTH.SIGN_UP,
     name: '회원가입',
     type: 'link',
-    icons: <SignUpIcon />,
+    icon: <SignUpIcon />,
   },
 ];

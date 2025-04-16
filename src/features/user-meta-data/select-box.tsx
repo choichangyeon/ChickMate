@@ -18,7 +18,7 @@ const SelectBox = ({ options, selected = DEFAULT, onSelect }: Props) => {
     <select value={selected} onChange={handleSelect}>
       <option value={DEFAULT}>선택</option>
       {options.map((option) => (
-        <option key={`option_${option.name}`} value={option.name}>
+        <option key={`option_${option.name}`} value={option.value}>
           {option.name}
         </option>
       ))}

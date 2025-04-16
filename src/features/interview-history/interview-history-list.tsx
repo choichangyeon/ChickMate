@@ -1,15 +1,16 @@
 'use client';
-import clsx from 'clsx';
-import ErrorComponent from '@/components/common/error-component';
 import { INTERVIEW_TYPE, INTERVIEW_TYPE_KR } from '@/constants/interview-constants';
 import { TABS } from '@/constants/my-page-constants';
+import clsx from 'clsx';
+import ErrorComponent from '@/components/common/error-component';
+import EmptyInterviewList from '@/features/interview-history/empty-interview-list';
 import { useInterviewHistoryInfiniteQuery } from '@/features/interview-history/hook/use-interview-history-infinite-query';
 import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
 import type { InterviewHistory, User } from '@prisma/client';
 
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import EmptyInterviewList from './empty-interview-list';
+
 const { CALM, PRESSURE } = INTERVIEW_TYPE;
 const { HISTORY } = TABS;
 

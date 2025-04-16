@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import Typography from '@/components/ui/typography';
 import { PATH } from '@/constants/path-constant';
 import type { Message } from '@/types/message';
-import { useExperienceUp } from '../character/hooks/use-experience-up';
+import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
 import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import Button from '@/components/ui/button';
 import { useInterviewStore } from '@/store/use-interview-store';

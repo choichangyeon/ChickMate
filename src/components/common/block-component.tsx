@@ -7,7 +7,7 @@ type Props = {
   firstLine: string;
   secondLine: string;
   thirdLine: string;
-  buttonName: string;
+  buttonName?: string;
   href?: string;
   onClick?: () => void;
 };
@@ -27,15 +27,17 @@ const BlockComponent = (props: Props) => {
         </Typography>
         <Typography size='sm'>{thirdLine}</Typography>
       </div>
-      {href ? (
-        <Button variant='outline' color='dark' link href={href}>
-          <Typography weight='bold'>{buttonName}</Typography>
-        </Button>
-      ) : (
-        <Button variant='outline' color='dark' onClick={onClick}>
-          <Typography weight='bold'>{buttonName}</Typography>
-        </Button>
-      )}
+      {buttonName ? (
+        href ? (
+          <Button variant='outline' color='dark' link href={href}>
+            <Typography weight='bold'>{buttonName}</Typography>
+          </Button>
+        ) : (
+          <Button variant='outline' color='dark' onClick={onClick}>
+            <Typography weight='bold'>{buttonName}</Typography>
+          </Button>
+        )
+      ) : null}
     </section>
   );
 };

@@ -10,7 +10,7 @@ type Props = {
   userId: User['id'];
 };
 const { A_DAY } = STALE_TIME;
-export const UseMetaDataQuery = ({ userId }: Props): UseQueryResult<UserMetaDataType> => {
+export const useMetaDataQuery = ({ userId }: Props): UseQueryResult<UserMetaDataType> => {
   return useQuery({
     queryKey: [META_DATA, userId],
     queryFn: () => getUserMetaData(userId),

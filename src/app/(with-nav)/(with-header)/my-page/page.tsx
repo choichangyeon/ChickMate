@@ -1,10 +1,16 @@
 import TabsField from '@/features/my-page/tabs-field';
 import ViewingField from '@/features/my-page/viewing-field';
+import { authOptions } from '@/utils/auth-option';
+import { getServerSession } from 'next-auth';
 
-const MyPage = () => {
+const MyPage = async () => {
+  const session = await getServerSession(authOptions);
+
+  if (!session) return null;
+
   return (
-    <article className='flex items-center gap-2 px-24'>
-      <ViewingField />
+    <article className='flex w-full items-center gap-2 px-12 py-8'>
+      <ViewingField session={session} />
       <TabsField />
     </article>
   );

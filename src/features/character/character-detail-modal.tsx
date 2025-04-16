@@ -31,7 +31,6 @@ const CharacterDetailModal = ({ session }: Props) => {
 
   return (
     <Modal modalId={MODAL_ID.CHARACTER_DETAIL}>
-      <div className='h-[410px]'>
         <div className='flex justify-around border-gray-300'>
           <div
             onClick={() => setSelectedTab('info')}
@@ -55,7 +54,6 @@ const CharacterDetailModal = ({ session }: Props) => {
         ) : (
           <CharacterHistoryList characterData={characterData} />
         )}
-      </div>
     </Modal>
   );
 };

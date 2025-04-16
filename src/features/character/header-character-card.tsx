@@ -35,8 +35,11 @@ const HeaderCharacterCard = ({
   return (
     <>
       <div onClick={handleClickCard} className='relative flex cursor-pointer items-center gap-4 px-8'>
-        {isDefault && <ScreenOverlay overlayText={overlayText!} />}
-
+        {isDefault && (
+          <ScreenOverlay>
+            {session ? <Typography>캐릭터 선택하러 가기</Typography> : '이런! 로그인을 하지 않았어요!'}
+          </ScreenOverlay>
+        )}
         <div className={`${isDefault && 'opacity-60'} flex items-center gap-4`}>
           <div>
             <div className='flex flex-col'>

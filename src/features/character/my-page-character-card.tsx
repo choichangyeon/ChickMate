@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import { Character } from '@prisma/client';
 import { defaultCharacter } from '@/features/character/data/character-data';
-import CharacterExpBar from '@/features/character/character-exp-bar';
 import Typography from '@/components/ui/typography';
 import { Session } from 'next-auth';
 import ScreenOverlay from '@/components/ui/screen-overlay';
@@ -19,63 +18,66 @@ type Props = {
   session?: Session;
 };
 
-const MainCharacterCard = ({
+const MyPageCharacterCard = ({
   characterData = defaultCharacter,
   requiredModal = false,
   overlayText,
   session,
 }: Props) => {
-  const { isCreateModalOpen, isDetailModalOpen, isDefault, type, level, percent, characterName, handleClickCard } =
-    useCharacterCard({
-      characterData,
-      overlayText,
-      requiredModal,
-      session,
-    });
+  const { isDefault, type, level, characterName, handleClickCard } = useCharacterCard({
+    characterData,
+    overlayText,
+    requiredModal,
+    session,
+  });
 
   return (
     <>
       <div
         onClick={handleClickCard}
-        className='relative flex h-full min-w-72 cursor-pointer flex-col justify-between overflow-hidden rounded-lg border-2 p-8'
+        className='relative flex h-full w-[524px] cursor-pointer flex-col justify-between overflow-hidden rounded-3xl border-2 shadow-lg'
       >
         {isDefault && (
           <ScreenOverlay>
             <BlockComponent
               firstLine={session ? '이런! 내 캐릭터가 없어요!' : '이런! 로그인을 하지 않았어요!'}
               secondLine={session ? '캐릭터를 설정해볼까요?' : '로그인이 필요합니다!'}
-              thirdLine={session ? 'ChickMate를 설정하고 함께 성장해요' : ''}
+              thirdLine={session ? 'ChickNate를 설정하고 함께 성장해요' : ''}
               buttonName={session ? '캐릭터 선택하기' : '로그인하러 가기'}
               href={session ? undefined : '/sign-in'}
             />
           </ScreenOverlay>
         )}
-        <div className={`${isDefault && 'opacity-60'} flex h-full flex-col justify-between`}>
-          <Image
-            src={`/assets/character/card/${type}-level${level}.png`}
-            width={242}
-            height={242}
-            alt='character-img'
-            priority
-          />
-          <div className='flex flex-col gap-2'>
-            <div className='flex justify-between gap-6'>
-              <Typography size='2xl' weight='black' color='primary-600'>
-                LV {level}
+        <div className={`flex h-full justify-between ${isDefault && 'opacity-60'}`}>
+          <div className='flex items-center justify-center'>
+            <Image
+              src={`/assets/character/card/${type}-level${level}.png`}
+              width={242}
+              height={242}
+              alt='character-img'
+              priority
+            />
+          </div>
+          <div className='flex flex-1 flex-col justify-between py-6 pr-9'>
+            <Typography size='sm' align='right'>
+              ChickMate
+            </Typography>
+            <div className='flex flex-col gap-1'>
+              <Typography size='3xl' weight='bold'>
+                {session?.user.name}
               </Typography>
-              <Typography size='xl' weight='bold'>
+              <Typography size='xs' color='gray-500'>
                 {characterName}
               </Typography>
             </div>
-            <CharacterExpBar type='main' percent={percent} />
+            <div className='flex justify-end'>
+              <img src='/assets/character/card/card_assets.svg' alt='card-assets' className='w-[175px]' />
+            </div>
           </div>
         </div>
       </div>
-
-      {isCreateModalOpen && <CreateCharacterModal />}
-      {isDetailModalOpen && session && <CharacterDetailModal session={session} />}
     </>
   );
 };
 
-export default MainCharacterCard;
+export default MyPageCharacterCard;

@@ -1,13 +1,14 @@
 'use client';
+import ErrorComponent from '@/components/common/error-component';
+import { INTERVIEW_TYPE, INTERVIEW_TYPE_KR } from '@/constants/interview-constants';
+import { QUERY_KEY } from '@/constants/query-key';
+import { useInterviewHistoryInfiniteQuery } from '@/features/interview-history/hook/use-interview-history-infinite-query';
+import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
+import type { InterviewHistory, User } from '@prisma/client';
 import clsx from 'clsx';
 import { useSession } from 'next-auth/react';
-import type { InterviewHistory, User } from '@prisma/client';
-import ErrorComponent from '@/components/common/error-component';
-import { useInterviewHistoryInfiniteQuery } from '@/features/interview-history/hook/use-interview-history-infinite-query';
-import { INTERVIEW_TYPE, INTERVIEW_TYPE_KR } from '@/constants/interview-constants';
-import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
 import EmptyInterviewList from './empty-interview-list';
-
+const { HISTORY } = QUERY_KEY;
 const { CALM, PRESSURE } = INTERVIEW_TYPE;
 
 const getInterviewer = (type: InterviewHistory['interviewType']) => {
@@ -55,7 +56,12 @@ const InterviewHistoryList = () => {
                 <span className='text-sm'>{getInterviewer(history.interviewType)}</span>
               </div>
               <div>
-                <span className='text-md block text-right text-primary-orange-600'>
+                <span
+                  className={clsx(
+                    'text-md block text-right',
+                    !history.isFeedbackCompleted && 'text-primary-orange-600'
+                  )}
+                >
                   {history.isFeedbackCompleted ? '평가 완료' : '평가 중'}
                 </span>
                 <span className='text-sm'>{history.createdDate}</span>

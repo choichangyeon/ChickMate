@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useInterviewStore } from '@/store/use-interview-store';
 import { useAudioRecorder } from '@/features/interview/hooks/use-audio-recorder';
 import { useTimer } from '@/features/interview/hooks/use-timer';
 import { FEEDBACK_PROMPT, INTERVIEW_PROMPT, USER_PROMPT } from '@/constants/interview-constants';
@@ -24,6 +25,7 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
     },
   ];
   /** state */
+  const incrementQuestionIndex = useInterviewStore((state) => state.incrementQuestionIndex);
   const [messageList, setMessageList] = useState<Message[]>(init_state);
   const [interviewQnA, setInterviewQnA] = useState({
     question: '간단한 자기소개 부탁드립니다',
@@ -70,6 +72,8 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
       setInterviewQnA((prev) => {
         return { ...prev, answer: answerText };
       });
+
+      incrementQuestionIndex();
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);

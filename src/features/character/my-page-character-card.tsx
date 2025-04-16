@@ -24,13 +24,12 @@ const MyPageCharacterCard = ({
   overlayText,
   session,
 }: Props) => {
-  const { isCreateModalOpen, isDetailModalOpen, isDefault, type, level, characterName, handleClickCard } =
-    useCharacterCard({
-      characterData,
-      overlayText,
-      requiredModal,
-      session,
-    });
+  const { isDefault, type, level, characterName, handleClickCard } = useCharacterCard({
+    characterData,
+    overlayText,
+    requiredModal,
+    session,
+  });
 
   return (
     <>
@@ -59,8 +58,6 @@ const MyPageCharacterCard = ({
               priority
             />
           </div>
-
-          {/* 텍스트와 기타 콘텐츠는 padding 적용 */}
           <div className='flex flex-1 flex-col justify-between py-6 pr-9'>
             <Typography size='sm' align='right'>
               ChickMate
@@ -79,9 +76,6 @@ const MyPageCharacterCard = ({
           </div>
         </div>
       </div>
-
-      {isCreateModalOpen && <CreateCharacterModal />}
-      {isDetailModalOpen && session && <CharacterDetailModal session={session} />}
     </>
   );
 };

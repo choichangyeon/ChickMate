@@ -15,6 +15,8 @@ type FeedbackItem = {
 };
 
 const InterviewDetailField = ({ id }: Props) => {
+
+  // 추후 use hook 분리 및 상수 처리 예정
   const { data, isPending, isError } = useQuery({
     queryKey: ['interview', id],
     queryFn: async () => {

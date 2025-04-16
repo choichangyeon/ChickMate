@@ -1,7 +1,9 @@
 import { Metadata } from 'next';
+import { getServerSession } from 'next-auth';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-key';
 import { RESUME_STATUS } from '@/constants/resume-constants';
+import { authOptions } from '@/utils/auth-option';
 import Typography from '@/components/ui/typography';
 import { serverActionWithSentry } from '@/utils/server-action-with-sentry';
 import ResumeForm from '@/features/resume/resume-form';
@@ -18,10 +20,11 @@ const { RESUME_DRAFT } = QUERY_KEY;
 const { DRAFT } = RESUME_STATUS;
 
 const ResumePage = async ({ params }: RouteParams) => {
+  const session = await getServerSession(authOptions);
   const resumeId = Number(params.id);
   const resume = await getResumeById(resumeId);
 
-  if (!resume) return null;
+  if (!session || !resume) return null;
 
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
@@ -38,7 +41,7 @@ const ResumePage = async ({ params }: RouteParams) => {
           </Typography>
           <ResumeForm resume={resume} />
         </section>
-        <UserInfoSummary />
+        <UserInfoSummary session={session} />
       </main>
     </HydrationBoundary>
   );

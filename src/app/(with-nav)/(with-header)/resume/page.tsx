@@ -1,4 +1,6 @@
 import { Metadata } from 'next';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/utils/auth-option';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-key';
 import { RESUME_STATUS } from '@/constants/resume-constants';
@@ -17,11 +19,14 @@ const { RESUME_DRAFT } = QUERY_KEY;
 const { DRAFT } = RESUME_STATUS;
 
 const ResumePage = async () => {
+  const session = await getServerSession(authOptions);
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: [RESUME_DRAFT],
     queryFn: () => serverActionWithSentry(() => getResumeList(DRAFT)),
   });
+
+  if (!session) return null;
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
@@ -32,7 +37,7 @@ const ResumePage = async () => {
           </Typography>
           <ResumeForm />
         </section>
-        <UserInfoSummary />
+        <UserInfoSummary session={session} />
       </main>
     </HydrationBoundary>
   );

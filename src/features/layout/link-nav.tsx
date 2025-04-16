@@ -6,7 +6,7 @@ type Props = {
 };
 
 const LinkNav = ({ menu }: Props) => {
-  return <Link href={menu.path}>{menu?.icons}</Link>;
+  return <Link href={menu.path}>{menu?.icon}</Link>;
 };
 
 export default LinkNav;

@@ -5,12 +5,19 @@ import { QUERY_KEY } from '@/constants/query-key';
 import Typography from '@/components/ui/typography';
 import UserDataItem from '@/features/resume/user-data-item';
 import type { UserMetaDataType } from '@/types/user-meta-data-type';
+import type { Session } from 'next-auth';
+import { metadata } from '@/app/layout';
 
 const { META_DATA } = QUERY_KEY;
 
-const UserInfoSummary = () => {
+type Props = {
+  session: Session;
+};
+
+const UserInfoSummary = ({ session }: Props) => {
   const queryClient = useQueryClient();
-  const userMetaData = queryClient.getQueryData([META_DATA]) as UserMetaDataType;
+  const userMetaData = queryClient.getQueryData([META_DATA, session.user.id]) as UserMetaDataType;
+
   const { experienceType, educationLevel, jobType, mainRegion } = userMetaData;
 
   const userDatalist = [

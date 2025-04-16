@@ -22,7 +22,7 @@ const ResumeCard = ({ type = 'resume', resume, iconButton, children, isSelected,
   const createdAtDate = formatDate({ input: createdAt });
 
   // TODO: isSelected Style 설정하기
-  const selectedClassName = isSelected ? 'outline-2 outline-primary-600 bg-red-500' : '';
+  const selectedClassName = isSelected ? 'cursor-pointer outline-2 outline-primary-600 bg-red-500' : 'cursor-pointer';
   const handleClick = () => {
     if (type === 'interview') {
       onSelect && onSelect();

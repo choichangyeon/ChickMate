@@ -17,19 +17,18 @@ const LIMIT_COUNT = 7;
 export const useAudioWithTimer = (duration: number, interviewHistory: InterviewHistoryWithResume) => {
   const { interviewType, resume, id } = interviewHistory;
   const type = interviewType === 'calm' ? CALM_PROMPT : PRESSURE_PROMPT;
-  const [interviewQnA, setInterviewQnA] = useState({
-    question: '간단한 자기소개 부탁드립니다',
-    answer: '',
-  });
-
-  /** state */
   const init_state: Message[] = [
     {
       role: 'system',
       content: [...type.content, { type: 'text', text: `지원자의 자기소개서: ${resume}` }],
     },
   ];
+  /** state */
   const [messageList, setMessageList] = useState<Message[]>(init_state);
+  const [interviewQnA, setInterviewQnA] = useState({
+    question: '간단한 자기소개 부탁드립니다',
+    answer: '',
+  });
 
   /** hook */
   const { isRecording, startRecording, stopRecording } = useAudioRecorder();

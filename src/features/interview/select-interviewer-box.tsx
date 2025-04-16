@@ -14,7 +14,7 @@ import { useInterviewStore } from '@/store/use-interview-store';
 const { CALM, PRESSURE } = INTERVIEW_TYPE;
 const { LIVE } = PATH.INTERVIEW;
 
-const activeBgClass = 'bg-primary-orange-600';
+const activeBgClass = 'outline-primary-orange-600 bg-cool-gray-10';
 
 const SelectInterviewerBox = () => {
   const [interviewType, setInterviewType] = useState<string>(CALM);

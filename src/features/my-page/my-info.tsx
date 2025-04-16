@@ -50,7 +50,8 @@ const MyInfo = ({ session }: Props) => {
         </button>
       </div>
       {/* 높이 조정 필요 */}
-      <ul className='flex h-full max-h-[35vh] flex-col items-center justify-center gap-2 overflow-y-auto scrollbar-hide'>
+      <ul className='flex max-h-[40vh] flex-col items-start gap-2 overflow-y-auto scrollbar-hide'>
+
         {!data ? (
           <BlockComponent
             firstLine='이런! 내 정보가 없어요!'
@@ -62,7 +63,7 @@ const MyInfo = ({ session }: Props) => {
         ) : (
           <>
             {fieldList.map(({ key, label }) => (
-              <li key={key} className='flex gap-5 rounded-lg border border-gray-200 p-4'>
+              <li key={key} className='flex w-full gap-5 rounded-lg border border-gray-200 p-4'>
                 <Typography size='xl' weight='bold' color='secondary-amber'>
                   {label}
                 </Typography>

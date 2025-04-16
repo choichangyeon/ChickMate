@@ -46,7 +46,7 @@ const MainCharacterCard = ({
               secondLine={session ? '캐릭터를 설정해볼까요?' : '로그인이 필요합니다!'}
               thirdLine={session ? 'ChickNate를 설정하고 함께 성장해요' : ''}
               buttonName={session ? '캐릭터 선택하기' : '로그인하러 가기'}
-              href={session ? '/' : '/sign-in'}
+              href={session ? undefined : '/sign-in'}
             />
           </ScreenOverlay>
         )}

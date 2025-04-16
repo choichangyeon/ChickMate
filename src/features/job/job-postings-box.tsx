@@ -17,7 +17,7 @@ const { MY_PAGE } = PATH;
 
 const JobPostingsBox = ({ userId }: Props) => {
   const queryClient = useQueryClient();
-  const userMetaData = queryClient.getQueryData([META_DATA]) as UserMetaDataType;
+  const userMetaData = queryClient.getQueryData([META_DATA, userId]) as UserMetaDataType;
   const { data: jobPostingList, isLoading, isError } = useJobPostingQuery({ userMetaData });
 
   if (isLoading) return <div>Loading...</div>;

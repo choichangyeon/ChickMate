@@ -72,10 +72,11 @@ const SelectInterviewerBox = () => {
           )}
         </div>
         {/* TODO: 버튼 onClick 속성 추가시 변경 */}
-        {/* <Button color='secondary' variant='outline' link href='/interview-live'>
-          <Typography weight='bold'>면접 시작하기</Typography>
-        </Button> */}
-        <button onClick={handleClickSetInterviewType}>면접 시작하기 버튼</button>
+        {resumeId && (
+          <Button color='dark' variant='outline' onClick={handleClickSetInterviewType}>
+            <Typography weight='bold'>면접 시작하기</Typography>
+          </Button>
+        )}
       </aside>
     </section>
   );

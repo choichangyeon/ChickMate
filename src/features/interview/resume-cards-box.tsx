@@ -5,7 +5,6 @@ import useResumeStore from '@/features/interview/hooks/use-resume-store';
 import { useSubmitResumesQuery } from '@/hooks/queries/use-submit-resumes-query';
 import BlockComponent from '@/components/common/block-component';
 import { PATH } from '@/constants/path-constant';
-import Image from 'next/image';
 
 const { ROOT } = PATH.RESUME;
 

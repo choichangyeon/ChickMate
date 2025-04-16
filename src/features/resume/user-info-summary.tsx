@@ -7,6 +7,7 @@ import UserDataItem from '@/features/resume/user-data-item';
 import type { UserMetaDataType } from '@/types/user-meta-data-type';
 import type { Session } from 'next-auth';
 import { metadata } from '@/app/layout';
+import { useMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-query';
 
 const { META_DATA } = QUERY_KEY;
 
@@ -15,10 +16,11 @@ type Props = {
 };
 
 const UserInfoSummary = ({ session }: Props) => {
-  const queryClient = useQueryClient();
-  const userMetaData = queryClient.getQueryData([META_DATA, session.user.id]) as UserMetaDataType;
+  // const queryClient = useQueryClient();
+  // const userMetaData = queryClient.getQueryData([META_DATA, session.user.id]) as UserMetaDataType;
+  const { data: userMetaData } = useMetaDataQuery({ userId: session.user.id });
 
-  const { experienceType, educationLevel, jobType, mainRegion } = userMetaData;
+  const { experienceType, educationLevel, jobType, mainRegion } = userMetaData as UserMetaDataType;
 
   const userDatalist = [
     { label: '경력', content: experienceType },

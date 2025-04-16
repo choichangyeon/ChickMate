@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { postBookmarkWithJobPostingId } from '../api/client-services';
+import { postBookmarkWithJobPostingId } from '@/features/job/api/client-services';
 import { QUERY_KEY } from '@/constants/query-key';
 
 const { BOOKMARK } = QUERY_KEY;

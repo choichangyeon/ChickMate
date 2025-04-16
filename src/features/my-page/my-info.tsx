@@ -7,7 +7,7 @@ import UserMetaDataModal from '@/features/user-meta-data/user-meta-data-modal';
 import Modal from '@/components/ui/modal';
 import { Session } from 'next-auth';
 import SettingFill from '@/components/icons/setting-fill';
-import { UseMetaDataQuery } from '../user-meta-data/hooks/use-meta-data-query';
+import { useMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-query';
 import { UserMetaDataType } from '@/types/user-meta-data-type';
 import BlockComponent from '@/components/common/block-component';
 
@@ -31,7 +31,7 @@ const fieldList: FieldList[] = [
 ];
 
 const MyInfo = ({ session }: Props) => {
-  const { data, isPending, isError } = UseMetaDataQuery({ userId: session.user.id });
+  const { data, isPending, isError } = useMetaDataQuery({ userId: session.user.id });
 
   const toggleModal = useModalStore((state) => state.toggleModal);
   const isModalOpen = useModalStore((state) => state.getIsModalOpen(USER_META_DATA));
@@ -51,7 +51,6 @@ const MyInfo = ({ session }: Props) => {
       </div>
       {/* 높이 조정 필요 */}
       <ul className='flex max-h-[40vh] flex-col items-start gap-2 overflow-y-auto scrollbar-hide'>
-
         {!data ? (
           <BlockComponent
             firstLine='이런! 내 정보가 없어요!'

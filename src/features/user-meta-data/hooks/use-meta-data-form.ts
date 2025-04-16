@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { UseMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-query';
+import { useMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-query';
 import useMetaDataMutation from '@/features/user-meta-data/hooks/use-meta-data-mutation';
 import { userMetaFormSchema, UserMetaSchema } from '@/features/user-meta-data/data/user-meta-form-schema';
 import { DEFAULT, USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
@@ -23,7 +23,7 @@ const {
 const { USER_META_DATA } = MODAL_ID;
 
 export const useMetaDataForm = (userId: string) => {
-  const { data: metaData, isPending: isMetaDataPending } = UseMetaDataQuery({ userId });
+  const { data: metaData, isPending: isMetaDataPending } = useMetaDataQuery({ userId });
   const { mutate, error } = useMetaDataMutation(userId);
   const toggleModal = useModalStore((state) => state.toggleModal);
   const {

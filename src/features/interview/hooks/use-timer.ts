@@ -23,9 +23,9 @@ export const useTimer = ({ duration, onTimerComplete }: Props) => {
         intervalRef.current = null;
         setTimeLeft(duration);
         if (onTimerComplete) onTimerComplete();
+      } else {
+        setTimeLeft(newTimeLeft);
       }
-
-      setTimeLeft(newTimeLeft);
     }, 1000);
   };
 

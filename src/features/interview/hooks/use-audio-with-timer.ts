@@ -12,7 +12,7 @@ import type { Message } from '@/types/message';
 import type { InterviewHistoryWithResume } from '@/types/interview';
 
 const { CALM_PROMPT, PRESSURE_PROMPT } = INTERVIEW_PROMPT;
-const LIMIT_COUNT = 5;
+const LIMIT_COUNT = 7;
 
 export const useAudioWithTimer = (duration: number, interviewHistory: InterviewHistoryWithResume) => {
   const { interviewType, resume, id } = interviewHistory;
@@ -35,8 +35,9 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
   const { isRecording, startRecording, stopRecording } = useAudioRecorder();
 
   /** function */
-  const handleTimerComplete = () => {
+  const handleTimerComplete = async () => {
     stopRecording();
+    await stopRecordingWithTimer();
   };
 
   const { startTimer, stopTimer, timeLeft, formatTime } = useTimer({

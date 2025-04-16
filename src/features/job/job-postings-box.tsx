@@ -24,24 +24,26 @@ const JobPostingsBox = ({ userId }: Props) => {
   if (isError) return <div>Error...</div>;
 
   if (!jobPostingList || jobPostingList.length === 0) {
-    // TODO: 비어있는 UI 구현 -> 민철님에게 요청 완료
+    // TODO: 그 외에 아이콘 추가
     return (
-      <BlockComponent
-        firstLine='이런! 나에게 맞는 채용공고가 없어요!'
-        secondLine='내 정보를 수정해볼까요?'
-        thirdLine='맞춤형 채용공고는 내 정보를 기반으로 진행됩니다'
-        buttonName='프로필 수정하기!'
-        href={MY_PAGE}
-      />
+      <section className='flex h-[400px] flex-col items-center justify-center self-stretch'>
+        <BlockComponent
+          firstLine='이런! 나에게 맞는 채용공고가 없어요!'
+          secondLine='내 정보를 수정해볼까요?'
+          thirdLine='맞춤형 채용공고는 내 정보를 기반으로 진행됩니다'
+          buttonName='프로필 수정하기!'
+          href={MY_PAGE}
+        />
+      </section>
     );
   }
 
   return (
     // TODO: 무한 스크롤 구현
     <section className='flex flex-row flex-wrap gap-5 self-stretch scrollbar-hide'>
-      {/* {jobPostingList.map((jobPosting) => (
+      {jobPostingList.map((jobPosting) => (
         <JobPostingCard key={jobPosting.id} jobPosting={jobPosting}></JobPostingCard>
-      ))} */}
+      ))}
       <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
       <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
       <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>

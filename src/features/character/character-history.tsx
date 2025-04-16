@@ -2,7 +2,7 @@
 
 import Typography from '@/components/ui/typography';
 import { formatDate } from '@/utils/format-date';
-import { Character } from '@prisma/client';
+import { Character, CharacterHistory } from '@prisma/client';
 import { useCharacterHistoryInfiniteQuery } from '@/features/character/hooks/use-character-history-infinite-query';
 import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
 
@@ -38,7 +38,7 @@ const CharacterHistoryList = ({ characterData }: Props) => {
         ) : (
           <>
             <ul className='flex flex-col gap-4'>
-              {characterHistories.map((history: any) => (
+              {characterHistories.map((history: CharacterHistory) => (
                 <li key={history.id} className='flex w-full items-center justify-between'>
                   <div className='flex flex-col'>
                     <Typography size='xs' color='gray-500'>

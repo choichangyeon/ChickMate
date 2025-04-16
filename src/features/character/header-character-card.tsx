@@ -35,16 +35,23 @@ const HeaderCharacterCard = ({
   return (
     <>
       <div onClick={handleClickCard} className='relative flex cursor-pointer items-center gap-4 px-8'>
-        {isDefault && <ScreenOverlay overlayText={overlayText!} />}
-
+        {isDefault && (
+          <ScreenOverlay>
+            {session ? <Typography>캐릭터 선택하러 가기</Typography> : '이런! 로그인을 하지 않았어요!'}
+          </ScreenOverlay>
+        )}
         <div className={`${isDefault && 'opacity-60'} flex items-center gap-4`}>
           <div>
             <div className='flex flex-col'>
               <div className='flex w-56 items-center justify-between'>
-                <Typography weight='bold' size='md'>
-                  <span className='pr-2 text-primary-orange-600'>LV {level} </span>
-                  {session && session.user.name}님
-                </Typography>
+                <div className='flex truncate w-36'>
+                  <Typography weight='bold' size='md'>
+                    <span className='pr-2 text-primary-orange-600'>LV {level} </span>
+                  </Typography>
+                  <Typography weight='bold' size='md'>
+                    {session && session.user.name}님
+                  </Typography>
+                </div>
                 {/* 추후 tag 공통 컴포넌트 */}
                 <div className='rounded-xl border p-1 text-center text-xs font-normal text-cool-gray-900'>
                   {characterName}

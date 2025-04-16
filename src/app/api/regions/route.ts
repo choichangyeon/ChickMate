@@ -8,7 +8,11 @@ const {
 export const GET = async () => {
   try {
     const mainRegions = await prisma.mainRegion.findMany();
-    return NextResponse.json(mainRegions, { status: 200 });
+    const parsedMainRegions = mainRegions.map((region) => ({
+      ...region,
+      value: region.name,
+    }));
+    return NextResponse.json(parsedMainRegions, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: GET_REGIONS_ERROR }, { status: 500 });
   }

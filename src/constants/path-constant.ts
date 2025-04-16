@@ -29,6 +29,7 @@ export const ROUTE_HANDLER_PATH = {
     TTS: '/api/ai/tts',
     INTERVIEW: '/api/ai/interview',
     INTERVIEW_START: (id: number) => `/api/ai/interview/${id}`,
+    INTERVIEW_LIVE:(id: number) => `/api/ai/interview/${id}`,
   },
   RESUME: {
     ROOT: '/api/resume',
@@ -40,6 +41,7 @@ export const ROUTE_HANDLER_PATH = {
   },
   USER: {
     META_DATA: '/api/user-meta-data',
+    INTERVIEW_HISTORY: '/api/interview-history',
   },
   REGIONS: '/api/regions',
   JOB: {

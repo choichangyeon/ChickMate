@@ -38,33 +38,28 @@ export const typeData: SelectBoxType[] = [
 
 export const academicData: SelectBoxType[] = [
   {
-    name: '고졸',
-    value: '고교 졸업 이하',
-    // value: 'ACADEMIC1', => 사람인 API 연결되면 바꿀 예정
-  },
-  {
     name: '고등학교 졸업',
-    value: '고등학교 졸업',
+    value: '고졸',
     // value: 'ACADEMIC2',=> 사람인 API 연결되면 바꿀 예정
   },
   {
-    name: '대졸(2~3년)',
-    value: '대학 졸업(2,3년제)',
+    name: '대학 졸업(2,3년제)',
+    value: '대졸(2~3년)',
     // value: 'ACADEMIC3',=> 사람인 API 연결되면 바꿀 예정
   },
   {
-    name: '대졸(4년)',
-    value: '대학교 졸업(4년제)',
+    name: '대학교 졸업(4년제)',
+    value: '대졸(4년)',
     // value: 'ACADEMIC4',=> 사람인 API 연결되면 바꿀 예정
   },
   {
-    name: '석사',
-    value: '대학원 석사 졸업',
+    name: '대학원 석사 졸업',
+    value: '석사',
     // value: 'ACADEMIC5',=> 사람인 API 연결되면 바꿀 예정
   },
   {
-    name: '박사',
-    value: '대학원 박사 졸업',
+    name: '대학원 박사 졸업',
+    value: '박사',
     // value: 'ACADEMIC6',=> 사람인 API 연결되면 바꿀 예정
   },
   // {
@@ -89,7 +84,7 @@ export const jobData: SelectBoxType[] = [
   { name: '운전·운송·배송', value: '운전·운송·배송' },
   { name: '서비스', value: '서비스' },
   { name: '생산', value: '생산' },
-  { name: '건설·건축', value: '건설' },
+  { name: '건설·건축', value: '건설·건축' },
 ];
 
 // export const jobData: SelectBoxType[] = [

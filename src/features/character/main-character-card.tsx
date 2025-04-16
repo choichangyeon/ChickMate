@@ -10,6 +10,7 @@ import ScreenOverlay from '@/components/ui/screen-overlay';
 import { useCharacterCard } from '@/features/character/hooks/use-character-card';
 import CharacterDetailModal from '@/features/character/character-detail-modal';
 import CreateCharacterModal from '@/features/character/create-character-modal';
+import BlockComponent from '@/components/common/block-component';
 
 type Props = {
   characterData?: Character;
@@ -38,24 +39,33 @@ const MainCharacterCard = ({
         onClick={handleClickCard}
         className='relative flex h-full min-w-72 cursor-pointer flex-col justify-between overflow-hidden rounded-lg border-2 p-8'
       >
-        {isDefault && <ScreenOverlay overlayText={overlayText!} />}
-        <div className={`${isDefault && 'opacity-60'} flex flex-col justify-between`}>
-          {/* 추후 이미지로 대체 예정 div wrapper 필요 없음 */}
-          <div className='min-w-60'>
-            <Image
-              src={`/assets/character/card/${type}-level${level}.png`}
-              width={240}
-              height={240}
-              alt='character-img'
-              priority
+        {isDefault && (
+          <ScreenOverlay>
+            <BlockComponent
+              firstLine={session ? '이런! 내 캐릭터가 없어요!' : '이런! 로그인을 하지 않았어요!'}
+              secondLine={session ? '캐릭터를 설정해볼까요?' : '로그인이 필요합니다!'}
+              thirdLine={session ? 'ChickMate를 설정하고 함께 성장해요' : ''}
+              buttonName={session ? '캐릭터 선택하기' : '로그인하러 가기'}
+              href={session ? undefined : '/sign-in'}
             />
-          </div>
+          </ScreenOverlay>
+        )}
+        <div className={`${isDefault && 'opacity-60'} flex h-full flex-col justify-between`}>
+          <Image
+            src={`/assets/character/card/${type}-level${level}.png`}
+            width={242}
+            height={242}
+            alt='character-img'
+            priority
+          />
           <div className='flex flex-col gap-2'>
             <div className='flex justify-between gap-6'>
-              <Typography weight='black' color='primary-600'>
+              <Typography size='2xl' weight='black' color='primary-600'>
                 LV {level}
               </Typography>
-              <Typography size='sm'>{characterName}</Typography>
+              <Typography size='xl' weight='bold'>
+                {characterName}
+              </Typography>
             </div>
             <CharacterExpBar type='main' percent={percent} />
           </div>

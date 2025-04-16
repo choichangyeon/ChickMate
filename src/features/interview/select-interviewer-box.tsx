@@ -9,18 +9,23 @@ import useResumeStore from '@/features/interview/hooks/use-resume-store';
 import { postInterview } from '@/features/interview/api/client-services';
 import { useRouter } from 'next/navigation';
 import { PATH } from '@/constants/path-constant';
+import { useInterviewStore } from '@/store/use-interview-store';
 
 const { CALM, PRESSURE } = INTERVIEW_TYPE;
 const { LIVE } = PATH.INTERVIEW;
+
+const activeBgClass = 'bg-primary-orange-600';
 
 const SelectInterviewerBox = () => {
   const [interviewType, setInterviewType] = useState<string>(CALM);
   const router = useRouter();
   const { resumeId } = useResumeStore();
+  const resetQuestionIndex = useInterviewStore((state) => state.resetQuestionIndex);
 
   const handleClickSetInterviewType = async () => {
     if (resumeId) {
       const interviewId = await postInterview({ resumeId, interviewType });
+      resetQuestionIndex();
       // 동적 라우팅 페이지 라우팅
       router.push(`${LIVE(interviewId)}`);
     }
@@ -31,13 +36,13 @@ const SelectInterviewerBox = () => {
       <aside className='mr-5 flex w-full items-start justify-start gap-5 self-stretch'>
         <div
           onClick={() => setInterviewType(CALM)}
-          className='flex w-full items-center justify-center self-stretch rounded-lg bg-primary-orange-600 outline outline-1 outline-cool-gray-300'
+          className={`flex w-full cursor-pointer items-center justify-center self-stretch rounded-lg outline outline-1 outline-cool-gray-300 ${interviewType === CALM ? activeBgClass : ''}`}
         >
           <Image src={`/assets/character/card/yellow-level2.png`} alt='침착한 면접관' width={220} height={220} />
         </div>
         <div
           onClick={() => setInterviewType(PRESSURE)}
-          className='flex w-full items-center justify-center self-stretch rounded-lg bg-primary-orange-600 outline outline-1 outline-cool-gray-300'
+          className={`flex w-full cursor-pointer items-center justify-center self-stretch rounded-lg outline outline-1 outline-cool-gray-300 ${interviewType === PRESSURE ? activeBgClass : ''}`}
         >
           <Image src={`/assets/character/card/yellow-level3.png`} alt='불타는 면접관' width={220} height={220} />
         </div>
@@ -71,11 +76,11 @@ const SelectInterviewerBox = () => {
             </>
           )}
         </div>
-        {/* TODO: 버튼 onClick 속성 추가시 변경 */}
-        {/* <Button color='secondary' variant='outline' link href='/interview-live'>
-          <Typography weight='bold'>면접 시작하기</Typography>
-        </Button> */}
-        <button onClick={handleClickSetInterviewType}>면접 시작하기 버튼</button>
+        {resumeId && (
+          <Button color='dark' variant='outline' onClick={handleClickSetInterviewType}>
+            <Typography weight='bold'>면접 시작하기</Typography>
+          </Button>
+        )}
       </aside>
     </section>
   );

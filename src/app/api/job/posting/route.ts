@@ -8,6 +8,16 @@ import { NextRequest, NextResponse } from 'next/server';
 /**
  * GET
  */
+// TODO: 필터링 기준 상수화
+const educationOrder = {
+  '학력무관': 0,
+  '고졸': 1,
+  '대졸(2~3년)': 2,
+  '대졸(4년)': 3,
+  '석사': 4,
+  '박사': 5,
+};
+
 export const GET = async (request: NextRequest): Promise<NextResponse> => {
   const { DB_REQUEST_ERROR, DB_SERVER_ERROR, DB_URL_ERROR } = DB_MESSAGE.ERROR;
   const { MAIN_REGION } = USER_META_DATA_KEY;
@@ -26,9 +36,14 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
     }
 
     // const mainRegion = JSON.parse(location).mainRegion;
+    const userLevelNum = educationOrder[educationLevel as keyof typeof educationOrder];
     const response: JobPosting[] = await prisma.jobPosting.findMany({
       where: {
-        educationLevel,
+        educationLevel: {
+          in: Object.entries(educationOrder)
+            .filter(([_, levelNum]) => levelNum <= userLevelNum)
+            .map(([key]) => key),
+        },
         experienceType,
         jobType,
         location: {

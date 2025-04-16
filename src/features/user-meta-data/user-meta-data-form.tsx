@@ -6,6 +6,7 @@ import useRegionsQuery from '@/features/user-meta-data/hooks/use-regions-query';
 import SingleSelectField from '@/features/user-meta-data/single-select-field';
 import { useMetaDataForm } from '@/features/user-meta-data/hooks/use-meta-data-form';
 import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
+import Button from '@/components/ui/button';
 
 const { TYPE, EDUCATION, JOB, MAIN_REGION, ETC } = USER_META_DATA_KEY;
 
@@ -23,7 +24,7 @@ const UserMetaDataForm = () => {
   if (isPending || isMetaDataPending) return <div>로딩 중..</div>;
 
   return (
-    <form onSubmit={handleSubmit(handleOnSubmit)}>
+    <form onSubmit={handleSubmit(handleOnSubmit)} className='mx-auto w-2/3'>
       <SingleSelectField
         label='*경력'
         options={typeData}
@@ -40,7 +41,6 @@ const UserMetaDataForm = () => {
         onSelect={handleSelect}
         error={errors[EDUCATION]?.message}
       />
-
       <SingleSelectField
         label='*직무'
         options={jobData}
@@ -49,7 +49,6 @@ const UserMetaDataForm = () => {
         onSelect={handleSelect}
         error={errors[JOB]?.message}
       />
-
       <SingleSelectField
         label='*지역'
         options={regions}
@@ -59,11 +58,15 @@ const UserMetaDataForm = () => {
         error={errors[MAIN_REGION]?.message}
       />
 
-      <div className='h-14'>
+      <div className='mb-4 flex h-14 flex-col justify-center'>
         <label>기타 커리어</label>
-        <input id={ETC} type='text' {...register(ETC)} />
+        <input className='rounded-lg border border-cool-gray-200 px-4 py-2' id={ETC} type='text' {...register(ETC)} />
       </div>
-      <button>{`내 정보 ${FORM_TYPE} 완료`}</button>
+      <div className='text-center'>
+        <Button variant='outline' color='dark' type='submit'>
+          설정을 완료헀어요!
+        </Button>
+      </div>
     </form>
   );
 };

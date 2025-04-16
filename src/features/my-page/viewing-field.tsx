@@ -1,25 +1,32 @@
 'use client';
-import Modal from '@/components/ui/modal';
-import Typography from '@/components/ui/typography';
-import { useModalStore } from '@/store/use-modal-store';
-import { MODAL_ID } from '@/constants/modal-id-constants';
-import UserMetaDataModal from '@/features/user-meta-data/user-meta-data-modal';
 
-const { USER_META_DATA } = MODAL_ID;
+import MyPageCharacter from '@/features/character/my-page-character';
+import { Session } from 'next-auth';
+import MyInfo from '@/features/my-page/my-info';
+import { useSearchParams } from 'next/navigation';
+import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
+import InterviewDetailField from './interview-detail-field';
 
-const ViewingField = () => {
-  const toggleModal = useModalStore((state) => state.toggleModal);
-  const isModalOpen = useModalStore((state) => state.getIsModalOpen(USER_META_DATA));
+type Props = {
+  session: Session;
+};
+
+const ViewingField = ({ session }: Props) => {
+  const searchParams = useSearchParams();
+  const { id, tab } = sanitizeQueryParams(searchParams);
+  const hasSearchParams = searchParams.toString();
 
   return (
-    <section className='text- w-1/2 border-2'>
-      <Typography as='h3'>삐약이카드</Typography>
-      <button onClick={() => toggleModal(USER_META_DATA)}>모달열자</button>
-      {isModalOpen && (
-        <Modal modalId={USER_META_DATA}>
-          <UserMetaDataModal />
-        </Modal>
+    <section className='h-[80dvh] w-1/2'>
+      {!hasSearchParams && (
+        <>
+          <div className='mb-8 flex w-full items-center justify-center'>
+            <MyPageCharacter session={session} />
+          </div>
+          <MyInfo session={session} />
+        </>
       )}
+      {tab === 'interviewHistories' && <InterviewDetailField id={id} />}
     </section>
   );
 };

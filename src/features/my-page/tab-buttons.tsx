@@ -32,7 +32,10 @@ type Props = {
 
 const TabButtons = ({ tabCounts }: Props) => {
   const { setTab, tab: targetTab, resetTab } = useTabStore();
-  const handleChangeTab = (newTab: Tabs) => setTab(newTab);
+  const handleChangeTab = (newTab: Tabs) => {
+    if (newTab !== HISTORY) return; //@TODO: 아직 북마크, 자소서쪽이 미완이라 일단 tab change는 막아두겠습니다.
+    setTab(newTab);
+  };
   useEffect(() => {
     return () => resetTab();
   }, []);
@@ -46,7 +49,10 @@ const TabButtons = ({ tabCounts }: Props) => {
             targetTab === tab.id && 'bg-cool-gray-300'
           )}
         >
-          <button className='w-full' onClick={() => handleChangeTab(tab.id)}>
+          <button
+            className={clsx('w-full', tab.id !== HISTORY && 'cursor-not-allowed')}
+            onClick={() => handleChangeTab(tab.id)}
+          >
             {tab.title}
             {tabCounts[tab.id] !== 0 && (
               <span className='mx-1 rounded-xl bg-cool-gray-900 px-[10px] py-[2px] text-xs text-cool-gray-50'>

@@ -7,6 +7,13 @@ type Props = {
   id: string;
 };
 
+type FeedbackItem = {
+  [key: string]: {
+    strength: string;
+    improvement: string;
+  };
+};
+
 const InterviewDetailField = ({ id }: Props) => {
   const { data, isPending, isError } = useQuery({
     queryKey: ['interview', id],
@@ -20,7 +27,7 @@ const InterviewDetailField = ({ id }: Props) => {
   if (isPending) return <div>로딩 중...</div>;
   if (isError) return <div>에러임..</div>;
 
-  let feedbackArray: any[] = [];
+  let feedbackArray: FeedbackItem[] = [];
 
   if (typeof data.feedback === 'string') {
     feedbackArray = JSON.parse(data.feedback);
@@ -31,7 +38,7 @@ const InterviewDetailField = ({ id }: Props) => {
       <div>
         <Typography>면접 결과</Typography>
         {feedbackArray.map((item) => {
-          const [key, value] = Object.entries(item)[0] as [string, { strength: string; improvement: string }];
+          const [key, value] = Object.entries(item)[0];
 
           return (
             <div key={key} style={{ marginTop: '16px' }}>

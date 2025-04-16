@@ -1,15 +1,17 @@
 'use client';
 import ErrorComponent from '@/components/common/error-component';
 import { INTERVIEW_TYPE, INTERVIEW_TYPE_KR } from '@/constants/interview-constants';
-import { QUERY_KEY } from '@/constants/query-key';
 import { useInterviewHistoryInfiniteQuery } from '@/features/interview-history/hook/use-interview-history-infinite-query';
 import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
 import type { InterviewHistory, User } from '@prisma/client';
 import clsx from 'clsx';
 import { useSession } from 'next-auth/react';
 import EmptyInterviewList from './empty-interview-list';
-const { HISTORY } = QUERY_KEY;
+import { TABS } from '@/constants/my-page-constants';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 const { CALM, PRESSURE } = INTERVIEW_TYPE;
+const { HISTORY } = TABS;
 
 const getInterviewer = (type: InterviewHistory['interviewType']) => {
   return type === CALM ? `${INTERVIEW_TYPE_KR[CALM]} ☀️` : `${INTERVIEW_TYPE_KR[PRESSURE]} 🔥`;
@@ -17,9 +19,8 @@ const getInterviewer = (type: InterviewHistory['interviewType']) => {
 
 const InterviewHistoryList = () => {
   const { data: session } = useSession();
-
   const userId: User['id'] | undefined = session?.user?.id;
-
+  const router = useRouter();
   const { data, isPending, isError, fetchNextPage, hasNextPage, isFetchingNextPage } = useInterviewHistoryInfiniteQuery(
     userId!
   );
@@ -32,6 +33,15 @@ const InterviewHistoryList = () => {
   if (isPending) return <div className='text-center'>로딩 중..</div>;
   if (isError) return <ErrorComponent />;
 
+  const handleGetDetailList = (historyId: InterviewHistory['id']) => {
+    router.push(`?id=${historyId}&tab=${HISTORY}`);
+  };
+
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    return () => router.replace(currentPath);
+  }, []);
+
   const histories = data.pages.flatMap((page) => page.histories);
   if (histories.length === 0) return <EmptyInterviewList />;
   return (
@@ -42,13 +52,11 @@ const InterviewHistoryList = () => {
             <li
               key={`interview_list_${history.id}_${index}`}
               className={clsx(
-                'flex cursor-pointer items-center justify-between py-2',
+                'flex items-center justify-between py-2',
                 histories.length !== index + 1 && 'border-b',
-                history.isFeedbackCompleted && 'cursor-auto'
+                history.isFeedbackCompleted && 'cursor-pointer'
               )}
-              onClick={() => {
-                console.log('왼쪽 페이지 렌더링');
-              }}
+              onClick={() => (history.isFeedbackCompleted ? handleGetDetailList(history.id) : null)}
               aria-disabled={history.isFeedbackCompleted}
             >
               <div>

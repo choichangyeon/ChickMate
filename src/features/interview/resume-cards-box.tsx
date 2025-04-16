@@ -3,6 +3,10 @@ import ResumeCard from '@/components/common/resume-card';
 import { useEffect } from 'react';
 import useResumeStore from '@/features/interview/hooks/use-resume-store';
 import { useSubmitResumesQuery } from '@/hooks/queries/use-submit-resumes-query';
+import BlockComponent from '@/components/common/block-component';
+import { PATH } from '@/constants/path-constant';
+
+const { ROOT } = PATH.RESUME;
 
 const ResumeCardsBox = () => {
   const { resumeId: selectedId, setResume } = useResumeStore();
@@ -19,7 +23,18 @@ const ResumeCardsBox = () => {
   if (isLoading) return <div>Loading...</div>;
   if (isError || !resumeList) return <div>Error...</div>;
   // TODO: 자소서 작성 페이지 라우팅 UI 구현 -> 민철님에게 요청 완료
-  if (resumeList.length === 0) return <div>no data 1</div>;
+  if (resumeList.length === 0)
+    return (
+      <section className='flex h-44 max-w-[100vw] flex-col items-center justify-center'>
+        <BlockComponent
+          firstLine='이런! 작성한 자소서가 없어요!'
+          secondLine='자소서를 작성하러 가볼까요?'
+          thirdLine='AI면접은 자소서기반으로 진행됩니다'
+          buttonName='자소서 작성하기'
+          href={ROOT}
+        ></BlockComponent>
+      </section>
+    );
 
   return (
     <section className='flex max-w-[100vw] flex-row flex-nowrap gap-5 overflow-x-auto scrollbar-hide'>

@@ -9,12 +9,13 @@ type Props = {
   thirdLine: string;
   buttonName: string;
   href?: string;
+  onClick?: () => void;
 };
 
 const defaultClassName = 'w-full flex flex-col justify-center items-center gap-4';
 
 const BlockComponent = (props: Props) => {
-  const { className, firstLine, secondLine, thirdLine, buttonName, href } = props;
+  const { className, firstLine, secondLine, thirdLine, buttonName, href, onClick } = props;
   return (
     <section className={clsx(className, defaultClassName)}>
       <div className='flex flex-col items-center justify-center'>
@@ -31,7 +32,7 @@ const BlockComponent = (props: Props) => {
           <Typography weight='bold'>{buttonName}</Typography>
         </Button>
       ) : (
-        <Button variant='outline' color='dark'>
+        <Button variant='outline' color='dark' onClick={onClick}>
           <Typography weight='bold'>{buttonName}</Typography>
         </Button>
       )}

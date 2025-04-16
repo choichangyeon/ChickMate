@@ -64,7 +64,7 @@ const MyPageCharacterCard = ({
             </Typography>
             <div className='flex flex-col gap-1'>
               <Typography size='3xl' weight='bold'>
-                {session?.user.name}
+              {session && session.user.name}님
               </Typography>
               <Typography size='xs' color='gray-500'>
                 {characterName}

@@ -38,7 +38,7 @@ const SelectInterviewerBox = () => {
           onClick={() => setInterviewType(CALM)}
           className={`flex w-full cursor-pointer items-center justify-center self-stretch rounded-lg outline outline-1 outline-cool-gray-300 ${interviewType === CALM ? activeBgClass : ''}`}
         >
-          <Image src={`/assets/character/card/yellow-level2.png`} alt='침착한 면접관' width={220} height={220} />
+          <Image src={`/assets/character/card/yellow-level2.png`} alt='햇살 면접관' width={220} height={220} />
         </div>
         <div
           onClick={() => setInterviewType(PRESSURE)}
@@ -53,7 +53,7 @@ const SelectInterviewerBox = () => {
           {interviewType === 'calm' ? (
             <>
               <Typography as='h3' size='3xl' weight='bold' align='center' className='mb-2'>
-                침착한 면접관
+                햇살 면접관
               </Typography>
               <Typography color='gray-300' align='center'>
                 이 면접관은 침착하고 편안한 느낌으로

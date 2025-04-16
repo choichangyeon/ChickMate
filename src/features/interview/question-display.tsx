@@ -29,7 +29,7 @@ const QuestionDisplay = ({ messageList, interviewHistory }: Props) => {
           />
         </div>
         <Typography color='primary-600' weight='bold'>
-          {interviewType === 'calm' ? '침착한 면접관' : '불타는 면접관'}
+          {interviewType === 'calm' ? '햇살 면접관' : '불타는 면접관'}
         </Typography>
       </div>
       <div className='w-full border-t border-cool-gray-500 px-16 py-2'>

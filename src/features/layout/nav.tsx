@@ -21,7 +21,7 @@ export const Nav = ({ session }: Props) => {
       <Link href={ON_BOARDING} className='mb-12 block rounded-lg border'>
         칰
       </Link>
-      <ul className={clsx('flex h-full flex-col items-center gap-2', session ? 'justify-between' : 'ustify-end')}>
+      <ul className={clsx('flex h-full flex-col items-center gap-2', session ? 'justify-between' : 'justify-end')}>
         {menus.map((menu) => (
           <li key={`menu_${menu.name}`} className={menu.class}>
             {menu.type === 'link' ? <LinkNav menu={menu} /> : <ButtonNav menu={menu} />}

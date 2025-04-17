@@ -9,6 +9,7 @@ import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
 import { useInterviewStore } from '@/store/use-interview-store';
 import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import type { Message } from '@/types/message';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 
 const { MY_PAGE } = PATH;
 const { INTERVIEW_COMPLETION } = CHARACTER_HISTORY_KEY;
@@ -84,7 +85,7 @@ const Timer = ({
             square
             onClick={handleButtonClick}
           >
-            {isRecording ? '답변 완료하기' : '말하기'}
+            {isRecording ? '답변 완료하기' : isAIVoicePlaying ? '말하는 중..' : '말하기'}
           </Button>
         )}
       </div>

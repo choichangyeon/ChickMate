@@ -5,7 +5,7 @@ import Modal from '@/components/ui/modal';
 import { useModalStore } from '@/store/use-modal-store';
 import Image from 'next/image';
 import { postCreateCharacter } from '@/features/character/api/client-services';
-import { CHARACTER_INFORMATION } from '@/constants/character-constants';
+import { CHARACTER_HISTORY_KEY, CHARACTER_INFORMATION } from '@/constants/character-constants';
 import { CHARACTER_MESSAGE } from '@/constants/message-constants';
 import { MODAL_ID } from '@/constants/modal-id-constants';
 import { useQueryClient } from '@tanstack/react-query';
@@ -14,11 +14,13 @@ import Typography from '@/components/ui/typography';
 import Button from '@/components/ui/button';
 import RightArrowIcon from '@/components/icons/right-arrow-icon';
 import LeftArrowIcon from '@/components/icons/left-arrow-icon';
+import { useExperienceUp } from './hooks/use-experience-up';
+import { useCharacterStore } from '@/store/use-character-store';
 
 const { CHARACTER } = QUERY_KEY;
 const { POST_DATA_SUCCESS } = CHARACTER_MESSAGE.POST;
 const { CHARACTER_CREATE } = MODAL_ID;
-
+const { CREATE_CHARACTER } = CHARACTER_HISTORY_KEY;
 const CreateCharacterModal = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const queryClient = useQueryClient();
@@ -26,14 +28,17 @@ const CreateCharacterModal = () => {
   const characterTypes = Object.keys(CHARACTER_INFORMATION);
   const type = characterTypes[currentIndex];
   const selectedCharacter = CHARACTER_INFORMATION[type][1];
-
+  const { handleExperienceUp } = useExperienceUp();
+  const setCharacterId = useCharacterStore((state) => state.setCharacterId);
   const toggleModal = useModalStore((state) => state.toggleModal);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await postCreateCharacter({ type });
-      //@TODO: exp
+      const res = await postCreateCharacter({ type });
+      const characterId = res.id ?? null;
+      setCharacterId(characterId);
+      handleExperienceUp(CREATE_CHARACTER);
       queryClient.invalidateQueries({ queryKey: [CHARACTER] });
       alert(POST_DATA_SUCCESS);
       toggleModal(CHARACTER_CREATE);
@@ -69,7 +74,7 @@ const CreateCharacterModal = () => {
               className='text-3xl text-gray-500 transition'
               aria-label='이전 캐릭터 보기'
             >
-              <LeftArrowIcon/>
+              <LeftArrowIcon />
             </button>
             <Image
               src={`/assets/character/card/${type}-level1.png`}
@@ -84,26 +89,21 @@ const CreateCharacterModal = () => {
               className='text-3xl text-gray-500 transition'
               aria-label='다음 캐릭터 보기'
             >
-              <RightArrowIcon/>
+              <RightArrowIcon />
             </button>
           </div>
         </div>
         <div className='flex w-full items-center'>
           <div className='flex-1 border-t'></div>
         </div>
-        <div className='flex w-full justify-between items-end'>
+        <div className='flex w-full items-end justify-between'>
           <div>
             <Typography weight='bold'>ChickMate</Typography>
             <Typography weight='bold' color='primary-600' size='2xl'>
               {selectedCharacter.name}
             </Typography>
           </div>
-          <Button
-            type='submit'
-            size='small'
-            square
-            variant='outline'
-          >
+          <Button type='submit' size='small' square variant='outline'>
             캐릭터 생성
           </Button>
         </div>

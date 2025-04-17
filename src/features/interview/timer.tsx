@@ -12,7 +12,7 @@ import type { Message } from '@/types/message';
 
 const { MY_PAGE } = PATH;
 const { INTERVIEW_COMPLETION } = CHARACTER_HISTORY_KEY;
-const DISABLE_DURATION = 15000;
+const DISABLE_DURATION = 14000;
 
 type Props = {
   isRecording: boolean;

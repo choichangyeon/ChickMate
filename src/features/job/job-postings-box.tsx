@@ -2,6 +2,7 @@
 
 import BlockComponent from '@/components/common/block-component';
 import JobPostingCard from '@/components/common/job-posting-card';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 import { QUERY_KEY } from '@/constants/query-key';
 import { useJobPostingQuery } from '@/features/job/hooks/use-job-posting-query';
 import { UserMetaDataType } from '@/types/user-meta-data-type';
@@ -22,7 +23,11 @@ const JobPostingsBox = ({ userId }: Props) => {
 
   if (isPending) {
     // TODO: 로딩스피너
-    return <div>...Loading</div>;
+    return (
+      <section className='flex h-[400px] flex-col items-center justify-center self-stretch'>
+        <LoadingSpinner size='lg' />
+      </section>
+    );
   }
 
   if (isError) {

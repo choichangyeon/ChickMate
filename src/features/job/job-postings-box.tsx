@@ -85,7 +85,7 @@ const JobPostingsBox = ({ userId }: Props) => {
 export default JobPostingsBox;
 
 const mockJobPosting = {
-  id: 1,
+  id: 10,
   company: '삼성전자',
   title: '삼성전자 신입사원 모집',
   experienceType: '신입',

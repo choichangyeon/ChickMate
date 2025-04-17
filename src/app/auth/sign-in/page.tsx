@@ -1,5 +1,9 @@
-import SignInAuthForm from '@/features/sign/sign-in-auth-form';
+import dynamic from 'next/dynamic';
 import { Metadata } from 'next';
+
+const SignInAuthForm = dynamic(() => import('@/features/sign/sign-in-auth-form'), {
+  ssr: false,
+});
 
 export const metadata: Metadata = {
   title: '로그인 - ChickMate',

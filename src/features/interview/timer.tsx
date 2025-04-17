@@ -1,16 +1,18 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Typography from '@/components/ui/typography';
-import { PATH } from '@/constants/path-constant';
-import type { Message } from '@/types/message';
-import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
-import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import Button from '@/components/ui/button';
+import { PATH } from '@/constants/path-constant';
+import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
 import { useInterviewStore } from '@/store/use-interview-store';
+import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
+import type { Message } from '@/types/message';
 
 const { MY_PAGE } = PATH;
 const { INTERVIEW_COMPLETION } = CHARACTER_HISTORY_KEY;
+const DISABLE_DURATION = 15000;
 
 type Props = {
   isRecording: boolean;
@@ -25,20 +27,38 @@ type Props = {
 
 const Timer = ({ isRecording, formattedTime, startRecordingWithTimer, stopRecordingWithTimer, messageList }: Props) => {
   const router = useRouter();
-  const resetQuestionIndex = useInterviewStore((state) => state.resetQuestionIndex);
   const { handleExperienceUp } = useExperienceUp();
 
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [isAnswerButtonClicked, setIsAnswerButtonClicked] = useState(false);
+  const resetQuestionIndex = useInterviewStore((state) => state.resetQuestionIndex);
+
+  const isFinalQuestionAsked = messageList.length >= 2 && messageList[1].role === 'assistant';
+
   const handleButtonClick = () => {
-    isRecording ? stopRecordingWithTimer() : startRecordingWithTimer();
+    if (isRecording) {
+      stopRecordingWithTimer();
+      setIsAnswerButtonClicked(true);
+    } else {
+      startRecordingWithTimer();
+      setIsAnswerButtonClicked(false);
+    }
   };
 
   const handleCompletedButtonClick = async () => {
     handleExperienceUp(INTERVIEW_COMPLETION);
+    setIsAnswerButtonClicked(false);
     resetQuestionIndex();
     router.push(MY_PAGE);
   };
 
-  const isFinalQuestionAsked = messageList.length >= 2 && messageList[1].role === 'assistant';
+  useEffect(() => {
+    if (!isRecording && isAnswerButtonClicked) {
+      setIsButtonDisabled(true);
+      const timer = setTimeout(() => setIsButtonDisabled(false), DISABLE_DURATION);
+      return () => clearTimeout(timer);
+    }
+  }, [isRecording]);
 
   return (
     <div className='flex h-[220px] w-[526px] flex-shrink-0 flex-col items-center justify-center gap-4 rounded-lg border border-cool-gray-200 bg-cool-gray-10 p-8'>
@@ -57,9 +77,11 @@ const Timer = ({ isRecording, formattedTime, startRecordingWithTimer, stopRecord
       </div>
       <div>
         {isFinalQuestionAsked ? (
-          <button onClick={handleCompletedButtonClick}>면접 완료하기</button>
+          <Button variant='outline' color='dark' square onClick={handleCompletedButtonClick}>
+            면접 완료하기
+          </Button>
         ) : (
-          <Button variant='outline' color='dark' square onClick={handleButtonClick}>
+          <Button variant='outline' color='dark' disabled={isButtonDisabled} square onClick={handleButtonClick}>
             {isRecording ? '답변 완료하기' : '말하기'}
           </Button>
         )}

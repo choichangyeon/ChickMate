@@ -1,7 +1,12 @@
-import Typography from '@/components/ui/typography';
-import type { Message } from '@/types/message';
-import { InterviewHistory } from '@prisma/client';
 import Image from 'next/image';
+import { InterviewHistory } from '@prisma/client';
+import Typography from '@/components/ui/typography';
+import { INTERVIEW_TYPE, INTERVIEW_TYPE_KR, PROMPT_ROLE } from '@/constants/interview-constants';
+import type { Message } from '@/types/message';
+
+const { CALM } = INTERVIEW_TYPE;
+const { CALM_KR, PRESSURE_KR } = INTERVIEW_TYPE_KR;
+const { ASSISTANT } = PROMPT_ROLE;
 
 type Props = {
   messageList: Message[];
@@ -10,10 +15,11 @@ type Props = {
 
 const QuestionDisplay = ({ messageList, interviewHistory }: Props) => {
   const { interviewType } = interviewHistory;
-  const INTERVIEW_IMAGE = interviewType === 'calm' ? 2 : 3;
+  const INTERVIEW_IMAGE = interviewType === CALM ? 2 : 3; // TODO: 면접관 이미지 확정되면 수정
 
   const AIquestion = messageList[messageList.length - 1].content[0].text;
-  const isFinalQuestionAsked = messageList.length >= 2 && messageList[1].role === 'assistant';
+  const isFinalQuestionAsked = messageList.length >= 2 && messageList[1].role === ASSISTANT;
+  const isInterviewTypeCalm = interviewType === CALM;
 
   return (
     <div className='flex w-full flex-col items-start gap-4'>
@@ -29,7 +35,7 @@ const QuestionDisplay = ({ messageList, interviewHistory }: Props) => {
           />
         </div>
         <Typography color='primary-600' weight='bold'>
-          {interviewType === 'calm' ? '햇살 면접관' : '불타는 면접관'}
+          {isInterviewTypeCalm ? CALM_KR : PRESSURE_KR}
         </Typography>
       </div>
       <div className='w-full border-t border-cool-gray-500 px-16 py-2'>

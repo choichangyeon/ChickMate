@@ -11,11 +11,12 @@ import type { InterviewHistory, User } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-const { CALM, PRESSURE } = INTERVIEW_TYPE;
+const { CALM } = INTERVIEW_TYPE;
+const { CALM_KR, PRESSURE_KR } = INTERVIEW_TYPE_KR;
 const { HISTORY } = TABS;
 
 const getInterviewer = (type: InterviewHistory['interviewType']) => {
-  return type === CALM ? `${INTERVIEW_TYPE_KR[CALM]} ☀️` : `${INTERVIEW_TYPE_KR[PRESSURE]} 🔥`;
+  return type === CALM ? `${CALM_KR} ☀️` : `${PRESSURE_KR} 🔥`;
 };
 
 const InterviewHistoryList = () => {

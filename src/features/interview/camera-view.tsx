@@ -1,9 +1,9 @@
 'use client';
 
-import { useWebcamStream } from '@/features/interview/hooks/use-webcam-stream';
+import { useCameraStream } from '@/features/interview/hooks/use-camera-stream';
 
 const CameraView = () => {
-  const videoRef = useWebcamStream();
+  const videoRef = useCameraStream();
 
   return (
     <div className='flex-1 rounded-lg border border-cool-gray-200 bg-white'>

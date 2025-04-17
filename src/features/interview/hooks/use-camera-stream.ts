@@ -1,9 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type StreamCallback = (stream: MediaStream) => void;
 
-export const useWebcamStream = () => {
+export const useCameraStream = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+
+  const [isCameraOn, setIsCameraOn] = useState(false);
 
   const getWebcam = async (onStreamReady: StreamCallback) => {
     try {

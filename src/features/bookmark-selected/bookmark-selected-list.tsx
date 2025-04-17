@@ -6,15 +6,15 @@ import { User } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
 import ErrorComponent from '@/components/common/error-component';
+import { useBookmarkSelectedInfiniteQuery } from './hook/use-bookmark-selected-infinite-query';
 
 const { BOOKMARK } = TABS;
 
 const BookmarkSelectedList = () => {
   const { data: session } = useSession();
   const userId: User['id'] | undefined = session?.user?.id;
-  const router = useRouter();
 
-  const { data, isPending, isError, fetchNextPage, hasNextPage, isFetchingNextPage } = useInterviewHistoryInfiniteQuery(
+  const { data, isPending, isError, fetchNextPage, hasNextPage, isFetchingNextPage } = useBookmarkSelectedInfiniteQuery(
     userId!
   );
 
@@ -26,12 +26,9 @@ const BookmarkSelectedList = () => {
   if (isPending) return <div className='text-center'>로딩 중..</div>;
   if (isError) return <ErrorComponent />;
 
-  const handleGetDetailList = (historyId: InterviewHistory['id']) => {
-    router.push(`?id=${historyId}&tab=${HISTORY}`);
-  };
+  const bookmarkList = data.pages.flatMap((page) => page.bookmarkList);
 
-  const histories = data.pages.flatMap((page) => page.histories);
-  if (histories.length === 0) return <EmptyList tab={HISTORY} />;
+  if (bookmarkList.length === 0) return <EmptyList tab={BOOKMARK} />;
   return <EmptyList tab={BOOKMARK} />;
 };
 

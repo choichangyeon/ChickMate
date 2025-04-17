@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useInterviewStore } from '@/store/use-interview-store';
 import { useAudioRecorder } from '@/features/interview/hooks/use-audio-recorder';
 import { useTimer } from '@/features/interview/hooks/use-timer';
@@ -24,6 +24,8 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
       content: [...type.content, { type: 'text', text: `지원자의 자기소개서: ${resume}` }],
     },
   ];
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
   /** state */
   const incrementQuestionIndex = useInterviewStore((state) => state.incrementQuestionIndex);
   const [messageList, setMessageList] = useState<Message[]>(init_state);
@@ -99,10 +101,10 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
           type: interviewType,
         });
 
-        const audio = new Audio(audioUrl);
-        await audio.play();
+        audioRef.current = new Audio(audioUrl);
+        await audioRef.current.play();
 
-        audio.addEventListener('ended', () => setIsAIVoicePlaying(false));
+        audioRef.current.addEventListener('ended', () => setIsAIVoicePlaying(false));
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -110,6 +112,16 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
       }
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        audioRef.current = null;
+      }
+    };
+  }, []);
 
   return {
     messageList,

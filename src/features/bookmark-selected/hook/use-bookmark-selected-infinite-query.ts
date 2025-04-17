@@ -10,11 +10,14 @@ const { MIN } = REFETCH_TIME;
 export const useBookmarkSelectedInfiniteQuery = (userId: User['id']) => {
   return useInfiniteQuery({
     queryKey: [BOOKMARK, userId],
-    queryFn: async ({ pageParam = 1 }) =>
-      await getSelectedBookmark({
+    queryFn: async ({ pageParam = 1 }) => {
+      if (!userId) throw new Error('사용자 ID가 필요합니다');
+      return await getSelectedBookmark({
         pageParam,
         limit: ITEMS_PER_PAGE,
-      }),
+      });
+    },
+    enabled: !!userId,
     getNextPageParam: (lastPage) => lastPage.nextPage ?? undefined,
     initialPageParam: 1,
     refetchInterval: 5 * MIN,

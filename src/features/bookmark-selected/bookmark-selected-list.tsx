@@ -16,7 +16,7 @@ const BookmarkSelectedList = () => {
   const userId = session?.user?.id;
 
   const { data, isPending, isError, fetchNextPage, hasNextPage, isFetchingNextPage } = useBookmarkSelectedInfiniteQuery(
-    userId!
+    userId || ''
   );
 
   const targetRef = useInfiniteScroll({ fetchNextPage, hasNextPage });

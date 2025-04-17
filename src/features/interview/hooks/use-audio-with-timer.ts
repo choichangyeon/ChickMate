@@ -13,7 +13,7 @@ import type { Message } from '@/types/message';
 import type { InterviewHistoryWithResume } from '@/types/interview';
 
 const { CALM_PROMPT, PRESSURE_PROMPT } = INTERVIEW_PROMPT;
-const LIMIT_COUNT = 7;
+const INTERVIEW_LIMIT_COUNT = 7;
 
 export const useAudioWithTimer = (duration: number, interviewHistory: InterviewHistoryWithResume) => {
   const { interviewType, resume, id } = interviewHistory;
@@ -86,13 +86,13 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
   const getOpenAIInterviewContent = async (answerText: string) => {
     try {
       const updatedMessageList: Message[] =
-        messageList.length < LIMIT_COUNT ? [...messageList, USER_PROMPT(answerText)] : [FEEDBACK_PROMPT];
+        messageList.length < INTERVIEW_LIMIT_COUNT ? [...messageList, USER_PROMPT(answerText)] : [FEEDBACK_PROMPT];
 
       const { messageList: newMessageList, question } = await getOpenAIResponse({ messageList: updatedMessageList });
       setMessageList(newMessageList);
       setInterviewQnA((prev) => ({ ...prev, question }));
 
-      if (messageList.length === LIMIT_COUNT) {
+      if (messageList.length === INTERVIEW_LIMIT_COUNT) {
         await patchInterviewHistory({ interviewId: id, feedback: question });
       } else {
         // AI 면접관 텍스트를 audio url로 반환하는 로직
@@ -113,6 +113,7 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
     }
   };
 
+  // 페이지 벗어날 때 음성 중단
   useEffect(() => {
     return () => {
       if (audioRef.current) {

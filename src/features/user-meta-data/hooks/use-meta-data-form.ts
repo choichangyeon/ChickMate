@@ -12,6 +12,8 @@ import { useModalStore } from '@/store/use-modal-store';
 import { MODAL_ID } from '@/constants/modal-id-constants';
 import type { UserMetaDataType } from '@/types/user-meta-data-type';
 import type { SelectBoxType } from '@/types/select-box';
+import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
+import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 
 const { TYPE, EDUCATION, JOB, MAIN_REGION, ETC } = USER_META_DATA_KEY;
 const {
@@ -21,11 +23,15 @@ const {
   API: { POST_DATA_SUCCESS },
 } = USER_META_DATA_FORM_MESSAGE;
 const { USER_META_DATA } = MODAL_ID;
+const { FILL_OUT_META_DATA } = CHARACTER_HISTORY_KEY;
 
 export const useMetaDataForm = (userId: string) => {
   const { data: metaData, isPending: isMetaDataPending } = useMetaDataQuery({ userId });
   const { mutate, error } = useMetaDataMutation(userId);
   const toggleModal = useModalStore((state) => state.toggleModal);
+  const { handleExperienceUp } = useExperienceUp();
+  const isFirstTime = metaData === null;
+
   const {
     setValue,
     watch,
@@ -76,13 +82,12 @@ export const useMetaDataForm = (userId: string) => {
   const handleOnSubmit = (values: UserMetaDataType) => {
     mutate(values, {
       onSuccess: () => {
-        alert(POST_DATA_SUCCESS);
+        if (isFirstTime) handleExperienceUp(FILL_OUT_META_DATA);
+        alert(POST_DATA_SUCCESS); //@TODO: 최초 등록이면 alert 문구 바꾸기 -> 경험치 추가 되었습니다 어쩌고~
         toggleModal(USER_META_DATA);
       },
     });
   };
-
-  const FORM_TYPE = useMemo(() => (metaData && Object.keys(metaData).length !== 0 ? '수정' : '작성'), [metaData]);
 
   return {
     userId,
@@ -93,6 +98,6 @@ export const useMetaDataForm = (userId: string) => {
     handleOnSubmit,
     handleSelect,
     isMetaDataPending,
-    FORM_TYPE,
+    isFirstTime,
   };
 };

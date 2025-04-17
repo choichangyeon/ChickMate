@@ -2,6 +2,7 @@
 import { TABS } from '@/constants/my-page-constants';
 import { useTabStore } from '@/store/use-tab-store';
 import InterviewHistoryList from '@/features/interview-history/interview-history-list';
+import BookmarkHistoryList from '@/features/bookmark-history/bookmark-history-list';
 
 const { HISTORY, BOOKMARK, RESUME } = TABS;
 
@@ -11,7 +12,7 @@ const ListByTab = () => {
     case HISTORY:
       return <InterviewHistoryList />;
     case BOOKMARK:
-      return <div>bookmark컴포넌트 연결</div>;
+      return <BookmarkHistoryList />;
     case RESUME:
       return <div>자소서 컴포넌트 연결</div>;
     default:

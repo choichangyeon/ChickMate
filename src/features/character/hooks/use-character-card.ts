@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useModalStore } from '@/store/use-modal-store';
 import { getLevelAndPercentage } from '@/features/character/utils/get-level-and-percent';
-import { CHARACTER_INFOMATIONS } from '@/constants/character-constants';
+import { CHARACTER_INFORMATION } from '@/constants/character-constants';
 import { PATH } from '@/constants/path-constant';
 import { defaultCharacter } from '@/features/character/data/character-data';
 import { Session } from 'next-auth';
@@ -34,7 +34,7 @@ export const useCharacterCard = ({
   const isDefault = characterData === defaultCharacter && !!overlayText;
   const { type, experience } = characterData;
   const { level, percent, remainingExp } = getLevelAndPercentage(experience);
-  const characterName = CHARACTER_INFOMATIONS[type][level].name;
+  const characterName = CHARACTER_INFORMATION[type][level].name;
 
   const handleClickCard = () => {
     if (!session) {

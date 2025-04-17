@@ -5,7 +5,7 @@ import Modal from '@/components/ui/modal';
 import { useModalStore } from '@/store/use-modal-store';
 import Image from 'next/image';
 import { postCreateCharacter } from '@/features/character/api/client-services';
-import { CHARACTER_INFOMATIONS } from '@/constants/character-constants';
+import { CHARACTER_INFORMATION } from '@/constants/character-constants';
 import { CHARACTER_MESSAGE } from '@/constants/message-constants';
 import { MODAL_ID } from '@/constants/modal-id-constants';
 import { useQueryClient } from '@tanstack/react-query';
@@ -23,9 +23,9 @@ const CreateCharacterModal = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const queryClient = useQueryClient();
 
-  const characterTypes = Object.keys(CHARACTER_INFOMATIONS);
+  const characterTypes = Object.keys(CHARACTER_INFORMATION);
   const type = characterTypes[currentIndex];
-  const selectedCharacter = CHARACTER_INFOMATIONS[type][1];
+  const selectedCharacter = CHARACTER_INFORMATION[type][1];
 
   const toggleModal = useModalStore((state) => state.toggleModal);
 
@@ -33,6 +33,7 @@ const CreateCharacterModal = () => {
     e.preventDefault();
     try {
       await postCreateCharacter({ type });
+      //@TODO: exp
       queryClient.invalidateQueries({ queryKey: [CHARACTER] });
       alert(POST_DATA_SUCCESS);
       toggleModal(CHARACTER_CREATE);

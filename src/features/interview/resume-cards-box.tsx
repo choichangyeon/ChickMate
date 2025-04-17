@@ -1,5 +1,5 @@
 'use client';
-import ResumeCard from '@/components/common/resume-card';
+import ResumeCard from '@/features/interview/resume-card';
 import { useEffect } from 'react';
 import useResumeStore from '@/features/interview/hooks/use-resume-store';
 import { useSubmitResumesQuery } from '@/hooks/queries/use-submit-resumes-query';

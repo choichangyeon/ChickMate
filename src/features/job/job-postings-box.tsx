@@ -1,7 +1,7 @@
 'use client';
 
 import BlockComponent from '@/components/common/block-component';
-import JobPostingCard from '@/components/common/job-posting-card';
+import JobPostingCard from '@/features/job/job-posting-card';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import { QUERY_KEY } from '@/constants/query-key';
 import { useJobPostingQuery } from '@/features/job/hooks/use-job-posting-query';

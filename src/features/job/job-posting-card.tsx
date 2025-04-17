@@ -52,7 +52,6 @@ const JobPostingCard = ({ jobPosting }: Props) => {
               날짜정보 오류
             </Typography>
           )}
-          {/* TODO: 수정되는 버튼 사용 예정 */}
           {url ? (
             <Button target='_blank' link href={url} variant='outline' color='dark' square>
               바로 가기

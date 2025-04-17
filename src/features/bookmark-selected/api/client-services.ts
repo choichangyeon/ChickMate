@@ -12,7 +12,7 @@ type Props = {
   limit: number;
 };
 
-type Return = UserSelectedJob & JobPosting;
+type Return = UserSelectedJob & { jobPosting: JobPosting };
 export const getSelectedBookmark = async ({
   pageParam,
   limit,

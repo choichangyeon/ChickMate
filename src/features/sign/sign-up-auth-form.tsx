@@ -35,7 +35,7 @@ const SignUpAuthForm = () => {
   };
 
   return (
-    <div className='mx-auto w-full max-w-md rounded-lg bg-white p-6 shadow-md'>
+    <div className='mx-auto w-full max-w-md rounded-3xl bg-white p-6 shadow-md'>
       <div className='mb-8'>
         <Typography size='2xl' weight='normal' align='center'>
           만나서 반가워요.<span className='font-bold'>병아리</span>씨!

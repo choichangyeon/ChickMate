@@ -64,16 +64,18 @@ const Timer = ({ isRecording, formattedTime, startRecordingWithTimer, stopRecord
     <div className='flex h-[220px] w-[526px] flex-shrink-0 flex-col items-center justify-center gap-4 rounded-lg border border-cool-gray-200 bg-cool-gray-10 p-8'>
       <div className='flex flex-col items-center'>
         <Typography size='2xl' weight='bold'>
-          제한시간 안에 답변을 완료하세요
+          {isFinalQuestionAsked ? '완료 버튼을 누르고 피드백을 확인해보세요' : '제한시간 안에 답변을 완료하세요'}
         </Typography>
         <Typography size='sm' weight='medium' color='gray-500'>
-          타이머가 종료되면 자동으로 답변이 종료됩니다
+          {!isFinalQuestionAsked && '타이머가 종료되면 자동으로 답변이 종료됩니다'}
         </Typography>
       </div>
       <div>
-        <Typography color='primary-600' size='6xl' weight='black'>
-          {formattedTime.minutes} : {formattedTime.seconds}
-        </Typography>
+        {!isFinalQuestionAsked && (
+          <Typography color='primary-600' size='6xl' weight='black'>
+            {formattedTime.minutes} : {formattedTime.seconds}
+          </Typography>
+        )}
       </div>
       <div>
         {isFinalQuestionAsked ? (

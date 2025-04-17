@@ -23,7 +23,11 @@ const JobPostingsBox = ({ userId }: Props) => {
 
   if (isPending) {
     // TODO: 로딩스피너
-    return <LoadingSpinner />;
+    return (
+      <section className='flex h-[400px] flex-col items-center justify-center self-stretch'>
+        <LoadingSpinner />
+      </section>
+    );
   }
 
   if (isError) {

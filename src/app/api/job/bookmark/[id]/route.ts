@@ -40,6 +40,7 @@ export const POST = async (request: NextRequest, { params }: Props) => {
 
     return NextResponse.json({ data }, { status: 200 });
   } catch (error) {
+    console.log(error);
     return NextResponse.json({ message: DB_SERVER_ERROR }, { status: 500 });
   }
 };

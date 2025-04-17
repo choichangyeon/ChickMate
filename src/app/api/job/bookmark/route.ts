@@ -56,15 +56,8 @@ export const GET = async (request: NextRequest) => {
     });
     const nextPage = pageNumber * limitNumber < totalCount ? pageNumber + 1 : null;
     if (!bookmarks) return NextResponse.json({ data: [], nextPage }, { status: 200 });
-    const parsedBookmarks = bookmarks.map((bookmark) => {
-      const selectedJobPosting = bookmark?.jobPosting ?? null;
 
-      return {
-        ...bookmark,
-        selectedJobPosting,
-      };
-    });
-    return NextResponse.json({ response: parsedBookmarks, nextPage }, { status: 200 });
+    return NextResponse.json({ response: bookmarks, nextPage }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: DB_SERVER_ERROR }, { status: 500 });
   }

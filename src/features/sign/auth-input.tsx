@@ -11,7 +11,9 @@ type Props<T extends FieldValues> = {
 
 const AuthInput = <T extends FieldValues>({ label, id, register, error, type }: Props<T>) => (
   <div className='flex w-full flex-col gap-1 px-3 py-2'>
-    <Typography weight='bold'>{label}</Typography>
+    <Typography weight='bold' as='h2'>
+      {label}
+    </Typography>
     <input {...register(id)} type={type} className='border-b border-gray-300 focus:outline-0' />
     <div className='h-5'>
       {error && (

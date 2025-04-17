@@ -44,7 +44,7 @@ const SignInAuthForm = () => {
         </Typography>
       </div>
       <div className='mb-8'>
-        <Typography color='primary-600' weight='bold' align='center'>
+        <Typography color='primary-600' weight='bold' align='center' as='h1'>
           원할한 서비스 이용을 위해 로그인 해주세요.
         </Typography>
       </div>

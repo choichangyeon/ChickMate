@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useModalStore } from '@/store/use-modal-store';
-import { getLevelAndPercentage } from '@/features/character/utils/get-level-and-percent';
+import { getLevelAndPercentage } from '@/features/character/utils/get-level-and-percentage';
 import { CHARACTER_INFORMATION } from '@/constants/character-constants';
 import { PATH } from '@/constants/path-constant';
 import { defaultCharacter } from '@/features/character/data/character-data';

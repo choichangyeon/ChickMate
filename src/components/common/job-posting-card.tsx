@@ -49,7 +49,7 @@ const JobPostingCard = ({ jobPosting }: Props) => {
             </Typography>
           ) : (
             <Typography color='primary-600' weight='bold' size='xl'>
-              정보제공 오류
+              날짜정보 오류
             </Typography>
           )}
           {/* TODO: 수정되는 버튼 사용 예정 */}

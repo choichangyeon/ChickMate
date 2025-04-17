@@ -14,7 +14,7 @@ const spinnerSize = {
 const LoadingSpinner = ({ size = 'md' }: Props) => {
   return (
     <div
-      className={`animate-spin rounded-full ${spinnerSize[size]} border-4 border-b-secondary-amber border-l-secondary-yellow border-r-secondary-amber border-t-secondary-yellow opacity-80`}
+      className={`role="status" aria-label="로딩 중" animate-spin rounded-full ${spinnerSize[size]} border-4 border-b-secondary-amber border-l-secondary-yellow border-r-secondary-amber border-t-secondary-yellow opacity-80`}
     />
   );
 };

@@ -22,8 +22,8 @@ export const buttonStyle = cva('', {
       small: 'px-4 py-[2px]',
     },
     square: {
-      true: 'rounded',
-      false: 'rounded-3xl',
+      true: 'rounded-[4px]',
+      false: 'rounded-[50px]',
     },
   },
   compoundVariants: [

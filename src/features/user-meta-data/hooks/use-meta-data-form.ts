@@ -14,6 +14,7 @@ import type { UserMetaDataType } from '@/types/user-meta-data-type';
 import type { SelectBoxType } from '@/types/select-box';
 import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
 import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
+import { useCharacterStore } from '@/store/use-character-store';
 
 const { TYPE, EDUCATION, JOB, MAIN_REGION, ETC } = USER_META_DATA_KEY;
 const {
@@ -30,7 +31,9 @@ export const useMetaDataForm = (userId: string) => {
   const { mutate, error } = useMetaDataMutation(userId);
   const toggleModal = useModalStore((state) => state.toggleModal);
   const { handleExperienceUp } = useExperienceUp();
-  const isFirstTime = metaData === null;
+  const characterId = useCharacterStore((state) => state.characterId);
+
+  const isFirstTime = metaData === null && characterId !== null;
 
   const {
     setValue,

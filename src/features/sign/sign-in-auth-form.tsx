@@ -9,8 +9,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { schema, SignInFormData } from '@/features/sign/data/sign-in-schema';
 import Image from 'next/image';
 import { useSignInResult } from './hooks/use-sign-in-result';
+import Typography from '@/components/ui/typography';
 
-const callback_url = `${process.env.NEXT_PUBLIC_BASE_URL}/${PATH.AUTH.SIGN_IN}`;
+const { ON_BOARDING } = PATH;
 
 const SignInAuthForm = () => {
   const {
@@ -28,16 +29,25 @@ const SignInAuthForm = () => {
   const onSubmit = async (data: SignInFormData) => {
     await signIn('credentials', {
       ...data,
+      callbackUrl: ON_BOARDING,
     });
   };
 
   return (
-    <div className='mx-auto w-full max-w-md rounded-lg bg-white p-6 shadow-md'>
-      <p className='mb-1 text-center text-2xl font-light'>
-        만나서 반가워요.<span className='font-normal'>병아리</span>씨!
-      </p>
-      <p className='mb-4 text-center font-extralight'>우리 같이 취업을 향한 여정을 떠나볼까요?</p>
-      <p className='mb-10 text-center font-extralight text-black/30'>원할한 서비스 이용을 위해 로그인 해주세요.</p>
+    <div className='mx-auto w-full max-w-md rounded-3xl bg-white p-6 shadow-md'>
+      <div className='mb-8'>
+        <Typography size='2xl' weight='normal' align='center'>
+          만나서 반가워요.<span className='font-bold'>병아리</span>씨!
+        </Typography>
+        <Typography weight='normal' align='center'>
+          우리 같이 취업을 향한 여정을 떠나볼까요?
+        </Typography>
+      </div>
+      <div className='mb-8'>
+        <Typography color='primary-600' weight='bold' align='center' as='h1'>
+          원할한 서비스 이용을 위해 로그인 해주세요.
+        </Typography>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <AuthInput label='EMAIL' id='email' register={register} error={errors.email} type='email' />
         <AuthInput label='PASSWORD' id='password' register={register} error={errors.password} type='password' />
@@ -51,14 +61,14 @@ const SignInAuthForm = () => {
       <div className='mt-2 flex flex-col gap-2 text-center'>
         <>
           <button
-            onClick={() => signIn('google', { callbackUrl: callback_url })}
+            onClick={() => signIn('google', { callbackUrl: ON_BOARDING })}
             className='flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm'
           >
             <Image src='/assets/google_icon.png' alt='구글 로그인' width={14} height={14} />
             구글 계정으로 로그인
           </button>
           <button
-            onClick={() => signIn('naver', { callbackUrl: callback_url })}
+            onClick={() => signIn('naver', { callbackUrl: ON_BOARDING })}
             className='flex w-full items-center justify-center gap-2 rounded-md bg-[#03C75A] px-4 py-2 text-sm font-bold text-white shadow-sm'
           >
             <Image src='/assets/naver_icon.png' alt='네이버 로그인' width={24} height={24} />
@@ -71,7 +81,7 @@ const SignInAuthForm = () => {
           <div className='flex-1 border-t'></div>
         </div>
         <Link href={PATH.AUTH.SIGN_UP} className='font-extralight'>
-          30초만에 회원가입하기
+          <Typography align='center'> 30초만에 회원가입하기</Typography>
         </Link>
       </div>
     </div>

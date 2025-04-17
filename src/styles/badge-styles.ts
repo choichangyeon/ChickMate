@@ -21,6 +21,11 @@ export const badgeStyle = cva('', {
     mb: { 0: '', 1: 'mb-1', 2: 'mb-2', 3: 'mb-3', 4: 'mb-4', 5: 'mb-5' },
     mx: { 0: '', 1: 'mx-1', 2: 'mx-2', 3: 'mx-3', 4: 'mx-4', 5: 'mx-5' },
     my: { 0: '', 1: 'my-1', 2: 'my-2', 3: 'my-3', 4: 'my-4', 5: 'my-5' },
+    display: {
+      inline: 'inline',
+      block: 'block',
+      'inline-block': 'inline-block',
+    },
   },
   compoundVariants: [
     {
@@ -53,5 +58,6 @@ export const badgeStyle = cva('', {
     variant: 'contained',
     color: 'primary',
     size: 'default',
+    display: 'inline',
   },
 });

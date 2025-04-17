@@ -13,6 +13,7 @@ type Badge = {
   mb?: Margin;
   ml?: Margin;
   mr?: Margin;
+  display?: 'block' | 'inline' | 'inline-block';
 };
 
 const Badge = ({
@@ -26,9 +27,15 @@ const Badge = ({
   ml = 0,
   mr = 0,
   mb = 0,
+  display = 'inline',
 }: Badge) => {
   return (
-    <span className={clsx('rounded-[50px] text-center', badgeStyle({ color, variant, size, mr, ml, mt, mb, my, mx }))}>
+    <span
+      className={clsx(
+        'rounded-[50px] text-center',
+        badgeStyle({ color, variant, size, mr, ml, mt, mb, my, mx, display })
+      )}
+    >
       {children}
     </span>
   );

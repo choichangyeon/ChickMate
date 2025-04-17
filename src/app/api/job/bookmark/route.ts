@@ -55,7 +55,7 @@ export const GET = async (request: NextRequest) => {
       where: { userId },
     });
     const nextPage = pageNumber * limitNumber < totalCount ? pageNumber + 1 : null;
-    if (!bookmarks) return NextResponse.json({ data: [], nextPage }, { status: 200 });
+    if (!bookmarks) return NextResponse.json({ response: [], nextPage }, { status: 200 });
 
     return NextResponse.json({ response: bookmarks, nextPage }, { status: 200 });
   } catch (error) {

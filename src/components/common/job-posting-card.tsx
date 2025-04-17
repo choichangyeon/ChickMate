@@ -43,9 +43,15 @@ const JobPostingCard = ({ jobPosting }: Props) => {
           </div>
         </section>
         <section className={badgeClassName}>
-          <Typography color='primary-600' weight='bold' size='xl'>
-            D-{remainDay}
-          </Typography>
+          {remainDay ? (
+            <Typography color='primary-600' weight='bold' size='xl'>
+              D-{remainDay}
+            </Typography>
+          ) : (
+            <Typography color='primary-600' weight='bold' size='xl'>
+              정보제공 오류
+            </Typography>
+          )}
           {/* TODO: 수정되는 버튼 사용 예정 */}
           {url ? (
             <Button target='_blank' link href={url} variant='outline' color='dark' square>

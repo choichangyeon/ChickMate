@@ -80,7 +80,7 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
     }
   };
 
-  // AI 면접관이랑 면접 보는 로직
+  // AI 면접관에게 답변 보내고 질문 받아오는 로직
   const getOpenAIInterviewContent = async (answerText: string) => {
     try {
       const updatedMessageList: Message[] =

@@ -25,7 +25,7 @@ const JobPostingsBox = ({ userId }: Props) => {
     // TODO: 로딩스피너
     return (
       <section className='flex h-[400px] flex-col items-center justify-center self-stretch'>
-        <LoadingSpinner />
+        <LoadingSpinner size='lg' />
       </section>
     );
   }

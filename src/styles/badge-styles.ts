@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority';
 
-export const badgeStyle = cva('block', {
+export const badgeStyle = cva('', {
   variants: {
     variant: {
       contained: 'bg-primary-orange-600, text-cool-gray-50',
@@ -12,7 +12,7 @@ export const badgeStyle = cva('block', {
       dark: 'cool-gray-900',
     },
     size: {
-      small: 'py-[2px] px-[10px]',
+      small: 'py-[2px] px-[10px] text-sm',
       default: 'px-5 py-1',
     },
     ml: { 0: '', 1: 'ml-1', 2: 'ml-2', 3: 'ml-3', 4: 'ml-4', 5: 'ml-5' },

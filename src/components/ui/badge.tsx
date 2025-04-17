@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { badgeStyle } from '@/styles/badge-styles';
 
 type Margin = 0 | 1 | 2 | 3 | 4 | 5;
@@ -26,7 +27,11 @@ const Badge = ({
   mr = 0,
   mb = 0,
 }: Badge) => {
-  return <span className={badgeStyle({ color, variant, size, mr, ml, mt, mb, my, mx })}>{children}</span>;
+  return (
+    <span className={clsx('rounded-[50px] text-center', badgeStyle({ color, variant, size, mr, ml, mt, mb, my, mx }))}>
+      {children}
+    </span>
+  );
 };
 
 export default Badge;

@@ -1,16 +1,13 @@
 import { ENV } from '@/constants/env-constants';
 import { AUTH_MESSAGE, DB_MESSAGE, HISTORY_MESSAGE } from '@/constants/message-constants';
 import { prisma } from '@/lib/prisma';
+import { authOptions } from '@/utils/auth-option';
 import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
 import { User } from '@prisma/client';
+import { getServerSession } from 'next-auth';
 import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
 
-type Props = {
-  params: {
-    userId: User['id'];
-  };
-};
 const {
   VALIDATION: { USER_ID_VALIDATION },
   ERROR: { DB_SERVER_ERROR },
@@ -25,16 +22,17 @@ const {
 /**
  * GET 요청 함수
  */
-export const GET = async (request: NextRequest, { params }: Props) => {
+export const GET = async (request: NextRequest) => {
   try {
     const token = await getToken({ req: request, secret: NEXTAUTH_SECRET });
     if (!token) return NextResponse.json({ message: EXPIRED_TOKEN }, { status: 401 });
 
-    const { userId } = params;
-    if (!userId) {
+    const session = await getServerSession(authOptions);
+    if (!session || !session.user) {
       return NextResponse.json({ message: USER_ID_VALIDATION }, { status: 401 });
     }
 
+    const userId = session.user.id;
     const searchParams = request.nextUrl.searchParams;
     const { page, limit } = sanitizeQueryParams(searchParams);
     const pageNumber = Number(page);
@@ -66,7 +64,7 @@ export const GET = async (request: NextRequest, { params }: Props) => {
         selectedJobPosting,
       };
     });
-    return NextResponse.json({ data: parsedBookmarks, nextPage }, { status: 200 });
+    return NextResponse.json({ response: parsedBookmarks, nextPage }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: DB_SERVER_ERROR }, { status: 500 });
   }

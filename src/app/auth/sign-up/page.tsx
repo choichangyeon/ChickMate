@@ -7,7 +7,11 @@ export const metadata: Metadata = {
 };
 
 const SignUpPage = () => {
-  return <SignUpAuthForm />;
+  return (
+    <div className='flex min-h-screen w-full items-center justify-center'>
+      <SignUpAuthForm />
+    </div>
+  );
 };
 
 export default SignUpPage;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useInterviewStore } from '@/store/use-interview-store';
 import { useAudioRecorder } from '@/features/interview/hooks/use-audio-recorder';
 import { useTimer } from '@/features/interview/hooks/use-timer';
@@ -31,6 +31,7 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
     question: '간단한 자기소개 부탁드립니다',
     answer: '',
   });
+  const [isAIVoicePlaying, setIsAIVoicePlaying] = useState(false);
 
   /** hook */
   const { isRecording, startRecording, stopRecording } = useAudioRecorder();
@@ -55,26 +56,24 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
   // 녹음 중단 (사용자 음성 -> 텍스트 변환 + DB에 저장)
   const stopRecordingWithTimer = async () => {
     stopTimer();
+    setIsAIVoicePlaying(true);
+
     const blob = await stopRecording();
 
     // 사용자 음성을 텍스트로 변환해주는 로직
     try {
       const answerText = await postSpeechToText({ blob });
-      getOpenAIInterviewContent(answerText);
+      await getOpenAIInterviewContent(answerText);
 
       const content = { question: interviewQnA.question, answer: answerText };
       const interview = await patchInterviewHistory({ interviewId: id, content });
 
-      if (interview.content.length > 9) {
-        return;
-      }
+      if (interview.content.length > 9) return;
 
-      setInterviewQnA((prev) => {
-        return { ...prev, answer: answerText };
-      });
-
+      setInterviewQnA((prev) => ({ ...prev, answer: answerText }));
       incrementQuestionIndex();
     } catch (error) {
+      setIsAIVoicePlaying(false);
       if (error instanceof Error) {
         alert(error.message);
       }
@@ -94,11 +93,16 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
       if (messageList.length === LIMIT_COUNT) {
         await patchInterviewHistory({ interviewId: id, feedback: question });
       } else {
-        // AI 면접관 텍스트를 음성으로 출력하는 로직
-        await postTextToSpeech({
+        // AI 면접관 텍스트를 audio url로 반환하는 로직
+        const audioUrl = await postTextToSpeech({
           text: question,
           type: interviewType,
         });
+
+        const audio = new Audio(audioUrl);
+        await audio.play();
+
+        audio.addEventListener('ended', () => setIsAIVoicePlaying(false));
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -110,6 +114,7 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
   return {
     messageList,
     isRecording,
+    isAIVoicePlaying,
     timeLeft,
     formattedTime: formatTime(),
     startRecordingWithTimer,

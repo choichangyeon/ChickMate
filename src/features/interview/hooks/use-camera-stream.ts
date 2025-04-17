@@ -1,4 +1,7 @@
+import { INTERVIEW_MESSAGE } from '@/constants/message-constants';
 import { useCallback, useEffect, useRef, useState } from 'react';
+
+const { CAMERA_ACCESS } = INTERVIEW_MESSAGE;
 
 type StreamCallback = (stream: MediaStream) => void;
 
@@ -32,7 +35,7 @@ export const useCameraStream = () => {
       setIsCameraOn(true);
     } catch (error) {
       if (error instanceof Error) {
-        alert('카메라 사용 권한이 거부되었거나 장치에 문제가 있습니다.');
+        alert(CAMERA_ACCESS);
       }
     }
   }, []);

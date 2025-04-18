@@ -3,7 +3,6 @@
 import Card from '@/components/ui/card';
 import Typography from '@/components/ui/typography';
 import Bookmark from '@/features/job/bookmark';
-import { formatDate } from '@/utils/format-date';
 import { JobPosting } from '@prisma/client';
 import clsx from 'clsx';
 import Button from '@/components/ui/button';

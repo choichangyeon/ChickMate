@@ -18,7 +18,7 @@ const DraftResumeItem = ({ resume, onDeleteClick, onDraftResumeClick }: Props) =
           <Trash />
         </button>
       </div>
-      <button className='text-left font-bold text-cool-gray-900' onClick={() => onDraftResumeClick(resume)}>
+      <button className='w-fit font-bold text-cool-gray-900' onClick={() => onDraftResumeClick(resume)}>
         {resume.title}
       </button>
     </li>

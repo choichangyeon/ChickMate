@@ -1,15 +1,33 @@
-export const LEVEL_EXP = [0, 100, 300, 1000];
+// TODO: 제가 임의로 넣어둔 부분이라 나중에 수정해주시면 됩니다!
+
+export const LEVEL_EXP = [0, 100, 300, 1000, 2000, 10000];
 
 type CharacterDescription = Record<number, { name: string }>;
 
 type CharacterInfo = Record<string, CharacterDescription>;
 
 export const CHARACTER_INFOMATIONS: CharacterInfo = {
-  yellow: {
-    1: { name: '아기 병아리' },
-    2: { name: '안경 병아리' },
-    3: { name: '화난 병아리' },
-    4: { name: '미친 병아리' },
+  // yellow: {
+  //   1: { name: '아기 병아리' },
+  //   2: { name: '안경 병아리' },
+  //   3: { name: '화난 병아리' },
+  //   4: { name: '미친 병아리' },
+  // },
+  clay: {
+    1: { name: '알 (클레이)' },
+    2: { name: '학생 병아리' },
+    3: { name: '백수 병아리' },
+    4: { name: '안경 병아리' },
+    5: { name: '정장 병아리' },
+    6: { name: '불닭 병아리' },
+  },
+  poly: {
+    1: { name: '알 (로우폴리)' },
+    2: { name: '학생 병아리' },
+    3: { name: '백수 병아리' },
+    4: { name: '안경 병아리' },
+    5: { name: '정장 병아리' },
+    6: { name: '불닭 병아리' },
   },
   // 추후 확장 가능
   // green: {

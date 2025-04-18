@@ -10,6 +10,10 @@ import { CHARACTER_MESSAGE } from '@/constants/message-constants';
 import { MODAL_ID } from '@/constants/modal-id-constants';
 import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-key';
+import Typography from '@/components/ui/typography';
+import Button from '@/components/ui/button';
+import RightArrowIcon from '@/components/icons/right-arrow-icon';
+import LeftArrowIcon from '@/components/icons/left-arrow-icon';
 
 const { CHARACTER } = QUERY_KEY;
 const { POST_DATA_SUCCESS } = CHARACTER_MESSAGE.POST;
@@ -49,12 +53,14 @@ const CreateCharacterModal = () => {
     <Modal modalId={CHARACTER_CREATE}>
       <form
         onSubmit={handleSubmit}
-        className='mx-auto flex w-full max-w-xl flex-col items-center justify-center bg-white p-6'
+        className='mx-auto flex w-full max-w-xl flex-col items-center justify-center gap-4 bg-white'
       >
-        <h2 className='mb-6 text-center text-3xl font-bold text-gray-800'>캐릭터 선택</h2>
+        <Typography size='2xl'>
+          <span className='text-primary-orange-600'>ChickMate</span>를 선택하세요!
+        </Typography>
 
-        <div className='mb-6 flex w-full flex-col items-center'>
-          <div className='flex w-full items-center justify-between'>
+        <div className='flex w-full flex-col items-center'>
+          <div className='flex w-full items-center justify-center gap-8'>
             <button
               type='button'
               onClick={goToPrev}
@@ -62,13 +68,13 @@ const CreateCharacterModal = () => {
               className='text-3xl text-gray-500 transition'
               aria-label='이전 캐릭터 보기'
             >
-              &lt;
+              <LeftArrowIcon/>
             </button>
             <Image
               src={`/assets/character/card/${type}-level1.png`}
               alt={selectedCharacter.name}
-              width={220}
-              height={220}
+              width={200}
+              height={200}
             />
             <button
               type='button'
@@ -77,18 +83,29 @@ const CreateCharacterModal = () => {
               className='text-3xl text-gray-500 transition'
               aria-label='다음 캐릭터 보기'
             >
-              &gt;
+              <RightArrowIcon/>
             </button>
           </div>
-          <span className='mt-3 text-xl font-semibold text-gray-700'>{selectedCharacter.name}</span>
         </div>
-
-        <button
-          type='submit'
-          className='rounded-md bg-green-500 px-6 py-3 text-lg font-semibold text-white transition hover:bg-green-600 disabled:opacity-50'
-        >
-          캐릭터 생성
-        </button>
+        <div className='flex w-full items-center'>
+          <div className='flex-1 border-t'></div>
+        </div>
+        <div className='flex w-full justify-between items-end'>
+          <div>
+            <Typography weight='bold'>ChickMate</Typography>
+            <Typography weight='bold' color='primary-600' size='2xl'>
+              {selectedCharacter.name}
+            </Typography>
+          </div>
+          <Button
+            type='submit'
+            size='small'
+            square
+            variant='outline'
+          >
+            캐릭터 생성
+          </Button>
+        </div>
       </form>
     </Modal>
   );

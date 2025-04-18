@@ -1,10 +1,8 @@
 export const USER_META_DATA_KEY = {
-  TYPE: 'experienceType',
-  EXPERIENCE: 'workExperience',
-  EDUCATION: 'educationLevel',
-  JOB: 'jobType',
-  MAIN_REGION: 'mainRegion',
-  SUB_REGION: 'subRegion',
+  EXPERIENCE_NAME: 'experienceName',
+  REQUIRED_EUCATION_NAME: 'requiredEducationName',
+  JOB_MID_CODE_NAME: 'jobMidCodeName',
+  LOCATION_NAME: 'locationName',
   ETC: 'etc',
 } as const;
 

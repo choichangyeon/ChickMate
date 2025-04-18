@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-query';
@@ -16,7 +16,7 @@ import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
 import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import { useCharacterStore } from '@/store/use-character-store';
 
-const { TYPE, EDUCATION, JOB, MAIN_REGION, ETC } = USER_META_DATA_KEY;
+const { EXPERIENCE_NAME, REQUIRED_EUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
 const {
   AUTH: { SIGN_IN },
 } = PATH;
@@ -45,10 +45,10 @@ export const useMetaDataForm = (userId: string) => {
     formState: { errors },
   } = useForm<UserMetaSchema>({
     defaultValues: {
-      [TYPE]: DEFAULT,
-      [EDUCATION]: DEFAULT,
-      [JOB]: DEFAULT,
-      [MAIN_REGION]: DEFAULT,
+      [EXPERIENCE_NAME]: DEFAULT,
+      [REQUIRED_EUCATION_NAME]: DEFAULT,
+      [JOB_MID_CODE_NAME]: DEFAULT,
+      [LOCATION_NAME]: DEFAULT,
       [ETC]: null,
     },
     mode: 'onBlur',
@@ -58,10 +58,10 @@ export const useMetaDataForm = (userId: string) => {
   useEffect(() => {
     if (metaData) {
       reset({
-        [TYPE]: metaData?.[TYPE] ?? DEFAULT,
-        [EDUCATION]: metaData?.[EDUCATION] ?? DEFAULT,
-        [JOB]: metaData?.[JOB] ?? DEFAULT,
-        [MAIN_REGION]: metaData?.[MAIN_REGION] ?? DEFAULT,
+        [EXPERIENCE_NAME]: metaData?.[EXPERIENCE_NAME] ?? DEFAULT,
+        [REQUIRED_EUCATION_NAME]: metaData?.[REQUIRED_EUCATION_NAME] ?? DEFAULT,
+        [JOB_MID_CODE_NAME]: metaData?.[JOB_MID_CODE_NAME] ?? DEFAULT,
+        [LOCATION_NAME]: metaData?.[LOCATION_NAME] ?? DEFAULT,
         [ETC]: metaData?.[ETC] ?? null,
       });
     }

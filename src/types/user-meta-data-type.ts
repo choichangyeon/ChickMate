@@ -1,23 +1,14 @@
 import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 
-const { TYPE, EDUCATION, JOB, MAIN_REGION, ETC } = USER_META_DATA_KEY;
+const { EXPERIENCE_NAME, REQUIRED_EUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
+
 export type UserMetaDataType = {
-  [TYPE]: string;
-  // career: string; => 사람인 api 연결 시 사용
-  [EDUCATION]: string;
-  [JOB]: string;
-  [MAIN_REGION]: string; // => 사람인 api 연결 시 삭제
-  // mainRegion: string; => 사람인 api 연결 시 사용
-  // subRegion: string; => 사람인 api 연결 시 사용
+  [EXPERIENCE_NAME]: string;
+  [REQUIRED_EUCATION_NAME]: string;
+  [JOB_MID_CODE_NAME]: string;
+  [LOCATION_NAME]: string;
   [ETC]?: string | null;
 };
-
-// export type DependencyMap = {
-//   [K in keyof UserMetaDataType]?: {
-//     children: (keyof UserMetaDataType)[];
-//     condition: (value: UserMetaDataType[K]) => boolean;
-//   };
-// }; => 사람인 api 연결되면 살릴 예정
 
 export type RegionsType = {
   id: number;

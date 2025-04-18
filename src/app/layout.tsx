@@ -24,7 +24,7 @@ const RootLayout = ({
       <body className={suit.className}>
         <AuthProvider>
           <RQProvider>
-            <div className='min-h-[100dvh]s mx-[auto] flex'>{children}</div>
+            <div className='mx-[auto] flex min-h-[100dvh]'>{children}</div>
           </RQProvider>
         </AuthProvider>
       </body>

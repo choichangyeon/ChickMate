@@ -57,6 +57,7 @@ export const RESUME_MESSAGE = {
   DELETE_REQUEST_SUCCESS: '자기소개서가 삭제되었습니다.',
   DELETE_SERVER_ERROR: '자기소개서를 삭제하는데 실패했습니다.',
   DELETE_FORBIDDEN: '해당 자기소개서를 삭제할 권한이 없습니다.',
+  GET_COUNT_ERROR: '경험치 지급을 위해 오늘 작성한 자소서를 확인하는데 실패했습니다.',
 };
 
 const { TYPE, EDUCATION, JOB, MAIN_REGION } = USER_META_DATA_KEY;
@@ -72,6 +73,7 @@ export const USER_META_DATA_FORM_MESSAGE = {
     GET_DATA_ERROR: '유저 정보를 가져오는데 실패했습니다.',
     POST_DATA_ERROR: '유저 정보를 저장하는데 실패했습니다.',
     POST_DATA_SUCCESS: '주요 이력이 저장되었습니다.',
+    CHARACTER_POST_SUCCESS: '500 경험치 획득!\n주요 이력이 저장되었습니다.',
   },
 };
 
@@ -96,7 +98,7 @@ export const CHARACTER_MESSAGE = {
   },
   POST: {
     POST_DATA_FAILED: '캐릭터를 생성하는 데 실패했습니다.',
-    POST_DATA_SUCCESS: '캐릭터가 생성되었습니다.',
+    POST_DATA_SUCCESS: `캐릭터 생성 1,000 경험치 획득!\n캐릭터가 생성되었습니다.`, //TODO: alert 붙일 때 수정할 수도..?
   },
   PATCH: {
     PATCH_DATA_FAILED: '경험치 획득에 실패했습니다.',

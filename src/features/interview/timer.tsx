@@ -1,15 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Typography from '@/components/ui/typography';
 import Button from '@/components/ui/button';
+import Typography from '@/components/ui/typography';
+import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import { PATH } from '@/constants/path-constant';
 import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
+import { useCharacterStore } from '@/store/use-character-store';
 import { useInterviewStore } from '@/store/use-interview-store';
-import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import type { Message } from '@/types/message';
-import LoadingSpinner from '@/components/ui/loading-spinner';
+import { useRouter } from 'next/navigation';
 
 const { MY_PAGE } = PATH;
 const { INTERVIEW_COMPLETION } = CHARACTER_HISTORY_KEY;
@@ -35,9 +34,9 @@ const Timer = ({
   messageList,
 }: Props) => {
   const router = useRouter();
-  const { handleExperienceUp } = useExperienceUp();
-
   const resetQuestionIndex = useInterviewStore((state) => state.resetQuestionIndex);
+  const characterId = useCharacterStore((state) => state.characterId);
+  const { handleExperienceUp } = useExperienceUp();
 
   const isFinalQuestionAsked = messageList.length >= 2 && messageList[1].role === 'assistant';
 
@@ -50,7 +49,11 @@ const Timer = ({
   };
 
   const handleCompletedButtonClick = async () => {
-    handleExperienceUp(INTERVIEW_COMPLETION);
+    //@TODO: 캐릭터 아이디 있을 때만
+    if (characterId) {
+      handleExperienceUp(INTERVIEW_COMPLETION);
+      alert('경험치 획득 완료!'); //@TODO: 경험치 정의 완료된 후에 alert 리팩토링하면서 상수로 빼겠습니다.
+    }
     resetQuestionIndex();
     router.push(MY_PAGE);
   };

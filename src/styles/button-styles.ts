@@ -13,7 +13,7 @@ export const buttonStyle = cva('', {
       dark: '',
     },
     disabled: {
-      true: 'opacity-80 cursor-not-allowed text-cool-gray-300',
+      true: 'cursor-not-allowed',
       false: '',
     },
     size: {
@@ -66,6 +66,21 @@ export const buttonStyle = cva('', {
       variant: 'ghost',
       color: 'dark',
       className: 'text-cool-gray-900 hover:bg-cool-gray-900 hover:text-cool-gray-50',
+    },
+    {
+      variant: 'contained',
+      disabled: true,
+      className: 'border-cool-gray-300 text-cool-gray-50 bg-cool-gray-300',
+    },
+    {
+      variant: 'outline',
+      disabled: true,
+      className: 'border-cool-gray-300 text-cool-gray-300 bg-transparent',
+    },
+    {
+      variant: 'ghost',
+      disabled: true,
+      className: 'text-cool-gray-300 hover:bg-cool-gray-300 hover:text-cool-gray-50',
     },
   ],
   defaultVariants: {

@@ -3,6 +3,7 @@
 import { useModalStore } from '@/store/use-modal-store';
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import Close from '@/components/icons/close';
 
 type Props = {
   modalId: string;
@@ -47,9 +48,9 @@ const Modal = ({ portalRoot, modalId, children, className }: Props) => {
     <div className='fixed inset-0 z-50 flex items-center justify-center overflow-y-auto'>
       <div className='fixed inset-0 bg-black opacity-70' />
       {/* 모달 width 변경 - 빠른 재조정 시급 */}
-      <div ref={modalContentRef} className='relative w-full max-w-[600px] flex-col rounded-lg bg-white p-8'>
+      <div ref={modalContentRef} className='relative w-full max-w-[434px] flex-col rounded-3xl bg-white p-8'>
         <button onClick={() => toggleModal(modalId)} className='absolute right-4 top-4'>
-          X
+          <Close />
         </button>
         <div className={className}>{children}</div>
       </div>

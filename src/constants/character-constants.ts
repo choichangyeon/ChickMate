@@ -73,7 +73,7 @@ const {
 
 export const CHARACTER_HISTORY = {
   [LOGIN]: { amount: 200 },
-  [CREATE_CHARACTER]: { amount: 1000 }, // 캐릭터가 생성되어야 exp update가 가능한데, 처음 생성할 땐 캐릭터 id가 없어서 update 불가 -> 하지만 생성과 동시에 1,000점을 줘야하기 때문에 여기서는 0으로 처리하지만 서버에서 기본 값을 1,000으로 설정
+  [CREATE_CHARACTER]: { amount: 1000 },
   [RESUME_SUBMISSION]: { amount: 300 },
   [INTERVIEW_COMPLETION]: { amount: 300 },
   // [JOB_BOOKMARK]: { amount: 5 },

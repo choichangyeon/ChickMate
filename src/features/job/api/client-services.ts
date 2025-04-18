@@ -9,11 +9,9 @@ const { JSON_HEADER } = API_HEADER;
 const { POST, DELETE, GET } = API_METHOD;
 const EMPTY_LIST_NUMBER = 0;
 
-// TODO : userData 타입 지정하기
 type UserMetaDataProps = UserMetaDataType;
 
 export const getJobByUserMetaData = async (userMetaData: UserMetaDataProps): Promise<JobPosting[]> => {
-  // TODO : mainRegion -> location으로 바꾸기
   const { requiredEducationName, locationName, experienceName, jobMidCodeName } = userMetaData;
   const queryParams = new URLSearchParams({
     requiredEducationName,

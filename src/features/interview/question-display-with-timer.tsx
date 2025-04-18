@@ -14,7 +14,7 @@ type Props = {
 };
 
 const QuestionDisplayWithTimer = ({ interviewHistory }: Props) => {
-  const { isRecording, formattedTime, startRecordingWithTimer, stopRecordingWithTimer, messageList } =
+  const { isRecording, isAIVoicePlaying, formattedTime, startRecordingWithTimer, stopRecordingWithTimer, messageList } =
     useAudioWithTimer(MINUTES_IN_MS, interviewHistory);
 
   return (
@@ -22,6 +22,7 @@ const QuestionDisplayWithTimer = ({ interviewHistory }: Props) => {
       <QuestionDisplay messageList={messageList} interviewHistory={interviewHistory} />
       <Timer
         isRecording={isRecording}
+        isAIVoicePlaying={isAIVoicePlaying}
         formattedTime={formattedTime}
         startRecordingWithTimer={startRecordingWithTimer}
         stopRecordingWithTimer={stopRecordingWithTimer}

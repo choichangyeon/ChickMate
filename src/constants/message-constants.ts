@@ -116,6 +116,7 @@ export const INTERVIEW_MESSAGE = {
   FORBIDDEN: '해당 인터뷰 히스토리를 수정할 권한이 없습니다.',
   PATCH_SERVER_ERROR: '인터뷰 히스토리 수정에 실패했습니다.',
   GET_SERVER_ERROR: '인터뷰 히스토리를 가져오는데 실패했습니다.',
+  CAMERA_ACCESS: '카메라 사용 권한이 거부되었거나 장치에 문제가 있습니다.',
 };
 
 export const INTERVIEW_HISTORY = {

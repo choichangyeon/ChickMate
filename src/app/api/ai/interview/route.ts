@@ -19,11 +19,11 @@ const DEFAULT_COMPLETION_OPTIONS = {
 
 // 추후 변경 - 기능 구현 우선
 export const GET = async (req: NextRequest, { params }: RouteParams) => {
-  const interviewHistroyId = Number(params.id);
+  const interviewHistoryId = Number(params.id);
 
   const data = await prisma.interviewHistory.findUnique({
     where: {
-      id: interviewHistroyId,
+      id: interviewHistoryId,
     },
   });
 

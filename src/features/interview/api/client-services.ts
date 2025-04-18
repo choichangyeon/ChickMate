@@ -27,7 +27,7 @@ type TtsProps = {
   type: string;
 };
 
-export const postTextToSpeech = async ({ text, type }: TtsProps): Promise<void> => {
+export const postTextToSpeech = async ({ text, type }: TtsProps): Promise<string> => {
   const { MODEL, FORMAT } = TTS_OPTIONS;
   const { PRESSURE } = INTERVIEW_TYPE;
   const { VOICE, SPEED, INSTRUCTION } = type === PRESSURE ? PRESSURE_OPTIONS : CALM_OPTIONS;
@@ -45,8 +45,7 @@ export const postTextToSpeech = async ({ text, type }: TtsProps): Promise<void> 
     }),
   });
 
-  const audio = new Audio(audioUrl);
-  await audio.play();
+  return audioUrl;
 };
 
 /**

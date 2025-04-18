@@ -34,7 +34,7 @@ export const useCharacterCard = ({
   const isDefault = characterData === defaultCharacter && !!overlayText;
   const { type, experience } = characterData;
   const { level, percent, remainingExp } = getLevelAndPercentage(experience);
-  const characterName = CHARACTER_INFORMATION[type][level].name;
+  const characterName = CHARACTER_INFORMATION[type]?.[level].name;
 
   const handleClickCard = () => {
     if (!session) {

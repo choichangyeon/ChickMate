@@ -57,6 +57,7 @@ export const RESUME_MESSAGE = {
   DELETE_REQUEST_SUCCESS: '자기소개서가 삭제되었습니다.',
   DELETE_SERVER_ERROR: '자기소개서를 삭제하는데 실패했습니다.',
   DELETE_FORBIDDEN: '해당 자기소개서를 삭제할 권한이 없습니다.',
+  GET_COUNT_ERROR: '경험치 지급을 위해 오늘 작성한 자소서를 확인하는데 실패했습니다.',
 };
 
 const { TYPE, EDUCATION, JOB, MAIN_REGION } = USER_META_DATA_KEY;

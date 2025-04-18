@@ -19,7 +19,10 @@ const Bookmark = ({ jobPostingId }: Props) => {
     setIsMarked(isBookmarked);
   }, [isBookmarked]);
 
-  const handleClick = () => bookmarkMutate(isMarked!);
+  const handleClick = () => {
+    bookmarkMutate(isMarked!);
+    // TODO: alert 구현
+  };
 
   return isMarked ? (
     <button type='button' onClick={handleClick} aria-label='북마크 버튼'>

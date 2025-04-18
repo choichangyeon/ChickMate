@@ -18,6 +18,7 @@ const { META_DATA } = QUERY_KEY;
 const JobPostingsBox = ({ userId }: Props) => {
   // TODO: 추후 변경 가능성 고려
   const queryClient = useQueryClient();
+  const router = useRouter();
   const userMetaData = queryClient.getQueryData([META_DATA, userId]) as UserMetaDataType;
   const { data: jobPostingList, isError, isPending } = useJobPostingQuery({ userMetaData });
 
@@ -42,7 +43,6 @@ const JobPostingsBox = ({ userId }: Props) => {
     );
   }
 
-  const router = useRouter();
   if (!jobPostingList || jobPostingList.length === 0) {
     // TODO: 이 부분은 수정 고려
     return (

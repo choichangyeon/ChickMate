@@ -6,7 +6,6 @@ import { Character, CharacterHistory } from '@prisma/client';
 import { useCharacterHistoryInfiniteQuery } from '@/features/character/hooks/use-character-history-infinite-query';
 import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
 import LoadingSpinner from '@/components/ui/loading-spinner';
-import { blob } from 'stream/consumers';
 
 type Props = {
   characterData: Character;

@@ -27,7 +27,7 @@ const UserMetaDataForm = () => {
     <div>
       {isFirstTime && (
         <span className='text-md mb-4 block text-center font-light text-primary-orange-600'>
-          작성 완료 시 200 경험치 획득!
+          작성 완료 시 500 경험치 획득!
         </span>
       )}
       <form onSubmit={handleSubmit(handleOnSubmit)} className='mx-auto w-2/3'>

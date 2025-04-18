@@ -68,15 +68,18 @@ export const useResumeForm = (resume?: Resume) => {
     try {
       const data = { title, fieldList };
       const res = await submitResume({ resumeId, data });
-      if (characterId && res) {
-        const isAbleToGetEXP = await getCheckToGetEXP();
-        if (isAbleToGetEXP) {
-          handleExperienceUp(RESUME_SUBMISSION);
-          alert('경험치 추가 회득 완료! 자기소개서 작성이 완료되었습니다.'); // @TODO: 문구 정의 후 상수 분리
-        }
+      const isAbleToGetEXP = await getCheckToGetEXP(); // 오늘 작성한 자소서 개수 체크 -> 3개 이하 -> 경험치 획득 가능
+      const isReqExp = res && characterId;
+      if (isReqExp) {
+        if (isAbleToGetEXP) handleExperienceUp(RESUME_SUBMISSION);
       }
+
       // 수정해야되는 alert창
-      alert('자기소개서 작성이 완료되었습니다.');
+      alert(
+        isReqExp && isAbleToGetEXP
+          ? `경험치 획득 완료!\n자기소개서 작성이 완료되었습니다.`
+          : '자기소개서 작성이 완료되었습니다.'
+      );
       router.push(MY_PAGE);
     } catch (error) {
       if (error instanceof Error) {

@@ -22,7 +22,7 @@ const Home = () => {
       </div>
       <Link
         href={ON_BOARDING}
-        className='border-cool-gray-900 block w-[536px] rounded-3xl border p-[10px] text-center text-3xl font-thin'
+        className='block w-[536px] rounded-[50px] border border-cool-gray-900 p-[10px] text-center text-3xl font-thin'
       >
         지금 바로 시작해볼까요?
       </Link>

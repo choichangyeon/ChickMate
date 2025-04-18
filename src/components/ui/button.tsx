@@ -45,7 +45,12 @@ const Button = (props: ButtonProps | LinkButtonProps) => {
 
   const { type = 'button', onClick, disabled } = props;
   return (
-    <button type={type} className={buttonStyle({ variant, color, size, square })} onClick={onClick} disabled={disabled}>
+    <button
+      type={type}
+      className={buttonStyle({ variant, color, size, square, disabled })}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
     </button>
   );

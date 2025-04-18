@@ -3,11 +3,12 @@
 import { Dispatch, SetStateAction } from 'react';
 import Modal from '@/components/ui/modal';
 import Typography from '@/components/ui/typography';
-import type { Resume } from '@prisma/client';
 import { MODAL_ID } from '@/constants/modal-id-constants';
 import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
 import Trash from '@/components/icons/trash';
 import { formatDate } from '@/utils/format-date';
+import type { Resume } from '@prisma/client';
+import DraftResumeItem from './draft-resume-item';
 
 const { DRAFT_RESUME } = MODAL_ID;
 
@@ -49,20 +50,11 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResume
         <ul className='flex flex-col gap-4'>
           {draftResumeList?.map((resume) => {
             return (
-              <li key={resume.id} className='flex flex-col'>
-                <div className='flex justify-between'>
-                  <Typography color='gray-500'>{formatDate({ input: resume.createdAt })}</Typography>
-                  <button onClick={() => handleDeleteResume(resume.id)}>
-                    <Trash />
-                  </button>
-                </div>
-                <button
-                  className='text-left font-bold text-cool-gray-900'
-                  onClick={() => handleDraftResumeClick(resume)}
-                >
-                  {resume.title}
-                </button>
-              </li>
+              <DraftResumeItem
+                resume={resume}
+                onDeleteClick={handleDeleteResume}
+                onDraftResumeClick={handleDraftResumeClick}
+              />
             );
           })}
         </ul>

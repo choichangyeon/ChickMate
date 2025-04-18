@@ -1,12 +1,11 @@
 'use client';
 import { TABS } from '@/constants/my-page-constants';
-import EmptyList from '../my-page/empty-list';
+import EmptyList from '@/features/my-page/empty-list';
 import { useSession } from 'next-auth/react';
-import { User } from '@prisma/client';
 import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
 import ErrorComponent from '@/components/common/error-component';
 import LoadingSpinner from '@/components/ui/loading-spinner';
-import { useBookmarkSelectedInfiniteQuery } from './hook/use-bookmark-selected-infinite-query';
+import { useBookmarkSelectedInfiniteQuery } from '@/features/bookmark-selected/hook/use-bookmark-selected-infinite-query';
 import BookmarkTab from '@/features/bookmark-selected/bookmark-tab';
 
 const { BOOKMARK } = TABS;

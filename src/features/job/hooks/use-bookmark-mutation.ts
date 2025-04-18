@@ -21,7 +21,9 @@ export const useBookmarkMutation = ({ jobPostingId, userId }: Props) => {
         queryKey: [BOOKMARK, jobPostingId],
       });
 
-      if (userId) queryClient.invalidateQueries({ queryKey: [BOOKMARK, userId] });
+      if (userId) {
+        queryClient.invalidateQueries({ queryKey: [BOOKMARK, userId] });
+      }
     },
     onError: (error) => {
       throw error;

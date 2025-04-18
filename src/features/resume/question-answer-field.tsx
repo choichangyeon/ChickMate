@@ -19,8 +19,8 @@ const QuestionAnswerField = ({ field, onChange, onDelete }: Props) => {
           <Typography weight='normal' color='primary-600'>
             질문 1
           </Typography>
-          <button type='button' onClick={() => onDelete(id)} className='flex gap-5'>
-            <span className='font-semibold text-cool-gray-500'>질문 삭제</span> <Trash />
+          <button type='button' onClick={() => onDelete(id)}>
+            <Trash />
           </button>
         </div>
         <input

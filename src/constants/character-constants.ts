@@ -18,22 +18,22 @@ type CharacterInfo = Record<string, CharacterDescription>;
 
 export const LEVEL_EXP = [0, 1500, 3000, 5000, 8000, 15000]; //@TODO: 추후 더 고민해 볼 예정 (레벨 7이었는데 6으로 바뀌어서 급하게 수정했기 때문..)
 
-export const CHARACTER_INFOMATIONS: CharacterInfo = {
+export const CHARACTER_INFORMATION: CharacterInfo = {
   clay: {
-    1: { name: '알 (클레이)' },
-    2: { name: '학생 병아리' },
-    3: { name: '백수 병아리' },
-    4: { name: '안경 병아리' },
-    5: { name: '정장 병아리' },
-    6: { name: '불닭 병아리' },
+    1: { name: '칰칰이 알' },
+    2: { name: '학생 칰칰' },
+    3: { name: '백수 칰칰' },
+    4: { name: '안경잽이 칰칰' },
+    5: { name: '불닭' }, //@TODO: 이미지 추가되면 수정 예정
+    6: { name: '성공한 칰칰' }, //@TODO: 이미지 추가되면 수정 예정
   },
   poly: {
-    1: { name: '알 (로우폴리)' },
-    2: { name: '학생 병아리' },
-    3: { name: '백수 병아리' },
-    4: { name: '안경 병아리' },
-    5: { name: '정장 병아리' },
-    6: { name: '불닭 병아리' },
+    1: { name: '칰칰이 알' },
+    2: { name: '학생 칰칰' },
+    3: { name: '백수 칰칰' },
+    4: { name: '안경잽이 칰칰' },
+    5: { name: '불닭' }, //@TODO: 이미지 추가되면 수정 예정
+    6: { name: '성공한 칰칰' }, //@TODO: 이미지 추가되면 수정 예정
   },
 };
 

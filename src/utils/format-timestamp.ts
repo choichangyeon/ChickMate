@@ -6,11 +6,11 @@
 type Props = {
   input: number;
 };
-export function formatUnixTimestamp({ input }: Props): string {
+export const formatTimestamp = ({ input }: Props): string => {
   const date = new Date(input * 1000);
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const day = date.getDate().toString().padStart(2, '0');
 
   return `${year}.${month}.${day}`;
-}
+};

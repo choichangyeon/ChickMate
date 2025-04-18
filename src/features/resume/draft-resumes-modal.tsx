@@ -5,10 +5,8 @@ import Modal from '@/components/ui/modal';
 import Typography from '@/components/ui/typography';
 import { MODAL_ID } from '@/constants/modal-id-constants';
 import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
-import Trash from '@/components/icons/trash';
-import { formatDate } from '@/utils/format-date';
+import DraftResumeItem from '@/features/resume/draft-resume-item';
 import type { Resume } from '@prisma/client';
-import DraftResumeItem from './draft-resume-item';
 
 const { DRAFT_RESUME } = MODAL_ID;
 

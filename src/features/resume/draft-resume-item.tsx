@@ -1,7 +1,7 @@
 import Trash from '@/components/icons/trash';
 import Typography from '@/components/ui/typography';
 import { formatDate } from '@/utils/format-date';
-import { Resume } from '@prisma/client';
+import type { Resume } from '@prisma/client';
 
 type Props = {
   resume: Resume;

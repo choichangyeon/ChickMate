@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import clsx from 'clsx';
 import AuthProvider from '@/provider/auth-provider';
 import { RQProvider } from '@/provider/react-query-provider';
 import './global-style.css';
@@ -22,10 +21,10 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang='ko'>
-      <body>
+      <body className={suit.className}>
         <AuthProvider>
           <RQProvider>
-            <div className={clsx('mx-[auto] flex min-h-[100dvh]', suit.className)}>{children}</div>
+            <div className='mx-[auto] flex min-h-[100dvh]'>{children}</div>
           </RQProvider>
         </AuthProvider>
       </body>

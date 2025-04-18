@@ -11,6 +11,7 @@ import QuestionAnswerField from '@/features/resume/question-answer-field';
 import DraftResumesModal from '@/features/resume/draft-resumes-modal';
 import type { Field, ResumeData } from '@/types/resume';
 import type { Resume } from '@prisma/client';
+import ResumeFormActionButton from './resume-form-action-button';
 
 const { DRAFT_RESUME } = MODAL_ID;
 
@@ -79,30 +80,22 @@ const ResumeForm = ({ resume }: Props) => {
           질문 추가 +
         </button>
       </div>
+
       {fieldList.map((field) => {
         return (
           <QuestionAnswerField key={field.id} field={field} onChange={handleFieldChange} onDelete={handleDeleteField} />
         );
       })}
 
-      <div className='flex justify-between'>
-        {resume ? (
-          <Button variant='outline' color='dark' size='large' type='submit'>
-            수정 완료
-          </Button>
-        ) : (
-          <div className='flex gap-8'>
-            <Button variant='outline' color='dark' size='large' type='button' onClick={handleDraftResumeListClick}>
-              임시 저장된 글 | {draftResumeList?.length ?? 0}
-            </Button>
-            <Button variant='outline' color='dark' size='large' type='submit'>
-              작성 완료
-            </Button>
-          </div>
-        )}
-        <Typography color='gray-500'>{autoSaveStatus}</Typography>
-      </div>
+      {/** 버튼 */}
+      <ResumeFormActionButton
+        resume={resume}
+        draftResumeList={draftResumeList}
+        autoSaveStatus={autoSaveStatus}
+        onClick={handleDraftResumeListClick}
+      />
 
+      {/** 모달 */}
       {isModalOpen && (
         <DraftResumesModal
           draftResumeList={draftResumeList}

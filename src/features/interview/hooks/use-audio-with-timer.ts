@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { useInterviewStore } from '@/store/use-interview-store';
+import { FEEDBACK_PROMPT, INTERVIEW_PROMPT, USER_PROMPT } from '@/constants/interview-constants';
 import { useAudioRecorder } from '@/features/interview/hooks/use-audio-recorder';
 import { useTimer } from '@/features/interview/hooks/use-timer';
-import { FEEDBACK_PROMPT, INTERVIEW_PROMPT, USER_PROMPT } from '@/constants/interview-constants';
+import { usePreventPageUnload } from '@/features/resume/hooks/use-prevent-page-load';
 import {
   getOpenAIResponse,
   patchInterviewHistory,
@@ -28,6 +29,7 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
 
   /** state */
   const incrementQuestionIndex = useInterviewStore((state) => state.incrementQuestionIndex);
+  const [isDirty, setIsDirty] = useState<boolean>(false);
   const [messageList, setMessageList] = useState<Message[]>(init_state);
   const [interviewQnA, setInterviewQnA] = useState({
     question: '간단한 자기소개 부탁드립니다',
@@ -53,12 +55,14 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
   const startRecordingWithTimer = () => {
     startRecording();
     startTimer();
+    setIsDirty(true);
   };
 
   // 녹음 중단 (사용자 음성 -> 텍스트 변환 + DB에 저장)
   const stopRecordingWithTimer = async () => {
     stopTimer();
     setIsAIVoicePlaying(true);
+    setIsDirty(true);
 
     const blob = await stopRecording();
 
@@ -110,6 +114,8 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
       }
     }
   };
+
+  usePreventPageUnload(isDirty);
 
   // 페이지 벗어날 때 음성 중단
   useEffect(() => {

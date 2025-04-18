@@ -23,6 +23,7 @@ export const AUTH_MESSAGE = {
   },
   ERROR: {
     EXPIRED_TOKEN: '토큰이 만료되었습니다. 다시 로그인해 주세요.',
+    SESSION_NO_USER: '세션에 유저 정보가 존재하지 않습니다.',
   },
 };
 

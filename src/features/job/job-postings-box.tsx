@@ -1,7 +1,7 @@
 'use client';
 
 import BlockComponent from '@/components/common/block-component';
-import JobPostingCard from '@/components/common/job-posting-card';
+import JobPostingCard from '@/features/job/job-posting-card';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import { QUERY_KEY } from '@/constants/query-key';
 import { useJobPostingQuery } from '@/features/job/hooks/use-job-posting-query';
@@ -85,7 +85,7 @@ const JobPostingsBox = ({ userId }: Props) => {
 export default JobPostingsBox;
 
 const mockJobPosting = {
-  id: 1,
+  id: 10,
   company: '삼성전자',
   title: '삼성전자 신입사원 모집',
   experienceType: '신입',

@@ -3,11 +3,10 @@ import { INTERVIEW_TYPE, INTERVIEW_TYPE_KR } from '@/constants/interview-constan
 import { TABS } from '@/constants/my-page-constants';
 import clsx from 'clsx';
 import ErrorComponent from '@/components/common/error-component';
-import EmptyInterviewList from '@/features/interview-history/empty-interview-list';
+import EmptyList from '@/features/my-page/empty-list';
 import { useInterviewHistoryInfiniteQuery } from '@/features/interview-history/hook/use-interview-history-infinite-query';
 import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
 import type { InterviewHistory, User } from '@prisma/client';
-
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
@@ -41,7 +40,7 @@ const InterviewHistoryList = () => {
   };
 
   const histories = data.pages.flatMap((page) => page.histories);
-  if (histories.length === 0) return <EmptyInterviewList />;
+  if (histories.length === 0) return <EmptyList tab={HISTORY} />;
   return (
     <div className='flex h-[70dvh] flex-col'>
       <div className='flex-1 overflow-hidden'>

@@ -14,3 +14,7 @@ export const GC_TIME = {
 export const DELAY_TIME = {
   DEFAULT: 2000,
 };
+
+export const REFETCH_TIME = {
+  MIN: 1000 * 60,
+};

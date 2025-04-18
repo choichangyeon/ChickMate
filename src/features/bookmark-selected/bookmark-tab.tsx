@@ -1,5 +1,4 @@
 import { Star } from '@/components/icons/star';
-import IconButton from '@/components/ui/icon-button';
 import Typography from '@/components/ui/typography';
 import { JobPosting, UserSelectedJob } from '@prisma/client';
 import { formatDate } from '@/utils/format-date';

@@ -39,15 +39,13 @@ const QuestionDisplay = ({ messageList, interviewHistory }: Props) => {
         </Typography>
       </div>
       <div className='w-full border-t border-cool-gray-500 px-16 py-2'>
-        {isFinalQuestionAsked ? (
-          '면접보시느라 고생 많으셨습니다.'
-        ) : messageList.length === 1 ? (
-          <Typography color='gray-700' weight='normal'>
-            안녕하세요. 면접 준비가 완료되었다면 간단한 자기소개 부탁드립니다.
-          </Typography>
-        ) : (
-          AIquestion
-        )}
+        <Typography color='gray-700' weight='normal'>
+          {isFinalQuestionAsked
+            ? '면접보시느라 고생 많으셨습니다.'
+            : messageList.length === 1
+              ? '안녕하세요. 면접 준비가 완료되었다면 간단한 자기소개 부탁드립니다.'
+              : AIquestion}
+        </Typography>
       </div>
     </div>
   );

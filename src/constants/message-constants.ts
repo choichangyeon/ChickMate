@@ -60,13 +60,13 @@ export const RESUME_MESSAGE = {
   GET_COUNT_ERROR: '경험치 지급을 위해 오늘 작성한 자소서를 확인하는데 실패했습니다.',
 };
 
-const { TYPE, EDUCATION, JOB, MAIN_REGION } = USER_META_DATA_KEY;
+const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME } = USER_META_DATA_KEY;
 export const USER_META_DATA_FORM_MESSAGE = {
   VALIDATION: {
-    [TYPE]: '경력을 선택해 주세요.',
-    [EDUCATION]: '학력을 선택해 주세요.',
-    [JOB]: '직종을 선택해 주세요.',
-    [MAIN_REGION]: '지역을 선택해 주세요.',
+    [EXPERIENCE_NAME]: '경력을 선택해 주세요.',
+    [REQUIRED_EDUCATION_NAME]: '학력을 선택해 주세요.',
+    [JOB_MID_CODE_NAME]: '직종을 선택해 주세요.',
+    [LOCATION_NAME]: '지역을 선택해 주세요.',
   } as const,
   API: {
     GET_REGIONS_ERROR: '지역 정보를 가져오는데 실패했습니다.',

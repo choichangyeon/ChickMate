@@ -10,6 +10,7 @@ import SettingFill from '@/components/icons/setting-fill';
 import { useMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-query';
 import { UserMetaDataType } from '@/types/user-meta-data-type';
 import BlockComponent from '@/components/common/block-component';
+import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 
 type Props = {
   session: Session;
@@ -22,12 +23,14 @@ type FieldList = {
 
 const { USER_META_DATA } = MODAL_ID;
 
+const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
+
 const fieldList: FieldList[] = [
-  { key: 'experienceType', label: '경력' },
-  { key: 'educationLevel', label: '학력' },
-  { key: 'jobType', label: '직무' },
-  { key: 'mainRegion', label: '지역' },
-  { key: 'etc', label: '기타' },
+  { key: EXPERIENCE_NAME, label: '경력' },
+  { key: REQUIRED_EDUCATION_NAME, label: '학력' },
+  { key: JOB_MID_CODE_NAME, label: '직무' },
+  { key: LOCATION_NAME, label: '지역' },
+  { key: ETC, label: '기타' },
 ];
 
 const MyInfo = ({ session }: Props) => {
@@ -50,7 +53,7 @@ const MyInfo = ({ session }: Props) => {
         </button>
       </div>
       {/* 높이 조정 필요 */}
-      <ul className='flex max-h-[40vh] flex-col items-start gap-2 overflow-y-auto scrollbar-hide'>
+      <ul className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
         {!data ? (
           <BlockComponent
             firstLine='이런! 내 정보가 없어요!'
@@ -62,14 +65,14 @@ const MyInfo = ({ session }: Props) => {
         ) : (
           <>
             {fieldList.map(({ key, label }) => (
-              <li key={key} className='flex w-full gap-5 rounded-lg border border-gray-200 p-4'>
-                <Typography size='xl' weight='bold' color='secondary-amber'>
+              <li
+                key={key}
+                className='flex flex-col gap-2 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md'
+              >
+                <Typography size='md' weight='bold' color='secondary-amber'>
                   {label}
                 </Typography>
-                <div>
-                  <Typography>{data[key]}</Typography>
-                  <Typography color='gray-500'>네카라쿠베당토</Typography>
-                </div>
+                <Typography>{data[key]}</Typography>
               </li>
             ))}
           </>

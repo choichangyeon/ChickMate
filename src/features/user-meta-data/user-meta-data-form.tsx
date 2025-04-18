@@ -8,7 +8,7 @@ import SingleSelectField from '@/features/user-meta-data/single-select-field';
 import { useMetaDataForm } from '@/features/user-meta-data/hooks/use-meta-data-form';
 import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 
-const { TYPE, EDUCATION, JOB, MAIN_REGION, ETC } = USER_META_DATA_KEY;
+const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
 
 const UserMetaDataForm = () => {
   const { data } = useSession();
@@ -34,34 +34,34 @@ const UserMetaDataForm = () => {
         <SingleSelectField
           label='*경력'
           options={typeData}
-          value={watch(TYPE)}
-          fieldKey={TYPE}
+          value={watch(EXPERIENCE_NAME)}
+          fieldKey={EXPERIENCE_NAME}
           onSelect={handleSelect}
-          error={errors[TYPE]?.message}
+          error={errors[EXPERIENCE_NAME]?.message}
         />
         <SingleSelectField
           label='*학력'
           options={academicData}
-          value={watch(EDUCATION)}
-          fieldKey={EDUCATION}
+          value={watch(REQUIRED_EDUCATION_NAME)}
+          fieldKey={REQUIRED_EDUCATION_NAME}
           onSelect={handleSelect}
-          error={errors[EDUCATION]?.message}
+          error={errors[REQUIRED_EDUCATION_NAME]?.message}
         />
         <SingleSelectField
           label='*직무'
           options={jobData}
-          value={watch(JOB)}
-          fieldKey={JOB}
+          value={watch(JOB_MID_CODE_NAME)}
+          fieldKey={JOB_MID_CODE_NAME}
           onSelect={handleSelect}
-          error={errors[JOB]?.message}
+          error={errors[JOB_MID_CODE_NAME]?.message}
         />
         <SingleSelectField
           label='*지역'
           options={regions}
-          value={watch(MAIN_REGION)}
-          fieldKey={MAIN_REGION}
+          value={watch(LOCATION_NAME)}
+          fieldKey={LOCATION_NAME}
           onSelect={handleSelect}
-          error={errors[MAIN_REGION]?.message}
+          error={errors[LOCATION_NAME]?.message}
         />
 
         <div className='mb-4 flex h-14 flex-col justify-center'>

@@ -37,13 +37,13 @@ const MyCharacter = ({ session, characterData = defaultCharacter, overlayText, r
         </div>
         <div className='flex w-full items-center gap-8'>
           <div className='flex w-full flex-col'>
-            <div className='flex items-center w-full justify-between gap-6'>
+            <div className='flex w-full items-center justify-between gap-6'>
               <div className='flex items-center justify-center gap-3'>
                 <Typography weight='black' size='xl' color='primary-600'>
                   LV {level}
                 </Typography>
                 <div className='line-clamp-1 w-[72px]'>
-                  <Typography weight='bold'>{session && session.user.name}님</Typography>
+                  <Typography weight='bold'>{session?.user.name}님</Typography>
                 </div>
               </div>
               <Typography weight='normal'>{characterName}</Typography>

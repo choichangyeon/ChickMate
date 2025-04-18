@@ -23,7 +23,7 @@ const BookmarkTab = ({ bookmark, index, length, userId }: Props) => {
   const expiredAtDate = formatDate({ input: bookmark.jobPosting.expiredAt });
   const remainDay = formatRemainDay(bookmark.jobPosting.expiredAt);
   const handleDeleteBookmark = async () => {
-    /* TODO: Delete 로직 구현 */
+    /* TODO: alert 로직 구현 */
     bookmarkMutate(true);
   };
   return (

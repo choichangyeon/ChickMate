@@ -22,7 +22,10 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResume
   const { mutate: deleteResumeMutate } = useDeleteResumeMutation();
 
   const handleDeleteResume = (resumeId: number) => {
-    deleteResumeMutate(resumeId);
+    if (window.confirm('자기소개서를 정말로 삭제하시겠습니까?')) {
+      deleteResumeMutate(resumeId);
+    }
+
     if (activeResumeId === resumeId) {
       setResumeId(null);
     }

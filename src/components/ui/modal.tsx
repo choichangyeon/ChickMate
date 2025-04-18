@@ -47,8 +47,10 @@ const Modal = ({ portalRoot, modalId, children, className }: Props) => {
   return createPortal(
     <div className='fixed inset-0 z-50 flex items-center justify-center overflow-y-auto'>
       <div className='fixed inset-0 bg-black opacity-70' />
-      {/* 모달 width 변경 - 빠른 재조정 시급 */}
-      <div ref={modalContentRef} className='relative w-full max-w-[434px] flex-col rounded-3xl bg-white p-8'>
+      <div
+        ref={modalContentRef}
+        className='relative max-h-[600px] w-full max-w-[434px] flex-col overflow-scroll rounded-3xl bg-white p-8 scrollbar-hide'
+      >
         <button onClick={() => toggleModal(modalId)} className='absolute right-4 top-4'>
           <Close />
         </button>

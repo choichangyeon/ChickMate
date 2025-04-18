@@ -68,9 +68,7 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
       await getOpenAIInterviewContent(answerText);
 
       const content = { question: interviewQnA.question, answer: answerText };
-      const interview = await patchInterviewHistory({ interviewId: id, content });
-
-      if (interview.content.length > 9) return;
+      await patchInterviewHistory({ interviewId: id, content });
 
       setInterviewQnA((prev) => ({ ...prev, answer: answerText }));
       incrementQuestionIndex();

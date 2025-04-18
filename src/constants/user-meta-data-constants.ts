@@ -1,6 +1,6 @@
 export const USER_META_DATA_KEY = {
   EXPERIENCE_NAME: 'experienceName',
-  REQUIRED_EUCATION_NAME: 'requiredEducationName',
+  REQUIRED_EDUCATION_NAME: 'requiredEducationName',
   JOB_MID_CODE_NAME: 'jobMidCodeName',
   LOCATION_NAME: 'locationName',
   ETC: 'etc',

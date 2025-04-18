@@ -16,7 +16,7 @@ import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
 import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import { useCharacterStore } from '@/store/use-character-store';
 
-const { EXPERIENCE_NAME, REQUIRED_EUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
+const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
 const {
   AUTH: { SIGN_IN },
 } = PATH;
@@ -46,7 +46,7 @@ export const useMetaDataForm = (userId: string) => {
   } = useForm<UserMetaSchema>({
     defaultValues: {
       [EXPERIENCE_NAME]: DEFAULT,
-      [REQUIRED_EUCATION_NAME]: DEFAULT,
+      [REQUIRED_EDUCATION_NAME]: DEFAULT,
       [JOB_MID_CODE_NAME]: DEFAULT,
       [LOCATION_NAME]: DEFAULT,
       [ETC]: null,
@@ -59,7 +59,7 @@ export const useMetaDataForm = (userId: string) => {
     if (metaData) {
       reset({
         [EXPERIENCE_NAME]: metaData?.[EXPERIENCE_NAME] ?? DEFAULT,
-        [REQUIRED_EUCATION_NAME]: metaData?.[REQUIRED_EUCATION_NAME] ?? DEFAULT,
+        [REQUIRED_EDUCATION_NAME]: metaData?.[REQUIRED_EDUCATION_NAME] ?? DEFAULT,
         [JOB_MID_CODE_NAME]: metaData?.[JOB_MID_CODE_NAME] ?? DEFAULT,
         [LOCATION_NAME]: metaData?.[LOCATION_NAME] ?? DEFAULT,
         [ETC]: metaData?.[ETC] ?? null,

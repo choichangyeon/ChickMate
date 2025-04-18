@@ -8,7 +8,7 @@ import SingleSelectField from '@/features/user-meta-data/single-select-field';
 import { useMetaDataForm } from '@/features/user-meta-data/hooks/use-meta-data-form';
 import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 
-const { EXPERIENCE_NAME, REQUIRED_EUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
+const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
 
 const UserMetaDataForm = () => {
   const { data } = useSession();
@@ -42,10 +42,10 @@ const UserMetaDataForm = () => {
         <SingleSelectField
           label='*학력'
           options={academicData}
-          value={watch(REQUIRED_EUCATION_NAME)}
-          fieldKey={REQUIRED_EUCATION_NAME}
+          value={watch(REQUIRED_EDUCATION_NAME)}
+          fieldKey={REQUIRED_EDUCATION_NAME}
           onSelect={handleSelect}
-          error={errors[REQUIRED_EUCATION_NAME]?.message}
+          error={errors[REQUIRED_EDUCATION_NAME]?.message}
         />
         <SingleSelectField
           label='*직무'

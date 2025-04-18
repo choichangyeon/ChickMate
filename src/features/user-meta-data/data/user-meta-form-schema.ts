@@ -1,7 +1,7 @@
 import { USER_META_DATA_FORM_MESSAGE } from '@/constants/message-constants';
 import { DEFAULT, USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 import { z } from 'zod';
-const { EXPERIENCE_NAME, REQUIRED_EUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
+const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
 const { VALIDATION } = USER_META_DATA_FORM_MESSAGE;
 
 /**
@@ -10,7 +10,7 @@ const { VALIDATION } = USER_META_DATA_FORM_MESSAGE;
 export const userMetaFormSchema = z.object({
   [EXPERIENCE_NAME]: z.string().refine((value) => value !== DEFAULT, VALIDATION[EXPERIENCE_NAME]),
   // career: z.string(), => 경력기간 :  사람인 api 연결 시 사용
-  [REQUIRED_EUCATION_NAME]: z.string().refine((value) => value !== DEFAULT, VALIDATION[REQUIRED_EUCATION_NAME]),
+  [REQUIRED_EDUCATION_NAME]: z.string().refine((value) => value !== DEFAULT, VALIDATION[REQUIRED_EDUCATION_NAME]),
   [JOB_MID_CODE_NAME]: z.string().refine((value) => value !== DEFAULT, VALIDATION[JOB_MID_CODE_NAME]),
   [LOCATION_NAME]: z.string().refine((value) => value !== DEFAULT, {
     message: VALIDATION[LOCATION_NAME],

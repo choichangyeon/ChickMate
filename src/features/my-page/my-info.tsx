@@ -23,11 +23,11 @@ type FieldList = {
 
 const { USER_META_DATA } = MODAL_ID;
 
-const { EXPERIENCE_NAME, REQUIRED_EUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
+const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
 
 const fieldList: FieldList[] = [
   { key: EXPERIENCE_NAME, label: '경력' },
-  { key: REQUIRED_EUCATION_NAME, label: '학력' },
+  { key: REQUIRED_EDUCATION_NAME, label: '학력' },
   { key: JOB_MID_CODE_NAME, label: '직무' },
   { key: LOCATION_NAME, label: '지역' },
   { key: ETC, label: '기타' },

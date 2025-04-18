@@ -40,27 +40,32 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResume
           임시 저장된 자소서
         </Typography>
         <Typography color='primary-600' weight='bold' align='center'>
-          작성 완료 시 200 경험치 획득!
+          작성 완료 시 300 경험치 획득!
         </Typography>
       </div>
       {!isError && draftResumeList?.length === 0 ? (
         <Typography>임시 저장된 자기소개서가 없습니다</Typography>
       ) : (
-        draftResumeList?.map((resume) => {
-          return (
-            <div key={resume.id} className='flex flex-col'>
-              <div className='flex justify-between'>
-                <Typography color='gray-500'>{formatDate({ input: resume.createdAt })}</Typography>
-                <button onClick={() => handleDeleteResume(resume.id)}>
-                  <Trash />
+        <ul className='flex flex-col gap-4'>
+          {draftResumeList?.map((resume) => {
+            return (
+              <li key={resume.id} className='flex flex-col'>
+                <div className='flex justify-between'>
+                  <Typography color='gray-500'>{formatDate({ input: resume.createdAt })}</Typography>
+                  <button onClick={() => handleDeleteResume(resume.id)}>
+                    <Trash />
+                  </button>
+                </div>
+                <button
+                  className='text-left font-bold text-cool-gray-900'
+                  onClick={() => handleDraftResumeClick(resume)}
+                >
+                  {resume.title}
                 </button>
-              </div>
-              <button className='text-left font-bold text-cool-gray-900' onClick={() => handleDraftResumeClick(resume)}>
-                {resume.title}
-              </button>
-            </div>
-          );
-        })
+              </li>
+            );
+          })}
+        </ul>
       )}
     </Modal>
   );

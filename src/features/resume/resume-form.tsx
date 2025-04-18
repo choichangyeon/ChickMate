@@ -79,12 +79,14 @@ const ResumeForm = ({ resume }: Props) => {
           질문 추가 +
         </button>
       </div>
+
       {fieldList.map((field) => {
         return (
           <QuestionAnswerField key={field.id} field={field} onChange={handleFieldChange} onDelete={handleDeleteField} />
         );
       })}
 
+      {/** 버튼 */}
       <div className='flex justify-between'>
         {resume ? (
           <Button variant='outline' color='dark' size='large' type='submit'>
@@ -103,6 +105,7 @@ const ResumeForm = ({ resume }: Props) => {
         <Typography color='gray-500'>{autoSaveStatus}</Typography>
       </div>
 
+      {/** 모달 */}
       {isModalOpen && (
         <DraftResumesModal
           draftResumeList={draftResumeList}

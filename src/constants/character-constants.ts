@@ -16,7 +16,7 @@
 type CharacterDescription = Record<number, { name: string }>;
 type CharacterInfo = Record<string, CharacterDescription>;
 
-export const LEVEL_EXP = [0, 1500, 3000, 5000, 8000, 12000, 20000];
+export const LEVEL_EXP = [0, 1500, 3000, 5000, 8000, 15000]; //@TODO: 추후 더 고민해 볼 예정 (레벨 7이었는데 6으로 바뀌어서 급하게 수정했기 때문..)
 
 export const CHARACTER_INFOMATIONS: CharacterInfo = {
   clay: {

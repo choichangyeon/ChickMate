@@ -7,6 +7,7 @@ import type { Resume } from '@prisma/client';
 import { MODAL_ID } from '@/constants/modal-id-constants';
 import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
 import Trash from '@/components/icons/trash';
+import { formatDate } from '@/utils/format-date';
 
 const { DRAFT_RESUME } = MODAL_ID;
 
@@ -33,18 +34,33 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResume
   };
 
   return (
-    <Modal modalId={DRAFT_RESUME} className='flex flex-col gap-2'>
+    <Modal modalId={DRAFT_RESUME} className='flex flex-col gap-4'>
+      <div>
+        <Typography as='h2' size='2xl' weight='bold' align='center'>
+          임시 저장된 자소서
+        </Typography>
+        <Typography color='primary-600' weight='bold' align='center'>
+          작성 완료 시 200 경험치 획득!
+        </Typography>
+      </div>
       {!isError && draftResumeList?.length === 0 ? (
         <Typography>임시 저장된 자기소개서가 없습니다</Typography>
       ) : (
-        draftResumeList?.map((resume) => (
-          <div key={resume.id} className='flex justify-between'>
-            <button onClick={() => handleDraftResumeClick(resume)}>{resume.title}</button>
-            <button onClick={() => handleDeleteResume(resume.id)}>
-              <Trash />
-            </button>
-          </div>
-        ))
+        draftResumeList?.map((resume) => {
+          return (
+            <div key={resume.id} className='flex flex-col'>
+              <div className='flex justify-between'>
+                <Typography color='gray-500'>{formatDate({ input: resume.createdAt })}</Typography>
+                <button onClick={() => handleDeleteResume(resume.id)}>
+                  <Trash />
+                </button>
+              </div>
+              <button className='text-left font-bold text-cool-gray-900' onClick={() => handleDraftResumeClick(resume)}>
+                {resume.title}
+              </button>
+            </div>
+          );
+        })
       )}
     </Modal>
   );

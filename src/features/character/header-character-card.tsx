@@ -24,7 +24,7 @@ const HeaderCharacterCard = ({
   overlayText,
   requiredModal = false,
 }: Props) => {
-  const { isCreateModalOpen, isDetailModalOpen, isDefault, level, percent, characterName, handleClickCard } =
+  const { isCreateModalOpen, isDetailModalOpen, isDefault, level, type, percent, characterName, handleClickCard } =
     useCharacterCard({
       characterData,
       overlayText,
@@ -44,7 +44,7 @@ const HeaderCharacterCard = ({
           <div>
             <div className='flex flex-col'>
               <div className='flex w-56 items-center justify-between'>
-                <div className='flex truncate w-36'>
+                <div className='flex w-36 truncate'>
                   <Typography weight='bold' size='md'>
                     <span className='pr-2 text-primary-orange-600'>LV {level} </span>
                   </Typography>
@@ -62,15 +62,13 @@ const HeaderCharacterCard = ({
           </div>
           <div>
             {/* 추후 원형 이미지로 대체 예정 */}
-            <div className='h-12 w-12 overflow-hidden rounded-full border'>
-              <Image
-                src={`/assets/character/header/level${level}.jpeg`}
-                width={48}
-                height={48}
-                alt={characterName}
-                priority
-              />
-            </div>
+            <Image
+              src={`/assets/character/header/${type}-level${level}.png`}
+              width={48}
+              height={48}
+              alt={characterName}
+              priority
+            />
           </div>
         </div>
       </div>

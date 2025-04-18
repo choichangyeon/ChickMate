@@ -1,18 +1,14 @@
-import type { Resume, User } from '@prisma/client';
 import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
-import { fetchWithSentry } from '@/utils/fetch-with-sentry';
 import type { ResumeData } from '@/types/resume';
+import { fetchWithSentry } from '@/utils/fetch-with-sentry';
+import type { Resume } from '@prisma/client';
 
 type Props = {
   data: ResumeData;
   resumeId: number | null;
 };
 
-type ResumeCount = {
-  todayCount: number;
-  isAbleToGetExp: boolean;
-};
 const { ROOT, DETAIL, SUBMIT, SUBMIT_DETAIL, DRAFT, DRAFT_DETAIL } = ROUTE_HANDLER_PATH.RESUME;
 const { GET, POST, PATCH, DELETE } = API_METHOD;
 const { JSON_HEADER } = API_HEADER;
@@ -96,7 +92,7 @@ export const deleteResume = async (resumeId: number): Promise<void> => {
   });
 };
 
-export const getCheckToGetEXP = async (): Promise<ResumeCount> => {
+export const getCheckToGetEXP = async (): Promise<boolean> => {
   const { response } = await fetchWithSentry(`${ROOT}/count`, {
     method: GET,
   });

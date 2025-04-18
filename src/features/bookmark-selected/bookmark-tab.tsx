@@ -37,9 +37,9 @@ const BookmarkTab = ({ bookmark, index, length, userId }: Props) => {
             {bookmark.jobPosting.title}
           </Typography>
         </div>
-        <IconButton ariaLabel='북마크 버튼' onClick={handleDeleteBookmark}>
+        <button type='button' onClick={handleDeleteBookmark} aria-label='북마크 버튼'>
           <Star width='18' height='18' color='#FDE047' stroke='#FDE047' />
-        </IconButton>
+        </button>
       </div>
       <div className='flex w-full flex-row items-center justify-between'>
         <div className='flex flex-row gap-6'>

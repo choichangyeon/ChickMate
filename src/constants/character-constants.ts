@@ -72,7 +72,6 @@ const {
 } = CHARACTER_HISTORY_KEY;
 
 export const CHARACTER_HISTORY = {
-  [LOGIN]: { amount: 200 },
   [CREATE_CHARACTER]: { amount: 1000 },
   [RESUME_SUBMISSION]: { amount: 300 },
   [INTERVIEW_COMPLETION]: { amount: 300 },

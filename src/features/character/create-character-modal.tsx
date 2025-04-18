@@ -1,21 +1,21 @@
 'use client';
 
 import { useState } from 'react';
-import Modal from '@/components/ui/modal';
-import { useModalStore } from '@/store/use-modal-store';
 import Image from 'next/image';
+import { useQueryClient } from '@tanstack/react-query';
+import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
 import { postCreateCharacter } from '@/features/character/api/client-services';
+import { useModalStore } from '@/store/use-modal-store';
+import { useCharacterStore } from '@/store/use-character-store';
+import Modal from '@/components/ui/modal';
 import { CHARACTER_HISTORY_KEY, CHARACTER_INFORMATION } from '@/constants/character-constants';
 import { CHARACTER_MESSAGE } from '@/constants/message-constants';
 import { MODAL_ID } from '@/constants/modal-id-constants';
-import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-key';
 import Typography from '@/components/ui/typography';
 import Button from '@/components/ui/button';
 import RightArrowIcon from '@/components/icons/right-arrow-icon';
 import LeftArrowIcon from '@/components/icons/left-arrow-icon';
-import { useExperienceUp } from './hooks/use-experience-up';
-import { useCharacterStore } from '@/store/use-character-store';
 
 const { CHARACTER } = QUERY_KEY;
 const { POST_DATA_SUCCESS } = CHARACTER_MESSAGE.POST;

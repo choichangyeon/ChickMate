@@ -11,11 +11,11 @@ import { NextRequest, NextResponse } from 'next/server';
 // TODO: 필터링 기준 상수화
 const educationOrder = {
   '학력무관': 0,
-  '고졸': 1,
-  '대졸(2~3년)': 2,
-  '대졸(4년)': 3,
-  '석사': 4,
-  '박사': 5,
+  '고등학교졸업': 1,
+  '대학졸업(2,3년)': 2,
+  '대학교졸업(4년)': 3,
+  '석사졸업': 4,
+  '박사졸업': 5,
 };
 
 export const GET = async (request: NextRequest): Promise<NextResponse> => {

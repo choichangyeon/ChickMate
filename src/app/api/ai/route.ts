@@ -4,14 +4,13 @@ import { openAi } from '@/lib/open-ai';
 import { prisma } from '@/lib/prisma';
 import { ENV } from '@/constants/env-constants';
 import { AI_MESSAGE, AUTH_MESSAGE, INTERVIEW_HISTORY } from '@/constants/message-constants';
+import { INTERVIEW_LIMIT_COUNT } from '@/constants/interview-constants';
 import type { ChatCompletionMessageParam } from 'openai/resources/chat';
 
 const { NEXTAUTH_SECRET } = ENV;
 const { EXPIRED_TOKEN } = AUTH_MESSAGE.ERROR;
 const { AI_REQUEST_FAILURE, AI_SERVER_ERROR } = AI_MESSAGE.AI;
 const { NOT_FOUND } = INTERVIEW_HISTORY.API;
-
-const INTERVIEW_LIMIT_COUNT = 3;
 
 const DEFAULT_COMPLETION_OPTIONS = {
   model: 'gpt-4o-mini',

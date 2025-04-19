@@ -1,7 +1,7 @@
 const StrengthIcon = () => {
   return (
     <svg width='92' height='94' viewBox='0 0 92 94' fill='none' xmlns='http://www.w3.org/2000/svg'>
-      <g clip-path='url(#clip0_1467_715)'>
+      <g clipPath='url(#clip0_1467_715)'>
         <path
           d='M28.08 44.66C31.1617 44.66 33.66 42.1617 33.66 39.08C33.66 35.9983 31.1617 33.5 28.08 33.5C24.9983 33.5 22.5 35.9983 22.5 39.08C22.5 42.1617 24.9983 44.66 28.08 44.66Z'
           fill='#FBBF24'

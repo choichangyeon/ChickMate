@@ -3,16 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
 import { NextRequest, NextResponse } from 'next/server';
 import { JobPosting } from '@prisma/client';
-
-// TODO: 필터링 기준 상수화
-const educationOrder = {
-  '학력무관': 0,
-  '고등학교졸업': 1,
-  '대학졸업(2,3년)': 2,
-  '대학교졸업(4년)': 3,
-  '석사졸업': 4,
-  '박사졸업': 5,
-};
+import { educationOrder } from '@/constants/education-constants';
 
 /**
  * GET

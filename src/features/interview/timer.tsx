@@ -24,7 +24,6 @@ type Props = {
     minutes: string;
     seconds: string;
   };
-  aiQuestion: string;
   startRecordingWithTimer: () => void;
   stopRecordingWithTimer: () => void;
 };

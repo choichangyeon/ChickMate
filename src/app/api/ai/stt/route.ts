@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { openAi } from '@/lib/open-ai';
-import { AI_MESSAGE, AUTH_MESSAGE } from '@/constants/message-constants';
+import { AI_MESSAGE, AUTH_MESSAGE, INTERVIEW_QNA_MESSAGE } from '@/constants/message-constants';
 import { ENV } from '@/constants/env-constants';
 import { prisma } from '@/lib/prisma';
 
 const { NEXTAUTH_SECRET } = ENV;
 const { EXPIRED_TOKEN } = AUTH_MESSAGE.ERROR;
 const { NOT_FILE, SERVER_ERROR } = AI_MESSAGE.STT;
+const { NOT_FOUND } = INTERVIEW_QNA_MESSAGE.API;
 
 const STT_OPTIONS = {
   MODEL: 'gpt-4o-transcribe',
@@ -38,7 +39,7 @@ export const POST = async (request: NextRequest) => {
       language: STT_OPTIONS.LANGUAGE,
     });
 
-    const { id } = await prisma.interviewQnA.findFirst({
+    const interviewQnA = await prisma.interviewQnA.findFirst({
       where: {
         interviewHistoryId,
         OR: [{ answer: null }],
@@ -48,8 +49,12 @@ export const POST = async (request: NextRequest) => {
       },
     });
 
+    if (!interviewQnA) {
+      return NextResponse.json({ message: NOT_FOUND }, { status: 404 });
+    }
+
     await prisma.interviewQnA.update({
-      where: { id },
+      where: { id: interviewQnA.id },
       data: { answer: response },
     });
 

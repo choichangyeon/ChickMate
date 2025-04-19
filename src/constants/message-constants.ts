@@ -127,3 +127,9 @@ export const INTERVIEW_HISTORY = {
     FORBIDDEN: '해당 면접 기록을 수정할 권한이 없습니다.',
   },
 };
+
+export const INTERVIEW_QNA_MESSAGE = {
+  API: {
+    NOT_FOUND: '해당 QnA의 ID를 찾을 수 없습니다.',
+  },
+};

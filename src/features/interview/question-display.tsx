@@ -1,8 +1,7 @@
 import Image from 'next/image';
 import Typography from '@/components/ui/typography';
-import { INTERVIEW_TYPE, INTERVIEW_TYPE_KR } from '@/constants/interview-constants';
+import { INTERVIEW_LIMIT_COUNT, INTERVIEW_TYPE, INTERVIEW_TYPE_KR } from '@/constants/interview-constants';
 import { useInterviewStore } from '@/store/use-interview-store';
-import { INTERVIEW_LIMIT_COUNT } from '@/features/interview/hooks/use-audio-with-timer';
 import type { InterviewHistory } from '@prisma/client';
 
 const { CALM } = INTERVIEW_TYPE;

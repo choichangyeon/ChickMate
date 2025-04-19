@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useInterviewStore } from '@/store/use-interview-store';
+import { INTERVIEW_LIMIT_COUNT } from '@/constants/interview-constants';
 import { useAudioRecorder } from '@/features/interview/hooks/use-audio-recorder';
-import { useTimer } from '@/features/interview/hooks/use-timer';
 import { usePreventPageUnload } from '@/features/resume/hooks/use-prevent-page-load';
-import { handleVoiceToAIFlow } from '../utils/handle-voice-to-ai-flow';
+import { useTimer } from '@/features/interview/hooks/use-timer';
+import { handleVoiceToAIFlow } from '@/features/interview/utils/handle-voice-to-ai-flow';
 import type { InterviewHistory } from '@prisma/client';
-
-export const INTERVIEW_LIMIT_COUNT = 3;
 
 type Props = {
   duration: number;

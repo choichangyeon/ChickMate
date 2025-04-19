@@ -2,7 +2,7 @@ import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
 
-const { TTS, STT, ROOT, INTERVIEW_START, INTERVIEW_LIVE } = ROUTE_HANDLER_PATH.AI;
+const { TTS, STT, ROOT, INTERVIEW_START, INTERVIEW_LIVE, FEEDBACK } = ROUTE_HANDLER_PATH.AI;
 const { POST, PATCH } = API_METHOD;
 const { JSON_HEADER } = API_HEADER;
 
@@ -77,6 +77,13 @@ export const postOpenAIQuestion = async ({ userAnswer, interviewId, interviewTyp
   });
 
   return question;
+};
+
+export const postAIInterviewFeedback = async ({ interviewId }: Pick<OpenAIProps, 'interviewId'>): Promise<void> => {
+  await fetchWithSentry(FEEDBACK, {
+    method: POST,
+    body: JSON.stringify({ interviewId }),
+  });
 };
 
 /**

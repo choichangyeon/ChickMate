@@ -31,6 +31,7 @@ export const ROUTE_HANDLER_PATH = {
     INTERVIEW: '/api/ai/interview',
     INTERVIEW_START: (id: number) => `/api/ai/interview/${id}`,
     INTERVIEW_LIVE: (id: number) => `/api/ai/interview/${id}`,
+    FEEDBACK: '/api/ai/feedback',
   },
   RESUME: {
     ROOT: '/api/resume',

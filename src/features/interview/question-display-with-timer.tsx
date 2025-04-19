@@ -17,13 +17,13 @@ const QuestionDisplayWithTimer = ({ interviewHistory }: Props) => {
 
   return (
     <section className='flex gap-5'>
-      <QuestionDisplay interviewHistory={interviewHistory} aiQuestion={aiQuestion} />
+      <QuestionDisplay interviewHistory={interviewHistory} aiQuestion={aiQuestion ?? '질문을 생성 중입니다.'} />
       <Timer
         interviewHistory={interviewHistory}
         isRecording={isRecording}
         isAIVoicePlaying={isAIVoicePlaying}
         formattedTime={formattedTime}
-        aiQuestion={aiQuestion}
+        aiQuestion={aiQuestion ?? '질문을 생성 중입니다.'}
         startRecordingWithTimer={startRecordingWithTimer}
         stopRecordingWithTimer={stopRecordingWithTimer}
       />

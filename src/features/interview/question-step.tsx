@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import { useInterviewStore } from '@/store/use-interview-store';
 
-const QUESTION_STEP = 8;
+const QUESTION_STEP = 7;
 
 const QuestionStep = () => {
   const questionIndex = useInterviewStore((state) => state.questionIndex);

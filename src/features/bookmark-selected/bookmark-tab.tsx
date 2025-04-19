@@ -27,7 +27,7 @@ const BookmarkTab = ({ bookmark, index, length, userId }: Props) => {
   });
 
   const { jobPosting } = bookmark;
-  const { companyName, positionTitle, experienceName, experienceCode } = jobPosting;
+  const { companyName, positionTitle, experienceCode } = jobPosting;
 
   const postedAtDate = formatTimestamp({ input: jobPosting.openingTimestamp });
   const expiredAtDate = formatTimestamp({ input: jobPosting.expirationTimestamp });

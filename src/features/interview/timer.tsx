@@ -10,7 +10,7 @@ import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import { PATH } from '@/constants/path-constant';
 import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
 import { usePatchInterviewHistoryMutation } from '@/features/interview/hooks/use-interview-history-mutation';
-import { postAIInterviewFeedback } from '@/features/interview/api/client-services';
+import { usePostAIFeedbackMutation } from '@/features/interview/hooks/use-ai-feedback-mutation';
 import type { InterviewHistory } from '@prisma/client';
 
 const { MY_PAGE } = PATH;
@@ -39,6 +39,7 @@ const Timer = ({
 }: Props) => {
   const router = useRouter();
   const { mutate: patchInterviewHistoryMutate } = usePatchInterviewHistoryMutation();
+  const { mutate: postAIFeedbackMutate } = usePostAIFeedbackMutation();
 
   const characterId = useCharacterStore((state) => state.characterId);
   const { handleExperienceUp } = useExperienceUp();
@@ -57,7 +58,7 @@ const Timer = ({
   const handleCompletedButtonClick = async () => {
     if (!characterId) {
       patchInterviewHistoryMutate(interviewHistory.id);
-      await postAIInterviewFeedback({ interviewId: interviewHistory.id });
+      postAIFeedbackMutate(interviewHistory.id);
       router.push(MY_PAGE);
     }
 
@@ -66,7 +67,7 @@ const Timer = ({
     alert('경험치 획득 완료!'); //@TODO: 경험치 정의 완료된 후에 alert 리팩토링하면서 상수로 빼겠습니다.
 
     patchInterviewHistoryMutate(interviewHistory.id);
-    await postAIInterviewFeedback({ interviewId: interviewHistory.id });
+    postAIFeedbackMutate(interviewHistory.id);
     router.push(MY_PAGE);
   };
 

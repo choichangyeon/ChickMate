@@ -53,7 +53,7 @@ export const GET = async (request: NextRequest, { params }: Props) => {
     });
 
     const totalCount = await prisma.interviewHistory.count({
-      where: { userId },
+      where: { userId, status: COMPLETED_INTERVIEW_CODE },
     });
     const nextPage = pageNumber * limitNumber < totalCount ? pageNumber + 1 : null;
     if (!histories) return NextResponse.json({ data: [], nextPage }, { status: 200 });

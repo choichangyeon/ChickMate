@@ -150,7 +150,7 @@ model InterviewQnA {
   answer             String?
   createdAt          DateTime @default(now()) @map("created_at")
 
-  interviewHistory InterviewHistory @relation(fields: [interviewHistoryId], references: [id])
+  interviewHistory  InterviewHistory @relation(fields: [interviewHistoryId], references: [id], onDelete: Cascade)
 
   @@map("interview_qna")
 }

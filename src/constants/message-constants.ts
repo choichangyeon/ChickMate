@@ -117,6 +117,7 @@ export const HISTORY_MESSAGE = {
 export const INTERVIEW_MESSAGE = {
   CAMERA_ACCESS: '카메라 사용 권한이 거부되었거나 장치에 문제가 있습니다.',
   MIC_ACCESS: '마이크 사용 권한이 거부되었거나 장치에 문제가 있습니다.',
+  DELETE_SUCCEESS: '인터뷰 기록을 삭제했습니다.'
 };
 
 export const INTERVIEW_HISTORY = {

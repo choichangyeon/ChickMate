@@ -1,8 +1,10 @@
 'use client';
+
 import { TABS } from '@/constants/my-page-constants';
 import { useTabStore } from '@/store/use-tab-store';
 import InterviewHistoryList from '@/features/interview-history/interview-history-list';
 import BookmarkSelectedList from '@/features/bookmark-selected/bookmark-selected-list';
+import ResumeList from '../resume-list/resume-list';
 
 const { HISTORY, BOOKMARK, RESUME } = TABS;
 
@@ -14,7 +16,7 @@ const ListByTab = () => {
     case BOOKMARK:
       return <BookmarkSelectedList />;
     case RESUME:
-      return <div>자소서 컴포넌트 연결</div>;
+      return <ResumeList />;
     default:
       <InterviewHistoryList />;
   }

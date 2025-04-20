@@ -56,7 +56,10 @@ export const useAudioWithTimer = ({ duration, interviewHistory }: Props) => {
     setIsAIVoicePlaying(true);
     const data = await handleVoiceToAIFlow({ blob, interviewType, interviewId });
 
-    if (!data) return;
+    if (!data) {
+      setIsAIVoicePlaying(false);
+      return;
+    }
     const { audio, aiQuestion } = data;
 
     if (questionIndex < INTERVIEW_LIMIT_COUNT - 1) {

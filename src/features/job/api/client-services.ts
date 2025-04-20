@@ -11,7 +11,9 @@ const EMPTY_LIST_NUMBER = 0;
 
 type UserMetaDataProps = UserMetaDataType;
 
-export const getJobByUserMetaData = async (userMetaData: UserMetaDataProps): Promise<JobPosting[]> => {
+export const getJobByUserMetaData = async (
+  userMetaData: UserMetaDataProps
+): Promise<(JobPosting & { isBookmarked: boolean })[]> => {
   const { requiredEducationName, locationName, experienceName, jobMidCodeName } = userMetaData;
   const queryParams = new URLSearchParams({
     requiredEducationName,
@@ -26,7 +28,7 @@ export const getJobByUserMetaData = async (userMetaData: UserMetaDataProps): Pro
     headers: JSON_HEADER,
   });
 
-  const jobPostingList: JobPosting[] = response;
+  const jobPostingList: (JobPosting & { isBookmarked: boolean })[] = response;
 
   return jobPostingList;
 };

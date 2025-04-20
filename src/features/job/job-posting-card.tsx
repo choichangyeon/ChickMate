@@ -10,11 +10,12 @@ import { formatRemainDay } from '@/utils/format-remain-day';
 import { formatTimestamp } from '@/utils/format-timestamp';
 
 type Props = {
-  jobPosting: JobPosting;
+  jobPosting: JobPosting & { isBookmarked: boolean };
 };
 
 const JobPostingCard = ({ jobPosting }: Props) => {
-  const { companyName, positionTitle, experienceName, expirationTimestamp, openingTimestamp, id, url } = jobPosting;
+  const { companyName, positionTitle, experienceName, expirationTimestamp, openingTimestamp, id, url, isBookmarked } =
+    jobPosting;
   const postedAtDate = formatTimestamp({ input: openingTimestamp });
   const expiredAtDate = formatTimestamp({ input: expirationTimestamp });
   const remainDay = formatRemainDay(expirationTimestamp);
@@ -28,7 +29,7 @@ const JobPostingCard = ({ jobPosting }: Props) => {
               {companyName}
             </Typography>
             {/* TODO: iconButton component 적용 */}
-            <Bookmark jobPostingId={id} />
+            <Bookmark jobPostingId={id} isBookmarked={isBookmarked} />
           </div>
           <Typography as='h3' weight='bold' lineClamp='2'>
             {positionTitle}

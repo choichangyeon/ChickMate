@@ -35,13 +35,17 @@ export const GET = async (request: NextRequest, { params }: RouteParams) => {
         userId: session.user.id,
         id: interviewId,
       },
+      include: {
+        resume: true,
+        InterviewQnAList: true,
+      },
     });
 
     if (!response) {
       return NextResponse.json({ message: NOT_FOUND }, { status: 404 });
     }
 
-    return NextResponse.json({ response });
+    return NextResponse.json({ response }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: GET_ERROR }, { status: 500 });
   }
@@ -132,5 +136,46 @@ export const PATCH = async (request: NextRequest, { params }: RouteParams) => {
     return NextResponse.json({ response }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: PATCH_SERVER_ERROR }, { status: 500 });
+  }
+};
+
+/**
+ * 원하는 인터뷰 기록 삭제 요청
+ */
+export const DELETE = async (request: NextRequest, { params }: RouteParams) => {
+  const interviewId = Number(params.id);
+
+  try {
+    const token = await getToken({ req: request, secret: NEXTAUTH_SECRET });
+    if (!token) return NextResponse.json({ message: EXPIRED_TOKEN }, { status: 401 });
+
+    const session = await getServerSession(authOptions);
+    if (!session || !session.user) {
+      return NextResponse.json({ message: AUTH_REQUIRED }, { status: 401 });
+    }
+
+    const existing = await prisma.interviewHistory.findUnique({
+      where: {
+        userId: session.user.id,
+        id: interviewId,
+      },
+    });
+
+    console.log(existing);
+
+    if (!existing) {
+      return NextResponse.json({ message: NOT_FOUND }, { status: 404 });
+    }
+
+    await prisma.interviewHistory.delete({
+      where: {
+        id: interviewId,
+      },
+    });
+
+    return NextResponse.json({ message: '삭제 완료' }, { status: 200 });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ message: GET_SERVER_ERROR }, { status: 500 });
   }
 };

@@ -73,6 +73,7 @@ type OpenAIProps = {
 export const postOpenAIQuestion = async ({ userAnswer, interviewId, interviewType }: OpenAIProps): Promise<string> => {
   const { response: question } = await fetchWithSentry(ROOT, {
     method: POST,
+    headers: JSON_HEADER,
     body: JSON.stringify({ userAnswer, interviewId, interviewType }),
   });
 
@@ -82,6 +83,7 @@ export const postOpenAIQuestion = async ({ userAnswer, interviewId, interviewTyp
 export const postAIInterviewFeedback = async ({ interviewId }: Pick<OpenAIProps, 'interviewId'>): Promise<void> => {
   await fetchWithSentry(FEEDBACK, {
     method: POST,
+    headers: JSON_HEADER,
     body: JSON.stringify({ interviewId }),
   });
 };

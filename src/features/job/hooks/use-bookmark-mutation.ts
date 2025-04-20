@@ -12,6 +12,7 @@ type Props = {
 export const useBookmarkMutation = ({ jobPostingId, userId }: Props) => {
   const queryClient = useQueryClient();
   return useMutation({
+    // TODO: JobPosting과 BookMark queryKey 재설정 필요 - 불필요한 cache context가 너무 많이 생김
     mutationKey: [BOOKMARK, jobPostingId],
     mutationFn: async (isBookmarked: boolean) => {
       return await postBookmarkWithJobPostingId({ jobPostingId, isBookmarked });

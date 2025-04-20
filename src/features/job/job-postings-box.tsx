@@ -20,7 +20,8 @@ const JobPostingsBox = ({ userId }: Props) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const userMetaData = queryClient.getQueryData([META_DATA, userId]) as UserMetaDataType;
-  const { data: jobPostingList, isError, isPending } = useJobPostingQuery({ userMetaData });
+
+  const { data: jobPostingList, isError, isPending } = useJobPostingQuery({ userMetaData, userId });
 
   if (isPending) {
     // TODO: 로딩스피너
@@ -64,39 +65,8 @@ const JobPostingsBox = ({ userId }: Props) => {
       {jobPostingList.map((jobPosting) => (
         <JobPostingCard key={jobPosting.id} jobPosting={jobPosting}></JobPostingCard>
       ))}
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
     </section>
   );
 };
 
 export default JobPostingsBox;
-
-const mockJobPosting = {
-  id: 10,
-  companyName: '삼성전자',
-  positionTitle: '삼성전자 신입사원 모집',
-  experienceCode: 1,
-  experienceName: '신입',
-  openingTimestamp: 11,
-  expirationTimestamp: 11,
-  jobMidCodeName: '의료',
-  locationName: '서울',
-  requiredEducationCode: 3,
-  requiredEducationName: '대졸(4년)',
-  url: 'https://www.samsung.com/sec/careers/',
-  employmentType: '정규직',
-  createdAt: new Date(),
-};

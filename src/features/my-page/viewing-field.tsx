@@ -5,7 +5,7 @@ import { Session } from 'next-auth';
 import MyInfo from '@/features/my-page/my-info';
 import { useSearchParams } from 'next/navigation';
 import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
-import InterviewDetailField from './interview-detail-field';
+import InterviewDetailField from '../interview-history/interview-detail-field';
 
 type Props = {
   session: Session;
@@ -28,7 +28,7 @@ const ViewingField = ({ session }: Props) => {
           </div>
         </>
       )}
-      {tab === 'interviewHistories' && <InterviewDetailField id={id} />}
+      {tab === 'interviewHistories' && <InterviewDetailField id={Number(id)} />}
     </section>
   );
 };

@@ -112,12 +112,12 @@ export const HISTORY_MESSAGE = {
     QUERY_PARAMS_TYPE: 'page 또는 limit이 유효하지 않습니다.',
   },
   GET_SERVER_ERROR: '히스토리를 불러올 수 없습니다.',
+  DELETE_SUCCEESS: '인터뷰 기록을 삭제했습니다.',
 };
 
 export const INTERVIEW_MESSAGE = {
   CAMERA_ACCESS: '카메라 사용 권한이 거부되었거나 장치에 문제가 있습니다.',
   MIC_ACCESS: '마이크 사용 권한이 거부되었거나 장치에 문제가 있습니다.',
-  DELETE_SUCCEESS: '인터뷰 기록을 삭제했습니다.'
 };
 
 export const INTERVIEW_HISTORY = {

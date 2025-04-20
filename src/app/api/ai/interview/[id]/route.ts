@@ -5,6 +5,7 @@ import { authOptions } from '@/utils/auth-option';
 import { getServerSession } from 'next-auth';
 import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
+import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 import type { RouteParams } from '@/types/route-params';
 
 const { NEXTAUTH_SECRET } = ENV;
@@ -124,7 +125,7 @@ export const PATCH = async (request: NextRequest, { params }: RouteParams) => {
       where: { id: interviewId },
       data: {
         userId: session.user.id,
-        status: 1,
+        status: INTERVIEW_HISTORY_STATUS.COMPLETED,
       },
     });
 

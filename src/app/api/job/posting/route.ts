@@ -22,7 +22,6 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
     if (!requiredEducationName || !locationName || !experienceName || !jobMidCodeName) {
       return NextResponse.json({ message: DB_REQUEST_ERROR }, { status: 400 });
     }
-
     // const mainRegion = JSON.parse(location).mainRegion;
     const userLevelNum = educationOrder[requiredEducationName as keyof typeof educationOrder];
     const response: JobPosting[] = await prisma.jobPosting.findMany({
@@ -30,8 +29,12 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
         requiredEducationCode: {
           lte: userLevelNum,
         },
-        experienceName,
-        jobMidCodeName,
+        experienceName: {
+          contains: experienceName,
+        },
+        jobMidCodeName: {
+          contains: jobMidCodeName,
+        },
         locationName: {
           contains: locationName,
         },

@@ -9,3 +9,8 @@ export const INTERVIEW_TYPE_KR = {
 } as const;
 
 export const INTERVIEW_LIMIT_COUNT = 3;
+
+export const INTERVIEW_HISTORY_STATUS = {
+  PENDING: 0,
+  COMPLETED: 1,
+};

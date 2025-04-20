@@ -7,6 +7,7 @@ import { getInterviewHistory } from '@/features/interview/api/server-services';
 import QuestionDisplayWithTimer from '@/features/interview/question-display-with-timer';
 import QuestionStep from '@/features/interview/question-step';
 import type { RouteParams } from '@/types/route-params';
+import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 
 export const metadata: Metadata = {
   title: 'AI 면접',
@@ -20,7 +21,7 @@ const InterviewPage = async ({ params }: RouteParams) => {
 
   if (!session || !interviewHistory) return null;
 
-  if (interviewHistory.status === 1) {
+  if (interviewHistory.status === INTERVIEW_HISTORY_STATUS.COMPLETED) {
     return <div>이미 완료된 면접입니다.</div>;
   }
 

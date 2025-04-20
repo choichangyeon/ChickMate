@@ -25,11 +25,13 @@ export const ROUTE_HANDLER_PATH = {
     SIGN_IN: '/api/auth/sign-in',
   },
   AI: {
+    ROOT: '/api/ai',
     STT: '/api/ai/stt',
     TTS: '/api/ai/tts',
     INTERVIEW: '/api/ai/interview',
     INTERVIEW_START: (id: number) => `/api/ai/interview/${id}`,
-    INTERVIEW_LIVE:(id: number) => `/api/ai/interview/${id}`,
+    INTERVIEW_LIVE: (id: number) => `/api/ai/interview/${id}`,
+    FEEDBACK: '/api/ai/feedback',
   },
   RESUME: {
     ROOT: '/api/resume',

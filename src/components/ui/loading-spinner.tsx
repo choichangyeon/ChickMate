@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 type Props = {
   size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
 };
@@ -14,7 +16,12 @@ const spinnerSize = {
 const LoadingSpinner = ({ size = 'md' }: Props) => {
   return (
     <div
-      className={`role="status" aria-label="로딩 중" animate-spin rounded-full ${spinnerSize[size]} border-4 border-b-secondary-amber border-l-secondary-yellow border-r-secondary-amber border-t-secondary-yellow opacity-80`}
+      role='status'
+      aria-label='로딩 중'
+      className={clsx(
+        'animate-spin rounded-full border-4 border-b-secondary-amber border-l-secondary-yellow border-r-secondary-amber border-t-secondary-yellow opacity-80',
+        spinnerSize[size]
+      )}
     />
   );
 };

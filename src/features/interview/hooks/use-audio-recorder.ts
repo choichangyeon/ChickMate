@@ -32,7 +32,7 @@ export const useAudioRecorder = () => {
       mediaRecorder.start();
       setIsRecording(true);
     } catch (error) {
-      alert('MIC_ACCESS');
+      alert(MIC_ACCESS);
     }
   };
 

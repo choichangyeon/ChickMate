@@ -2,15 +2,31 @@
 
 import ResumeItem from '@/features/resume-list/resume-item';
 import { useResumeListQuery } from '@/features/resume-list/hooks/use-resume-list-infinite-query';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 
 const ResumeList = () => {
   const { data: resumeList, isPending, isError } = useResumeListQuery();
 
+  if (isPending) {
+    return (
+      <div className='flex h-full items-center justify-center'>
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (isError) return <div>자소서 리스트를 불러오는데 실패하였습니다.</div>;
+
   return (
     <div>
-      <ul className='h-full overflow-y-auto scrollbar-hide'>
+      <ul className='flex h-full flex-col gap-4 overflow-y-auto scrollbar-hide'>
         {resumeList.map((resume) => {
-          return <ResumeItem key={resume.id} resume={resume} />;
+          return (
+            <div className='flex flex-col gap-4'>
+              <ResumeItem key={resume.id} resume={resume} />
+              <hr className='border-cool-gray-300' />
+            </div>
+          );
         })}
       </ul>
     </div>

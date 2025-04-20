@@ -33,7 +33,12 @@ const InterviewHistoryList = () => {
     hasNextPage,
   });
 
-  if (isPending) return <LoadingSpinner />;
+  if (isPending)
+    return (
+      <div className='flex h-full items-center justify-center'>
+        <LoadingSpinner />
+      </div>
+    );
   if (isError) return <ErrorComponent />;
 
   const handleGetDetailList = (historyId: InterviewHistory['id']) => {

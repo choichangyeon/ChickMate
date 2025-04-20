@@ -14,8 +14,7 @@ type Props = {
 
 export const useJobPostingQuery = ({ userMetaData, userId }: Props) => {
   return useQuery({
-    // TODO: JobPosting과 BookMark queryKey 재설정 필요 - 불필요한 cache context가 너무 많이 생김
-    queryKey: [JOB_POSTING, 0],
+    queryKey: [JOB_POSTING, userId],
     queryFn: () => getJobByUserMetaData(userMetaData),
     staleTime: AN_HOUR,
   });

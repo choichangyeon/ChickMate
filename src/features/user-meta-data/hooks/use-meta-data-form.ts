@@ -15,6 +15,8 @@ import type { SelectBoxType } from '@/types/select-box';
 import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
 import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import { useCharacterStore } from '@/store/use-character-store';
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/constants/query-key';
 
 const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
 const {
@@ -25,6 +27,7 @@ const {
 } = USER_META_DATA_FORM_MESSAGE;
 const { USER_META_DATA } = MODAL_ID;
 const { FILL_OUT_META_DATA } = CHARACTER_HISTORY_KEY;
+const { JOB_POSTING } = QUERY_KEY;
 
 export const useMetaDataForm = (userId: string) => {
   const { data: metaData, isPending: isMetaDataPending } = useMetaDataQuery({ userId });
@@ -32,6 +35,7 @@ export const useMetaDataForm = (userId: string) => {
   const toggleModal = useModalStore((state) => state.toggleModal);
   const { handleExperienceUp } = useExperienceUp();
   const characterId = useCharacterStore((state) => state.characterId);
+  const queryClient = useQueryClient();
 
   const isFirstTime = metaData === null && characterId !== null;
 
@@ -88,6 +92,10 @@ export const useMetaDataForm = (userId: string) => {
         if (isFirstTime) handleExperienceUp(FILL_OUT_META_DATA);
         alert(isFirstTime ? CHARACTER_POST_SUCCESS : POST_DATA_SUCCESS);
         toggleModal(USER_META_DATA);
+        queryClient.invalidateQueries({
+          queryKey: [JOB_POSTING, userId],
+          exact: true,
+        });
       },
     });
   };

@@ -134,23 +134,23 @@ model InterviewHistory {
   createdAt     DateTime @default(now()) @map("created_at")
   interviewType String   @map("interview_type")
   status        Int      @default(0)
-  
+
   InterviewQnAList InterviewQnA[]
 
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  resume        Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 
   @@map("interview_history")
 }
 
 model InterviewQnA {
-  id                 Int    @id @default(autoincrement())
+  id                 Int      @id @default(autoincrement())
   interviewHistoryId Int      @map("interview_history_id")
   question           String?
   answer             String?
   createdAt          DateTime @default(now()) @map("created_at")
 
-  interviewHistory  InterviewHistory @relation(fields: [interviewHistoryId], references: [id])
+  interviewHistory InterviewHistory @relation(fields: [interviewHistoryId], references: [id])
 
   @@map("interview_qna")
 }
@@ -168,7 +168,6 @@ model JobPosting {
   jobMidCodeName        String   @map("job_mid_code_name")
   openingTimestamp      Int      @map("opening_timestamp")
   expirationTimestamp   Int      @map("expiration_timestamp")
-  active                Int
   createdAt             DateTime @default(now()) @map("created_at")
 
   userSelectedJobs UserSelectedJob[]

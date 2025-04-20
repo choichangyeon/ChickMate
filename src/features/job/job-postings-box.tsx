@@ -18,8 +18,10 @@ const { META_DATA } = QUERY_KEY;
 const JobPostingsBox = ({ userId }: Props) => {
   // TODO: 추후 변경 가능성 고려
   const queryClient = useQueryClient();
+  const router = useRouter();
   const userMetaData = queryClient.getQueryData([META_DATA, userId]) as UserMetaDataType;
-  const { data: jobPostingList, isError, isPending } = useJobPostingQuery({ userMetaData });
+
+  const { data: jobPostingList, isError, isPending } = useJobPostingQuery({ userMetaData, userId });
 
   if (isPending) {
     // TODO: 로딩스피너
@@ -42,9 +44,8 @@ const JobPostingsBox = ({ userId }: Props) => {
     );
   }
 
-  const router = useRouter();
   if (!jobPostingList || jobPostingList.length === 0) {
-    // TODO: 그 외에 아이콘 추가
+    // TODO: 이 부분은 수정 고려
     return (
       <section className='flex h-[400px] flex-col items-center justify-center self-stretch'>
         <BlockComponent
@@ -64,40 +65,8 @@ const JobPostingsBox = ({ userId }: Props) => {
       {jobPostingList.map((jobPosting) => (
         <JobPostingCard key={jobPosting.id} jobPosting={jobPosting}></JobPostingCard>
       ))}
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
-      <JobPostingCard jobPosting={mockJobPosting}></JobPostingCard>
     </section>
   );
 };
 
 export default JobPostingsBox;
-
-const mockJobPosting = {
-  id: 10,
-  company: '삼성전자',
-  title: '삼성전자 신입사원 모집',
-  experienceType: '신입',
-  expiredAt: new Date('2025-04-21'),
-  postedAt: new Date('2025-06-01'),
-  jobType: '의료',
-  location: {
-    mainRegion: '서울',
-    subRegion: '강남구',
-  },
-  educationLevel: '대졸(4년)',
-  url: 'https://www.samsung.com/sec/careers/',
-  employmentType: '정규직',
-  createdAt: new Date(),
-};

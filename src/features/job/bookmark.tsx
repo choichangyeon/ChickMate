@@ -1,19 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useBookmarkQuery } from '@/features/job/hooks/use-bookmark-query';
 import { useBookmarkMutation } from '@/features/job/hooks/use-bookmark-mutation';
-import Button from '@/components/ui/button';
 import { Star } from '@/components/icons/star';
 
 type Props = {
   jobPostingId: number;
+  isBookmarked: boolean;
 };
 
-const Bookmark = ({ jobPostingId }: Props) => {
-  const { data: isBookmarked } = useBookmarkQuery({ jobPostingId });
+const Bookmark = ({ jobPostingId, isBookmarked }: Props) => {
   const { mutate: bookmarkMutate } = useBookmarkMutation({ jobPostingId });
-  const [isMarked, setIsMarked] = useState<boolean | undefined>(isBookmarked);
+  const [isMarked, setIsMarked] = useState<boolean>(isBookmarked);
 
   useEffect(() => {
     setIsMarked(isBookmarked);
@@ -21,6 +19,7 @@ const Bookmark = ({ jobPostingId }: Props) => {
 
   const handleClick = () => {
     bookmarkMutate(isMarked!);
+    setIsMarked(!isMarked);
     // TODO: alert 구현
   };
 

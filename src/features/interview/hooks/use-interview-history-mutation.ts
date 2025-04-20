@@ -10,5 +10,8 @@ export const usePatchInterviewHistoryMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.HISTORY] });
     },
+    onError: (error) => {
+      throw error;
+    },
   });
 };

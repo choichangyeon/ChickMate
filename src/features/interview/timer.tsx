@@ -37,14 +37,22 @@ const Timer = ({
   stopRecordingWithTimer,
 }: Props) => {
   const router = useRouter();
-  const { mutate: patchInterviewHistoryMutate } = usePatchInterviewHistoryMutation();
-  const { mutate: postAIFeedbackMutate } = usePostAIFeedbackMutation();
+  const { mutate: patchInterviewHistoryMutate, error: InterviewHistoryError } = usePatchInterviewHistoryMutation();
+  const { mutate: postAIFeedbackMutate, error: aiFeedbackError } = usePostAIFeedbackMutation();
 
   const characterId = useCharacterStore((state) => state.characterId);
   const { handleExperienceUp } = useExperienceUp();
 
   const questionIndex = useInterviewStore((state) => state.questionIndex);
   const isFinalQuestionAsked = questionIndex >= INTERVIEW_LIMIT_COUNT;
+
+  {
+    /** TODO: 에러 처리 알림에 대한 고민 필요 */
+  }
+  if (InterviewHistoryError || aiFeedbackError) {
+    alert(InterviewHistoryError.message);
+    alert(aiFeedbackError.message);
+  }
 
   const handleButtonClick = () => {
     if (isRecording) {
@@ -55,15 +63,11 @@ const Timer = ({
   };
 
   const handleCompletedButtonClick = async () => {
-    if (!characterId) {
-      patchInterviewHistoryMutate(interviewHistory.id);
-      postAIFeedbackMutate(interviewHistory.id);
-      router.push(MY_PAGE);
+    if (characterId) {
+      //@TODO: 캐릭터 아이디 있을 때만
+      handleExperienceUp(INTERVIEW_COMPLETION);
+      alert('경험치 획득 완료!'); //@TODO: 경험치 정의 완료된 후에 alert 리팩토링하면서 상수로 빼겠습니다.
     }
-
-    //@TODO: 캐릭터 아이디 있을 때만
-    handleExperienceUp(INTERVIEW_COMPLETION);
-    alert('경험치 획득 완료!'); //@TODO: 경험치 정의 완료된 후에 alert 리팩토링하면서 상수로 빼겠습니다.
 
     patchInterviewHistoryMutate(interviewHistory.id);
     postAIFeedbackMutate(interviewHistory.id);

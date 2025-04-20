@@ -21,7 +21,8 @@ const InterviewDetailHistory = ({ data }: Props) => {
           <li key={idx}>
             <div className='flex gap-4'>
               <div>
-                <Image src='/assets/character/header/poly-level6.png' width={48} height={48} alt='interview-img' />
+                {/* 면접관 원형 이미지 추가 시 calm, pressure에 따른 이미지 변경 */}
+                <Image src='/assets/character/header/poly-level6.png' width={48} height={48} alt='interviewer-img' />
               </div>
               <div>
                 <Typography weight='bold' color='primary-600'>

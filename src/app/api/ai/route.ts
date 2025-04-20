@@ -53,7 +53,7 @@ export const POST = async (request: NextRequest) => {
     /** AI 시스템 설정 */
     const systemMessage: ChatCompletionMessageParam = {
       role: 'system',
-      content: SYSTEM_INTERVIEW_PROMPT[interviewType] + userResume,
+      content: `${SYSTEM_INTERVIEW_PROMPT[interviewType]} \n 다음은 지원자의 자기소개서 내용 입니다.: ${userResume}`,
     };
 
     /** 이전 대화 내용 */

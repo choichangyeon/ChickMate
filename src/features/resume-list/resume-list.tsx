@@ -9,7 +9,7 @@ const ResumeList = () => {
 
   if (isPending) {
     return (
-      <div className='flex h-full items-center justify-center'>
+      <div className='flex h-[70dvh] flex-col items-center justify-center'>
         <LoadingSpinner />
       </div>
     );
@@ -22,8 +22,8 @@ const ResumeList = () => {
       <ul className='flex h-full flex-col gap-4 overflow-y-auto scrollbar-hide'>
         {resumeList.map((resume) => {
           return (
-            <div className='flex flex-col gap-4'>
-              <ResumeItem key={resume.id} resume={resume} />
+            <div key={resume.id} className='flex flex-col gap-4'>
+              <ResumeItem resume={resume} />
               <hr className='border-cool-gray-300' />
             </div>
           );

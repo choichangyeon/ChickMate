@@ -19,25 +19,21 @@ const { RESUME_DRAFT } = QUERY_KEY;
 const { DRAFT } = RESUME_STATUS;
 
 const ResumePage = async () => {
-  const session = await getServerSession(authOptions);
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: [RESUME_DRAFT],
     queryFn: () => serverActionWithSentry(() => getResumeList(DRAFT)),
   });
 
-  if (!session) return null;
-
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <main className='flex w-full gap-4 px-[50px] py-8'>
-        <section className='flex w-full flex-col gap-4'>
+        <section className='mx-auto flex w-full max-w-[786px] flex-col gap-4'>
           <Typography as='h2' size='2xl' weight='bold'>
             <span className='text-primary-orange-600'>자소서</span>를 작성 해 볼까요?
           </Typography>
           <ResumeForm />
         </section>
-        <UserInfoSummary session={session} />
       </main>
     </HydrationBoundary>
   );

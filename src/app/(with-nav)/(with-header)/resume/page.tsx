@@ -1,13 +1,10 @@
 import { Metadata } from 'next';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/utils/auth-option';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-key';
 import { RESUME_STATUS } from '@/constants/resume-constants';
 import Typography from '@/components/ui/typography';
 import { serverActionWithSentry } from '@/utils/server-action-with-sentry';
 import ResumeForm from '@/features/resume/resume-form';
-import UserInfoSummary from '@/features/resume/user-info-summary';
 import { getResumeList } from '@/features/resume/api/server-services';
 
 export const metadata: Metadata = {

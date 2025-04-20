@@ -2,8 +2,9 @@
 
 import clsx from 'clsx';
 import { useInterviewStore } from '@/store/use-interview-store';
+import { INTERVIEW_LIMIT_COUNT } from '@/constants/interview-constants';
 
-const QUESTION_STEP = 7;
+const QUESTION_STEP = INTERVIEW_LIMIT_COUNT - 1;
 
 const QuestionStep = () => {
   const questionIndex = useInterviewStore((state) => state.questionIndex);

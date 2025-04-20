@@ -17,6 +17,7 @@ export const handleVoiceToAIFlow = async ({ blob, interviewId, interviewType }: 
     return { audio, aiQuestion };
   } catch (error) {
     if (error instanceof Error) {
+      alert(error.message);
     }
   }
 };

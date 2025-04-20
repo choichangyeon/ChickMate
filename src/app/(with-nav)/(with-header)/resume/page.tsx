@@ -11,7 +11,7 @@ import UserInfoSummary from '@/features/resume/user-info-summary';
 import { getResumeList } from '@/features/resume/api/server-services';
 
 export const metadata: Metadata = {
-  title: '자기소개서 작성',
+  title: '🐣ChickMate - 자기소개서 작성',
   description: 'ChickMate에서 자기소개서를 관리해보세요.',
 };
 

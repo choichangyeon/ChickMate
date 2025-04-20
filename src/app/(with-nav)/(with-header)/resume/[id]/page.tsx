@@ -12,7 +12,7 @@ import { getResumeById, getResumeList } from '@/features/resume/api/server-servi
 import type { RouteParams } from '@/types/route-params';
 
 export const metadata: Metadata = {
-  title: '자기소개서',
+  title: '🐣ChickMate - 자기소개서',
   description: 'ChickMate에서 자기소개서를 관리해보세요.',
 };
 

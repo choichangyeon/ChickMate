@@ -10,9 +10,9 @@ const { EXPIRED_TOKEN } = AUTH_MESSAGE.ERROR;
 const { NOT_FILE, SERVER_ERROR } = AI_MESSAGE.STT;
 const { NOT_FOUND } = INTERVIEW_QNA_MESSAGE.API;
 
-const STT_OPTIONS = {
-  MODEL: 'gpt-4o-transcribe',
-  LANGUAGE: 'ko',
+const DEFAULT_STT_OPTIONS = {
+  model: 'gpt-4o-transcribe',
+  language: 'ko',
 } as const;
 
 /**
@@ -35,8 +35,7 @@ export const POST = async (request: NextRequest) => {
 
     const { text: response } = await openAi.audio.transcriptions.create({
       file,
-      model: STT_OPTIONS.MODEL,
-      language: STT_OPTIONS.LANGUAGE,
+      ...DEFAULT_STT_OPTIONS,
     });
 
     const interviewQnA = await prisma.interviewQnA.findFirst({

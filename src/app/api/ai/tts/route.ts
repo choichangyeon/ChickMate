@@ -10,23 +10,21 @@ const { EXPIRED_TOKEN } = AUTH_MESSAGE.ERROR;
 const { REQUEST_FAILURE, SERVER_ERROR } = AI_MESSAGE.TTS;
 const { PRESSURE } = INTERVIEW_TYPE;
 
-const TTS_OPTIONS = {
-  MODEL: 'gpt-4o-mini-tts',
-  FORMAT: 'mp3',
+const DEFAULT_TTS_OPTIONS = {
+  model: 'gpt-4o-mini-tts',
+  response_format: 'mp3',
 } as const;
 
 const INTERVIEW_VOICE_OPTIONS = {
   CALM_OPTIONS: {
     VOICE: 'ash',
     SPEED: 1,
-    INSTRUCTION: `Uses a friendly and gentle tone of voice.
-    Rather than challenging the candidate's answers, frequently provides emotional empathy or positive reactions.`,
+    INSTRUCTION: `Uses a friendly and gentle tone of voice. Rather than challenging the candidate's answers, frequently provides emotional empathy or positive reactions.`,
   },
   PRESSURE_OPTIONS: {
     VOICE: 'sage',
     SPEED: 2.5,
-    INSTRUCTION: `Uses a firm and dry tone of voice.
-    Avoids showing emotional empathy or positive reactions to the candidate's responses.`,
+    INSTRUCTION: `Uses a firm and dry tone of voice.Avoids showing emotional empathy or positive reactions to the candidate's responses.`,
   },
 };
 
@@ -46,9 +44,8 @@ export const POST = async (request: NextRequest) => {
       interviewType === PRESSURE ? INTERVIEW_VOICE_OPTIONS.PRESSURE_OPTIONS : INTERVIEW_VOICE_OPTIONS.CALM_OPTIONS;
 
     const mp3 = await openAi.audio.speech.create({
+      ...DEFAULT_TTS_OPTIONS,
       input: aiQuestion,
-      model: TTS_OPTIONS.MODEL,
-      response_format: TTS_OPTIONS.FORMAT,
       voice: VOICE,
       speed: SPEED,
       instructions: INSTRUCTION,
@@ -60,7 +57,7 @@ export const POST = async (request: NextRequest) => {
 
     const arrayBuffer = await mp3.arrayBuffer();
     const base64Audio = Buffer.from(arrayBuffer).toString('base64');
-    const response = `data:audio/${TTS_OPTIONS.FORMAT};base64,${base64Audio}`;
+    const response = `data:audio/${DEFAULT_TTS_OPTIONS.response_format};base64,${base64Audio}`;
 
     return NextResponse.json({ response }, { status: 200 });
   } catch (error) {

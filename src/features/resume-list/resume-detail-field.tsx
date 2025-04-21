@@ -15,7 +15,7 @@ import type { Field } from '@/types/resume';
 
 const { MY_PAGE } = PATH;
 const { DETAIL } = PATH.RESUME;
-const { RESUME } = QUERY_KEY;
+const { RESUMES } = QUERY_KEY;
 
 type Props = {
   id: string;
@@ -25,7 +25,7 @@ const ResumeDetailField = ({ id }: Props) => {
   const resumeId = Number(id);
 
   const { data: resume, isPending, isError } = useResumeQuery(resumeId);
-  const { mutate: deleteResumeMutate } = useDeleteResumeMutation(RESUME);
+  const { mutate: deleteResumeMutate } = useDeleteResumeMutation(RESUMES);
 
   const handleDeleteResume = (resumeId: number) => {
     if (window.confirm('자기소개서를 정말로 삭제하시겠습니까?')) {

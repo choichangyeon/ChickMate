@@ -5,7 +5,7 @@ import { PATH } from '@/constants/path-constant';
 import { DELAY_TIME } from '@/constants/time-constants';
 import { AUTO_SAVE_STATUS } from '@/constants/resume-constants';
 import useDebounce from '@/hooks/customs/use-debounce';
-import { autoSaveResume, getCheckToGetEXP, submitResume } from '@/features/resume/api/client-services';
+import { autoSaveResume, getCheckToGetEXP } from '@/features/resume/api/client-services';
 import { usePreventPageUnload } from '@/features/resume/hooks/use-prevent-page-load';
 import { useCharacterStore } from '@/store/use-character-store';
 import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
@@ -19,12 +19,13 @@ const { MY_PAGE } = PATH;
 const { DEFAULT } = DELAY_TIME;
 const { SAVING, SAVED } = AUTO_SAVE_STATUS;
 const { RESUME_SUBMISSION } = CHARACTER_HISTORY_KEY;
+
 export const useResumeForm = (resume?: Resume) => {
   const router = useRouter();
   const characterId = useCharacterStore((state) => state.characterId);
   const { handleExperienceUp } = useExperienceUp();
 
-  const { mutate: addResumeMutate } = useAddResumeMutation();
+  const { mutateAsync: addResumeMutateAsync } = useAddResumeMutation();
 
   /** state */
   const [isDirty, setIsDirty] = useState<boolean>(false);
@@ -71,7 +72,8 @@ export const useResumeForm = (resume?: Resume) => {
     event.preventDefault();
     try {
       const data = { title, fieldList };
-      addResumeMutate({ resumeId, data });
+
+      await addResumeMutateAsync({ resumeId, data });
 
       const isAbleToGetEXP = await getCheckToGetEXP(); // 오늘 작성한 자소서 개수 체크 -> 3개 이하 -> 경험치 획득 가능
       const isReqExp = characterId;
@@ -85,6 +87,7 @@ export const useResumeForm = (resume?: Resume) => {
           ? `경험치 획득 완료!\n자기소개서 작성이 완료되었습니다.`
           : '자기소개서 작성이 완료되었습니다.'
       );
+
       router.push(MY_PAGE);
     } catch (error) {
       if (error instanceof Error) {

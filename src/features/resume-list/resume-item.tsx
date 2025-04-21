@@ -4,14 +4,15 @@ import Typography from '@/components/ui/typography';
 
 type Props = {
   resume: Resume;
+  onClick: (resumeId: number) => void;
 };
 
-const ResumeItem = ({ resume }: Props) => {
-  const { title, createdAt, tryCount } = resume;
+const ResumeItem = ({ resume, onClick }: Props) => {
+  const { id, title, createdAt, tryCount } = resume;
   const hasInterviewed = tryCount === 0;
 
   return (
-    <li className='flex flex-col'>
+    <li onClick={() => onClick(id)} className='flex cursor-pointer flex-col'>
       <Typography size='sm' weight='normal' color='gray-500'>
         {formatDate({ input: createdAt })}
       </Typography>

@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { useBookmarkMutation } from '@/features/job/hooks/use-bookmark-mutation';
 import { Star } from '@/components/icons/star';
 
@@ -12,8 +11,6 @@ type Props = {
 
 const Bookmark = ({ jobPostingId, isBookmarked, userId }: Props) => {
   const { mutate: bookmarkMutate } = useBookmarkMutation({ jobPostingId, userId });
-
-  useEffect(() => {}, [isBookmarked]);
 
   const handleClick = () => {
     bookmarkMutate(isBookmarked);

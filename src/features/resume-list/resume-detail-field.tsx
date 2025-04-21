@@ -5,6 +5,7 @@ import { useResumeQuery } from './hooks/use-resume-query';
 import ErrorComponent from '@/components/common/error-component';
 import Typography from '@/components/ui/typography';
 import ResumeQnAItem from '@/features/resume-list/resume-qna-item';
+import type { Field } from '@/types/resume';
 
 type Props = {
   id: string;
@@ -13,6 +14,7 @@ type Props = {
 const ResumeDetailField = ({ id }: Props) => {
   const resumeId = Number(id);
   const { data: resume, isPending, isError } = useResumeQuery(resumeId);
+  const resumeContent = resume.content as Field[];
 
   if (isPending) return <LoadingSpinner />;
   if (isError) return <ErrorComponent />;
@@ -28,7 +30,7 @@ const ResumeDetailField = ({ id }: Props) => {
         </Typography>
       </div>
       <ul className='flex flex-col gap-4'>
-        {resume.content.map((content) => {
+        {resumeContent.map((content) => {
           return <ResumeQnAItem key={content.id} content={content} />;
         })}
       </ul>

@@ -1,12 +1,13 @@
 import Typography from '@/components/ui/typography';
-import { Resume } from '@prisma/client';
+import type { Field } from '@/types/resume';
 
 type Props = {
-  content: Resume['content'];
+  content: Field;
 };
 
 const ResumeQnAItem = ({ content }: Props) => {
-  console.log(content);
+  const { question, answer } = content;
+
   return (
     <li className='flex flex-col gap-4'>
       <div>
@@ -14,12 +15,12 @@ const ResumeQnAItem = ({ content }: Props) => {
           질문 1
         </Typography>
         <Typography size='xl' weight='normal'>
-          {content.question}
+          {question}
         </Typography>
       </div>
       <hr className='border-cool-gray-500' />
       <Typography color='gray-700' weight='normal'>
-        {content.answer}
+        {answer}
       </Typography>
     </li>
   );

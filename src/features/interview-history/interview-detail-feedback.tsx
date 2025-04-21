@@ -15,7 +15,7 @@ export type FeedbackItem = {
   };
 };
 
-const FEEDBACK_KEYS = {
+const FEEDBACK_KEYS: { [key: string]: string } = {
   proactivity: '자기주도성',
   communication: '커뮤니케이션',
   problemSolving: '문제 해결',
@@ -28,6 +28,7 @@ const IMPROVEMENT_LABEL = '단점 분석';
 
 const InterviewDetailFeedback = ({ feedback }: Props) => {
   const [activeTab, setActiveTab] = useState<string>('proactivity');
+  console.log(feedback);
   return (
     <div>
       <div className='flex flex-col gap-4'>

@@ -49,8 +49,10 @@ const Timer = ({
   {
     /** TODO: 에러 처리 알림에 대한 고민 필요 */
   }
-  if (InterviewHistoryError || aiFeedbackError) {
+  if (InterviewHistoryError) {
     alert(InterviewHistoryError.message);
+  }
+  if (aiFeedbackError) {
     alert(aiFeedbackError.message);
   }
 

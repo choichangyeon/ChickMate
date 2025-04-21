@@ -52,6 +52,9 @@ export const RESUME_MESSAGE = {
     FORBIDDEN: '해당 자기소개서를 수정할 권한이 없습니다.',
     DRAFT_SERVER_ERROR: '자기소개서 임시 저장에 실패하였습니다.',
   },
+  VALIDATION: {
+    QUERY_PARAMS_TYPE: 'page 또는 limit이 유효하지 않습니다.',
+  },
   NOT_FOUND: '해당 자소서를 찾을 수 없습니다.',
   GET_SERVER_ERROR: '자기소개서를 가져오는데 실패했습니다.',
   DELETE_REQUEST_SUCCESS: '자기소개서가 삭제되었습니다.',

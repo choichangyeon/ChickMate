@@ -10,6 +10,7 @@ import { schema, SignInFormData } from '@/features/sign/data/sign-in-schema';
 import Image from 'next/image';
 import { useSignInResult } from './hooks/use-sign-in-result';
 import Typography from '@/components/ui/typography';
+import { useSearchParams } from 'next/navigation';
 
 const { ON_BOARDING } = PATH;
 
@@ -24,12 +25,16 @@ const SignInAuthForm = () => {
     defaultValues: { email: '', password: '' } as SignInFormData,
   });
 
+  const searchParams = useSearchParams();
+  const prevUrl = searchParams.get('prevUrl');
+  const redirectToUrl = prevUrl || ON_BOARDING;
+
   useSignInResult();
 
   const onSubmit = async (data: SignInFormData) => {
     await signIn('credentials', {
       ...data,
-      callbackUrl: ON_BOARDING,
+      callbackUrl: redirectToUrl,
     });
   };
 
@@ -61,14 +66,14 @@ const SignInAuthForm = () => {
       <div className='mt-2 flex flex-col gap-2 text-center'>
         <>
           <button
-            onClick={() => signIn('google', { callbackUrl: ON_BOARDING })}
+            onClick={() => signIn('google', { callbackUrl: redirectToUrl })}
             className='flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm'
           >
             <Image src='/assets/google_icon.png' alt='구글 로그인' width={14} height={14} />
             구글 계정으로 로그인
           </button>
           <button
-            onClick={() => signIn('naver', { callbackUrl: ON_BOARDING })}
+            onClick={() => signIn('naver', { callbackUrl: redirectToUrl })}
             className='flex w-full items-center justify-center gap-2 rounded-md bg-[#03C75A] px-4 py-2 text-sm font-bold text-white shadow-sm'
           >
             <Image src='/assets/naver_icon.png' alt='네이버 로그인' width={24} height={24} />

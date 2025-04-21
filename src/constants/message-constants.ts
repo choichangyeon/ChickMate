@@ -134,3 +134,9 @@ export const INTERVIEW_QNA_MESSAGE = {
     NOT_FOUND: '해당 QnA의 ID를 찾을 수 없습니다.',
   },
 };
+
+export const TAB_COUNT_MESSAGE = {
+  API: {
+    SERVER_ERROR: '리스트 개수를 가져오는데 실패했습니다.',
+  },
+};

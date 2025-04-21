@@ -8,4 +8,5 @@ export const QUERY_KEY = {
   JOB_POSTING: 'job-posting',
   CHARACTER_HISTORIES: 'characterHistories',
   HISTORY: 'interview-history',
+  TABS_COUNT: 'tabs-count',
 };

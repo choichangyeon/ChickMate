@@ -1,3 +1,5 @@
+import type { User } from '@prisma/client';
+
 export const PATH = {
   MAIN: '/',
   AUTH: {
@@ -43,6 +45,7 @@ export const ROUTE_HANDLER_PATH = {
   },
   USER: {
     META_DATA: '/api/user-meta-data',
+    LIST_COUNT: (userId: User['id']) => `/api/my-page/tab-counts/${userId}`,
     INTERVIEW_HISTORY: '/api/interview-history',
     INTERVIEW_DETAIL: (id: number) => `/api/ai/interview/${id}`,
   },

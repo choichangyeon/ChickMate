@@ -28,7 +28,7 @@ const IMPROVEMENT_LABEL = '단점 분석';
 
 const InterviewDetailFeedback = ({ feedback }: Props) => {
   const [activeTab, setActiveTab] = useState<string>('proactivity');
-  console.log(feedback);
+
   return (
     <div>
       <div className='flex flex-col gap-4'>

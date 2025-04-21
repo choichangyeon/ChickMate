@@ -61,7 +61,7 @@ const InterviewDetailField = ({ id }: Props) => {
         <div className='flex border-b'>
           <div
             className={`mx-4 cursor-pointer ${activeTab === SELECT_ACTIVE_TAB.FEEDBACK ? 'border-b-4 border-primary-orange-600' : 'border-none'}`}
-            onClick={() => setActiveTab('feedback')}
+            onClick={() => setActiveTab(SELECT_ACTIVE_TAB.FEEDBACK)}
           >
             <Typography
               size='xl'
@@ -73,7 +73,7 @@ const InterviewDetailField = ({ id }: Props) => {
           </div>
           <div
             className={`mx-4 cursor-pointer ${activeTab === SELECT_ACTIVE_TAB.HISTORY ? 'border-b-4 border-primary-orange-600' : 'border-none'}`}
-            onClick={() => setActiveTab('history')}
+            onClick={() => setActiveTab(SELECT_ACTIVE_TAB.HISTORY)}
           >
             <Typography
               size='xl'

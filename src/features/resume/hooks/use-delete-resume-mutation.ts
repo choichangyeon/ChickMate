@@ -1,9 +1,16 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Resume } from '@prisma/client';
 import { deleteResume } from '@/features/resume/api/client-services';
+import { QUERY_KEY } from '@/constants/query-key';
+import { useRouter } from 'next/navigation';
+import { PATH } from '@/constants/path-constant';
+
+const { MY_PAGE } = PATH;
+const { RESUMES } = QUERY_KEY;
 
 export const useDeleteResumeMutation = (queryKey: string) => {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   return useMutation({
     mutationFn: (resumeId: number) => deleteResume(resumeId),
@@ -21,6 +28,11 @@ export const useDeleteResumeMutation = (queryKey: string) => {
       }
       if (error) {
         throw error;
+      }
+    },
+    onSuccess: () => {
+      if (queryKey === RESUMES) {
+        router.replace(MY_PAGE);
       }
     },
     onSettled: () => queryClient.invalidateQueries({ queryKey: [queryKey] }),

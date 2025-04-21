@@ -16,6 +16,7 @@ export const useAddResumeMutation = () => {
 
   return useMutation({
     mutationFn: ({ resumeId, data }: Props) => submitResume({ resumeId, data }),
+
     onMutate: async ({ resumeId, data }) => {
       await queryClient.cancelQueries({ queryKey: [RESUMES] });
       const previousResume = queryClient.getQueryData([RESUMES]) as Resume[];
@@ -32,7 +33,7 @@ export const useAddResumeMutation = () => {
     onError: (error) => {
       throw error;
     },
-    onSettled: (data, error, resumeId) => {
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [RESUMES] });
     },
   });

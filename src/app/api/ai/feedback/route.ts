@@ -63,11 +63,12 @@ export const POST = async (request: NextRequest) => {
     }
 
     const response = completion.choices[0].message.content;
-    const parsedResponse = JSON.parse(response);
 
     if (!response) {
       return NextResponse.json({ message: AI_REQUEST_FAILURE }, { status: 400 });
     }
+
+    const parsedResponse = JSON.parse(response);
 
     await prisma.interviewHistory.update({
       where: { id: interviewId },

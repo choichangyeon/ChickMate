@@ -5,6 +5,7 @@ import type { User } from '@prisma/client';
 import { ENV } from '@/constants/env-constants';
 import { AUTH_MESSAGE, TAB_COUNT_MESSAGE } from '@/constants/message-constants';
 import { INIT_TAB_COUNTS, TABS } from '@/constants/my-page-constants';
+import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 
 const { NEXTAUTH_SECRET } = ENV;
 
@@ -17,6 +18,8 @@ const {
 } = TAB_COUNT_MESSAGE;
 
 const { HISTORY, RESUME, BOOKMARK } = TABS;
+
+const { COMPLETED } = INTERVIEW_HISTORY_STATUS;
 
 type Props = {
   params: {
@@ -34,8 +37,12 @@ export const GET = async (request: NextRequest, { params }: Props) => {
         _count: {
           select: {
             [RESUME]: true,
-            [HISTORY]: true,
             [BOOKMARK]: true,
+            [HISTORY]: {
+              where: {
+                status: COMPLETED,
+              },
+            },
           },
         },
       },

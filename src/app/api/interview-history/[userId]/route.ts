@@ -6,6 +6,7 @@ import { ENV } from '@/constants/env-constants';
 import { AUTH_MESSAGE, HISTORY_MESSAGE, INTERVIEW_HISTORY } from '@/constants/message-constants';
 import { formatDate } from '@/utils/format-date';
 import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
+import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 
 type Props = {
   params: {
@@ -22,8 +23,7 @@ const {
 const {
   API: { GET_ERROR },
 } = INTERVIEW_HISTORY;
-
-const COMPLETED_INTERVIEW_CODE = 1;
+const { COMPLETED } = INTERVIEW_HISTORY_STATUS;
 
 export const GET = async (request: NextRequest, { params }: Props) => {
   try {
@@ -43,7 +43,7 @@ export const GET = async (request: NextRequest, { params }: Props) => {
     }
 
     const histories = await prisma.interviewHistory.findMany({
-      where: { userId: userId, status: COMPLETED_INTERVIEW_CODE },
+      where: { userId: userId, status: COMPLETED },
       orderBy: { createdAt: 'desc' },
       include: {
         resume: true,
@@ -53,7 +53,7 @@ export const GET = async (request: NextRequest, { params }: Props) => {
     });
 
     const totalCount = await prisma.interviewHistory.count({
-      where: { userId, status: COMPLETED_INTERVIEW_CODE },
+      where: { userId, status: COMPLETED },
     });
     const nextPage = pageNumber * limitNumber < totalCount ? pageNumber + 1 : null;
     if (!histories) return NextResponse.json({ data: [], nextPage }, { status: 200 });

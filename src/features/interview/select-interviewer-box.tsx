@@ -22,6 +22,10 @@ const SelectInterviewerBox = () => {
   const { resumeId } = useResumeStore();
   const resetQuestionIndex = useInterviewStore((state) => state.resetQuestionIndex);
 
+  {/** TODO: clay이냐 poly 타입이냐에 따라 수정해야됨 */}
+  const charterType = 'poly';
+  const imageBasePath = `/assets/character/interviewer/${charterType}-interviewer`;
+
   const handleClickSetInterviewType = async () => {
     if (resumeId) {
       const interviewId = await postInterview({ resumeId, interviewType });
@@ -38,13 +42,13 @@ const SelectInterviewerBox = () => {
           onClick={() => setInterviewType(CALM)}
           className={`flex w-full cursor-pointer items-center justify-center self-stretch rounded-lg outline outline-1 outline-cool-gray-300 ${interviewType === CALM ? activeBgClass : ''}`}
         >
-          <Image src={`/assets/character/card/yellow-level2.png`} alt='햇살 면접관' width={220} height={220} />
+          <Image src={`${imageBasePath}-calm.png`} alt='햇살 면접관' width={220} height={220} />
         </div>
         <div
           onClick={() => setInterviewType(PRESSURE)}
           className={`flex w-full cursor-pointer items-center justify-center self-stretch rounded-lg outline outline-1 outline-cool-gray-300 ${interviewType === PRESSURE ? activeBgClass : ''}`}
         >
-          <Image src={`/assets/character/card/yellow-level3.png`} alt='불타는 면접관' width={220} height={220} />
+          <Image src={`${imageBasePath}-pressure.png`} alt='불타는 면접관' width={220} height={220} />
         </div>
       </aside>
       <aside className='flex h-80 w-96 flex-shrink-0 flex-col items-center justify-center overflow-hidden rounded-lg bg-emerald-900/0 outline outline-1 outline-offset-[-1px] outline-yellow-500'>

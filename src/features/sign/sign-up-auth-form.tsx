@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import AuthInput from '@/features/sign/auth-input';
 import { SignUpFormData, schema } from '@/features/sign/data/sign-up-schema';
+import Typography from '@/components/ui/typography';
 
 const SignUpAuthForm = () => {
   const {
@@ -34,12 +35,20 @@ const SignUpAuthForm = () => {
   };
 
   return (
-    <div className='mx-auto w-full max-w-md rounded-lg bg-white p-6 shadow-md'>
-      <p className='mb-1 text-center text-2xl font-light'>
-        만나서 반가워요.<span className='font-normal'>병아리</span>씨!
-      </p>
-      <p className='mb-4 text-center font-extralight'>우리 같이 취업을 향한 여정을 떠나볼까요?</p>
-      <p className='mb-10 text-center font-extralight text-black/30'>원할한 서비스 이용을 위해 회원가입 해주세요.</p>
+    <div className='mx-auto w-full max-w-md rounded-3xl bg-white p-6 shadow-md'>
+      <div className='mb-8'>
+        <Typography size='2xl' weight='normal' align='center'>
+          만나서 반가워요.<span className='font-bold'>병아리</span>씨!
+        </Typography>
+        <Typography weight='normal' align='center'>
+          우리 같이 취업을 향한 여정을 떠나볼까요?
+        </Typography>
+      </div>
+      <div className='mb-8'>
+        <Typography color='primary-600' weight='bold' align='center' as='h1'>
+          원할한 서비스 이용을 위해 회원가입 해주세요.
+        </Typography>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <AuthInput label='NAME' id='name' register={register} error={errors.name} type='text' />
         <AuthInput label='EMAIL' id='email' register={register} error={errors.email} type='email' />

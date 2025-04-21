@@ -9,12 +9,13 @@ const { AN_HOUR } = STALE_TIME;
 
 type Props = {
   userMetaData: UserMetaDataType;
+  userId: string;
 };
 
-export const useJobPostingQuery = ({ userMetaData }: Props) => {
+export const useJobPostingQuery = ({ userMetaData, userId }: Props) => {
   return useQuery({
-    queryKey: [JOB_POSTING],
-    queryFn: () => getJobByUserMetaData(userMetaData!),
+    queryKey: [JOB_POSTING, userId],
+    queryFn: () => getJobByUserMetaData(userMetaData),
     staleTime: AN_HOUR,
   });
 };

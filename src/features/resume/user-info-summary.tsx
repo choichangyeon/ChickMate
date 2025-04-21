@@ -32,13 +32,13 @@ const UserInfoSummary = ({ session }: Props) => {
     );
   }
 
-  const { experienceType, educationLevel, jobType, mainRegion } = userMetaData;
+  const { experienceName, requiredEducationName, jobMidCodeName, locationName } = userMetaData;
 
   const userDatalist = [
-    { label: '경력', content: experienceType },
-    { label: '학력', content: educationLevel },
-    { label: '직무', content: jobType },
-    { label: '지역', content: mainRegion },
+    { label: '경력', content: experienceName },
+    { label: '학력', content: requiredEducationName },
+    { label: '직무', content: jobMidCodeName },
+    { label: '지역', content: locationName },
   ];
 
   return (

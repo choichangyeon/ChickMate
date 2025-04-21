@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority';
 
-export const buttonVariants = cva('', {
+export const buttonStyle = cva('', {
   variants: {
     variant: {
       contained: 'text-cool-gray-50 bg-primary-orange-600',
@@ -13,7 +13,7 @@ export const buttonVariants = cva('', {
       dark: '',
     },
     disabled: {
-      true: 'opacity-80 cursor-not-allowed text-cool-gray-300',
+      true: 'cursor-not-allowed',
       false: '',
     },
     size: {
@@ -22,8 +22,8 @@ export const buttonVariants = cva('', {
       small: 'px-4 py-[2px]',
     },
     square: {
-      true: 'rounded',
-      false: 'rounded-3xl',
+      true: 'rounded-[4px]',
+      false: 'rounded-[50px]',
     },
   },
   compoundVariants: [
@@ -66,6 +66,21 @@ export const buttonVariants = cva('', {
       variant: 'ghost',
       color: 'dark',
       className: 'text-cool-gray-900 hover:bg-cool-gray-900 hover:text-cool-gray-50',
+    },
+    {
+      variant: 'contained',
+      disabled: true,
+      className: 'border-cool-gray-300 text-cool-gray-50 bg-cool-gray-300',
+    },
+    {
+      variant: 'outline',
+      disabled: true,
+      className: 'border-cool-gray-300 text-cool-gray-300 bg-transparent',
+    },
+    {
+      variant: 'ghost',
+      disabled: true,
+      className: 'text-cool-gray-300 hover:bg-cool-gray-300 hover:text-cool-gray-50',
     },
   ],
   defaultVariants: {

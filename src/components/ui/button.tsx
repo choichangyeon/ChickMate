@@ -1,4 +1,4 @@
-import { buttonVariants } from '@/styles/button-styles';
+import { buttonStyle } from '@/styles/button-styles';
 import Link from 'next/link';
 
 type ButtonBaseProps = {
@@ -37,7 +37,7 @@ const Button = (props: ButtonProps | LinkButtonProps) => {
 
   if (link) {
     return (
-      <Link href={props.href} target={target} className={buttonVariants({ variant, color, size, square })}>
+      <Link href={props.href} target={target} className={buttonStyle({ variant, color, size, square })}>
         {children}
       </Link>
     );
@@ -47,7 +47,7 @@ const Button = (props: ButtonProps | LinkButtonProps) => {
   return (
     <button
       type={type}
-      className={buttonVariants({ variant, color, size, square })}
+      className={buttonStyle({ variant, color, size, square, disabled })}
       onClick={onClick}
       disabled={disabled}
     >

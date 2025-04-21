@@ -8,6 +8,7 @@ import { useCharacterStoreSync } from '@/features/character/hooks/use-character-
 import { useState } from 'react';
 import { MODAL_ID } from '@/constants/modal-id-constants';
 import CharacterHistoryList from '@/features/character/character-history';
+import Typography from '@/components/ui/typography';
 
 type Props = {
   session: Session;
@@ -31,29 +32,43 @@ const CharacterDetailModal = ({ session }: Props) => {
 
   return (
     <Modal modalId={MODAL_ID.CHARACTER_DETAIL}>
-        <div className='flex justify-around border-gray-300'>
-          <div
-            onClick={() => setSelectedTab('info')}
-            className={`cursor-pointer px-4 py-2 ${
-              selectedTab === 'info' ? 'border-b-2 border-black font-bold' : 'text-gray-500'
-            }`}
+      <div className='flex justify-around mb-4'>
+        <div
+          onClick={() => setSelectedTab('info')}
+          className={`cursor-pointer px-4 py-2 ${
+            selectedTab === 'info' ? 'border-b-2 border-primary-orange-600 font-bold' : 'text-cool-gray-500'
+          }`}
+        >
+          <Typography
+            size='2xl'
+            weight='bold'
+            color={selectedTab === 'info' ? 'primary-600' : 'gray-500'}
           >
-            내 캐릭터
-          </div>
-          <div
-            onClick={() => setSelectedTab('history')}
-            className={`cursor-pointer px-4 py-2 ${
-              selectedTab === 'history' ? 'border-b-2 border-black font-bold' : 'text-gray-500'
-            }`}
-          >
-            성장 히스토리
-          </div>
+            My Mate
+          </Typography>
         </div>
-        {selectedTab === 'info' && !!characterData ? (
-          <MyCharacter session={session} characterData={characterData} />
-        ) : (
-          <CharacterHistoryList characterData={characterData} />
-        )}
+        <div
+          onClick={() => setSelectedTab('history')}
+          className={`cursor-pointer px-4 py-2 ${
+            selectedTab === 'history'
+              ? 'border-b-2 border-primary-orange-600 font-bold text-primary-orange-600'
+              : 'text-cool-gray-500'
+          }`}
+        >
+          <Typography
+            size='2xl'
+            weight='bold'
+            color={selectedTab === 'history' ? 'primary-600' : 'gray-500'}
+          >
+            History
+          </Typography>
+        </div>
+      </div>
+      {selectedTab === 'info' && !!characterData ? (
+        <MyCharacter session={session} characterData={characterData} />
+      ) : (
+        <CharacterHistoryList characterData={characterData} />
+      )}
     </Modal>
   );
 };

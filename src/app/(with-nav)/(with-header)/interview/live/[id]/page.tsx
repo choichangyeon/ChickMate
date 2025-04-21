@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 import Typography from '@/components/ui/typography';
 import { authOptions } from '@/utils/auth-option';
@@ -6,6 +7,12 @@ import { getInterviewHistory } from '@/features/interview/api/server-services';
 import QuestionDisplayWithTimer from '@/features/interview/question-display-with-timer';
 import QuestionStep from '@/features/interview/question-step';
 import type { RouteParams } from '@/types/route-params';
+import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
+
+export const metadata: Metadata = {
+  title: 'AI 면접',
+  description: 'ChickMate에서 AI와 함께 면접을 진행해보세요.',
+};
 
 const InterviewPage = async ({ params }: RouteParams) => {
   const session = await getServerSession(authOptions);
@@ -14,7 +21,7 @@ const InterviewPage = async ({ params }: RouteParams) => {
 
   if (!session || !interviewHistory) return null;
 
-  if (interviewHistory.feedback) {
+  if (interviewHistory.status === INTERVIEW_HISTORY_STATUS.COMPLETED) {
     return <div>이미 완료된 면접입니다.</div>;
   }
 
@@ -32,7 +39,7 @@ const InterviewPage = async ({ params }: RouteParams) => {
           <CameraView />
         </div>
       </section>
-      <QuestionDisplayWithTimer session={session} interviewHistory={interviewHistory} />
+      <QuestionDisplayWithTimer interviewHistory={interviewHistory} />
     </main>
   );
 };

@@ -1,43 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useInterviewStore } from '@/store/use-interview-store';
+import { INTERVIEW_LIMIT_COUNT } from '@/constants/interview-constants';
 import { useAudioRecorder } from '@/features/interview/hooks/use-audio-recorder';
+import { usePreventPageUnload } from '@/features/resume/hooks/use-prevent-page-load';
 import { useTimer } from '@/features/interview/hooks/use-timer';
-import { FEEDBACK_PROMPT, INTERVIEW_PROMPT, USER_PROMPT } from '@/constants/interview-constants';
-import {
-  getOpenAIResponse,
-  patchInterviewHistory,
-  postSpeechToText,
-  postTextToSpeech,
-} from '@/features/interview/api/client-services';
-import type { Message } from '@/types/message';
-import type { InterviewHistoryWithResume } from '@/types/interview';
+import { handleVoiceToAIFlow } from '@/features/interview/utils/handle-voice-to-ai-flow';
+import type { InterviewHistory } from '@prisma/client';
 
-const { CALM_PROMPT, PRESSURE_PROMPT } = INTERVIEW_PROMPT;
-const LIMIT_COUNT = 7;
+type Props = {
+  duration: number;
+  interviewHistory: InterviewHistory;
+};
 
-export const useAudioWithTimer = (duration: number, interviewHistory: InterviewHistoryWithResume) => {
-  const { interviewType, resume, id } = interviewHistory;
-  const type = interviewType === 'calm' ? CALM_PROMPT : PRESSURE_PROMPT;
-  const init_state: Message[] = [
-    {
-      role: 'system',
-      content: [...type.content, { type: 'text', text: `지원자의 자기소개서: ${resume}` }],
-    },
-  ];
+export const useAudioWithTimer = ({ duration, interviewHistory }: Props) => {
+  const { interviewType, id: interviewId } = interviewHistory;
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
   /** state */
+  const questionIndex = useInterviewStore((state) => state.questionIndex);
   const incrementQuestionIndex = useInterviewStore((state) => state.incrementQuestionIndex);
-  const [messageList, setMessageList] = useState<Message[]>(init_state);
-  const [interviewQnA, setInterviewQnA] = useState({
-    question: '간단한 자기소개 부탁드립니다',
-    answer: '',
-  });
+  const [isDirty, setIsDirty] = useState<boolean>(false);
+  const [isAIVoicePlaying, setIsAIVoicePlaying] = useState(false);
+  const [aiQuestion, setAiQuestion] = useState<string | null>(null);
 
   /** hook */
   const { isRecording, startRecording, stopRecording } = useAudioRecorder();
 
-  /** function */
   const handleTimerComplete = async () => {
-    stopRecording();
     await stopRecordingWithTimer();
   };
 
@@ -46,72 +36,60 @@ export const useAudioWithTimer = (duration: number, interviewHistory: InterviewH
     onTimerComplete: handleTimerComplete,
   });
 
+  /** function */
+
   // 녹음 시작
   const startRecordingWithTimer = () => {
     startRecording();
     startTimer();
+    setIsDirty(true);
   };
 
   // 녹음 중단 (사용자 음성 -> 텍스트 변환 + DB에 저장)
   const stopRecordingWithTimer = async () => {
-    stopTimer();
     const blob = await stopRecording();
 
-    // 사용자 음성을 텍스트로 변환해주는 로직
-    try {
-      const answerText = await postSpeechToText({ blob });
-      getOpenAIInterviewContent(answerText);
+    stopTimer();
+    setIsDirty(true);
+    incrementQuestionIndex();
 
-      const content = { question: interviewQnA.question, answer: answerText };
-      const interview = await patchInterviewHistory({ interviewId: id, content });
+    setIsAIVoicePlaying(true);
+    const data = await handleVoiceToAIFlow({ blob, interviewType, interviewId });
 
-      if (interview.content.length > 9) {
-        return;
-      }
+    if (!data) {
+      setIsAIVoicePlaying(false);
+      return;
+    }
+    const { audio, aiQuestion } = data;
 
-      setInterviewQnA((prev) => {
-        return { ...prev, answer: answerText };
-      });
+    if (questionIndex < INTERVIEW_LIMIT_COUNT - 1) {
+      setAiQuestion(aiQuestion);
+      audioRef.current = audio;
 
-      incrementQuestionIndex();
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
+      audio.play();
+      audio.addEventListener('ended', () => setIsAIVoicePlaying(false));
     }
   };
 
-  // AI 면접관이랑 면접 보는 로직
-  const getOpenAIInterviewContent = async (answerText: string) => {
-    try {
-      const updatedMessageList: Message[] =
-        messageList.length < LIMIT_COUNT ? [...messageList, USER_PROMPT(answerText)] : [FEEDBACK_PROMPT];
+  usePreventPageUnload(isDirty);
 
-      const { messageList: newMessageList, question } = await getOpenAIResponse({ messageList: updatedMessageList });
-      setMessageList(newMessageList);
-      setInterviewQnA((prev) => ({ ...prev, question }));
-
-      if (messageList.length === LIMIT_COUNT) {
-        await patchInterviewHistory({ interviewId: id, feedback: question });
-      } else {
-        // AI 면접관 텍스트를 음성으로 출력하는 로직
-        await postTextToSpeech({
-          text: question,
-          type: interviewType,
-        });
+  // 페이지 벗어날 때 음성 중단
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        audioRef.current = null;
       }
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(error);
-      }
-    }
-  };
+    };
+  }, []);
 
   return {
-    messageList,
     isRecording,
+    isAIVoicePlaying,
     timeLeft,
     formattedTime: formatTime(),
+    aiQuestion,
     startRecordingWithTimer,
     stopRecordingWithTimer,
   };

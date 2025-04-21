@@ -18,7 +18,7 @@ const JobPage = async () => {
 
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
-    queryKey: [JOB_POSTING],
+    queryKey: [JOB_POSTING, user.id],
     queryFn: () => serverActionWithSentry(getJobByUserMetaData),
     staleTime: AN_HOUR,
   });

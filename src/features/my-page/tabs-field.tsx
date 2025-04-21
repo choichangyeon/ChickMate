@@ -1,8 +1,8 @@
 import { prisma } from '@/lib/prisma';
+import type { User } from '@prisma/client';
 import ListByTab from '@/features/my-page/list-by-tab';
 import TabButtons from '@/features/my-page/tab-buttons';
 
-import type { User } from '@prisma/client';
 type Props = {
   userId: User['id'];
 };
@@ -27,9 +27,9 @@ const TabsField = async ({ userId }: Props) => {
   };
 
   return (
-    <section className='h-[80dvh] w-1/2 rounded-t-xl border'>
+    <section className='h-[80dvh] max-h-[643px] w-1/2 max-w-[634px] rounded-t-[8px] border bg-cool-gray-10'>
       <TabButtons tabCounts={tabCounts} />
-      <div className='p-8'>
+      <div className='h-full p-8'>
         <ListByTab />
       </div>
     </section>

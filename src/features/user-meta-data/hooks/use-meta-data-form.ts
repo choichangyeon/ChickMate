@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-query';
@@ -12,20 +12,33 @@ import { useModalStore } from '@/store/use-modal-store';
 import { MODAL_ID } from '@/constants/modal-id-constants';
 import type { UserMetaDataType } from '@/types/user-meta-data-type';
 import type { SelectBoxType } from '@/types/select-box';
+import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
+import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
+import { useCharacterStore } from '@/store/use-character-store';
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/constants/query-key';
 
-const { TYPE, EDUCATION, JOB, MAIN_REGION, ETC } = USER_META_DATA_KEY;
+const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
 const {
   AUTH: { SIGN_IN },
 } = PATH;
 const {
-  API: { POST_DATA_SUCCESS },
+  API: { POST_DATA_SUCCESS, CHARACTER_POST_SUCCESS },
 } = USER_META_DATA_FORM_MESSAGE;
 const { USER_META_DATA } = MODAL_ID;
+const { FILL_OUT_META_DATA } = CHARACTER_HISTORY_KEY;
+const { JOB_POSTING } = QUERY_KEY;
 
 export const useMetaDataForm = (userId: string) => {
   const { data: metaData, isPending: isMetaDataPending } = useMetaDataQuery({ userId });
   const { mutate, error } = useMetaDataMutation(userId);
   const toggleModal = useModalStore((state) => state.toggleModal);
+  const { handleExperienceUp } = useExperienceUp();
+  const characterId = useCharacterStore((state) => state.characterId);
+  const queryClient = useQueryClient();
+
+  const isFirstTime = metaData === null && characterId !== null;
+
   const {
     setValue,
     watch,
@@ -36,10 +49,10 @@ export const useMetaDataForm = (userId: string) => {
     formState: { errors },
   } = useForm<UserMetaSchema>({
     defaultValues: {
-      [TYPE]: DEFAULT,
-      [EDUCATION]: DEFAULT,
-      [JOB]: DEFAULT,
-      [MAIN_REGION]: DEFAULT,
+      [EXPERIENCE_NAME]: DEFAULT,
+      [REQUIRED_EDUCATION_NAME]: DEFAULT,
+      [JOB_MID_CODE_NAME]: DEFAULT,
+      [LOCATION_NAME]: DEFAULT,
       [ETC]: null,
     },
     mode: 'onBlur',
@@ -49,10 +62,10 @@ export const useMetaDataForm = (userId: string) => {
   useEffect(() => {
     if (metaData) {
       reset({
-        [TYPE]: metaData?.[TYPE] ?? DEFAULT,
-        [EDUCATION]: metaData?.[EDUCATION] ?? DEFAULT,
-        [JOB]: metaData?.[JOB] ?? DEFAULT,
-        [MAIN_REGION]: metaData?.[MAIN_REGION] ?? DEFAULT,
+        [EXPERIENCE_NAME]: metaData?.[EXPERIENCE_NAME] ?? DEFAULT,
+        [REQUIRED_EDUCATION_NAME]: metaData?.[REQUIRED_EDUCATION_NAME] ?? DEFAULT,
+        [JOB_MID_CODE_NAME]: metaData?.[JOB_MID_CODE_NAME] ?? DEFAULT,
+        [LOCATION_NAME]: metaData?.[LOCATION_NAME] ?? DEFAULT,
         [ETC]: metaData?.[ETC] ?? null,
       });
     }
@@ -76,13 +89,16 @@ export const useMetaDataForm = (userId: string) => {
   const handleOnSubmit = (values: UserMetaDataType) => {
     mutate(values, {
       onSuccess: () => {
-        alert(POST_DATA_SUCCESS);
+        if (isFirstTime) handleExperienceUp(FILL_OUT_META_DATA);
+        alert(isFirstTime ? CHARACTER_POST_SUCCESS : POST_DATA_SUCCESS);
         toggleModal(USER_META_DATA);
+        queryClient.invalidateQueries({
+          queryKey: [JOB_POSTING, userId],
+          exact: true,
+        });
       },
     });
   };
-
-  const FORM_TYPE = useMemo(() => (metaData && Object.keys(metaData).length !== 0 ? '수정' : '작성'), [metaData]);
 
   return {
     userId,
@@ -93,6 +109,6 @@ export const useMetaDataForm = (userId: string) => {
     handleOnSubmit,
     handleSelect,
     isMetaDataPending,
-    FORM_TYPE,
+    isFirstTime,
   };
 };

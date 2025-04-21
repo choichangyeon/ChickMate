@@ -1,11 +1,11 @@
 import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
-import type { User, InterviewHistory, Resume } from '@prisma/client';
+import type { User, InterviewHistory, Resume, InterviewQnA } from '@prisma/client';
 const {
-  USER: { INTERVIEW_HISTORY },
+  USER: { INTERVIEW_HISTORY, INTERVIEW_DETAIL },
 } = ROUTE_HANDLER_PATH;
-const { GET } = API_METHOD;
+const { GET, DELETE } = API_METHOD;
 const { JSON_HEADER } = API_HEADER;
 
 type Params = {
@@ -14,11 +14,14 @@ type Params = {
   limit: number;
 };
 
-type Return = InterviewHistory & {
-  resumeTitle: Resume['title'];
+type Return = {
+  id: InterviewHistory['id'];
+  interviewer: InterviewHistory['interviewType'];
+  title: Resume['title'];
   isFeedbackCompleted: boolean;
-  createdDate: string;
+  createdAt: string;
 };
+
 export const getInterviewHistories = async ({
   userId,
   pageParam,
@@ -40,4 +43,23 @@ export const getInterviewHistories = async ({
     histories: response.data,
     nextPage: response.nextPage,
   };
+};
+
+type InterviewHistoryDetail = InterviewHistory & {
+  InterviewQnAList: InterviewQnA[];
+  resume: Resume;
+};
+
+type InterviewDetailProps = InterviewHistory['id'];
+
+export const getInterviewDetail = async (id: InterviewDetailProps): Promise<InterviewHistoryDetail> => {
+  const { response: InterviewHistoryDetail } = await fetchWithSentry(INTERVIEW_DETAIL(id), { method: GET });
+
+  return InterviewHistoryDetail;
+};
+
+export const deleteInterview = async (id: InterviewDetailProps): Promise<void> => {
+  await fetchWithSentry(INTERVIEW_DETAIL(id), {
+    method: DELETE,
+  });
 };

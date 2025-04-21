@@ -3,21 +3,22 @@
 import Card from '@/components/ui/card';
 import Typography from '@/components/ui/typography';
 import Bookmark from '@/features/job/bookmark';
-import { formatDate } from '@/utils/format-date';
 import { JobPosting } from '@prisma/client';
 import clsx from 'clsx';
 import Button from '@/components/ui/button';
 import { formatRemainDay } from '@/utils/format-remain-day';
+import { formatTimestamp } from '@/utils/format-timestamp';
 
 type Props = {
-  jobPosting: JobPosting;
+  jobPosting: JobPosting & { isBookmarked: boolean };
 };
 
 const JobPostingCard = ({ jobPosting }: Props) => {
-  const { company, title, experienceType, expiredAt, postedAt, id, url } = jobPosting;
-  const postedAtDate = formatDate({ input: postedAt });
-  const expiredAtDate = formatDate({ input: expiredAt });
-  const remainDay = formatRemainDay(expiredAt);
+  const { companyName, positionTitle, experienceName, expirationTimestamp, openingTimestamp, id, url, isBookmarked } =
+    jobPosting;
+  const postedAtDate = formatTimestamp({ input: openingTimestamp });
+  const expiredAtDate = formatTimestamp({ input: expirationTimestamp });
+  const remainDay = formatRemainDay(expirationTimestamp);
 
   return (
     <Card className='h-full min-w-96 p-8'>
@@ -25,17 +26,17 @@ const JobPostingCard = ({ jobPosting }: Props) => {
         <section className='h-24'>
           <div className='flex flex-row justify-between'>
             <Typography weight='bold' color='gray-500'>
-              {company}
+              {companyName}
             </Typography>
             {/* TODO: iconButton component 적용 */}
-            <Bookmark jobPostingId={id} />
+            <Bookmark jobPostingId={id} isBookmarked={isBookmarked} />
           </div>
           <Typography as='h3' weight='bold' lineClamp='2'>
-            {title}
+            {positionTitle}
           </Typography>
           <div className='flex flex-row items-center gap-4'>
             <Typography size='sm' color='gray-500'>
-              {experienceType}
+              {experienceName}
             </Typography>
             <Typography size='sm' color='gray-500'>
               {postedAtDate}~{expiredAtDate}
@@ -43,10 +44,15 @@ const JobPostingCard = ({ jobPosting }: Props) => {
           </div>
         </section>
         <section className={badgeClassName}>
-          <Typography color='primary-600' weight='bold' size='xl'>
-            D-{remainDay}
-          </Typography>
-          {/* TODO: 수정되는 버튼 사용 예정 */}
+          {remainDay ? (
+            <Typography color='primary-600' weight='bold' size='xl'>
+              D-{remainDay}
+            </Typography>
+          ) : (
+            <Typography color='primary-600' weight='bold' size='xl'>
+              날짜정보 오류
+            </Typography>
+          )}
           {url ? (
             <Button target='_blank' link href={url} variant='outline' color='dark' square>
               바로 가기

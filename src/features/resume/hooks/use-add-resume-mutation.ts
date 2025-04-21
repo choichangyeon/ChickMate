@@ -33,8 +33,6 @@ export const useAddResumeMutation = () => {
     onError: (error) => {
       throw error;
     },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: [RESUMES] });
-    },
+    onSettled: () => queryClient.invalidateQueries({ queryKey: [RESUMES] }),
   });
 };

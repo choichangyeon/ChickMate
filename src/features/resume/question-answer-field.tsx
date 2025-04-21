@@ -4,11 +4,12 @@ import type { Field } from '@/types/resume';
 
 type Props = {
   field: Field;
+  idx: number;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   onDelete: (fieldId: string) => void;
 };
 
-const QuestionAnswerField = ({ field, onChange, onDelete }: Props) => {
+const QuestionAnswerField = ({ field, idx, onChange, onDelete }: Props) => {
   const { id, question, answer } = field;
   const MAX_ANSWER_LENGTH = 1000;
 
@@ -17,7 +18,7 @@ const QuestionAnswerField = ({ field, onChange, onDelete }: Props) => {
       <div className='flex flex-col gap-2'>
         <div className='flex w-full justify-between'>
           <Typography weight='normal' color='primary-600'>
-            질문 1
+            질문 {idx + 1}
           </Typography>
           <button type='button' onClick={() => onDelete(id)}>
             <Trash />

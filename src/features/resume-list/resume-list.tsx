@@ -1,15 +1,25 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import ResumeItem from '@/features/resume-list/resume-item';
 import { useResumeListQuery } from '@/features/resume-list/hooks/use-resume-list-infinite-query';
 import LoadingSpinner from '@/components/ui/loading-spinner';
+import { TABS } from '@/constants/my-page-constants';
+
+const { RESUME } = TABS;
 
 const ResumeList = () => {
+  const router = useRouter();
+
   const { data: resumeList, isPending, isError } = useResumeListQuery();
+
+  const handleGetDetailList = (resumeId: number) => {
+    router.push(`?id=${resumeId}&tab=${RESUME}`);
+  };
 
   if (isPending) {
     return (
-      <div className='flex h-[70dvh] flex-col items-center justify-center'>
+      <div className='flex h-[70dvh] items-center justify-center'>
         <LoadingSpinner />
       </div>
     );
@@ -19,11 +29,11 @@ const ResumeList = () => {
 
   return (
     <div>
-      <ul className='flex h-full flex-col gap-4 overflow-y-auto scrollbar-hide'>
+      <ul className='flex h-[70dvh] flex-col gap-4 overflow-y-auto scrollbar-hide'>
         {resumeList.map((resume) => {
           return (
             <div key={resume.id} className='flex flex-col gap-4'>
-              <ResumeItem resume={resume} />
+              <ResumeItem resume={resume} onClick={handleGetDetailList} />
               <hr className='border-cool-gray-300' />
             </div>
           );

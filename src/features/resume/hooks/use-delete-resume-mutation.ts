@@ -15,9 +15,12 @@ export const useDeleteResumeMutation = (queryKey: string) => {
       return { previousResume };
     },
 
-    onError: (err, resumeId, context) => {
+    onError: (error, resumeId, context) => {
       if (context) {
         queryClient.setQueryData([queryKey], context.previousResume);
+      }
+      if (error) {
+        throw error;
       }
     },
     onSettled: () => queryClient.invalidateQueries({ queryKey: [queryKey] }),

@@ -6,6 +6,8 @@ import clsx from 'clsx';
 import Button from '@/components/ui/button';
 import { useBookmarkMutation } from '@/features/job/hooks/use-bookmark-mutation';
 import { formatTimestamp } from '@/utils/format-timestamp';
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/constants/query-key';
 
 const experienceType: Record<number, string> = {
   0: '경력무관',
@@ -13,7 +15,7 @@ const experienceType: Record<number, string> = {
   2: '경력',
   3: '신입/경력',
 };
-
+const { TABS_COUNT } = QUERY_KEY;
 type Props = {
   bookmark: UserSelectedJob & { jobPosting: JobPosting };
   index: number;
@@ -21,7 +23,8 @@ type Props = {
   userId: string;
 };
 const BookmarkTab = ({ bookmark, index, length, userId }: Props) => {
-  const { mutate: bookmarkMutate } = useBookmarkMutation({
+  const queryClient = useQueryClient();
+  const { mutateAsync: bookmarkMutate } = useBookmarkMutation({
     jobPostingId: bookmark.jobPostingId,
     userId,
   });
@@ -34,8 +37,13 @@ const BookmarkTab = ({ bookmark, index, length, userId }: Props) => {
   const remainDay = formatRemainDay(jobPosting.expirationTimestamp);
 
   const handleDeleteBookmark = async () => {
-    /* TODO: alert 로직 구현 */
-    bookmarkMutate(true);
+    try {
+      /* TODO: alert 로직 구현 */
+      await bookmarkMutate(true);
+      queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
+    } catch (error) {
+      if (error instanceof Error) alert(error.message);
+    }
   };
 
   return (

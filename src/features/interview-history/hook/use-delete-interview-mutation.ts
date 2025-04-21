@@ -35,9 +35,11 @@ export const useDeleteInterviewMutation = () => {
       }
       throw err;
     },
+    onSuccess: () => {
+      router.replace(MY_PAGE);
+    },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [HISTORY] });
-      router.replace(MY_PAGE);
     },
   });
 };

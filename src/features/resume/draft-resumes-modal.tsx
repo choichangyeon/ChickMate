@@ -7,8 +7,10 @@ import { MODAL_ID } from '@/constants/modal-id-constants';
 import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
 import DraftResumeItem from '@/features/resume/draft-resume-item';
 import type { Resume } from '@prisma/client';
+import { QUERY_KEY } from '@/constants/query-key';
 
 const { DRAFT_RESUME } = MODAL_ID;
+const { RESUME_DRAFT } = QUERY_KEY;
 
 type Props = {
   draftResumeList: Resume[] | undefined;
@@ -19,7 +21,7 @@ type Props = {
 };
 
 const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResumeId, setResumeId }: Props) => {
-  const { mutate: deleteResumeMutate } = useDeleteResumeMutation();
+  const { mutate: deleteResumeMutate } = useDeleteResumeMutation(RESUME_DRAFT);
 
   const handleDeleteResume = (resumeId: number) => {
     if (window.confirm('자기소개서를 정말로 삭제하시겠습니까?')) {

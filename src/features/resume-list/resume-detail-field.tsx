@@ -1,15 +1,18 @@
 'use client';
 
 import LoadingSpinner from '@/components/ui/loading-spinner';
-import { useResumeQuery } from './hooks/use-resume-query';
 import ErrorComponent from '@/components/common/error-component';
 import Typography from '@/components/ui/typography';
-import ResumeQnAItem from '@/features/resume-list/resume-qna-item';
-import type { Field } from '@/types/resume';
 import Button from '@/components/ui/button';
 import { PATH } from '@/constants/path-constant';
+import ResumeQnAItem from '@/features/resume-list/resume-qna-item';
+import { useResumeQuery } from '@/features/resume-list/hooks/use-resume-query';
+import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
+import type { Field } from '@/types/resume';
+import { QUERY_KEY } from '@/constants/query-key';
 
-const { RESUME } = PATH;
+const { DETAIL } = PATH.RESUME;
+const { RESUME } = QUERY_KEY;
 
 type Props = {
   id: string;
@@ -18,6 +21,13 @@ type Props = {
 const ResumeDetailField = ({ id }: Props) => {
   const resumeId = Number(id);
   const { data: resume, isPending, isError } = useResumeQuery(resumeId);
+  const { mutate: deleteResumeMutate } = useDeleteResumeMutation(RESUME);
+
+  const handleDeleteResume = (resumeId: number) => {
+    if (window.confirm('자기소개서를 정말로 삭제하시겠습니까?')) {
+      deleteResumeMutate(resumeId);
+    }
+  };
 
   if (isPending) return <LoadingSpinner />;
   if (isError) return <ErrorComponent />;
@@ -40,10 +50,10 @@ const ResumeDetailField = ({ id }: Props) => {
         })}
       </ul>
       <div className='flex gap-8'>
-        <Button variant='outline' color='dark' size='large' link={true} href={`${RESUME.DETAIL(resumeId)}`}>
+        <Button variant='outline' color='dark' size='large' link={true} href={`${DETAIL(resumeId)}`}>
           수정하기
         </Button>
-        <Button variant='outline' color='dark' size='large'>
+        <Button variant='outline' color='dark' size='large' onClick={() => handleDeleteResume(resumeId)}>
           삭제하기
         </Button>
       </div>

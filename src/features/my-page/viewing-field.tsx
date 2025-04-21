@@ -32,7 +32,6 @@ const ViewingField = ({ session }: Props) => {
           </div>
         </>
       )}
-      {tab === 'interviewHistories' && <InterviewDetailField id={Number(id)} />}
       {tab === HISTORY && <InterviewDetailField id={id} />}
       {tab === RESUME && <ResumeDetailField id={id} />}
     </section>

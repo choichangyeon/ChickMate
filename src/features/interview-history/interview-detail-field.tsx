@@ -16,6 +16,10 @@ type Props = {
 };
 
 const { MY_PAGE } = PATH;
+const SELECT_ACTIVE_TAB = {
+  FEEDBACK: 'feedback',
+  HISTORY: 'history',
+};
 
 const InterviewDetailField = ({ id }: Props) => {
   const [activeTab, setActiveTab] = useState<string>('feedback');
@@ -56,25 +60,33 @@ const InterviewDetailField = ({ id }: Props) => {
       <div className='mb-4 flex flex-col gap-4'>
         <div className='flex border-b'>
           <div
-            className={`mx-4 cursor-pointer ${activeTab === 'feedback' ? 'border-b-4 border-primary-orange-600' : 'border-none'}`}
+            className={`mx-4 cursor-pointer ${activeTab === SELECT_ACTIVE_TAB.FEEDBACK ? 'border-b-4 border-primary-orange-600' : 'border-none'}`}
             onClick={() => setActiveTab('feedback')}
           >
-            <Typography size='xl' weight='bold' color={activeTab === 'feedback' ? 'primary-600' : 'gray-500'}>
+            <Typography
+              size='xl'
+              weight='bold'
+              color={activeTab === SELECT_ACTIVE_TAB.FEEDBACK ? 'primary-600' : 'gray-500'}
+            >
               최종 평가
             </Typography>
           </div>
           <div
-            className={`mx-4 cursor-pointer ${activeTab === 'history' ? 'border-b-4 border-primary-orange-600' : 'border-none'}`}
+            className={`mx-4 cursor-pointer ${activeTab === SELECT_ACTIVE_TAB.HISTORY ? 'border-b-4 border-primary-orange-600' : 'border-none'}`}
             onClick={() => setActiveTab('history')}
           >
-            <Typography size='xl' weight='bold' color={activeTab === 'history' ? 'primary-600' : 'gray-500'}>
+            <Typography
+              size='xl'
+              weight='bold'
+              color={activeTab === SELECT_ACTIVE_TAB.HISTORY ? 'primary-600' : 'gray-500'}
+            >
               면접 기록
             </Typography>
           </div>
         </div>
       </div>
-      {activeTab === 'feedback' && <InterviewDetailFeedback feedback={feedback} />}
-      {activeTab === 'history' && <InterviewDetailHistory data={data} />}
+      {activeTab === SELECT_ACTIVE_TAB.FEEDBACK && <InterviewDetailFeedback feedback={feedback} />}
+      {activeTab === SELECT_ACTIVE_TAB.HISTORY && <InterviewDetailHistory data={data} />}
       <div className='mt-auto pt-6'>
         <Button variant='outline' color='dark' size='large' onClick={() => deleteInterviewMutation(id)}>
           삭제하기

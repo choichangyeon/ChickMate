@@ -31,6 +31,7 @@ export const useDeleteInterviewMutation = () => {
       if (context?.previousInterviewList) {
         queryClient.setQueryData([HISTORY], context.previousInterviewList);
       }
+      throw err;
     },
 
     onSettled: () => {

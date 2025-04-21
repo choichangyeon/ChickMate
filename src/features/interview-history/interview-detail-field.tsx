@@ -10,6 +10,8 @@ import ErrorComponent from '@/components/common/error-component';
 import { useGetInterviewDetailQuery } from '@/features/interview-history/hook/use-get-interview-detail-query';
 import { useDeleteInterviewMutation } from '@/features/interview-history/hook/use-delete-interview-mutation';
 import Button from '@/components/ui/button';
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/constants/query-key';
 
 type Props = {
   id: number;
@@ -20,11 +22,12 @@ const SELECT_ACTIVE_TAB = {
   FEEDBACK: 'feedback',
   HISTORY: 'history',
 };
-
+const { TABS_COUNT } = QUERY_KEY;
 const InterviewDetailField = ({ id }: Props) => {
   const [activeTab, setActiveTab] = useState<string>('feedback');
   const { data, isPending, isError } = useGetInterviewDetailQuery(id);
-  const { mutate: deleteInterviewMutation } = useDeleteInterviewMutation();
+  const { mutateAsync: deleteInterviewMutation } = useDeleteInterviewMutation();
+  const queryClient = useQueryClient();
 
   if (isPending)
     return (
@@ -40,6 +43,15 @@ const InterviewDetailField = ({ id }: Props) => {
     );
 
   const feedback = data.feedback as FeedbackItem[];
+
+  const handleDelete = async () => {
+    try {
+      await deleteInterviewMutation(id);
+      queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
+    } catch (error) {
+      if (error instanceof Error) alert(error.message);
+    }
+  };
 
   return (
     <div className='flex h-full flex-col'>
@@ -88,7 +100,7 @@ const InterviewDetailField = ({ id }: Props) => {
       {activeTab === SELECT_ACTIVE_TAB.FEEDBACK && <InterviewDetailFeedback feedback={feedback} />}
       {activeTab === SELECT_ACTIVE_TAB.HISTORY && <InterviewDetailHistory data={data} />}
       <div className='mt-auto pt-6'>
-        <Button variant='outline' color='dark' size='large' onClick={() => deleteInterviewMutation(id)}>
+        <Button variant='outline' color='dark' size='large' onClick={handleDelete}>
           삭제하기
         </Button>
       </div>

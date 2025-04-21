@@ -55,6 +55,7 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResume
           {draftResumeList?.map((resume) => {
             return (
               <DraftResumeItem
+                key={resume.id}
                 resume={resume}
                 onDeleteClick={handleDeleteResume}
                 onDraftResumeClick={handleDraftResumeClick}

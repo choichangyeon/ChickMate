@@ -1,10 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import ResumeItem from '@/features/resume-list/resume-item';
-import { useResumeListQuery } from '@/features/resume-list/hooks/use-resume-list-infinite-query';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import { TABS } from '@/constants/my-page-constants';
+import ResumeItem from '@/features/resume-list/resume-item';
+import { useResumeListQuery } from '@/features/resume-list/hooks/use-resume-list-query';
 
 const { RESUME } = TABS;
 

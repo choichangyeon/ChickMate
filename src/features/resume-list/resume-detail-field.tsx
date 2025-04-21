@@ -6,6 +6,7 @@ import ErrorComponent from '@/components/common/error-component';
 import Typography from '@/components/ui/typography';
 import ResumeQnAItem from '@/features/resume-list/resume-qna-item';
 import type { Field } from '@/types/resume';
+import Button from '@/components/ui/button';
 
 type Props = {
   id: string;
@@ -14,13 +15,14 @@ type Props = {
 const ResumeDetailField = ({ id }: Props) => {
   const resumeId = Number(id);
   const { data: resume, isPending, isError } = useResumeQuery(resumeId);
-  const resumeContent = resume.content as Field[];
 
   if (isPending) return <LoadingSpinner />;
   if (isError) return <ErrorComponent />;
 
+  const resumeContent = resume.content as Field[];
+
   return (
-    <section className='flex h-[643px] flex-col gap-8 overflow-y-auto'>
+    <section className='flex h-[80dvh] flex-col gap-8'>
       <div>
         <Typography size='3xl' weight='bold'>
           내 자소서
@@ -29,11 +31,19 @@ const ResumeDetailField = ({ id }: Props) => {
           {resume.title}
         </Typography>
       </div>
-      <ul className='flex flex-col gap-4'>
-        {resumeContent.map((content) => {
-          return <ResumeQnAItem key={content.id} content={content} />;
+      <ul className='flex h-[70dvh] flex-col gap-4 overflow-y-auto scrollbar-hide'>
+        {resumeContent.map((content, idx) => {
+          return <ResumeQnAItem key={content.id} content={content} idx={idx} />;
         })}
       </ul>
+      <div className='flex gap-8'>
+        <Button variant='outline' color='dark' size='large'>
+          수정하기
+        </Button>
+        <Button variant='outline' color='dark' size='large'>
+          삭제하기
+        </Button>
+      </div>
     </section>
   );
 };

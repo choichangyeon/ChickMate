@@ -7,6 +7,9 @@ import Typography from '@/components/ui/typography';
 import ResumeQnAItem from '@/features/resume-list/resume-qna-item';
 import type { Field } from '@/types/resume';
 import Button from '@/components/ui/button';
+import { PATH } from '@/constants/path-constant';
+
+const { RESUME } = PATH;
 
 type Props = {
   id: string;
@@ -37,7 +40,7 @@ const ResumeDetailField = ({ id }: Props) => {
         })}
       </ul>
       <div className='flex gap-8'>
-        <Button variant='outline' color='dark' size='large'>
+        <Button variant='outline' color='dark' size='large' link={true} href={`${RESUME.DETAIL(resumeId)}`}>
           수정하기
         </Button>
         <Button variant='outline' color='dark' size='large'>

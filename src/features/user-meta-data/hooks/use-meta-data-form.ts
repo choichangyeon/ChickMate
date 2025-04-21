@@ -31,7 +31,7 @@ const { JOB_POSTING } = QUERY_KEY;
 
 export const useMetaDataForm = (userId: string) => {
   const { data: metaData, isPending: isMetaDataPending } = useMetaDataQuery({ userId });
-  const { mutate, error } = useMetaDataMutation(userId);
+  const { mutateAsync, error } = useMetaDataMutation(userId);
   const toggleModal = useModalStore((state) => state.toggleModal);
   const { handleExperienceUp } = useExperienceUp();
   const characterId = useCharacterStore((state) => state.characterId);
@@ -86,18 +86,19 @@ export const useMetaDataForm = (userId: string) => {
     [setValue, trigger]
   );
 
-  const handleOnSubmit = (values: UserMetaDataType) => {
-    mutate(values, {
-      onSuccess: () => {
-        if (isFirstTime) handleExperienceUp(FILL_OUT_META_DATA);
-        alert(isFirstTime ? CHARACTER_POST_SUCCESS : POST_DATA_SUCCESS);
-        toggleModal(USER_META_DATA);
-        queryClient.invalidateQueries({
-          queryKey: [JOB_POSTING, userId],
-          exact: true,
-        });
-      },
-    });
+  const handleOnSubmit = async (values: UserMetaDataType) => {
+    try {
+      await mutateAsync(values);
+      if (isFirstTime) handleExperienceUp(FILL_OUT_META_DATA);
+      alert(isFirstTime ? CHARACTER_POST_SUCCESS : POST_DATA_SUCCESS);
+      toggleModal(USER_META_DATA);
+      queryClient.invalidateQueries({
+        queryKey: [JOB_POSTING, userId],
+        exact: true,
+      });
+    } catch (error) {
+      if (error instanceof Error) alert(error.message);
+    }
   };
 
   return {

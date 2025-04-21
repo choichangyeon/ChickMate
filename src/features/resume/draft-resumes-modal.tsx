@@ -11,6 +11,7 @@ import { QUERY_KEY } from '@/constants/query-key';
 
 const { DRAFT_RESUME } = MODAL_ID;
 const { RESUME_DRAFT } = QUERY_KEY;
+const EMPTY_DRAFT_COUNT = 0;
 
 type Props = {
   draftResumeList: Resume[] | undefined;
@@ -47,7 +48,7 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResume
           작성 완료 시 300 경험치 획득!
         </Typography>
       </div>
-      {!isError && draftResumeList?.length === 0 ? (
+      {!isError && draftResumeList?.length === EMPTY_DRAFT_COUNT ? (
         <Typography color='gray-500'>임시 저장된 자기소개서가 없습니다</Typography>
       ) : (
         <ul className='flex flex-col gap-4'>

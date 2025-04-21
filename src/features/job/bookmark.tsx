@@ -7,23 +7,20 @@ import { Star } from '@/components/icons/star';
 type Props = {
   jobPostingId: number;
   isBookmarked: boolean;
+  userId: string;
 };
 
-const Bookmark = ({ jobPostingId, isBookmarked }: Props) => {
-  const { mutate: bookmarkMutate } = useBookmarkMutation({ jobPostingId });
-  const [isMarked, setIsMarked] = useState<boolean>(isBookmarked);
+const Bookmark = ({ jobPostingId, isBookmarked, userId }: Props) => {
+  const { mutate: bookmarkMutate } = useBookmarkMutation({ jobPostingId, userId });
 
-  useEffect(() => {
-    setIsMarked(isBookmarked);
-  }, [isBookmarked]);
+  useEffect(() => {}, [isBookmarked]);
 
   const handleClick = () => {
-    bookmarkMutate(isMarked!);
-    setIsMarked(!isMarked);
+    bookmarkMutate(isBookmarked!);
     // TODO: alert 구현
   };
 
-  return isMarked ? (
+  return isBookmarked ? (
     <button type='button' onClick={handleClick} aria-label='북마크 버튼'>
       <Star width='20' height='20' color='#FDE047' stroke='#FDE047' />
     </button>

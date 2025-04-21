@@ -2,6 +2,8 @@ import Trash from '@/components/icons/trash';
 import Typography from '@/components/ui/typography';
 import type { Field } from '@/types/resume';
 
+const MAX_ANSWER_LENGTH = 1000;
+
 type Props = {
   field: Field;
   idx: number;
@@ -11,7 +13,6 @@ type Props = {
 
 const QuestionAnswerField = ({ field, idx, onChange, onDelete }: Props) => {
   const { id, question, answer } = field;
-  const MAX_ANSWER_LENGTH = 1000;
 
   return (
     <div className='flex h-[444px] w-full flex-col gap-4 rounded-lg border border-cool-gray-200 p-8'>

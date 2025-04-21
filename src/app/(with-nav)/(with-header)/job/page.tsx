@@ -7,9 +7,11 @@ import JobPostingsBox from '@/features/job/job-postings-box';
 import Typography from '@/components/ui/typography';
 import { getJobByUserMetaData } from '@/features/job/api/server-services';
 import { serverActionWithSentry } from '@/utils/server-action-with-sentry';
+import Button from '@/components/ui/button';
 
 const { JOB_POSTING } = QUERY_KEY;
 const { AN_HOUR } = STALE_TIME;
+const SARAMIN_URL = 'http://www.saramin.co.kr';
 
 const JobPage = async () => {
   const session = await getServerSession(authOptions);
@@ -39,6 +41,11 @@ const JobPage = async () => {
           <JobPostingsBox userId={user.id} />
         </HydrationBoundary>
       </article>
+      <footer className='mt-4'>
+        <Button link href={SARAMIN_URL} target='_blank'>
+          데이터 출처: 취업 사람인
+        </Button>
+      </footer>
     </main>
   );
 };

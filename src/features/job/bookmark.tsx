@@ -16,7 +16,7 @@ const Bookmark = ({ jobPostingId, isBookmarked, userId }: Props) => {
   useEffect(() => {}, [isBookmarked]);
 
   const handleClick = () => {
-    bookmarkMutate(isBookmarked!);
+    bookmarkMutate(isBookmarked);
     // TODO: alert 구현
   };
 

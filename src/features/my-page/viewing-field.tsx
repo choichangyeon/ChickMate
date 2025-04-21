@@ -6,6 +6,10 @@ import MyInfo from '@/features/my-page/my-info';
 import { useSearchParams } from 'next/navigation';
 import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
 import InterviewDetailField from '@/features/interview-history/interview-detail-field';
+import { TABS } from '@/constants/my-page-constants';
+import ResumeDetailField from '../resume-list/resume-detail-field';
+
+const { HISTORY, RESUME } = TABS;
 
 type Props = {
   session: Session;
@@ -29,6 +33,8 @@ const ViewingField = ({ session }: Props) => {
         </>
       )}
       {tab === 'interviewHistories' && <InterviewDetailField id={Number(id)} />}
+      {tab === HISTORY && <InterviewDetailField id={id} />}
+      {tab === RESUME && <ResumeDetailField id={id} />}
     </section>
   );
 };

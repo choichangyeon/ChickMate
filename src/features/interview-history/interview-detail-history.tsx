@@ -13,7 +13,7 @@ type Props = {
 const InterviewDetailHistory = ({ data }: Props) => {
   const history = data.InterviewQnAList;
   return (
-    <div className='relative flex-1 overflow-hidden'>
+    <section className='relative flex-1 overflow-hidden'>
       <div className='pointer-events-none absolute bottom-0 left-0 right-0 z-10 h-10 bg-gradient-to-t from-white to-transparent' />
 
       <ol className='flex h-full flex-col gap-4 overflow-y-auto pr-2 scrollbar-hide'>
@@ -51,7 +51,7 @@ const InterviewDetailHistory = ({ data }: Props) => {
           </li>
         ))}
       </ol>
-    </div>
+    </section>
   );
 };
 

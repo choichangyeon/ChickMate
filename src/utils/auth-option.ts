@@ -13,9 +13,7 @@ const { JSON_HEADER } = API_HEADER;
 const { SIGN_IN } = ROUTE_HANDLER_PATH.AUTH;
 const { BASE_URL } = ENV;
 
-// NextAuth 설정 옵션을 정의합니다.
 export const authOptions: NextAuthOptions = {
-  // PrismaAdapter를 사용하여 Prisma와의 연결을 설정합니다.
   adapter: PrismaAdapter(prisma),
 
   providers: [
@@ -35,7 +33,6 @@ export const authOptions: NextAuthOptions = {
         password: { label: '비밀번호', type: 'password' },
       },
 
-      // 이메일, 패스워드 부분을 체크해서 맞으면 user 객체 리턴 틀리면 null 리턴
       async authorize(credentials, req) {
         const res = await fetch(`${BASE_URL}/${SIGN_IN}`, {
           method: POST,
@@ -56,7 +53,6 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
 
-  // 인증 과정에서 사용할 콜백 함수를 정의합니다.
   callbacks: {
     async jwt({ token, user }) {
       if ((user as any)?.accessToken) {
@@ -65,21 +61,16 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
 
-    // 세션이 생성될 때 호출되는 콜백 함수입니다.
     async session({ session, token }) {
       if (token?.accessToken) {
         (session as any).accessToken = token.accessToken;
       }
       if (token?.sub) {
-        session.user.id = token.sub; // 세션에 사용자 ID를 추가
+        session.user.id = token.sub;
       }
       return session;
     },
   },
-
-  // 사용자 정의 로그인 페이지 경로를 설정합니다.
-  // 원래의 경우라면, 로그인 페이지가 없어서 기본 로그인 페이지로 리디렉션됩니다.
-  // 하지만, 우리는 사용자 정의 로그인 페이지를 사용하기 때문에 이 설정을 추가합니다.
 
   pages: {
     signIn: '/auth/sign-in',

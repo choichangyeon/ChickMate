@@ -42,7 +42,7 @@ const MyCharacter = ({ session, characterData = defaultCharacter, overlayText, r
                 <Typography weight='black' size='xl' color='primary-600'>
                   LV {level}
                 </Typography>
-                <div className='line-clamp-1 w-[72px]'>
+                <div className='line-clamp-1 min-w-56'>
                   <Typography weight='bold'>{session?.user.name}님</Typography>
                 </div>
               </div>

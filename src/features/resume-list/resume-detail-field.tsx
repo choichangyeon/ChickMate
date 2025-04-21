@@ -1,16 +1,19 @@
 'use client';
 
+import Link from 'next/link';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import ErrorComponent from '@/components/common/error-component';
+import LeftArrowIcon from '@/components/icons/left-arrow-icon';
 import Typography from '@/components/ui/typography';
 import Button from '@/components/ui/button';
 import { PATH } from '@/constants/path-constant';
+import { QUERY_KEY } from '@/constants/query-key';
 import ResumeQnAItem from '@/features/resume-list/resume-qna-item';
 import { useResumeQuery } from '@/features/resume-list/hooks/use-resume-query';
 import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
 import type { Field } from '@/types/resume';
-import { QUERY_KEY } from '@/constants/query-key';
 
+const { MY_PAGE } = PATH;
 const { DETAIL } = PATH.RESUME;
 const { RESUME } = QUERY_KEY;
 
@@ -20,6 +23,7 @@ type Props = {
 
 const ResumeDetailField = ({ id }: Props) => {
   const resumeId = Number(id);
+
   const { data: resume, isPending, isError } = useResumeQuery(resumeId);
   const { mutate: deleteResumeMutate } = useDeleteResumeMutation(RESUME);
 
@@ -29,20 +33,35 @@ const ResumeDetailField = ({ id }: Props) => {
     }
   };
 
-  if (isPending) return <LoadingSpinner />;
-  if (isError) return <ErrorComponent />;
+  if (isPending)
+    return (
+      <div className='flex h-full w-full items-center justify-center'>
+        <LoadingSpinner />
+      </div>
+    );
+  if (isError)
+    return (
+      <div className='flex h-full w-full items-center justify-center'>
+        <ErrorComponent />
+      </div>
+    );
 
   const resumeContent = resume.content as Field[];
 
   return (
     <section className='flex h-[80dvh] flex-col gap-8'>
-      <div>
-        <Typography size='3xl' weight='bold'>
-          내 자소서
-        </Typography>
-        <Typography size='xl' color='gray-500' weight='normal'>
-          {resume.title}
-        </Typography>
+      <div className='flex items-center gap-4'>
+        <Link href={MY_PAGE}>
+          <LeftArrowIcon />
+        </Link>
+        <div>
+          <Typography size='3xl' weight='bold'>
+            내 자소서
+          </Typography>
+          <Typography size='xl' color='gray-500' weight='normal'>
+            {resume.title}
+          </Typography>
+        </div>
       </div>
       <ul className='flex h-[70dvh] flex-col gap-4 overflow-y-auto scrollbar-hide'>
         {resumeContent.map((content, idx) => {

@@ -28,18 +28,16 @@ const ResumeList = () => {
   if (isError) return <div>자소서 리스트를 불러오는데 실패하였습니다.</div>;
 
   return (
-    <div>
-      <ul className='flex h-[70dvh] flex-col gap-4 overflow-y-auto scrollbar-hide'>
-        {resumeList.map((resume) => {
-          return (
-            <div key={resume.id} className='flex flex-col gap-4'>
-              <ResumeItem resume={resume} onClick={handleGetDetailList} />
-              <hr className='border-cool-gray-300' />
-            </div>
-          );
-        })}
-      </ul>
-    </div>
+    <ul className='flex h-[70dvh] flex-col gap-4 overflow-y-auto scrollbar-hide'>
+      {resumeList.map((resume) => {
+        return (
+          <div key={resume.id} className='flex flex-col gap-4'>
+            <ResumeItem resume={resume} onClick={handleGetDetailList} />
+            <hr className='border-cool-gray-300' />
+          </div>
+        );
+      })}
+    </ul>
   );
 };
 

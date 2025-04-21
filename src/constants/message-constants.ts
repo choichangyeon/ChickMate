@@ -111,6 +111,7 @@ export const HISTORY_MESSAGE = {
   VALIDATION: {
     QUERY_PARAMS_TYPE: 'page 또는 limit이 유효하지 않습니다.',
   },
+  DELETE_SUCCEESS: '인터뷰 기록을 삭제했습니다.',
   GET_SERVER_ERROR: '히스토리를 불러올 수 없습니다.',
 };
 

@@ -8,7 +8,7 @@ export const STALE_TIME = {
 };
 
 export const GC_TIME = {
-  SAMPLE: 10,
+  MIN: 1000 * 60,
 };
 
 export const DELAY_TIME = {

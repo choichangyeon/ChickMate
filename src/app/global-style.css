@@ -115,6 +115,22 @@
   .border-cool-gray-50 {
     border-color: #f9fafb;
   }
+  /* nav shadow */
+  .nav-shadow {
+    box-shadow:
+      1px 1px 1px 0px rgba(255, 255, 255, 0.7) inset,
+      -1px -1px 1px 0px rgba(0, 0, 0, 0.23) inset,
+      0.445px 0.445px 0.629px -0.75px rgba(0, 0, 0, 0.26),
+      1.211px 1.211px 1.712px -1.5px rgba(0, 0, 0, 0.25),
+      2.658px 2.658px 3.759px -2.25px rgba(0, 0, 0, 0.23),
+      5.901px 5.901px 8.345px -3px rgba(0, 0, 0, 0.19),
+      14px 14px 21.213px -3.75px rgba(0, 0, 0, 0.2),
+      -0.5px -0.5px 0px 0px rgba(0, 0, 0, 0.69);
+  }
+  /* default text-balance */
+  .text-balance {
+    text-wrap: balance;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -128,10 +144,4 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
 }

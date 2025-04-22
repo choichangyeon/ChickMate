@@ -76,7 +76,6 @@ const Timer = ({
 
     patchInterviewHistoryMutate({ interviewId: interviewHistory.id, status: COMPLETED });
     postAIFeedbackMutate(interviewHistory.id);
-    //여기 충돌날 거 같아요! 이부분 마이 페이지 버튼 카운팅에 필요한 부분입니다 충돌 해결이 어렵다면 저(이다혜)를 찔러주세여!
     queryClient.invalidateQueries({
       queryKey: [TABS_COUNT],
     });

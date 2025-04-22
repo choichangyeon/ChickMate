@@ -9,7 +9,9 @@ import DraftResumeItem from '@/features/resume/draft-resume-item';
 import type { Resume } from '@prisma/client';
 import { QUERY_KEY } from '@/constants/query-key';
 import { Confirm } from 'notiflix';
+import { RESUME_MESSAGE } from '@/constants/message-constants';
 
+const { CONFIRM } = RESUME_MESSAGE;
 const { DRAFT_RESUME } = MODAL_ID;
 const { RESUME_DRAFT } = QUERY_KEY;
 const EMPTY_DRAFT_COUNT = 0;
@@ -30,7 +32,7 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResume
 
     Confirm.show(
       'Warning',
-      '자기소개서를 정말로 삭제하시겠습니까?',
+      CONFIRM.DELETE,
       '확인',
       '취소',
       () => {

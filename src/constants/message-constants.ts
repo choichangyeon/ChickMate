@@ -44,23 +44,30 @@ export const AI_MESSAGE = {
 
 export const RESUME_MESSAGE = {
   SUBMIT: {
-    REQUEST_FAILURE: '유효하지 않은 자기소개서 양식입니다.',
-    SUBMIT_SERVER_ERROR: '자기소개서 생성에 실패했습니다.',
+    REQUEST_FAILURE: '유효하지 않은 자소서 양식입니다.',
+    SUBMIT_SERVER_ERROR: '자소서 생성에 실패했습니다.',
   },
   DRAFT: {
     NOT_FOUND: '해당 자소서를 찾을 수 없습니다.',
-    FORBIDDEN: '해당 자기소개서를 수정할 권한이 없습니다.',
-    DRAFT_SERVER_ERROR: '자기소개서 임시 저장에 실패하였습니다.',
+    FORBIDDEN: '해당 자소서를 수정할 권한이 없습니다.',
+    DRAFT_SERVER_ERROR: '자소서 임시 저장에 실패하였습니다.',
   },
   VALIDATION: {
     QUERY_PARAMS_TYPE: 'page 또는 limit이 유효하지 않습니다.',
   },
   NOT_FOUND: '해당 자소서를 찾을 수 없습니다.',
-  GET_SERVER_ERROR: '자기소개서를 가져오는데 실패했습니다.',
-  DELETE_REQUEST_SUCCESS: '자기소개서가 삭제되었습니다.',
-  DELETE_SERVER_ERROR: '자기소개서를 삭제하는데 실패했습니다.',
-  DELETE_FORBIDDEN: '해당 자기소개서를 삭제할 권한이 없습니다.',
+  GET_SERVER_ERROR: '자소서를 가져오는데 실패했습니다.',
+  DELETE_REQUEST_SUCCESS: '자소개가 삭제되었습니다.',
+  DELETE_SERVER_ERROR: '자소서를 삭제하는데 실패했습니다.',
+  DELETE_FORBIDDEN: '해당 자소서를 삭제할 권한이 없습니다.',
   GET_COUNT_ERROR: '경험치 지급을 위해 오늘 작성한 자소서를 확인하는데 실패했습니다.',
+  LIMIT: {
+    MAX_RESUME_FIELD: '자소서 항목은 최대 5개까지 추가할 수 있습니다.',
+    MIN_RESUME_FIELD: '자소서 항목은 최소 1개 이상 작성해야됩니다.',
+  },
+  CONFIRM: {
+    DELETE: '자소서를 정말로 삭제하시겠습니까?',
+  },
 };
 
 const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME } = USER_META_DATA_KEY;

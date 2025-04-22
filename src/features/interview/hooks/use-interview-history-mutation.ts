@@ -6,7 +6,8 @@ export const usePatchInterviewHistoryMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (interviewId: number) => patchInterviewHistoryStatus(interviewId),
+    mutationFn: ({ interviewId, status }: { interviewId: number; status: number }) =>
+      patchInterviewHistoryStatus({ interviewId, status }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.HISTORY] });
     },

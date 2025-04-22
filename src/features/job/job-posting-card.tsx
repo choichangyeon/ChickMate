@@ -11,9 +11,10 @@ import { formatTimestamp } from '@/utils/format-timestamp';
 
 type Props = {
   jobPosting: JobPosting & { isBookmarked: boolean };
+  userId: string;
 };
 
-const JobPostingCard = ({ jobPosting }: Props) => {
+const JobPostingCard = ({ jobPosting, userId }: Props) => {
   const { companyName, positionTitle, experienceName, expirationTimestamp, openingTimestamp, id, url, isBookmarked } =
     jobPosting;
   const postedAtDate = formatTimestamp({ input: openingTimestamp });
@@ -29,7 +30,7 @@ const JobPostingCard = ({ jobPosting }: Props) => {
               {companyName}
             </Typography>
             {/* TODO: iconButton component 적용 */}
-            <Bookmark jobPostingId={id} isBookmarked={isBookmarked} />
+            <Bookmark jobPostingId={id} isBookmarked={isBookmarked} userId={userId} />
           </div>
           <Typography as='h3' weight='bold' lineClamp='2'>
             {positionTitle}

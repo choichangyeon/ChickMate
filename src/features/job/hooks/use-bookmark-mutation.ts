@@ -2,11 +2,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postBookmarkWithJobPostingId } from '@/features/job/api/client-services';
 import { QUERY_KEY } from '@/constants/query-key';
 
-const { BOOKMARK } = QUERY_KEY;
+const { BOOKMARK, JOB_POSTING } = QUERY_KEY;
 
 type Props = {
   jobPostingId: number;
-  userId?: string;
+  userId: string;
 };
 
 export const useBookmarkMutation = ({ jobPostingId, userId }: Props) => {
@@ -23,6 +23,9 @@ export const useBookmarkMutation = ({ jobPostingId, userId }: Props) => {
       });
 
       if (userId) {
+        queryClient.invalidateQueries({
+          queryKey: [JOB_POSTING, userId],
+        });
         queryClient.invalidateQueries({ queryKey: [BOOKMARK, userId] });
       }
     },

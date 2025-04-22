@@ -6,8 +6,14 @@ import { InterviewQnAType } from '@/types/DTO/interview-qna-dto';
 import QuestionStep from '@/features/interview/question-step';
 import CameraView from '@/features/interview/camera-view';
 import QuestionDisplayWithTimer from '@/features/interview/question-display-with-timer';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useInterviewStore } from '@/store/use-interview-store';
+import { patchInterviewHistoryStatus } from './api/client-services';
+import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
+
+const { IN_PROGRESS } = INTERVIEW_HISTORY_STATUS;
+const LAST_QNA_INDEX = -1;
+const CHECK_LEAST_INDEX = 1;
 
 type Props = {
   interviewHistory: InterviewHistoryType;
@@ -15,10 +21,20 @@ type Props = {
 };
 
 const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
+  const [lastQnA, setLastQnA] = useState<InterviewQnAType | null>(null);
   const setQuestionIndex = useInterviewStore((state) => state.setQuestionIndex);
+
   useEffect(() => {
-    setQuestionIndex(interviewQnAList.length - 1);
+    setQuestionIndex(interviewQnAList.length - CHECK_LEAST_INDEX);
+
+    if (interviewQnAList.length > CHECK_LEAST_INDEX) {
+      setLastQnA(interviewQnAList.at(LAST_QNA_INDEX) || null);
+    }
+    return () => {
+      patchInterviewHistoryStatus({ interviewId: interviewHistory.id, status: IN_PROGRESS });
+    };
   }, []);
+
   return (
     <main className='flex flex-col gap-8 px-[50px] py-8'>
       <section className='flex w-full flex-col gap-4'>
@@ -33,7 +49,7 @@ const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
           <CameraView />
         </div>
       </section>
-      <QuestionDisplayWithTimer interviewHistory={interviewHistory} />
+      <QuestionDisplayWithTimer interviewHistory={interviewHistory} interviewLastQnA={lastQnA} />
     </main>
   );
 };

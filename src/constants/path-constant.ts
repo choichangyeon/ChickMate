@@ -66,3 +66,10 @@ export const QUERY_PARAMS = {
   ERROR: 'error',
   UNAUTH: 'unauthorized',
 };
+
+const {
+  RESUME: { ROOT },
+  INTERVIEW: { START },
+  JOB,
+} = PATH;
+export const PUBLIC_PAGE = [ROOT, START, JOB]; //비회원도 접근할 수 있는 페이지

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import AuthProvider from '@/provider/auth-provider';
 import { RQProvider } from '@/provider/react-query-provider';
+import NotiflixProvider from '@/provider/notiflix-provider';
 import './global-style.css';
 
 const suit = localFont({
@@ -24,6 +25,7 @@ const RootLayout = ({
       <body className={suit.className}>
         <AuthProvider>
           <RQProvider>
+            <NotiflixProvider />
             <div className='mx-[auto] flex min-h-[100dvh]'>{children}</div>
           </RQProvider>
         </AuthProvider>

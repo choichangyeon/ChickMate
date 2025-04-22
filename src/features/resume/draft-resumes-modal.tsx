@@ -8,6 +8,7 @@ import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resu
 import DraftResumeItem from '@/features/resume/draft-resume-item';
 import type { Resume } from '@prisma/client';
 import { QUERY_KEY } from '@/constants/query-key';
+import { Confirm } from 'notiflix';
 
 const { DRAFT_RESUME } = MODAL_ID;
 const { RESUME_DRAFT } = QUERY_KEY;
@@ -25,13 +26,29 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResume
   const { mutate: deleteResumeMutate } = useDeleteResumeMutation(RESUME_DRAFT);
 
   const handleDeleteResume = (resumeId: number) => {
-    if (window.confirm('자기소개서를 정말로 삭제하시겠습니까?')) {
-      deleteResumeMutate(resumeId);
-    }
+    document.body.classList.add('confirm-open');
+
+    Confirm.show(
+      'Warning',
+      '자기소개서를 정말로 삭제하시겠습니까?',
+      '확인',
+      '취소',
+      () => {
+        document.body.classList.remove('confirm-open');
+        deleteResumeMutate(resumeId);
+      },
+      () => {
+        document.body.classList.remove('confirm-open');
+      }
+    );
 
     if (activeResumeId === resumeId) {
       setResumeId(null);
     }
+
+    // if (window.confirm('자기소개서를 정말로 삭제하시겠습니까?')) {
+    //   deleteResumeMutate(resumeId);
+    // }
   };
 
   const handleDraftResumeClick = (resume: Resume) => {

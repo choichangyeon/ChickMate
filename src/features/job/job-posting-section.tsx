@@ -1,7 +1,6 @@
 import { serverActionWithSentry } from '@/utils/server-action-with-sentry';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { Session } from 'next-auth';
-import React from 'react';
 import { QUERY_KEY } from '@/constants/query-key';
 import { STALE_TIME } from '@/constants/time-constants';
 import JobPostingsBox from '@/features/job/job-postings-box';

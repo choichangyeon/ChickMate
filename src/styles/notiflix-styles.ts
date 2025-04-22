@@ -45,7 +45,7 @@ export const initNotiflix = () => {
     backOverlay: false,
     backOverlayColor: 'rgba(0,0,0,0.5)',
     plainText: true,
-    showOnlyTheLastOne: false,
+    showOnlyTheLastOne: true,
     clickToClose: true,
     pauseOnHover: true,
 

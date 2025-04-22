@@ -27,7 +27,9 @@ export const getJobByUserMetaData = async (): Promise<JobPostingType[]> => {
 
   const { requiredEducationName, locationName, experienceName, jobMidCodeName } =
     userData.userMetaData as UserMetaDataType;
+
   const userLevelNum = educationOrder[requiredEducationName as keyof typeof educationOrder];
+
   const postings: (JobPostingType & {
     userSelectedJobs: { id: number }[];
   })[] = await prisma.jobPosting.findMany({
@@ -44,6 +46,12 @@ export const getJobByUserMetaData = async (): Promise<JobPostingType[]> => {
       locationName: {
         contains: locationName,
       },
+      expirationTimestamp: {
+        gte: Math.floor(Date.now() / 1000),
+      },
+    },
+    orderBy: {
+      expirationTimestamp: 'asc',
     },
     include: {
       userSelectedJobs: {
@@ -52,7 +60,6 @@ export const getJobByUserMetaData = async (): Promise<JobPostingType[]> => {
       },
     },
   });
-
   const jobPostingList = postings.map((post) => {
     const { userSelectedJobs, ...rest } = post;
     return {

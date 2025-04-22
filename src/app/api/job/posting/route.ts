@@ -60,6 +60,12 @@ export const GET = async (request: NextRequest) => {
         locationName: {
           contains: locationName,
         },
+        expirationTimestamp: {
+          gte: Math.floor(Date.now() / 1000),
+        },
+      },
+      orderBy: {
+        expirationTimestamp: 'asc',
       },
       include: {
         userSelectedJobs: {
@@ -68,7 +74,6 @@ export const GET = async (request: NextRequest) => {
         },
       },
     });
-
     const response = postings.map((post) => {
       const { userSelectedJobs, ...rest } = post;
       return {
@@ -79,6 +84,7 @@ export const GET = async (request: NextRequest) => {
 
     return NextResponse.json({ response }, { status: 200 });
   } catch (error) {
+    console.log(error)
     return NextResponse.json({ message: DB_SERVER_ERROR }, { status: 500 });
   }
 };

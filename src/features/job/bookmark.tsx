@@ -22,8 +22,12 @@ const Bookmark = ({ jobPostingId, isBookmarked, userId }: Props) => {
   const router = useRouter();
 
   const handleClick = async () => {
-    await bookmarkMutate(isBookmarked);
-    queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
+    try {
+      await bookmarkMutate(isBookmarked);
+      queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
+    } catch (error) {
+      if (error instanceof Error) alert(error.message);
+    }
 
     // TODO: alert 구현
   };

@@ -28,7 +28,7 @@ type Props = {
 };
 export const GET = async (request: NextRequest, { params }: Props) => {
   try {
-    const token = getToken({ req: request, secret: NEXTAUTH_SECRET });
+    const token = await getToken({ req: request, secret: NEXTAUTH_SECRET });
     if (!token) return NextResponse.json({ message: EXPIRED_TOKEN }, { status: 401 });
     const { userId } = params;
     const res = await prisma.user.findUnique({

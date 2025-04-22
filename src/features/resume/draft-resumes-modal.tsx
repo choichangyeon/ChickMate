@@ -1,15 +1,17 @@
 'use client';
 
 import { Dispatch, SetStateAction } from 'react';
+import { Confirm } from 'notiflix';
 import Modal from '@/components/ui/modal';
 import Typography from '@/components/ui/typography';
+import { RESUME_MESSAGE } from '@/constants/message-constants';
+import { QUERY_KEY } from '@/constants/query-key';
+import { NOTIFLIX_CONFIRM } from '@/constants/notiflix-constants';
 import { MODAL_ID } from '@/constants/modal-id-constants';
 import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
 import DraftResumeItem from '@/features/resume/draft-resume-item';
 import type { Resume } from '@prisma/client';
-import { QUERY_KEY } from '@/constants/query-key';
-import { Confirm } from 'notiflix';
-import { RESUME_MESSAGE } from '@/constants/message-constants';
+import { showNotiflixConfirm } from '@/utils/show-notiflix-confirm';
 
 const { CONFIRM } = RESUME_MESSAGE;
 const { DRAFT_RESUME } = MODAL_ID;
@@ -29,28 +31,11 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResume
 
   const handleDeleteResume = (resumeId: number) => {
     document.body.classList.add('confirm-open');
-
-    Confirm.show(
-      'Warning',
-      CONFIRM.DELETE,
-      '확인',
-      '취소',
-      () => {
-        document.body.classList.remove('confirm-open');
-        deleteResumeMutate(resumeId);
-      },
-      () => {
-        document.body.classList.remove('confirm-open');
-      }
-    );
+    showNotiflixConfirm({ message: CONFIRM.DELETE, okFunction: () => deleteResumeMutate(resumeId) });
 
     if (activeResumeId === resumeId) {
       setResumeId(null);
     }
-
-    // if (window.confirm('자기소개서를 정말로 삭제하시겠습니까?')) {
-    //   deleteResumeMutate(resumeId);
-    // }
   };
 
   const handleDraftResumeClick = (resume: Resume) => {

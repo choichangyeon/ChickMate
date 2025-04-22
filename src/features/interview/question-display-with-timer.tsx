@@ -21,7 +21,11 @@ const QuestionDisplayWithTimer = ({ interviewHistory, interviewLastQnA }: Props)
     useAudioWithTimer({ duration: MINUTES_IN_MS, interviewHistory });
 
   if (!interviewLastQnA && interviewHistory.status === IN_PROGRESS) {
-    return <LoadingSpinner />;
+    return (
+      <section className='mt-20 flex items-center justify-center'>
+        <LoadingSpinner />
+      </section>
+    );
   }
   return (
     <section className='flex gap-5'>

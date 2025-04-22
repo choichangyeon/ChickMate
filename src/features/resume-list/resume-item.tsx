@@ -12,7 +12,7 @@ const ResumeItem = ({ resume, onClick }: Props) => {
   const hasNotInterviewed = tryCount === 0;
 
   return (
-    <div key={resume.id} className='flex flex-col gap-4'>
+    <div className='flex flex-col gap-4'>
       <li onClick={() => onClick(id)} className='flex cursor-pointer flex-col'>
         <Typography size='sm' weight='normal' color='gray-500'>
           {formatDate({ input: createdAt })}

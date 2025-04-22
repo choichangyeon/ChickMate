@@ -30,7 +30,7 @@ const ResumeList = () => {
   return (
     <ul className='flex flex-col gap-4'>
       {resumeList.map((resume) => {
-        return <ResumeItem resume={resume} onClick={handleGetDetailList} />;
+        return <ResumeItem key={resume.id} resume={resume} onClick={handleGetDetailList} />;
       })}
     </ul>
   );

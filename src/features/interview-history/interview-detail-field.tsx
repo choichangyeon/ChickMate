@@ -1,17 +1,15 @@
+import ErrorComponent from '@/components/common/error-component';
 import LeftArrowIcon from '@/components/icons/left-arrow-icon';
+import Button from '@/components/ui/button';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 import Typography from '@/components/ui/typography';
 import { PATH } from '@/constants/path-constant';
-import Link from 'next/link';
-import { useState } from 'react';
+import { useDeleteInterviewMutation } from '@/features/interview-history/hook/use-delete-interview-mutation';
+import { useGetInterviewDetailQuery } from '@/features/interview-history/hook/use-get-interview-detail-query';
 import InterviewDetailFeedback, { FeedbackItem } from '@/features/interview-history/interview-detail-feedback';
 import InterviewDetailHistory from '@/features/interview-history/interview-detail-history';
-import LoadingSpinner from '@/components/ui/loading-spinner';
-import ErrorComponent from '@/components/common/error-component';
-import { useGetInterviewDetailQuery } from '@/features/interview-history/hook/use-get-interview-detail-query';
-import { useDeleteInterviewMutation } from '@/features/interview-history/hook/use-delete-interview-mutation';
-import Button from '@/components/ui/button';
-import { useQueryClient } from '@tanstack/react-query';
-import { QUERY_KEY } from '@/constants/query-key';
+import Link from 'next/link';
+import { useState } from 'react';
 
 type Props = {
   id: number;
@@ -22,12 +20,11 @@ const SELECT_ACTIVE_TAB = {
   FEEDBACK: 'feedback',
   HISTORY: 'history',
 };
-const { TABS_COUNT } = QUERY_KEY;
+
 const InterviewDetailField = ({ id }: Props) => {
   const [activeTab, setActiveTab] = useState<string>('feedback');
   const { data, isPending, isError } = useGetInterviewDetailQuery(id);
-  const { mutateAsync: deleteInterviewMutation } = useDeleteInterviewMutation();
-  const queryClient = useQueryClient();
+  const { mutate: deleteInterviewMutation } = useDeleteInterviewMutation();
 
   if (isPending)
     return (
@@ -44,13 +41,8 @@ const InterviewDetailField = ({ id }: Props) => {
 
   const feedback = data.feedback as FeedbackItem[];
 
-  const handleDelete = async () => {
-    try {
-      await deleteInterviewMutation(id);
-      queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
-    } catch (error) {
-      if (error instanceof Error) alert(error.message);
-    }
+  const handleDelete = () => {
+    deleteInterviewMutation(id);
   };
 
   return (

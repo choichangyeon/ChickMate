@@ -1,13 +1,12 @@
 import { Star } from '@/components/icons/star';
-import Typography from '@/components/ui/typography';
-import { JobPosting, UserSelectedJob } from '@prisma/client';
-import { formatRemainDay } from '@/utils/format-remain-day';
-import clsx from 'clsx';
 import Button from '@/components/ui/button';
-import { useBookmarkMutation } from '@/features/job/hooks/use-bookmark-mutation';
-import { formatTimestamp } from '@/utils/format-timestamp';
-import { useQueryClient } from '@tanstack/react-query';
+import Typography from '@/components/ui/typography';
 import { QUERY_KEY } from '@/constants/query-key';
+import { useBookmarkMutation } from '@/features/job/hooks/use-bookmark-mutation';
+import { formatRemainDay } from '@/utils/format-remain-day';
+import { formatTimestamp } from '@/utils/format-timestamp';
+import { JobPosting, UserSelectedJob } from '@prisma/client';
+import clsx from 'clsx';
 
 const experienceType: Record<number, string> = {
   0: '경력무관',
@@ -23,8 +22,7 @@ type Props = {
   userId: string;
 };
 const BookmarkTab = ({ bookmark, index, length, userId }: Props) => {
-  const queryClient = useQueryClient();
-  const { mutateAsync: bookmarkMutate } = useBookmarkMutation({
+  const { mutate: bookmarkMutate } = useBookmarkMutation({
     jobPostingId: bookmark.jobPostingId,
     userId,
   });
@@ -36,14 +34,8 @@ const BookmarkTab = ({ bookmark, index, length, userId }: Props) => {
   const expiredAtDate = formatTimestamp({ input: jobPosting.expirationTimestamp });
   const remainDay = formatRemainDay(jobPosting.expirationTimestamp);
 
-  const handleDeleteBookmark = async () => {
-    try {
-      /* TODO: alert 로직 구현 */
-      await bookmarkMutate(true);
-      queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
-    } catch (error) {
-      if (error instanceof Error) alert(error.message);
-    }
+  const handleDeleteBookmark = () => {
+    bookmarkMutate(true);
   };
 
   return (

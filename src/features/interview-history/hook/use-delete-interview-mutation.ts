@@ -26,7 +26,9 @@ export const useDeleteInterviewMutation = () => {
 
       return { previousInterviewList };
     },
-
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
+    },
     onError: (err, interviewId, context) => {
       if (context?.previousInterviewList) {
         queryClient.setQueryData([HISTORY], context.previousInterviewList);
@@ -36,7 +38,7 @@ export const useDeleteInterviewMutation = () => {
 
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [HISTORY] });
-      queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
+
       router.push(MY_PAGE);
     },
   });

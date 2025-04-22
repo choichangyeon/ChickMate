@@ -36,7 +36,6 @@ type Props = {
 const TabButtons = ({ userId, initialTabCounts }: Props) => {
   const { setTab, tab: targetTab, resetTab } = useTabStore();
   const handleChangeTab = (newTab: Tabs) => {
-    if (newTab === RESUME) return; //@TODO: 아직 자소서쪽이 미완이라 일단 tab change는 막아두겠습니다.
     setTab(newTab);
   };
 
@@ -56,10 +55,7 @@ const TabButtons = ({ userId, initialTabCounts }: Props) => {
             targetTab === tab.id && 'border-b-2 border-b-primary-orange-600'
           )}
         >
-          <button
-            className={clsx('w-full', tab.id === RESUME && 'cursor-not-allowed')}
-            onClick={() => handleChangeTab(tab.id)}
-          >
+          <button className='w-full' onClick={() => handleChangeTab(tab.id)}>
             {tab.title}
             {tabCounts[tab.id] !== 0 && (
               <Badge mx={1} size='small' color='dark'>

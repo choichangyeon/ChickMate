@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 type Props = {
-  id: number;
+  id: string;
 };
 
 const { MY_PAGE } = PATH;
@@ -22,8 +22,10 @@ const SELECT_ACTIVE_TAB = {
 };
 
 const InterviewDetailField = ({ id }: Props) => {
+  const interviewId = Number(id);
+
   const [activeTab, setActiveTab] = useState<string>('feedback');
-  const { data, isPending, isError } = useGetInterviewDetailQuery(id);
+  const { data, isPending, isError } = useGetInterviewDetailQuery(interviewId);
   const { mutate: deleteInterviewMutation } = useDeleteInterviewMutation();
 
   if (isPending)
@@ -40,10 +42,6 @@ const InterviewDetailField = ({ id }: Props) => {
     );
 
   const feedback = data.feedback as FeedbackItem[];
-
-  const handleDelete = () => {
-    deleteInterviewMutation(id);
-  };
 
   return (
     <div className='flex h-full flex-col'>
@@ -92,7 +90,7 @@ const InterviewDetailField = ({ id }: Props) => {
       {activeTab === SELECT_ACTIVE_TAB.FEEDBACK && <InterviewDetailFeedback feedback={feedback} />}
       {activeTab === SELECT_ACTIVE_TAB.HISTORY && <InterviewDetailHistory data={data} />}
       <div className='mt-auto pt-6'>
-        <Button variant='outline' color='dark' size='large' onClick={handleDelete}>
+        <Button variant='outline' color='dark' size='large' onClick={() => deleteInterviewMutation(interviewId)}>
           삭제하기
         </Button>
       </div>

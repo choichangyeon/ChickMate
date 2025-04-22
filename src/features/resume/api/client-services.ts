@@ -63,11 +63,46 @@ export const autoSaveResume = async ({ resumeId, data }: Props) => {
 export const getResumeList = async (status: number): Promise<Resume[]> => {
   const url = `${ROOT}?status=${status}`;
 
-  const { response: resumes } = await fetchWithSentry(url, {
+  const { response: resumeList } = await fetchWithSentry(url, {
     method: GET,
   });
 
-  return resumes;
+  return resumeList;
+};
+
+type ResumeListProps = {
+  status: number;
+  pageParam: number;
+  limit: number;
+};
+
+type PaginatedResumeListResponse = {
+  resumeList: Resume[];
+  nextPage: number | null;
+};
+/**
+ *
+ * @param {Number} status 저장 상태(등록/임시 저장)
+ * @param {Number} pageParam 가져올 페이지 번호
+ * @param {Number} limit 한 페이지에 표시할 항목 수
+ * @returns resumeList 자소서 목록
+ * @returns nextPage 다음 페이지
+ */
+export const getPaginatedResumeList = async ({
+  status,
+  pageParam,
+  limit,
+}: ResumeListProps): Promise<PaginatedResumeListResponse> => {
+  const url = `${ROOT}?status=${status}&page=${pageParam}&limit=${limit}`;
+
+  const { response: resumeList } = await fetchWithSentry(url, {
+    method: GET,
+  });
+
+  const hasNextPage = resumeList.length === limit;
+  const nextPage = hasNextPage ? pageParam + 1 : null;
+
+  return { resumeList, nextPage };
 };
 
 /**

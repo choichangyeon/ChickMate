@@ -7,8 +7,11 @@ import { MODAL_ID } from '@/constants/modal-id-constants';
 import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
 import DraftResumeItem from '@/features/resume/draft-resume-item';
 import type { Resume } from '@prisma/client';
+import { QUERY_KEY } from '@/constants/query-key';
 
 const { DRAFT_RESUME } = MODAL_ID;
+const { RESUME_DRAFT } = QUERY_KEY;
+const EMPTY_DRAFT_COUNT = 0;
 
 type Props = {
   draftResumeList: Resume[] | undefined;
@@ -19,7 +22,7 @@ type Props = {
 };
 
 const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResumeId, setResumeId }: Props) => {
-  const { mutate: deleteResumeMutate } = useDeleteResumeMutation();
+  const { mutate: deleteResumeMutate } = useDeleteResumeMutation(RESUME_DRAFT);
 
   const handleDeleteResume = (resumeId: number) => {
     if (window.confirm('자기소개서를 정말로 삭제하시겠습니까?')) {
@@ -45,13 +48,14 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResume
           작성 완료 시 300 경험치 획득!
         </Typography>
       </div>
-      {!isError && draftResumeList?.length === 0 ? (
+      {!isError && draftResumeList?.length === EMPTY_DRAFT_COUNT ? (
         <Typography color='gray-500'>임시 저장된 자기소개서가 없습니다</Typography>
       ) : (
         <ul className='flex flex-col gap-4'>
           {draftResumeList?.map((resume) => {
             return (
               <DraftResumeItem
+                key={resume.id}
                 resume={resume}
                 onDeleteClick={handleDeleteResume}
                 onDraftResumeClick={handleDraftResumeClick}

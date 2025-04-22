@@ -13,7 +13,7 @@ type Props = {
   userId: string;
 };
 
-export type SortOption = 'latest' | 'oldest' | 'deadline' | 'company';
+export type SortOption = 'latest' | 'oldest' | 'deadline' | 'company' | 'bookmark';
 
 const { META_DATA } = QUERY_KEY;
 
@@ -38,6 +38,7 @@ const JobPostingsBox = ({ userId }: Props) => {
           <option value='oldest'>오래된 순</option>
           <option value='deadline'>마감 임박 순</option>
           <option value='company'>기업명 순</option>
+          <option value='bookmark'>북마크한 공고</option>
         </select>
       </div>
 

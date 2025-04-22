@@ -86,6 +86,11 @@ export const GET = async (request: NextRequest) => {
         expirationTimestamp: {
           gte: Math.floor(Date.now() / 1000),
         },
+        ...(sortOption === 'bookmark' && {
+          userSelectedJobs: {
+            some: { userId },
+          },
+        }),
       },
       orderBy: orderByCondition,
       include: {

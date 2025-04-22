@@ -45,7 +45,7 @@ const JobPostingsBox = ({ userId }: Props) => {
   useEffect(() => {
     const { sortOption, page } = sanitizeQueryParams(params);
     setSortOption(sortOption as SortOption);
-    setPage(Number(page));
+    setPage(Number(page) || 1);
   }, [params]);
 
   const changeNewParams = (e: ChangeEvent<HTMLSelectElement>) => {

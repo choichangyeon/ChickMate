@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import Typography from '@/components/ui/typography';
 import { authOptions } from '@/utils/auth-option';
 import CameraView from '@/features/interview/camera-view';
-import { getInterviewHistory } from '@/features/interview/api/server-services';
+import { getInterviewHistory, getInterviewQnA } from '@/features/interview/api/server-services';
 import QuestionDisplayWithTimer from '@/features/interview/question-display-with-timer';
 import QuestionStep from '@/features/interview/question-step';
 import type { RouteParams } from '@/types/route-params';
@@ -18,6 +18,7 @@ const InterviewPage = async ({ params }: RouteParams) => {
   const session = await getServerSession(authOptions);
   const interviewId = Number(params.id);
   const interviewHistory = await getInterviewHistory(interviewId);
+  const interviewQnA = await getInterviewQnA(interviewId);
 
   if (!session || !interviewHistory) return null;
 

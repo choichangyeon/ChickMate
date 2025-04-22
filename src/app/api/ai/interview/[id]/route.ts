@@ -100,6 +100,7 @@ export const POST = async (request: NextRequest, { params }: RouteParams) => {
 /**
  * 인터뷰 기록 status 변경하는 요청
  * @param interviewId 인터뷰 기록 ID
+ * @param status 인터뷰 기록 상태
  * @returns interviewHistory 업데이트된 인터뷰 기록
  */
 export const PATCH = async (request: NextRequest, { params }: RouteParams) => {
@@ -113,6 +114,7 @@ export const PATCH = async (request: NextRequest, { params }: RouteParams) => {
     }
 
     const interviewId = Number(params.id);
+    const { status } = await request.json();
 
     const interviewHistory = await prisma.interviewHistory.findUnique({
       where: { id: interviewId },
@@ -130,7 +132,7 @@ export const PATCH = async (request: NextRequest, { params }: RouteParams) => {
       where: { id: interviewId },
       data: {
         userId: session.user.id,
-        status: INTERVIEW_HISTORY_STATUS.COMPLETED,
+        status,
       },
     });
 

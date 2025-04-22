@@ -2,13 +2,13 @@
 
 import Timer from '@/features/interview/timer';
 import { useAudioWithTimer } from '@/features/interview/hooks/use-audio-with-timer';
-import QuestionDisplay from './question-display';
-import { InterviewHistory } from '@prisma/client';
+import QuestionDisplay from '@/features/interview/question-display';
+import { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
 
 const MINUTES_IN_MS = 1 * 60 * 1000;
 
 type Props = {
-  interviewHistory: InterviewHistory;
+  interviewHistory: InterviewHistoryType;
 };
 
 const QuestionDisplayWithTimer = ({ interviewHistory }: Props) => {

@@ -9,7 +9,7 @@ type Props = {
 
 const ResumeItem = ({ resume, onClick }: Props) => {
   const { id, title, createdAt, tryCount } = resume;
-  const hasInterviewed = tryCount === 0;
+  const hasNotInterviewed = tryCount === 0;
 
   return (
     <div key={resume.id} className='flex flex-col gap-4'>
@@ -19,7 +19,7 @@ const ResumeItem = ({ resume, onClick }: Props) => {
         </Typography>
         <div className='flex items-end justify-between'>
           <Typography weight='bold'>{title}</Typography>
-          {hasInterviewed ? (
+          {hasNotInterviewed ? (
             <Typography size='sm' weight='bold' color='gray-500'>
               면접 보기 전
             </Typography>

@@ -4,8 +4,10 @@ import ListByTab from '@/features/my-page/list-by-tab';
 import TabButtons from '@/features/my-page/tab-buttons';
 import { INIT_TAB_COUNTS } from '@/constants/my-page-constants';
 import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
+import { RESUME_STATUS } from '@/constants/resume-constants';
 
 const { COMPLETED } = INTERVIEW_HISTORY_STATUS;
+const { SUBMIT } = RESUME_STATUS;
 type Props = {
   userId: User['id'];
 };
@@ -15,7 +17,11 @@ const TabsField = async ({ userId }: Props) => {
     select: {
       _count: {
         select: {
-          resumes: true,
+          resumes: {
+            where: {
+              status: SUBMIT,
+            },
+          },
           interviewHistories: {
             where: {
               status: COMPLETED,

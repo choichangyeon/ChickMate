@@ -7,9 +7,12 @@ import { useJobPostingQuery } from '@/features/job/hooks/use-job-posting-query';
 import { UserMetaDataType } from '@/types/user-meta-data-type';
 import { useQueryClient } from '@tanstack/react-query';
 import { JobPostingBlockComponent } from '@/features/job/job-posting-block-component';
-import { useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import Typography from '@/components/ui/typography';
-import JobPostingPaginationButton from './job-posting-pagination-button';
+import JobPostingPaginationButton from '@/features/job/job-posting-pagination-button';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
+import { PATH } from '@/constants/path-constant';
 
 type Props = {
   userId: string;
@@ -17,6 +20,7 @@ type Props = {
 
 export type SortOption = 'latest' | 'oldest' | 'deadline' | 'company' | 'bookmark';
 
+const { JOB } = PATH;
 const { META_DATA } = QUERY_KEY;
 export const JOB_POSTING_DATA_LIMIT = 15;
 
@@ -35,26 +39,37 @@ const JobPostingsBox = ({ userId }: Props) => {
     page,
     limit: JOB_POSTING_DATA_LIMIT,
   });
+  const params = useSearchParams();
+  const router = useRouter();
+
+  useEffect(() => {
+    const { sortOption, page } = sanitizeQueryParams(params);
+    setSortOption(sortOption as SortOption);
+    setPage(Number(page));
+  }, [params]);
+
+  const changeNewParams = (e: ChangeEvent<HTMLSelectElement>) => {
+    // setPage(1) 안할 경우 다른 sortOption으로 변경해도 해당 페이지 유지
+    const newSortOption = e.target.value;
+    setSortOption(newSortOption as SortOption);
+    router.push(`${JOB}?sortOption=${newSortOption}&page=1`);
+  };
 
   return (
     <>
-      <div className='mb-4 self-end'>
-        <select
-          value={sortOption}
-          onChange={(e) => {
-            setSortOption(e.target.value as typeof sortOption);
-            // setPage(1) 안할 경우 다른 sortOption으로 변경해도 해당 페이지 유지
-            setPage(1);
-          }}
-          className='rounded-md border px-2 py-1 text-sm shadow-sm'
-        >
-          <option value='latest'>최신순</option>
-          <option value='oldest'>오래된 순</option>
-          <option value='deadline'>마감 임박 순</option>
-          <option value='company'>기업명 순</option>
-          <option value='bookmark'>북마크한 공고</option>
-        </select>
-      </div>
+      <select
+        value={sortOption}
+        onChange={(e) => {
+          changeNewParams(e);
+        }}
+        className='mb-4 rounded-md border px-2 py-1 text-sm shadow-sm'
+      >
+        <option value='latest'>최신순</option>
+        <option value='oldest'>오래된 순</option>
+        <option value='deadline'>마감 임박 순</option>
+        <option value='company'>기업명 순</option>
+        <option value='bookmark'>북마크한 공고</option>
+      </select>
 
       {isPending ? (
         <section className='flex h-[400px] flex-col items-center justify-center gap-4 self-stretch'>

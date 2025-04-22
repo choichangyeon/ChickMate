@@ -17,6 +17,7 @@ type Props = {
 export type SortOption = 'latest' | 'oldest' | 'deadline' | 'company' | 'bookmark';
 
 const { META_DATA } = QUERY_KEY;
+const JOB_POSTING_DATA_LIMIT = 15;
 
 const JobPostingsBox = ({ userId }: Props) => {
   const queryClient = useQueryClient();
@@ -24,8 +25,20 @@ const JobPostingsBox = ({ userId }: Props) => {
 
   if (!userMetaData) return <JobPostingBlockComponent type='no-profile' />;
 
+  const [page, setPage] = useState(1);
   const [sortOption, setSortOption] = useState<SortOption>('latest');
-  const { data: jobPostingList, isError, isPending } = useJobPostingQuery({ userMetaData, userId, sortOption });
+  const { data, isError, isPending } = useJobPostingQuery({
+    userMetaData,
+    userId,
+    sortOption,
+    page,
+    limit: JOB_POSTING_DATA_LIMIT,
+  });
+
+  const totalPageCount = Math.ceil((data?.totalCount ?? 0) / JOB_POSTING_DATA_LIMIT);
+  const currentGroup = Math.floor((page - 1) / 10);
+  const startPage = currentGroup * 10 + 1;
+  const endPage = Math.min(startPage + 9, totalPageCount);
 
   return (
     <>
@@ -44,21 +57,47 @@ const JobPostingsBox = ({ userId }: Props) => {
       </div>
 
       {isPending ? (
-        <section className='flex h-[400px] flex-col items-center justify-center self-stretch gap-4'>
+        <section className='flex h-[400px] flex-col items-center justify-center gap-4 self-stretch'>
           <LoadingSpinner size='lg' />
           <Typography>채용 공고를 불러오는 중...</Typography>
         </section>
       ) : isError ? (
         <JobPostingBlockComponent type='fetch-error' />
-      ) : !jobPostingList ? (
+      ) : !data.jobPostingList ? (
         <JobPostingBlockComponent type='no-job-data' />
-      ) : jobPostingList.length === 0 ? (
+      ) : data.jobPostingList.length === 0 ? (
         <JobPostingBlockComponent type='no-bookmark' />
       ) : (
-        <section className='flex flex-row flex-wrap gap-5 self-stretch scrollbar-hide'>
-          {jobPostingList.map((jobPosting) => (
-            <JobPostingCard key={jobPosting.id} userId={userId} jobPosting={jobPosting} />
-          ))}
+        <section className='flex flex-col items-center gap-6'>
+          <div className='flex flex-row flex-wrap gap-5 self-stretch scrollbar-hide'>
+            {data.jobPostingList.map((jobPosting) => (
+              <JobPostingCard key={jobPosting.id} userId={userId} jobPosting={jobPosting} />
+            ))}
+          </div>
+
+          {totalPageCount > 1 && (
+            <div className='mt-6 flex flex-wrap justify-center gap-2'>
+              {startPage > 1 && (
+                <button onClick={() => setPage(startPage - 1)} className='rounded border px-3 py-1 text-sm'>
+                  &laquo;
+                </button>
+              )}
+              {Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i).map((pageNumber) => (
+                <button
+                  key={pageNumber}
+                  onClick={() => setPage(pageNumber)}
+                  className={`rounded border px-3 py-1 text-sm ${pageNumber === page ? 'bg-primary-orange-600 text-white' : 'hover:bg-gray-100'}`}
+                >
+                  {pageNumber}
+                </button>
+              ))}
+              {endPage < totalPageCount && (
+                <button onClick={() => setPage(endPage + 1)} className='rounded border px-3 py-1 text-sm'>
+                  &raquo;
+                </button>
+              )}
+            </div>
+          )}
         </section>
       )}
     </>

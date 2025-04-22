@@ -14,26 +14,29 @@ type UserMetaDataProps = UserMetaDataType;
 
 export const getJobByUserMetaData = async (
   userMetaData: UserMetaDataProps,
-  sortOption: SortOption
-): Promise<(JobPostingType & { isBookmarked: boolean })[]> => {
+  sortOption: SortOption,
+  page: number,
+  limit: number
+): Promise<{ jobPostingList: (JobPostingType & { isBookmarked: boolean })[]; totalCount: number }> => {
   const { requiredEducationName, locationName, experienceName, jobMidCodeName } = userMetaData;
   const queryParams = new URLSearchParams({
     requiredEducationName,
     locationName,
     experienceName,
     jobMidCodeName,
-    sortOption
+    sortOption,
+    page: String(page),
+    limit: String(limit),
   });
   const url = `${POSTING}?${queryParams}`;
 
-  const { response } = await fetchWithSentry(url, {
+  const { response, totalCount } = await fetchWithSentry(url, {
     method: GET,
     headers: JSON_HEADER,
   });
 
   const jobPostingList: (JobPostingType & { isBookmarked: boolean })[] = response;
-
-  return jobPostingList;
+  return { jobPostingList, totalCount };
 };
 
 /**

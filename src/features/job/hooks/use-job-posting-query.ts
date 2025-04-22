@@ -12,12 +12,14 @@ type Props = {
   userMetaData: UserMetaDataType;
   userId: string;
   sortOption: SortOption;
+  page: number;
+  limit: number;
 };
 
-export const useJobPostingQuery = ({ userMetaData, userId, sortOption }: Props) => {
+export const useJobPostingQuery = ({ userMetaData, userId, sortOption, page, limit }: Props) => {
   return useQuery({
-    queryKey: [JOB_POSTING, userId, sortOption],
-    queryFn: () => getJobByUserMetaData(userMetaData, sortOption),
+    queryKey: [JOB_POSTING, userId, sortOption, page],
+    queryFn: () => getJobByUserMetaData(userMetaData, sortOption, page, limit),
     staleTime: AN_HOUR,
   });
 };

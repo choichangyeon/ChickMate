@@ -7,11 +7,10 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/utils/auth-option';
 import { ENV } from '@/constants/env-constants';
 import { getToken } from 'next-auth/jwt';
-import { JobPostingType } from '@/types/DTO/job-posting-dto';
 
 type OrderByCondition = {
-  [key: string]: 'asc' | 'desc',
-}
+  [key: string]: 'asc' | 'desc';
+};
 
 const { NEXTAUTH_SECRET } = ENV;
 const {
@@ -36,70 +35,87 @@ export const GET = async (request: NextRequest) => {
 
     const userId = session.user.id;
     const searchParams = request.nextUrl.searchParams;
-    const { requiredEducationName, locationName, experienceName, jobMidCodeName, sortOption } =
+    const { requiredEducationName, locationName, experienceName, jobMidCodeName, sortOption, page, limit } =
       sanitizeQueryParams(searchParams);
-
-    let orderByCondition: OrderByCondition = {};
-
-    switch (sortOption) {
-      case 'latest':
-        orderByCondition = { createdAt: 'desc' }; 
-        break;
-      case 'oldest':
-        orderByCondition = { createdAt: 'asc' }; 
-        break;
-      case 'deadline':
-        orderByCondition = { expirationTimestamp: 'asc' }; 
-        break;
-      case 'company':
-        orderByCondition = { companyName: 'asc' }; 
-        break;
-      default:
-        orderByCondition = { createdAt: 'desc' };
-    }
 
     if (!searchParams) {
       return NextResponse.json({ message: DB_URL_ERROR }, { status: 400 });
     }
 
-    if (!requiredEducationName || !locationName || !experienceName || !jobMidCodeName) {
+    if (
+      !requiredEducationName ||
+      !locationName ||
+      !experienceName ||
+      !jobMidCodeName ||
+      !sortOption ||
+      !page ||
+      !limit
+    ) {
       return NextResponse.json({ message: DB_REQUEST_ERROR }, { status: 400 });
     }
-    // const mainRegion = JSON.parse(location).mainRegion;
+
+    let orderByCondition: OrderByCondition = {};
+
+    switch (sortOption) {
+      case 'latest':
+        orderByCondition = { createdAt: 'desc' };
+        break;
+      case 'oldest':
+        orderByCondition = { createdAt: 'asc' };
+        break;
+      case 'deadline':
+        orderByCondition = { expirationTimestamp: 'asc' };
+        break;
+      case 'company':
+        orderByCondition = { companyName: 'asc' };
+        break;
+      default:
+        orderByCondition = { createdAt: 'desc' };
+    }
+
     const userLevelNum = educationOrder[requiredEducationName as keyof typeof educationOrder];
-    const postings: (JobPostingType & {
-      userSelectedJobs: { id: number }[];
-    })[] = await prisma.jobPosting.findMany({
-      where: {
-        requiredEducationCode: {
-          lte: userLevelNum,
-        },
-        experienceName: {
-          contains: experienceName,
-        },
-        jobMidCodeName: {
-          contains: jobMidCodeName,
-        },
-        locationName: {
-          contains: locationName,
-        },
-        expirationTimestamp: {
-          gte: Math.floor(Date.now() / 1000),
-        },
-        ...(sortOption === 'bookmark' && {
-          userSelectedJobs: {
-            some: { userId },
-          },
-        }),
+
+    const whereCondition = {
+      requiredEducationCode: {
+        lte: userLevelNum,
       },
-      orderBy: orderByCondition,
-      include: {
+      experienceName: {
+        contains: experienceName,
+      },
+      jobMidCodeName: {
+        contains: jobMidCodeName,
+      },
+      locationName: {
+        contains: locationName,
+      },
+      expirationTimestamp: {
+        gte: Math.floor(Date.now() / 1000),
+      },
+      ...(sortOption === 'bookmark' && {
         userSelectedJobs: {
-          where: { userId },
-          select: { id: true },
+          some: { userId },
         },
-      },
-    });
+      }),
+    };
+
+    const [postings, totalCount] = await Promise.all([
+      prisma.jobPosting.findMany({
+        where: whereCondition,
+        orderBy: orderByCondition,
+        include: {
+          userSelectedJobs: {
+            where: { userId },
+            select: { id: true },
+          },
+        },
+        take: Number(limit),
+        skip: (Number(page) - 1) * Number(limit),
+      }),
+      prisma.jobPosting.count({
+        where: whereCondition,
+      }),
+    ]);
+
     const response = postings.map((post) => {
       const { userSelectedJobs, ...rest } = post;
       return {
@@ -108,7 +124,7 @@ export const GET = async (request: NextRequest) => {
       };
     });
 
-    return NextResponse.json({ response }, { status: 200 });
+    return NextResponse.json({ response, totalCount }, { status: 200 });
   } catch (error) {
     console.log(error);
     return NextResponse.json({ message: DB_SERVER_ERROR }, { status: 500 });

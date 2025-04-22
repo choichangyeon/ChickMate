@@ -45,7 +45,11 @@ const JobPostingsBox = ({ userId }: Props) => {
       <div className='mb-4 self-end'>
         <select
           value={sortOption}
-          onChange={(e) => setSortOption(e.target.value as typeof sortOption)}
+          onChange={(e) => {
+            setSortOption(e.target.value as typeof sortOption);
+            // setPage(1) 안할 경우 다른 sortOption으로 변경해도 해당 페이지 유지
+            setPage(1);
+          }}
           className='rounded-md border px-2 py-1 text-sm shadow-sm'
         >
           <option value='latest'>최신순</option>

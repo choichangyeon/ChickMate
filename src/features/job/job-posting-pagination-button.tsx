@@ -1,5 +1,7 @@
 'use client';
 
+import LeftArrowIcon from '@/components/icons/left-arrow-icon';
+import RightArrowIcon from '@/components/icons/right-arrow-icon';
 import { JOB_POSTING_DATA_LIMIT } from '@/features/job/job-postings-box';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Dispatch, SetStateAction } from 'react';
@@ -30,8 +32,8 @@ const JobPostingPaginationButton = ({ totalCount, page, setPage }: Props) => {
       {totalPageCount > 1 && (
         <div className='mt-6 flex flex-wrap justify-center gap-2'>
           {startPage > 1 && (
-            <button onClick={() => setPage(startPage - 1)} className='rounded border px-3 py-1 text-sm'>
-              &laquo;
+            <button onClick={() => setPage(startPage - 1)} className='rounded border text-sm'>
+              <LeftArrowIcon />
             </button>
           )}
           {Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i).map((pageNumber) => (
@@ -44,8 +46,8 @@ const JobPostingPaginationButton = ({ totalCount, page, setPage }: Props) => {
             </button>
           ))}
           {endPage < totalPageCount && (
-            <button onClick={() => goToPage(endPage + 1)} className='rounded border px-3 py-1 text-sm'>
-              &raquo;
+            <button onClick={() => goToPage(endPage + 1)} className='rounded border text-sm'>
+              <RightArrowIcon />
             </button>
           )}
         </div>

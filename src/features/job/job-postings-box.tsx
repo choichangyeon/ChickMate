@@ -76,15 +76,15 @@ const JobPostingsBox = ({ userId }: Props) => {
       ) : data.jobPostingList.length === 0 ? (
         <JobPostingBlockComponent type='no-bookmark' />
       ) : (
-        <section className='flex flex-col items-center gap-6'>
-          <div className='flex flex-row flex-wrap gap-5 self-stretch scrollbar-hide'>
+        <div className='flex flex-col items-center gap-6'>
+          <section className='flex flex-wrap justify-between gap-5 self-stretch scrollbar-hide'>
             {data.jobPostingList.map((jobPosting) => (
               <JobPostingCard key={jobPosting.id} userId={userId} jobPosting={jobPosting} />
             ))}
-          </div>
+          </section>
 
           <JobPostingPaginationButton totalCount={data.totalCount} page={page} setPage={setPage} />
-        </section>
+        </div>
       )}
     </>
   );

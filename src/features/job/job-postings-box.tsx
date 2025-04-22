@@ -7,12 +7,13 @@ import { useJobPostingQuery } from '@/features/job/hooks/use-job-posting-query';
 import { UserMetaDataType } from '@/types/user-meta-data-type';
 import { useQueryClient } from '@tanstack/react-query';
 import { JobPostingBlockComponent } from '@/features/job/job-posting-block-component';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import Typography from '@/components/ui/typography';
 import JobPostingPaginationButton from '@/features/job/job-posting-pagination-button';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
 import { PATH } from '@/constants/path-constant';
+import JobPostingSelectBox from '@/features/job/job-posting-select-box';
 
 type Props = {
   userId: string;
@@ -29,9 +30,16 @@ const JobPostingsBox = ({ userId }: Props) => {
   const userMetaData = queryClient.getQueryData([META_DATA, userId]) as UserMetaDataType;
 
   if (!userMetaData) return <JobPostingBlockComponent type='no-profile' />;
+  const params = useSearchParams();
+  const router = useRouter();
 
-  const [page, setPage] = useState(1);
-  const [sortOption, setSortOption] = useState<SortOption>('latest');
+  // 새로 고침 시 option 유지되도록
+  // 없을 시 새로고침 시 initialSort가 'latest'로 나옴
+  const { sortOption: initialSort, page: initialPage } = useMemo(() => sanitizeQueryParams(params), [params]);
+
+  const [sortOption, setSortOption] = useState<SortOption>(initialSort as SortOption);
+  const [page, setPage] = useState(Number(initialPage));
+
   const { data, isError, isPending } = useJobPostingQuery({
     userMetaData,
     userId,
@@ -39,8 +47,6 @@ const JobPostingsBox = ({ userId }: Props) => {
     page,
     limit: JOB_POSTING_DATA_LIMIT,
   });
-  const params = useSearchParams();
-  const router = useRouter();
 
   useEffect(() => {
     const { sortOption, page } = sanitizeQueryParams(params);
@@ -49,7 +55,6 @@ const JobPostingsBox = ({ userId }: Props) => {
   }, [params]);
 
   const changeNewParams = (e: ChangeEvent<HTMLSelectElement>) => {
-    // setPage(1) 안할 경우 다른 sortOption으로 변경해도 해당 페이지 유지
     const newSortOption = e.target.value;
     setSortOption(newSortOption as SortOption);
     router.push(`${JOB}?sortOption=${newSortOption}&page=1`);
@@ -57,19 +62,7 @@ const JobPostingsBox = ({ userId }: Props) => {
 
   return (
     <>
-      <select
-        value={sortOption}
-        onChange={(e) => {
-          changeNewParams(e);
-        }}
-        className='mb-4 rounded-md border px-2 py-1 text-sm shadow-sm'
-      >
-        <option value='latest'>최신순</option>
-        <option value='oldest'>오래된 순</option>
-        <option value='deadline'>마감 임박 순</option>
-        <option value='company'>기업명 순</option>
-        <option value='bookmark'>북마크한 공고</option>
-      </select>
+      <JobPostingSelectBox sortOption={sortOption} changeNewParams={changeNewParams} />
 
       {isPending ? (
         <section className='flex h-[400px] flex-col items-center justify-center gap-4 self-stretch'>

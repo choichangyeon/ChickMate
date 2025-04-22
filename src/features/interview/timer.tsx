@@ -5,7 +5,7 @@ import { useCharacterStore } from '@/store/use-character-store';
 import { useInterviewStore } from '@/store/use-interview-store';
 import Button from '@/components/ui/button';
 import Typography from '@/components/ui/typography';
-import { INTERVIEW_LIMIT_COUNT } from '@/constants/interview-constants';
+import { INTERVIEW_HISTORY_STATUS, INTERVIEW_LIMIT_COUNT } from '@/constants/interview-constants';
 import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import { PATH } from '@/constants/path-constant';
 import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
@@ -18,6 +18,7 @@ import { QUERY_KEY } from '@/constants/query-key';
 const { MY_PAGE } = PATH;
 const { INTERVIEW_COMPLETION } = CHARACTER_HISTORY_KEY;
 const { TABS_COUNT } = QUERY_KEY;
+const { COMPLETED } = INTERVIEW_HISTORY_STATUS;
 type Props = {
   interviewHistory: InterviewHistory;
   isRecording: boolean;
@@ -73,7 +74,7 @@ const Timer = ({
       alert('경험치 획득 완료!'); //@TODO: 경험치 정의 완료된 후에 alert 리팩토링하면서 상수로 빼겠습니다.
     }
 
-    patchInterviewHistoryMutate(interviewHistory.id);
+    patchInterviewHistoryMutate({ interviewId: interviewHistory.id, status: COMPLETED });
     postAIFeedbackMutate(interviewHistory.id);
     //여기 충돌날 거 같아요! 이부분 마이 페이지 버튼 카운팅에 필요한 부분입니다 충돌 해결이 어렵다면 저(이다혜)를 찔러주세여!
     queryClient.invalidateQueries({

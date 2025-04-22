@@ -19,7 +19,7 @@ const tabs = [
     title: '북마크한 채용공고',
   },
   {
-    id: RESUME, //@TODO:  zustand 타입에도 추가 부탁드립니다.
+    id: RESUME,
     title: '내가 작성한 자소서',
   },
 ];

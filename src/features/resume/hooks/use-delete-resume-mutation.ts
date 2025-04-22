@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { PATH } from '@/constants/path-constant';
 
 const { MY_PAGE } = PATH;
-const { RESUMES } = QUERY_KEY;
+const { RESUMES, TABS_COUNT } = QUERY_KEY;
 
 export const useDeleteResumeMutation = (queryKey: string) => {
   const queryClient = useQueryClient();
@@ -32,6 +32,7 @@ export const useDeleteResumeMutation = (queryKey: string) => {
     },
     onSuccess: () => {
       if (queryKey === RESUMES) {
+        queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
         router.replace(MY_PAGE);
       }
     },

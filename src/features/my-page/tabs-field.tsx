@@ -2,7 +2,10 @@ import { prisma } from '@/lib/prisma';
 import type { User } from '@prisma/client';
 import ListByTab from '@/features/my-page/list-by-tab';
 import TabButtons from '@/features/my-page/tab-buttons';
+import { INIT_TAB_COUNTS } from '@/constants/my-page-constants';
+import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 
+const { COMPLETED } = INTERVIEW_HISTORY_STATUS;
 type Props = {
   userId: User['id'];
 };
@@ -13,22 +16,22 @@ const TabsField = async ({ userId }: Props) => {
       _count: {
         select: {
           resumes: true,
-          interviewHistories: true,
+          interviewHistories: {
+            where: {
+              status: COMPLETED,
+            },
+          },
           userSelectedJobs: true,
         },
       },
     },
   });
 
-  const tabCounts = result?._count ?? {
-    resumes: 0,
-    interviewHistories: 0,
-    userSelectedJobs: 0,
-  };
+  const initialTabCounts = result?._count ?? INIT_TAB_COUNTS;
 
   return (
     <section className='h-[80dvh] max-h-[643px] w-1/2 max-w-[634px] rounded-t-[8px] border bg-cool-gray-10'>
-      <TabButtons tabCounts={tabCounts} />
+      <TabButtons userId={userId} initialTabCounts={initialTabCounts} />
       <div className='h-full p-8'>
         <ListByTab />
       </div>

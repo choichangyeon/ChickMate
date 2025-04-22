@@ -7,6 +7,9 @@ import { useRouter } from 'next/navigation';
 
 const { SIGN_IN } = PATH.AUTH;
 
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/constants/query-key';
+const { TABS_COUNT } = QUERY_KEY;
 type Props = {
   jobPostingId: number;
   isBookmarked: boolean;
@@ -14,11 +17,18 @@ type Props = {
 };
 
 const Bookmark = ({ jobPostingId, isBookmarked, userId }: Props) => {
-  const { mutate: bookmarkMutate, isError } = useBookmarkMutation({ jobPostingId, userId });
+  const queryClient = useQueryClient();
+  const { mutateAsync: bookmarkMutate, isError } = useBookmarkMutation({ jobPostingId, userId });
   const router = useRouter();
 
-  const handleClick = () => {
-    bookmarkMutate(isBookmarked);
+  const handleClick = async () => {
+    try {
+      await bookmarkMutate(isBookmarked);
+      queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
+    } catch (error) {
+      if (error instanceof Error) alert(error.message);
+    }
+
     // TODO: alert 구현
   };
 

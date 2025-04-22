@@ -1,11 +1,12 @@
 import { Star } from '@/components/icons/star';
-import Typography from '@/components/ui/typography';
-import { JobPosting, UserSelectedJob } from '@prisma/client';
-import { formatRemainDay } from '@/utils/format-remain-day';
-import clsx from 'clsx';
 import Button from '@/components/ui/button';
+import Typography from '@/components/ui/typography';
+import { QUERY_KEY } from '@/constants/query-key';
 import { useBookmarkMutation } from '@/features/job/hooks/use-bookmark-mutation';
+import { formatRemainDay } from '@/utils/format-remain-day';
 import { formatTimestamp } from '@/utils/format-timestamp';
+import { JobPosting, UserSelectedJob } from '@prisma/client';
+import clsx from 'clsx';
 
 const experienceType: Record<number, string> = {
   0: '경력무관',
@@ -13,7 +14,7 @@ const experienceType: Record<number, string> = {
   2: '경력',
   3: '신입/경력',
 };
-
+const { TABS_COUNT } = QUERY_KEY;
 type Props = {
   bookmark: UserSelectedJob & { jobPosting: JobPosting };
   index: number;
@@ -33,8 +34,7 @@ const BookmarkTab = ({ bookmark, index, length, userId }: Props) => {
   const expiredAtDate = formatTimestamp({ input: jobPosting.expirationTimestamp });
   const remainDay = formatRemainDay(jobPosting.expirationTimestamp);
 
-  const handleDeleteBookmark = async () => {
-    /* TODO: alert 로직 구현 */
+  const handleDeleteBookmark = () => {
     bookmarkMutate(true);
   };
 

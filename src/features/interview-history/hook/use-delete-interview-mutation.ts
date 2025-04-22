@@ -5,7 +5,7 @@ import { deleteInterview } from '@/features/interview-history/api/client-service
 import { useRouter } from 'next/navigation';
 import { PATH } from '@/constants/path-constant';
 
-const { HISTORY } = QUERY_KEY;
+const { HISTORY, TABS_COUNT } = QUERY_KEY;
 const { MY_PAGE } = PATH;
 
 export const useDeleteInterviewMutation = () => {
@@ -26,15 +26,19 @@ export const useDeleteInterviewMutation = () => {
 
       return { previousInterviewList };
     },
-
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
+    },
     onError: (err, interviewId, context) => {
       if (context?.previousInterviewList) {
         queryClient.setQueryData([HISTORY], context.previousInterviewList);
       }
+      throw err;
     },
 
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [HISTORY] });
+
       router.push(MY_PAGE);
     },
   });

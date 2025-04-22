@@ -1,0 +1,57 @@
+import { prisma } from '@/lib/prisma';
+import { getToken } from 'next-auth/jwt';
+import { NextRequest, NextResponse } from 'next/server';
+import type { User } from '@prisma/client';
+import { ENV } from '@/constants/env-constants';
+import { AUTH_MESSAGE, TAB_COUNT_MESSAGE } from '@/constants/message-constants';
+import { INIT_TAB_COUNTS, TABS } from '@/constants/my-page-constants';
+import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
+
+const { NEXTAUTH_SECRET } = ENV;
+
+const {
+  ERROR: { EXPIRED_TOKEN },
+} = AUTH_MESSAGE;
+
+const {
+  API: { SERVER_ERROR },
+} = TAB_COUNT_MESSAGE;
+
+const { HISTORY, RESUME, BOOKMARK } = TABS;
+
+const { COMPLETED } = INTERVIEW_HISTORY_STATUS;
+
+type Props = {
+  params: {
+    userId: User['id'];
+  };
+};
+export const GET = async (request: NextRequest, { params }: Props) => {
+  try {
+    const token = await getToken({ req: request, secret: NEXTAUTH_SECRET });
+    if (!token) return NextResponse.json({ message: EXPIRED_TOKEN }, { status: 401 });
+    const { userId } = params;
+    const res = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        _count: {
+          select: {
+            [RESUME]: true,
+            [BOOKMARK]: true,
+            [HISTORY]: {
+              where: {
+                status: COMPLETED,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const tabCounts = res?._count ?? INIT_TAB_COUNTS;
+
+    return NextResponse.json({ response: tabCounts }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ message: SERVER_ERROR }, { status: 500 });
+  }
+};

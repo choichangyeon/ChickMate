@@ -2,9 +2,10 @@
 import clsx from 'clsx';
 import { useEffect } from 'react';
 import { useTabStore } from '@/store/use-tab-store';
+import { useTabCountQuery } from '@/features/my-page/hook/use-tab-count-query';
 import Badge from '@/components/ui/badge';
-import { TABS } from '@/constants/my-page-constants';
 import type { Tabs } from '@/types/tab-type';
+import { TABS } from '@/constants/my-page-constants';
 
 const { BOOKMARK, RESUME, HISTORY } = TABS;
 
@@ -24,22 +25,27 @@ const tabs = [
 ];
 
 type Props = {
-  tabCounts: {
-    resumes: number;
-    interviewHistories: number;
-    userSelectedJobs: number;
+  userId: string;
+  initialTabCounts: {
+    [RESUME]: number;
+    [HISTORY]: number;
+    [BOOKMARK]: number;
   };
 };
 
-const TabButtons = ({ tabCounts }: Props) => {
+const TabButtons = ({ userId, initialTabCounts }: Props) => {
   const { setTab, tab: targetTab, resetTab } = useTabStore();
   const handleChangeTab = (newTab: Tabs) => {
     if (newTab === RESUME) return; //@TODO: 아직 자소서쪽이 미완이라 일단 tab change는 막아두겠습니다.
     setTab(newTab);
   };
+
   useEffect(() => {
     return () => resetTab();
   }, []);
+
+  const { data: tabCounts } = useTabCountQuery(userId, initialTabCounts);
+
   return (
     <ul className='flex h-12 items-center justify-evenly bg-cool-gray-100'>
       {tabs.map((tab) => (
@@ -59,9 +65,6 @@ const TabButtons = ({ tabCounts }: Props) => {
               <Badge mx={1} size='small' color='dark'>
                 {tabCounts[tab.id]}
               </Badge>
-              // <span className='mx-1 rounded-xl bg-cool-gray-900 px-[10px] py-[2px] text-xs text-cool-gray-50'>
-              //   {tabCounts[tab.id]}개
-              // </span>
             )}
           </button>
         </li>

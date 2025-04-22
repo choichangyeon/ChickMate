@@ -12,10 +12,12 @@ import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
 import { usePatchInterviewHistoryMutation } from '@/features/interview/hooks/use-interview-history-mutation';
 import { usePostAIFeedbackMutation } from '@/features/interview/hooks/use-ai-feedback-mutation';
 import type { InterviewHistory } from '@prisma/client';
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/constants/query-key';
 
 const { MY_PAGE } = PATH;
 const { INTERVIEW_COMPLETION } = CHARACTER_HISTORY_KEY;
-
+const { TABS_COUNT } = QUERY_KEY;
 type Props = {
   interviewHistory: InterviewHistory;
   isRecording: boolean;
@@ -39,7 +41,7 @@ const Timer = ({
   const router = useRouter();
   const { mutate: patchInterviewHistoryMutate, error: InterviewHistoryError } = usePatchInterviewHistoryMutation();
   const { mutate: postAIFeedbackMutate, error: aiFeedbackError } = usePostAIFeedbackMutation();
-
+  const queryClient = useQueryClient();
   const characterId = useCharacterStore((state) => state.characterId);
   const { handleExperienceUp } = useExperienceUp();
 
@@ -73,6 +75,10 @@ const Timer = ({
 
     patchInterviewHistoryMutate(interviewHistory.id);
     postAIFeedbackMutate(interviewHistory.id);
+    //여기 충돌날 거 같아요! 이부분 마이 페이지 버튼 카운팅에 필요한 부분입니다 충돌 해결이 어렵다면 저(이다혜)를 찔러주세여!
+    queryClient.invalidateQueries({
+      queryKey: [TABS_COUNT],
+    });
     router.push(MY_PAGE);
   };
 

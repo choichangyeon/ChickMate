@@ -8,6 +8,7 @@ import { UserMetaDataType } from '@/types/user-meta-data-type';
 import { useQueryClient } from '@tanstack/react-query';
 import { JobPostingBlockComponent } from '@/features/job/job-posting-block-component';
 import { useState } from 'react';
+import Typography from '@/components/ui/typography';
 
 type Props = {
   userId: string;
@@ -43,13 +44,16 @@ const JobPostingsBox = ({ userId }: Props) => {
       </div>
 
       {isPending ? (
-        <section className='flex h-[400px] flex-col items-center justify-center self-stretch'>
+        <section className='flex h-[400px] flex-col items-center justify-center self-stretch gap-4'>
           <LoadingSpinner size='lg' />
+          <Typography>채용 공고를 불러오는 중...</Typography>
         </section>
       ) : isError ? (
         <JobPostingBlockComponent type='fetch-error' />
-      ) : !jobPostingList || jobPostingList.length === 0 ? (
+      ) : !jobPostingList ? (
         <JobPostingBlockComponent type='no-job-data' />
+      ) : jobPostingList.length === 0 ? (
+        <JobPostingBlockComponent type='no-bookmark' />
       ) : (
         <section className='flex flex-row flex-wrap gap-5 self-stretch scrollbar-hide'>
           {jobPostingList.map((jobPosting) => (

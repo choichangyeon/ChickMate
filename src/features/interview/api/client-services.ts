@@ -116,11 +116,19 @@ export const postInterview = async ({ resumeId, interviewType }: InterviewProps)
 
 /** DB에 인터뷰 기록 업데이트하는 요청
  * @param interviewId 인터뷰 기록 ID
+ * @param status 업데이트하고자하는 상태
  */
+type InterviewHistoryProps = {
+  interviewId: number;
+  status: number;
+};
 
-export const patchInterviewHistoryStatus = async (interviewId: number) => {
+export const patchInterviewHistoryStatus = async ({ interviewId, status }: InterviewHistoryProps) => {
   await fetchWithSentry(INTERVIEW_LIVE(interviewId), {
     method: PATCH,
+    body: JSON.stringify({
+      status,
+    }),
     headers: JSON_HEADER,
   });
 };

@@ -87,7 +87,7 @@ export const POST = async (request: NextRequest, { params }: RouteParams) => {
     await prisma.interviewQnA.create({
       data: {
         interviewHistoryId: response.id,
-        question: '자기소개를 해주세요.',
+        question: '면접 준비가 완료되었다면, 말하기 버튼을 눌러 자기 소개를 해주세요.',
       },
     });
 

@@ -49,7 +49,7 @@ const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
           <CameraView />
         </div>
       </section>
-      <QuestionDisplayWithTimer interviewHistory={interviewHistory} interviewLastQnA={lastQnA} />
+      <QuestionDisplayWithTimer interviewHistory={interviewHistory} interviewQnAList={interviewQnAList} />
     </main>
   );
 };

@@ -13,14 +13,14 @@ const { IN_PROGRESS } = INTERVIEW_HISTORY_STATUS;
 
 type Props = {
   interviewHistory: InterviewHistoryType;
-  interviewLastQnA: InterviewQnAType | null;
+  interviewQnAList: InterviewQnAType[];
 };
 
-const QuestionDisplayWithTimer = ({ interviewHistory, interviewLastQnA }: Props) => {
+const QuestionDisplayWithTimer = ({ interviewHistory, interviewQnAList }: Props) => {
   const { isRecording, isAIVoicePlaying, formattedTime, aiQuestion, startRecordingWithTimer, stopRecordingWithTimer } =
     useAudioWithTimer({ duration: MINUTES_IN_MS, interviewHistory });
 
-  if (!interviewLastQnA && interviewHistory.status === IN_PROGRESS) {
+  if (!interviewQnAList && interviewHistory.status === IN_PROGRESS) {
     return (
       <section className='mt-20 flex items-center justify-center'>
         <LoadingSpinner />
@@ -33,7 +33,7 @@ const QuestionDisplayWithTimer = ({ interviewHistory, interviewLastQnA }: Props)
         interviewHistory={interviewHistory}
         aiQuestion={
           aiQuestion ||
-          interviewLastQnA?.question ||
+          interviewQnAList.at(-1)?.question ||
           '면접 준비가 완료되었다면, 말하기 버튼을 눌러 자기 소개를 해주세요.'
         }
       />

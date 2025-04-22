@@ -28,6 +28,7 @@ const ResumeDetailField = ({ id }: Props) => {
   const { mutate: deleteResumeMutate } = useDeleteResumeMutation(RESUMES);
 
   const handleDeleteResume = (resumeId: number) => {
+    // TODO: confirm창 적용하기
     if (window.confirm('자기소개서를 정말로 삭제하시겠습니까?')) {
       deleteResumeMutate(resumeId);
     }

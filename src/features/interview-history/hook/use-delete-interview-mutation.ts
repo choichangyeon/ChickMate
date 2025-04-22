@@ -28,15 +28,13 @@ export const useDeleteInterviewMutation = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
+      router.replace(MY_PAGE);
     },
     onError: (err, interviewId, context) => {
       if (context?.previousInterviewList) {
         queryClient.setQueryData([HISTORY], context.previousInterviewList);
       }
       throw err;
-    },
-    onSuccess: () => {
-      router.replace(MY_PAGE);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [HISTORY] });

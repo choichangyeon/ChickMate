@@ -57,7 +57,7 @@ export const RESUME_MESSAGE = {
   },
   NOT_FOUND: '해당 자소서를 찾을 수 없습니다.',
   GET_SERVER_ERROR: '자소서를 가져오는데 실패했습니다.',
-  DELETE_REQUEST_SUCCESS: '자소개가 삭제되었습니다.',
+  DELETE_REQUEST_SUCCESS: '자소서가 삭제되었습니다.',
   DELETE_SERVER_ERROR: '자소서를 삭제하는데 실패했습니다.',
   DELETE_FORBIDDEN: '해당 자소서를 삭제할 권한이 없습니다.',
   GET_COUNT_ERROR: '경험치 지급을 위해 오늘 작성한 자소서를 확인하는데 실패했습니다.',

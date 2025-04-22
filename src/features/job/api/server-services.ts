@@ -5,12 +5,12 @@ import { AUTH_MESSAGE } from '@/constants/message-constants';
 import { prisma } from '@/lib/prisma';
 import { UserMetaDataType } from '@/types/user-meta-data-type';
 import { authOptions } from '@/utils/auth-option';
-import { JobPosting } from '@prisma/client';
 import { getServerSession } from 'next-auth';
+import { JobPostingType } from '@/types/DTO/job-posting-dto';
 
 const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
 
-export const getJobByUserMetaData = async (): Promise<JobPosting[]> => {
+export const getJobByUserMetaData = async (): Promise<JobPostingType[]> => {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -28,7 +28,7 @@ export const getJobByUserMetaData = async (): Promise<JobPosting[]> => {
   const { requiredEducationName, locationName, experienceName, jobMidCodeName } =
     userData.userMetaData as UserMetaDataType;
   const userLevelNum = educationOrder[requiredEducationName as keyof typeof educationOrder];
-  const postings: (JobPosting & {
+  const postings: (JobPostingType & {
     userSelectedJobs: { id: number }[];
   })[] = await prisma.jobPosting.findMany({
     where: {

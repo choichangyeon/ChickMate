@@ -1,17 +1,15 @@
 'use client';
 
 import { Dispatch, SetStateAction } from 'react';
-import { Confirm } from 'notiflix';
 import Modal from '@/components/ui/modal';
 import Typography from '@/components/ui/typography';
 import { RESUME_MESSAGE } from '@/constants/message-constants';
 import { QUERY_KEY } from '@/constants/query-key';
-import { NOTIFLIX_CONFIRM } from '@/constants/notiflix-constants';
 import { MODAL_ID } from '@/constants/modal-id-constants';
+import { showNotiflixConfirm } from '@/utils/show-notiflix-confirm';
 import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
 import DraftResumeItem from '@/features/resume/draft-resume-item';
 import type { Resume } from '@prisma/client';
-import { showNotiflixConfirm } from '@/utils/show-notiflix-confirm';
 
 const { CONFIRM } = RESUME_MESSAGE;
 const { DRAFT_RESUME } = MODAL_ID;

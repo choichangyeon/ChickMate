@@ -33,7 +33,7 @@ const Bookmark = ({ jobPostingId, isBookmarked, userId }: Props) => {
   };
 
   if (isError) {
-    alert('로그인이 다시 진행해주시길 바랍니다.');
+    alert('로그인을 다시 진행해주시길 바랍니다.');
     router.replace(SIGN_IN);
   }
 

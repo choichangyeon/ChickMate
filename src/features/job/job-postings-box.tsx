@@ -1,13 +1,12 @@
 'use client';
 
-import BlockComponent from '@/components/common/block-component';
 import JobPostingCard from '@/features/job/job-posting-card';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import { QUERY_KEY } from '@/constants/query-key';
 import { useJobPostingQuery } from '@/features/job/hooks/use-job-posting-query';
 import { UserMetaDataType } from '@/types/user-meta-data-type';
 import { useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { JobPostingBlockComponent } from './job-posting-block-component';
 
 type Props = {
   userId: string;
@@ -16,15 +15,14 @@ type Props = {
 const { META_DATA } = QUERY_KEY;
 
 const JobPostingsBox = ({ userId }: Props) => {
-  // TODO: 추후 변경 가능성 고려
   const queryClient = useQueryClient();
-  const router = useRouter();
   const userMetaData = queryClient.getQueryData([META_DATA, userId]) as UserMetaDataType;
+
+  if (!userMetaData) return <JobPostingBlockComponent type='no-profile' />;
 
   const { data: jobPostingList, isError, isPending } = useJobPostingQuery({ userMetaData, userId });
 
   if (isPending) {
-    // TODO: 로딩스피너
     return (
       <section className='flex h-[400px] flex-col items-center justify-center self-stretch'>
         <LoadingSpinner size='lg' />
@@ -32,32 +30,9 @@ const JobPostingsBox = ({ userId }: Props) => {
     );
   }
 
-  if (isError) {
-    return (
-      <section className='flex h-[400px] flex-col items-center justify-center self-stretch'>
-        <BlockComponent
-          firstLine='이런! 사용자 정보를 설정하지 않았네요!'
-          secondLine='내 정보를 작성해볼까요?'
-          thirdLine='맞춤형 채용공고는 내 정보를 기반으로 진행됩니다'
-        />
-      </section>
-    );
-  }
+  if (isError) return <JobPostingBlockComponent type='fetch-error' />;
 
-  if (!jobPostingList || jobPostingList.length === 0) {
-    // TODO: 이 부분은 수정 고려
-    return (
-      <section className='flex h-[400px] flex-col items-center justify-center self-stretch'>
-        <BlockComponent
-          firstLine='이런! 나에게 맞는 채용공고가 없어요!'
-          secondLine='채용공고를 다시 요청할까요?'
-          thirdLine='맞춤형 채용공고는 내 정보를 기반으로 진행됩니다'
-          buttonName='채용공고 불러오기!'
-          onClick={() => router.refresh()}
-        />
-      </section>
-    );
-  }
+  if (!jobPostingList || jobPostingList.length === 0) return <JobPostingBlockComponent type='no-job-data' />;
 
   return (
     // TODO: 무한 스크롤 구현

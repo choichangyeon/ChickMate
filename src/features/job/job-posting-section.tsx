@@ -2,11 +2,11 @@ import { serverActionWithSentry } from '@/utils/server-action-with-sentry';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { Session } from 'next-auth';
 import React from 'react';
-import { getJobByUserMetaData } from './api/client-services';
 import { QUERY_KEY } from '@/constants/query-key';
 import { STALE_TIME } from '@/constants/time-constants';
-import BlockComponent from '@/components/common/block-component';
-import JobPostingsBox from './job-postings-box';
+import JobPostingsBox from '@/features/job/job-postings-box';
+import { getJobByUserMetaData } from '@/features/job/api/server-services';
+import { JobPostingBlockComponent } from '@/features/job/job-posting-block-component';
 
 type Props = {
   session: Session | null;
@@ -17,15 +17,7 @@ const { AN_HOUR } = STALE_TIME;
 
 const JobPostingSection = async ({ session }: Props) => {
   if (!session) {
-    return (
-      <section className='flex h-[400px] flex-col items-center justify-center self-stretch'>
-        <BlockComponent
-          firstLine='이런! 사용자 정보를 설정하지 않았네요!'
-          secondLine='내 정보를 작성해볼까요?'
-          thirdLine='맞춤형 채용공고는 내 정보를 기반으로 진행됩니다'
-        />
-      </section>
-    );
+    return <JobPostingBlockComponent type='unauthenticated' />;
   }
 
   const queryClient = new QueryClient();

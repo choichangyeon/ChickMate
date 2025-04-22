@@ -6,7 +6,7 @@ import { QUERY_KEY } from '@/constants/query-key';
 import { useJobPostingQuery } from '@/features/job/hooks/use-job-posting-query';
 import { UserMetaDataType } from '@/types/user-meta-data-type';
 import { useQueryClient } from '@tanstack/react-query';
-import { JobPostingBlockComponent } from './job-posting-block-component';
+import { JobPostingBlockComponent } from '@/features/job/job-posting-block-component';
 
 type Props = {
   userId: string;

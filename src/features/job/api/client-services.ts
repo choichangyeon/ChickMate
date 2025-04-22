@@ -10,10 +10,8 @@ const { JSON_HEADER } = API_HEADER;
 const { POST, DELETE, GET } = API_METHOD;
 const EMPTY_LIST_NUMBER = 0;
 
-type UserMetaDataProps = UserMetaDataType;
-
 export const getJobByUserMetaData = async (
-  userMetaData: UserMetaDataProps,
+  userMetaData: UserMetaDataType,
   sortOption: SortOption,
   page: number,
   limit: number

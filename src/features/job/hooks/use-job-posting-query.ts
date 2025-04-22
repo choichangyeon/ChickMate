@@ -18,7 +18,7 @@ type Props = {
 
 export const useJobPostingQuery = ({ userMetaData, userId, sortOption = 'latest', page = 1, limit }: Props) => {
   return useQuery({
-    queryKey: [JOB_POSTING, userId, sortOption, page],
+    queryKey: [JOB_POSTING, userId, sortOption, page, JSON.stringify(userMetaData)],
     queryFn: () => getJobByUserMetaData(userMetaData, sortOption, page, limit),
     staleTime: AN_HOUR,
   });

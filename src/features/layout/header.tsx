@@ -7,7 +7,7 @@ export const Header = async () => {
   const session = await getServerSession(authOptions);
 
   return (
-    <header className='flex items-center justify-between border-b border-cool-gray-500 bg-white py-4'>
+    <header className='z-modal fixed flex h-20 w-[calc(100vw-52px)] items-center justify-between border-b border-cool-gray-500 bg-white py-4'>
       <HeaderTitle />
       <HeaderCharacter session={session} />
     </header>

@@ -49,7 +49,7 @@ const Modal = ({ portalRoot, modalId, children, className }: Props) => {
   }, [toggleModal, modalId]);
 
   return createPortal(
-    <div className='fixed inset-0 z-50 flex items-center justify-center overflow-y-auto'>
+    <div className='z-modal fixed inset-0 flex items-center justify-center overflow-y-auto'>
       <div className='fixed inset-0 bg-black opacity-70' />
       <div
         ref={modalContentRef}

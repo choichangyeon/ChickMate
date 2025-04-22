@@ -10,25 +10,21 @@ const JobPage = async () => {
   const session = await getServerSession(authOptions);
 
   return (
-    <main className='px-12 py-8 flex-grow'>
-      <section className='mb-4 flex justify-between'>
-        <div>
-          <Typography color='primary-600' as='h1' size='3xl' weight='bold'>
-            맞춤형
-            <span className='text-cool-gray-900'> 채용공고</span>
-          </Typography>
-          <Typography color='gray-500' size='xl'>
-            프로필에 작성된 정보를 통해 맞춤형 채용공고를 추천해드립니다
-          </Typography>
-        </div>
-        <div>
-          <Button link href={SARAMIN_URL} target='_blank'>
-            데이터 출처: 취업 사람인
-          </Button>
-        </div>
+    <div className='px-12 py-8'>
+      <section className='mb-4'>
+        <Typography color='primary-600' as='h1' size='3xl' weight='bold'>
+          맞춤형
+          <span className='text-cool-gray-900'> 채용공고</span>
+        </Typography>
+        <Typography color='gray-500' size='xl'>
+          프로필에 작성된 정보를 통해 맞춤형 채용공고를 추천해드립니다
+        </Typography>
       </section>
-      <JobPostingSection session={session} />
-    </main>
+
+      <Button link href={SARAMIN_URL} target='_blank'>
+        데이터 출처: 취업 사람인
+      </Button>
+    </div>
   );
 };
 

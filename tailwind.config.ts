@@ -10,6 +10,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        'desktop': '1728px',
+        'tablet': '', //@미정
+        'mobile': '', //@미정
+      },
       colors: {
         'primary-orange': {
           600: '#E55A27',
@@ -40,6 +45,11 @@ const config: Config = {
         'rounded-2xl': '1rem',
         'rounded-3xl': '1.5rem',
         'rounded-full': '50%',
+      },
+      zIndex: {
+        modal: '100',
+        header: '90',
+        overlay: '10',
       },
     },
   },

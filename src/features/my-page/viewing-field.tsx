@@ -2,12 +2,12 @@
 
 import MyPageCharacter from '@/features/character/my-page-character';
 import { Session } from 'next-auth';
-import MyInfo from '@/features/my-page/my-info';
 import { useSearchParams } from 'next/navigation';
 import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
-import InterviewDetailField from '@/features/interview-history/interview-detail-field';
 import { TABS } from '@/constants/my-page-constants';
-import ResumeDetailField from '../resume-list/resume-detail-field';
+import MyInfo from '@/features/my-page/my-info';
+import InterviewDetailField from '@/features/interview-history/interview-detail-field';
+import ResumeDetailField from '@/features/resume-list/resume-detail-field';
 
 const { HISTORY, RESUME } = TABS;
 

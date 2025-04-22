@@ -4,7 +4,7 @@ import { TABS } from '@/constants/my-page-constants';
 import { useTabStore } from '@/store/use-tab-store';
 import InterviewHistoryList from '@/features/interview-history/interview-history-list';
 import BookmarkSelectedList from '@/features/bookmark-selected/bookmark-selected-list';
-import ResumeList from '../resume-list/resume-list';
+import ResumeList from '@/features/resume-list/resume-list';
 
 const { HISTORY, BOOKMARK, RESUME } = TABS;
 

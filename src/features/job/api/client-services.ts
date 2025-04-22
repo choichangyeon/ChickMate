@@ -2,7 +2,8 @@ import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { UserMetaDataType } from '@/types/user-meta-data-type';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
-import { JobPosting } from '@prisma/client';
+import { SortOption } from '@/features/job/job-postings-box';
+import { JobPostingType } from '@/types/DTO/job-posting-dto';
 
 const { POSTING, BOOKMARK_DETAIL } = ROUTE_HANDLER_PATH.JOB;
 const { JSON_HEADER } = API_HEADER;
@@ -12,14 +13,16 @@ const EMPTY_LIST_NUMBER = 0;
 type UserMetaDataProps = UserMetaDataType;
 
 export const getJobByUserMetaData = async (
-  userMetaData: UserMetaDataProps
-): Promise<(JobPosting & { isBookmarked: boolean })[]> => {
+  userMetaData: UserMetaDataProps,
+  sortOption: SortOption
+): Promise<(JobPostingType & { isBookmarked: boolean })[]> => {
   const { requiredEducationName, locationName, experienceName, jobMidCodeName } = userMetaData;
   const queryParams = new URLSearchParams({
     requiredEducationName,
     locationName,
     experienceName,
     jobMidCodeName,
+    sortOption
   });
   const url = `${POSTING}?${queryParams}`;
 
@@ -28,7 +31,7 @@ export const getJobByUserMetaData = async (
     headers: JSON_HEADER,
   });
 
-  const jobPostingList: (JobPosting & { isBookmarked: boolean })[] = response;
+  const jobPostingList: (JobPostingType & { isBookmarked: boolean })[] = response;
 
   return jobPostingList;
 };

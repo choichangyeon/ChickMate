@@ -2,12 +2,16 @@ import { AUTH_MESSAGE, DB_MESSAGE } from '@/constants/message-constants';
 import { prisma } from '@/lib/prisma';
 import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
 import { NextRequest, NextResponse } from 'next/server';
-import { JobPosting } from '@prisma/client';
 import { educationOrder } from '@/constants/education-constants';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/utils/auth-option';
 import { ENV } from '@/constants/env-constants';
 import { getToken } from 'next-auth/jwt';
+import { JobPostingType } from '@/types/DTO/job-posting-dto';
+
+type OrderByCondition = {
+  [key: string]: 'asc' | 'desc',
+}
 
 const { NEXTAUTH_SECRET } = ENV;
 const {
@@ -31,9 +35,28 @@ export const GET = async (request: NextRequest) => {
     }
 
     const userId = session.user.id;
-    // searchParams로 정보 가져오기
     const searchParams = request.nextUrl.searchParams;
-    const { requiredEducationName, locationName, experienceName, jobMidCodeName } = sanitizeQueryParams(searchParams);
+    const { requiredEducationName, locationName, experienceName, jobMidCodeName, sortOption } =
+      sanitizeQueryParams(searchParams);
+
+    let orderByCondition: OrderByCondition = {};
+
+    switch (sortOption) {
+      case 'latest':
+        orderByCondition = { createdAt: 'desc' }; 
+        break;
+      case 'oldest':
+        orderByCondition = { createdAt: 'asc' }; 
+        break;
+      case 'deadline':
+        orderByCondition = { expirationTimestamp: 'asc' }; 
+        break;
+      case 'company':
+        orderByCondition = { companyName: 'asc' }; 
+        break;
+      default:
+        orderByCondition = { createdAt: 'desc' };
+    }
 
     if (!searchParams) {
       return NextResponse.json({ message: DB_URL_ERROR }, { status: 400 });
@@ -44,7 +67,7 @@ export const GET = async (request: NextRequest) => {
     }
     // const mainRegion = JSON.parse(location).mainRegion;
     const userLevelNum = educationOrder[requiredEducationName as keyof typeof educationOrder];
-    const postings: (JobPosting & {
+    const postings: (JobPostingType & {
       userSelectedJobs: { id: number }[];
     })[] = await prisma.jobPosting.findMany({
       where: {
@@ -64,9 +87,7 @@ export const GET = async (request: NextRequest) => {
           gte: Math.floor(Date.now() / 1000),
         },
       },
-      orderBy: {
-        expirationTimestamp: 'asc',
-      },
+      orderBy: orderByCondition,
       include: {
         userSelectedJobs: {
           where: { userId },
@@ -84,7 +105,7 @@ export const GET = async (request: NextRequest) => {
 
     return NextResponse.json({ response }, { status: 200 });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return NextResponse.json({ message: DB_SERVER_ERROR }, { status: 500 });
   }
 };

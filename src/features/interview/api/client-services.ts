@@ -3,7 +3,7 @@ import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
 
 const { TTS, STT, ROOT, INTERVIEW_START, INTERVIEW_LIVE, FEEDBACK } = ROUTE_HANDLER_PATH.AI;
-const { POST, PATCH } = API_METHOD;
+const { POST, PATCH, DELETE } = API_METHOD;
 const { JSON_HEADER } = API_HEADER;
 
 /**
@@ -131,4 +131,18 @@ export const patchInterviewHistoryStatus = async ({ interviewId, status }: Inter
     }),
     headers: JSON_HEADER,
   });
+};
+
+/**
+ * @param interviewId 인터뷰 기록 ID
+ */
+type InterviewDeleteProps = {
+  interviewId: number;
+};
+export const deleteInterviewHistory = async ({ interviewId }: InterviewDeleteProps) => {
+  const { message } = await fetchWithSentry(INTERVIEW_START(interviewId), {
+    method: DELETE,
+    headers: JSON_HEADER,
+  });
+  console.log(message);
 };

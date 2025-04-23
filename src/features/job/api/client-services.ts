@@ -2,8 +2,8 @@ import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { UserMetaDataType } from '@/types/user-meta-data-type';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
-import { SortOption } from '@/features/job/job-postings-box';
-import { JobPostingType } from '@/types/DTO/job-posting-dto';
+import type { SortOption } from '@/features/job/job-postings-box';
+import type { JobPostingType } from '@/types/DTO/job-posting-dto';
 
 const { POSTING, BOOKMARK_DETAIL } = ROUTE_HANDLER_PATH.JOB;
 const { JSON_HEADER } = API_HEADER;

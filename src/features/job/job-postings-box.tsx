@@ -4,7 +4,7 @@ import JobPostingCard from '@/features/job/job-posting-card';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import { QUERY_KEY } from '@/constants/query-key';
 import { useJobPostingQuery } from '@/features/job/hooks/use-job-posting-query';
-import { UserMetaDataType } from '@/types/user-meta-data-type';
+import type { UserMetaDataType } from '@/types/user-meta-data-type';
 import { useQueryClient } from '@tanstack/react-query';
 import { JobPostingBlockComponent } from '@/features/job/job-posting-block-component';
 import { ChangeEvent, useEffect, useState } from 'react';
@@ -33,8 +33,6 @@ const JobPostingsBox = ({ userId }: Props) => {
   const params = useSearchParams();
   const router = useRouter();
 
-  // 새로 고침 시 option 유지되도록
-  // 없을 시 새로고침 시 initialSort가 'latest'로 나옴
   const { sortOption: initialSort, page: initialPage } = sanitizeQueryParams(params);
   const [sortOption, setSortOption] = useState<SortOption>((initialSort as SortOption) || 'latest');
   const [page, setPage] = useState(Number(initialPage) || 1);

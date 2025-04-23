@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postBookmarkWithJobPostingId } from '@/features/job/api/client-services';
 import { QUERY_KEY } from '@/constants/query-key';
-import { JobPostingType } from '@/types/DTO/job-posting-dto';
+import type { JobPostingType } from '@/types/DTO/job-posting-dto';
 
 const { JOB_POSTING, TABS_COUNT } = QUERY_KEY;
 

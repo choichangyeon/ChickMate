@@ -21,7 +21,7 @@ const SignInAuthForm = () => {
     formState: { errors },
   } = useForm<SignInFormData>({
     resolver: zodResolver(schema),
-    mode: 'onBlur',
+    mode: 'onChange',
     defaultValues: { email: '', password: '' } as SignInFormData,
   });
 
@@ -42,7 +42,7 @@ const SignInAuthForm = () => {
     <div className='mx-auto w-full max-w-md rounded-3xl bg-white p-6 shadow-md'>
       <div className='mb-8'>
         <Typography size='2xl' weight='normal' align='center'>
-          만나서 반가워요.<span className='font-bold'>병아리</span>씨!
+          만나서 반가워요.<span className='font-bold'>칙칙</span>씨!
         </Typography>
         <Typography weight='normal' align='center'>
           우리 같이 취업을 향한 여정을 떠나볼까요?
@@ -70,14 +70,14 @@ const SignInAuthForm = () => {
             className='flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm'
           >
             <Image src='/assets/google_icon.png' alt='구글 로그인' width={14} height={14} />
-            구글 계정으로 로그인
+            구글 이메일로 로그인
           </button>
           <button
             onClick={() => signIn('naver', { callbackUrl: redirectToUrl })}
             className='flex w-full items-center justify-center gap-2 rounded-md bg-[#03C75A] px-4 py-2 text-sm font-bold text-white shadow-sm'
           >
             <Image src='/assets/naver_icon.png' alt='네이버 로그인' width={24} height={24} />
-            네이버 아이디로 로그인
+            네이버 이메일로 로그인
           </button>
         </>
         <div className='my-4 flex w-full items-center'>

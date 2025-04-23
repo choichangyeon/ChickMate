@@ -1,16 +1,16 @@
 'use client';
 
-import { PATH } from '@/constants/path-constant';
-import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import AuthInput from '@/features/sign/auth-input';
+import Image from 'next/image';
+import { signIn } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { schema, SignInFormData } from '@/features/sign/data/sign-in-schema';
-import Image from 'next/image';
-import { useSignInResult } from './hooks/use-sign-in-result';
+import { PATH } from '@/constants/path-constant';
 import Typography from '@/components/ui/typography';
-import { useSearchParams } from 'next/navigation';
+import AuthInput from '@/features/sign/auth-input';
+import { schema, SignInFormData } from '@/features/sign/data/sign-in-schema';
+import { useSignInResult } from '@/features/sign/hooks/use-sign-in-result';
 
 const { ON_BOARDING } = PATH;
 

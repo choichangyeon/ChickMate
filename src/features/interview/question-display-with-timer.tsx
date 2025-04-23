@@ -21,6 +21,12 @@ const QuestionDisplayWithTimer = ({ interviewHistory, interviewQnAList }: Props)
   const { isRecording, isAIVoicePlaying, formattedTime, aiQuestion, startRecordingWithTimer, stopRecordingWithTimer } =
     useAudioWithTimer({ duration: MINUTES_IN_MS, interviewHistory });
 
+  let lastQuestion = interviewQnAList.at(CHECK_LAST_INDEX)?.question;
+
+  if (interviewQnAList.at(CHECK_LAST_INDEX)?.answer) {
+    lastQuestion = null;
+  }
+
   if (!interviewQnAList && interviewHistory.status === IN_PROGRESS) {
     return (
       <section className='mt-20 flex items-center justify-center'>
@@ -28,17 +34,10 @@ const QuestionDisplayWithTimer = ({ interviewHistory, interviewQnAList }: Props)
       </section>
     );
   }
+
   return (
     <section className='flex gap-5'>
-      <QuestionDisplay
-        interviewHistory={interviewHistory}
-        aiQuestion={
-          aiQuestion || interviewQnAList.at(CHECK_LAST_INDEX)?.answer
-            ? '대기중..'
-            : interviewQnAList.at(CHECK_LAST_INDEX)?.question ||
-              '면접 준비가 완료되었다면, 말하기 버튼을 눌러 자기 소개를 해주세요.'
-        }
-      />
+      <QuestionDisplay interviewHistory={interviewHistory} aiQuestion={aiQuestion || lastQuestion || '대기 중...'} />
       <Timer
         interviewHistory={interviewHistory}
         isRecording={isRecording}

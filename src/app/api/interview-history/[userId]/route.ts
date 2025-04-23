@@ -1,16 +1,16 @@
-import type { User } from '@prisma/client';
 import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { ENV } from '@/constants/env-constants';
-import { AUTH_MESSAGE, HISTORY_MESSAGE, INTERVIEW_HISTORY } from '@/constants/message-constants';
 import { formatDate } from '@/utils/format-date';
 import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
+import { ENV } from '@/constants/env-constants';
+import { AUTH_MESSAGE, HISTORY_MESSAGE, INTERVIEW_HISTORY } from '@/constants/message-constants';
 import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
+import type { UserType } from '@/types/DTO/user-dto';
 
 type Props = {
   params: {
-    userId: User['id'];
+    userId: UserType['id'];
   };
 };
 const {
@@ -29,7 +29,6 @@ export const GET = async (request: NextRequest, { params }: Props) => {
   try {
     const token = await getToken({ req: request, secret: NEXTAUTH_SECRET });
     if (!token) return NextResponse.json({ message: EXPIRED_TOKEN }, { status: 401 });
-
     const { userId } = params;
     if (!userId) return NextResponse.json({ message: EXPIRED_TOKEN }, { status: 401 });
 

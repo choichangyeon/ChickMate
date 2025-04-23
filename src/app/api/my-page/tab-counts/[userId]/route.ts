@@ -1,12 +1,12 @@
 import { prisma } from '@/lib/prisma';
 import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
-import type { User } from '@prisma/client';
 import { ENV } from '@/constants/env-constants';
 import { AUTH_MESSAGE, TAB_COUNT_MESSAGE } from '@/constants/message-constants';
 import { INIT_TAB_COUNTS, TABS } from '@/constants/my-page-constants';
 import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 import { RESUME_STATUS } from '@/constants/resume-constants';
+import type { UserType } from '@/types/DTO/user-dto';
 
 const { NEXTAUTH_SECRET } = ENV;
 
@@ -25,7 +25,7 @@ const { SUBMIT } = RESUME_STATUS;
 
 type Props = {
   params: {
-    userId: User['id'];
+    userId: UserType['id'];
   };
 };
 export const GET = async (request: NextRequest, { params }: Props) => {

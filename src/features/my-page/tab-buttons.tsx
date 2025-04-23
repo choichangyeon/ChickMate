@@ -46,12 +46,12 @@ const TabButtons = ({ userId, initialTabCounts }: Props) => {
   const { data: tabCounts } = useTabCountQuery(userId, initialTabCounts);
 
   return (
-    <ul className='flex h-12 items-center justify-evenly bg-cool-gray-100'>
+    <ul className='flex h-[48px] items-center justify-evenly bg-cool-gray-100'>
       {tabs.map((tab) => (
         <li
           key={`tab_${tab.id}`}
           className={clsx(
-            'text-md w-1/3 px-4 py-[14px] text-center font-bold text-cool-gray-900',
+            'text-md h-full w-1/3 px-4 py-[14px] text-center font-bold text-cool-gray-900',
             targetTab === tab.id && 'border-b-2 border-b-primary-orange-600'
           )}
         >

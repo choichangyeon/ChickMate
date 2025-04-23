@@ -1,15 +1,15 @@
-import type { User } from '@prisma/client';
-import { QUERY_KEY } from '@/constants/query-key';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getSelectedBookmark } from '@/features/bookmark-selected/api/client-services';
+import { QUERY_KEY } from '@/constants/query-key';
 import { REFETCH_TIME } from '@/constants/time-constants';
 import { AUTH_MESSAGE } from '@/constants/message-constants';
+import type { UserType } from '@/types/DTO/user-dto';
 const { SESSION_NO_USER } = AUTH_MESSAGE.ERROR;
 const { BOOKMARK } = QUERY_KEY;
 const ITEMS_PER_PAGE = 8;
 const { MIN } = REFETCH_TIME;
 
-export const useBookmarkSelectedInfiniteQuery = (userId: User['id']) => {
+export const useBookmarkSelectedInfiniteQuery = (userId: UserType['id']) => {
   return useInfiniteQuery({
     queryKey: [BOOKMARK, userId],
     queryFn: async ({ pageParam = 1 }) => {

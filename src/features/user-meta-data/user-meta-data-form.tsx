@@ -1,13 +1,13 @@
 'use client';
 import { useSession } from 'next-auth/react';
-import ErrorComponent from '@/components/common/error-component';
-import Button from '@/components/ui/button';
 import { academicData, jobData, typeData } from '@/features/user-meta-data/data/user-meta-data';
 import useRegionsQuery from '@/features/user-meta-data/hooks/use-regions-query';
 import SingleSelectField from '@/features/user-meta-data/single-select-field';
 import { useMetaDataForm } from '@/features/user-meta-data/hooks/use-meta-data-form';
-import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
+import ErrorComponent from '@/components/common/error-component';
+import Button from '@/components/ui/button';
 import LoadingSpinner from '@/components/ui/loading-spinner';
+import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 import { CHARACTER_HISTORY, CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 
 const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;

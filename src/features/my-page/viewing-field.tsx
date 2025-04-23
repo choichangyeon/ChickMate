@@ -19,6 +19,7 @@ const ViewingField = ({ session }: Props) => {
   const searchParams = useSearchParams();
   const { id, tab } = sanitizeQueryParams(searchParams);
   const hasSearchParams = searchParams.toString();
+  const targetId = Number(id);
 
   return (
     <section className='flex h-[80dvh] w-1/2 flex-col'>
@@ -32,8 +33,8 @@ const ViewingField = ({ session }: Props) => {
           </div>
         </>
       )}
-      {tab === HISTORY && <InterviewDetailField id={id} />}
-      {tab === RESUME && <ResumeDetailField id={id} />}
+      {tab === HISTORY && <InterviewDetailField interviewId={targetId} />}
+      {tab === RESUME && <ResumeDetailField resumeId={targetId} />}
     </section>
   );
 };

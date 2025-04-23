@@ -1,10 +1,10 @@
-import { Resume } from '@prisma/client';
 import { formatDate } from '@/utils/format-date';
 import Typography from '@/components/ui/typography';
+import type { ResumeType } from '@/types/DTO/resume-dto';
 
 type Props = {
-  resume: Resume;
-  onClick: (resumeId: number) => void;
+  resume: ResumeType;
+  onClick: (resumeId: ResumeType['id']) => void;
 };
 
 const ResumeItem = ({ resume, onClick }: Props) => {

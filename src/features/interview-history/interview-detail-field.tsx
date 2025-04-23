@@ -1,18 +1,19 @@
+import Link from 'next/link';
+import { useState } from 'react';
+import { useDeleteInterviewMutation } from '@/features/interview-history/hook/use-delete-interview-mutation';
+import { useGetInterviewDetailQuery } from '@/features/interview-history/hook/use-get-interview-detail-query';
+import InterviewDetailFeedback, { FeedbackItem } from '@/features/interview-history/interview-detail-feedback';
+import InterviewDetailHistory from '@/features/interview-history/interview-detail-history';
 import ErrorComponent from '@/components/common/error-component';
 import LeftArrowIcon from '@/components/icons/left-arrow-icon';
 import Button from '@/components/ui/button';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import Typography from '@/components/ui/typography';
 import { PATH } from '@/constants/path-constant';
-import { useDeleteInterviewMutation } from '@/features/interview-history/hook/use-delete-interview-mutation';
-import { useGetInterviewDetailQuery } from '@/features/interview-history/hook/use-get-interview-detail-query';
-import InterviewDetailFeedback, { FeedbackItem } from '@/features/interview-history/interview-detail-feedback';
-import InterviewDetailHistory from '@/features/interview-history/interview-detail-history';
-import Link from 'next/link';
-import { useState } from 'react';
+import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
 
 type Props = {
-  id: string;
+  interviewId: InterviewHistoryType['id'];
 };
 
 const { MY_PAGE } = PATH;
@@ -21,9 +22,7 @@ const SELECT_ACTIVE_TAB = {
   HISTORY: 'history',
 };
 
-const InterviewDetailField = ({ id }: Props) => {
-  const interviewId = Number(id);
-
+const InterviewDetailField = ({ interviewId }: Props) => {
   const [activeTab, setActiveTab] = useState<string>('feedback');
   const { data, isPending, isError } = useGetInterviewDetailQuery(interviewId);
   const { mutate: deleteInterviewMutation } = useDeleteInterviewMutation();

@@ -9,12 +9,17 @@ const { SIGN_IN } = PATH.AUTH;
 
 import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-key';
-const { TABS_COUNT } = QUERY_KEY;
+import { Notify } from 'notiflix';
+import { BOOKMARK_MESSAGE } from '@/constants/message-constants';
+
 type Props = {
   jobPostingId: number;
   isBookmarked: boolean;
   userId: string;
 };
+
+const { TABS_COUNT } = QUERY_KEY;
+const { ADD, REMOVE, ADD_ERROR, REMOVE_ERROR } = BOOKMARK_MESSAGE;
 
 const Bookmark = ({ jobPostingId, isBookmarked, userId }: Props) => {
   const queryClient = useQueryClient();
@@ -24,12 +29,21 @@ const Bookmark = ({ jobPostingId, isBookmarked, userId }: Props) => {
   const handleClick = async () => {
     try {
       await bookmarkMutate(isBookmarked);
+      if (isBookmarked) {
+        Notify.info(REMOVE);
+      } else {
+        Notify.info(ADD);
+      }
       queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
     } catch (error) {
-      if (error instanceof Error) alert(error.message);
+      if (error instanceof Error) {
+        if (isBookmarked) {
+          Notify.info(REMOVE_ERROR);
+        } else {
+          Notify.info(ADD_ERROR);
+        }
+      }
     }
-
-    // TODO: alert 구현
   };
 
   if (isError) {

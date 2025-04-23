@@ -1,4 +1,4 @@
-import type { ResumeType } from './DTO/resume-dto';
+import type { ResumeType } from '@/types/DTO/resume-dto';
 
 export type Field = {
   id: ResumeType['id'];

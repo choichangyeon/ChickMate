@@ -7,7 +7,7 @@ import { useJobPostingQuery } from '@/features/job/hooks/use-job-posting-query';
 import { UserMetaDataType } from '@/types/user-meta-data-type';
 import { useQueryClient } from '@tanstack/react-query';
 import { JobPostingBlockComponent } from '@/features/job/job-posting-block-component';
-import { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import Typography from '@/components/ui/typography';
 import JobPostingPaginationButton from '@/features/job/job-posting-pagination-button';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -62,25 +62,25 @@ const JobPostingsBox = ({ userId }: Props) => {
   const renderContent = () => {
     if (isPending) {
       return (
-        <section className="flex h-[400px] flex-col items-center justify-center gap-4 self-stretch">
-          <LoadingSpinner size="lg" />
+        <section className='flex h-[400px] flex-col items-center justify-center gap-4 self-stretch'>
+          <LoadingSpinner size='lg' />
           <Typography>채용 공고를 불러오는 중...</Typography>
         </section>
       );
     }
-    
+
     if (isError) {
-      return <JobPostingBlockComponent type="fetch-error" />;
+      return <JobPostingBlockComponent type='fetch-error' />;
     }
-    
+
     if (!data?.jobPostingList) {
-      return <JobPostingBlockComponent type="no-job-data" />;
+      return <JobPostingBlockComponent type='no-job-data' />;
     }
-    
+
     if (data.jobPostingList.length === 0) {
-      return <JobPostingBlockComponent type="no-bookmark" />;
+      return <JobPostingBlockComponent type='no-bookmark' />;
     }
-    
+
     return (
       <div className='flex flex-col items-center justify-between gap-6'>
         <section className='flex flex-wrap gap-5 self-stretch scrollbar-hide'>
@@ -93,7 +93,6 @@ const JobPostingsBox = ({ userId }: Props) => {
       </div>
     );
   };
-
 
   return (
     <>

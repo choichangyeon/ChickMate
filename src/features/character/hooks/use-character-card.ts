@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useModalStore } from '@/store/use-modal-store';
 import { getLevelAndPercentage } from '@/features/character/utils/get-level-and-percentage';
 import { CHARACTER_INFORMATION } from '@/constants/character-constants';
@@ -30,6 +30,7 @@ export const useCharacterCard = ({
   const isDetailModalOpen = useModalStore((state) => state.getIsModalOpen(CHARACTER_DETAIL));
 
   const router = useRouter();
+  const currentPath = usePathname();
 
   const isDefault = characterData === defaultCharacter && !!overlayText;
   const { type, experience } = characterData;
@@ -38,7 +39,7 @@ export const useCharacterCard = ({
 
   const handleClickCard = () => {
     if (!session) {
-      router.push(PATH.AUTH.SIGN_IN);
+      router.push(PATH.AUTH.SIGN_IN_WITH_PREV_URL(currentPath));
     } else if (requiredModal) {
       toggleModal(CHARACTER_CREATE);
     } else if (!isDefault) {

@@ -18,9 +18,8 @@ export const useSignInResult = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const error = searchParams.get('error');
-  const prevUrl = searchParams.get('prevUrl');
   const callbackUrl = searchParams.get('callbackUrl');
-  const redirectTo = prevUrl || callbackUrl || ON_BOARDING;
+  const redirectTo = callbackUrl || ON_BOARDING;
 
   useEffect(() => {
     if (!error) return;

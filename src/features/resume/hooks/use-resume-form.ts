@@ -1,9 +1,11 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Notify } from 'notiflix';
 import { PATH } from '@/constants/path-constant';
 import { DELAY_TIME } from '@/constants/time-constants';
 import { AUTO_SAVE_STATUS } from '@/constants/resume-constants';
+import { RESUME_MESSAGE } from '@/constants/message-constants';
 import useDebounce from '@/hooks/customs/use-debounce';
 import { autoSaveResume, getCheckToGetEXP } from '@/features/resume/api/client-services';
 import { usePreventPageUnload } from '@/features/resume/hooks/use-prevent-page-load';
@@ -19,6 +21,7 @@ const { MY_PAGE } = PATH;
 const { DEFAULT } = DELAY_TIME;
 const { SAVING, SAVED } = AUTO_SAVE_STATUS;
 const { RESUME_SUBMISSION } = CHARACTER_HISTORY_KEY;
+const { LIMIT } = RESUME_MESSAGE;
 
 export const useResumeForm = (resume?: Resume) => {
   const router = useRouter();
@@ -50,8 +53,7 @@ export const useResumeForm = (resume?: Resume) => {
 
   const handleAddField = () => {
     if (fieldList.length >= 5) {
-      // 수정해야되는 alert창
-      alert('자기소개서 항목은 최대 5개까지 추가할 수 있습니다.');
+      Notify.warning(LIMIT.MAX_RESUME_FIELD);
       return;
     }
     setFieldList((prev) => [...prev, { id: crypto.randomUUID(), question: '', answer: '' }]);
@@ -60,8 +62,7 @@ export const useResumeForm = (resume?: Resume) => {
 
   const handleDeleteField = (fieldId: string) => {
     if (fieldList.length <= 1) {
-      // 수정해야되는 alert창
-      alert('자기소개서 항목은 최소 1개 이상 작성해야됩니다.');
+      Notify.warning(LIMIT.MIN_RESUME_FIELD);
       return;
     }
     setFieldList((prev) => prev.filter((field) => field.id !== fieldId));

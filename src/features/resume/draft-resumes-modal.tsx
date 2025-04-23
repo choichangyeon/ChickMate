@@ -3,12 +3,15 @@
 import { Dispatch, SetStateAction } from 'react';
 import Modal from '@/components/ui/modal';
 import Typography from '@/components/ui/typography';
+import { RESUME_MESSAGE } from '@/constants/message-constants';
+import { QUERY_KEY } from '@/constants/query-key';
 import { MODAL_ID } from '@/constants/modal-id-constants';
+import { showNotiflixConfirm } from '@/utils/show-notiflix-confirm';
 import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
 import DraftResumeItem from '@/features/resume/draft-resume-item';
 import type { Resume } from '@prisma/client';
-import { QUERY_KEY } from '@/constants/query-key';
 
+const { CONFIRM } = RESUME_MESSAGE;
 const { DRAFT_RESUME } = MODAL_ID;
 const { RESUME_DRAFT } = QUERY_KEY;
 const EMPTY_DRAFT_COUNT = 0;
@@ -25,13 +28,15 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResume
   const { mutate: deleteResumeMutate } = useDeleteResumeMutation(RESUME_DRAFT);
 
   const handleDeleteResume = (resumeId: number) => {
-    if (window.confirm('자기소개서를 정말로 삭제하시겠습니까?')) {
-      deleteResumeMutate(resumeId);
-    }
-
-    if (activeResumeId === resumeId) {
-      setResumeId(null);
-    }
+    showNotiflixConfirm({
+      message: CONFIRM.DELETE,
+      okFunction: () => {
+        deleteResumeMutate(resumeId);
+        if (activeResumeId === resumeId) {
+          setResumeId(null);
+        }
+      },
+    });
   };
 
   const handleDraftResumeClick = (resume: Resume) => {

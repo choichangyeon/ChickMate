@@ -41,6 +41,9 @@ importers:
       next-auth:
         specifier: ^4.24.11
         version: 4.24.11(next@14.2.18(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      notiflix:
+        specifier: ^3.2.8
+        version: 3.2.8
       openai:
         specifier: ^4.90.0
         version: 4.90.0(zod@3.24.2)
@@ -2328,6 +2331,9 @@ packages:
   normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
+
+  notiflix@3.2.8:
+    resolution: {integrity: sha512-BNBGr3qNIBNt6NZYvch0OLF9DEEgWKcjYzISMH9eECKwfsUaINb5K/RA21hy5kmfOtdbdAdODrqxts+0xp+xwA==}
 
   oauth4webapi@3.3.1:
     resolution: {integrity: sha512-ZwX7UqYrP3Lr+Glhca3a1/nF2jqf7VVyJfhGuW5JtrfDUxt0u+IoBPzFjZ2dd7PJGkdM6CFPVVYzuDYKHv101A==}
@@ -5641,6 +5647,8 @@ snapshots:
   node-releases@2.0.19: {}
 
   normalize-path@3.0.0: {}
+
+  notiflix@3.2.8: {}
 
   oauth4webapi@3.3.1: {}
 

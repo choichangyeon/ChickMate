@@ -21,11 +21,9 @@ const InterviewStartPage = async () => {
 
   const interviewHistoryInProgress = await getInterviewHistoryAboutInProgress();
 
-  console.log(interviewHistoryInProgress);
-
   return (
     <>
-      <AlertInProgress />
+      {interviewHistoryInProgress && <AlertInProgress />}
       <article className='mb-8'>
         <section className='mb-4 flex flex-row'>
           <Typography as='h2' size='2xl' weight='bold'>

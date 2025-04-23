@@ -15,7 +15,7 @@ const QuestionAnswerField = ({ field, idx, onChange, onDelete }: Props) => {
   const { id, question, answer } = field;
 
   return (
-    <div className='flex min-h-[444px] w-full flex-col gap-4 rounded-lg border border-cool-gray-200 p-8'>
+    <div className='flex min-h-[444px] h-[444px] w-full flex-col gap-4 rounded-lg border border-cool-gray-200 p-8'>
       <div className='flex flex-col gap-2'>
         <div className='flex w-full justify-between'>
           <Typography weight='normal' color='primary-600'>

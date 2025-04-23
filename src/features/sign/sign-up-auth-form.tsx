@@ -41,7 +41,7 @@ const SignUpAuthForm = () => {
         <Typography size='2xl' weight='normal' align='center'>
           만나서 반가워요.<span className='font-bold'>칙칙</span>씨!
         </Typography>
-        <Typography weight='normal' align='center'>
+        <Typography color='gray-700' weight='normal' align='center'>
           우리 같이 취업을 향한 여정을 떠나볼까요?
         </Typography>
       </div>
@@ -58,7 +58,7 @@ const SignUpAuthForm = () => {
         />
         <button
           type='submit'
-          className='bg-blue-white mt-2 w-full rounded-md border border-cool-gray-200 px-4 py-2 text-sm font-medium text-black shadow-sm'
+          className='w-full rounded-lg border border-cool-gray-200 py-2 text-sm font-medium text-cool-gray-700'
         >
           회원가입
         </button>

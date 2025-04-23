@@ -44,7 +44,7 @@ const SignInAuthForm = () => {
         <Typography size='2xl' weight='normal' align='center'>
           만나서 반가워요.<span className='font-bold'>칙칙</span>씨!
         </Typography>
-        <Typography weight='normal' align='center'>
+        <Typography color='gray-700' weight='normal' align='center'>
           우리 같이 취업을 향한 여정을 떠나볼까요?
         </Typography>
       </div>
@@ -53,7 +53,7 @@ const SignInAuthForm = () => {
         <AuthInput label='PASSWORD' id='password' register={register} error={errors.password} type='password' />
         <button
           type='submit'
-          className='bg-blue-white mt-2 w-full rounded-lg border border-cool-gray-200 px-4 py-2 text-sm font-medium text-cool-gray-700'
+          className='w-full rounded-lg border border-cool-gray-200 py-2 text-sm font-medium text-cool-gray-700'
         >
           로그인
         </button>
@@ -75,10 +75,10 @@ const SignInAuthForm = () => {
             네이버 이메일로 로그인
           </button>
         </div>
-        <div className='my-4 flex w-full items-center'>
-          <div className='flex-1 border-t'></div>
-          <span className='px-3 text-sm text-gray-500'>OR</span>
-          <div className='flex-1 border-t'></div>
+        <div className='my-4 flex w-full items-center gap-4'>
+          <div className='flex-1 border-t border-cool-gray-500'></div>
+          <span className='text-sm text-cool-gray-500'>OR</span>
+          <div className='flex-1 border-t border-cool-gray-500'></div>
         </div>
         <Link href={PATH.AUTH.SIGN_UP} className='text-cool-gray-500'>
           30초 만에 회원가입하기

@@ -28,11 +28,15 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResume
   const { mutate: deleteResumeMutate } = useDeleteResumeMutation(RESUME_DRAFT);
 
   const handleDeleteResume = (resumeId: number) => {
-    showNotiflixConfirm({ message: CONFIRM.DELETE, okFunction: () => deleteResumeMutate(resumeId) });
-
-    if (activeResumeId === resumeId) {
-      setResumeId(null);
-    }
+    showNotiflixConfirm({
+      message: CONFIRM.DELETE,
+      okFunction: () => {
+        deleteResumeMutate(resumeId);
+        if (activeResumeId === resumeId) {
+          setResumeId(null);
+        }
+      },
+    });
   };
 
   const handleDraftResumeClick = (resume: Resume) => {

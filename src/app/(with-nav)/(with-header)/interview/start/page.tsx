@@ -6,6 +6,11 @@ import { QueryClient, HydrationBoundary, dehydrate } from '@tanstack/react-query
 import { getResumeList } from '@/features/resume/api/client-services';
 import { RESUME_STATUS } from '@/constants/resume-constants';
 import { getInterviewHistoryAboutInProgress } from '@/features/interview/api/server-services';
+import dynamic from 'next/dynamic';
+// import AlertComponent from '@/components/common/alert-component';
+const AlertComponent = dynamic(() => import('@/components/common/alert-component'), {
+  ssr: false,
+});
 
 const InterviewStartPage = async () => {
   const { RESUME_SUBMIT } = QUERY_KEY;

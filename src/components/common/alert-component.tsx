@@ -14,7 +14,8 @@ const AlertComponent = ({ message, okFunction, cancelFunction }: Props) => {
     okFunction,
     cancelFunction,
   });
-  return null;
+  console.log('afsdkjadsflkbdskfbasdf');
+  return <></>;
 };
 
 export default AlertComponent;

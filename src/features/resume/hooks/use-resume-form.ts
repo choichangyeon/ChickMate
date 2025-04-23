@@ -16,15 +16,19 @@ import { useAddResumeMutation } from '@/features/resume/hooks/use-add-resume-mut
 import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import type { Field } from '@/types/resume';
 import type { ResumeType } from '@/types/DTO/resume-dto';
+import { useTabStore } from '@/store/use-tab-store';
+import { TABS } from '@/constants/my-page-constants';
 
 const { MY_PAGE } = PATH;
 const { DEFAULT } = DELAY_TIME;
 const { SAVING, SAVED } = AUTO_SAVE_STATUS;
 const { RESUME_SUBMISSION } = CHARACTER_HISTORY_KEY;
+const { RESUME } = TABS;
 
 export const useResumeForm = (resume?: ResumeType) => {
   const router = useRouter();
   const characterId = useCharacterStore((state) => state.characterId);
+  const setTab = useTabStore((state) => state.setTab);
   const { handleExperienceUp } = useExperienceUp();
 
   const { mutateAsync: addResumeMutateAsync } = useAddResumeMutation();
@@ -81,7 +85,7 @@ export const useResumeForm = (resume?: ResumeType) => {
 
       Notify.success(isReqExp && isAbleToGetEXP ? SUCCESS_WITH_EXP : SUCCESS);
 
-      // TODO: 이동하기 전 zustand를 통해 마이페이지의 탭 자기소개서 선택되도록
+      // TODO: 이동하기 전 zustand를 통해 마이페이지의 탭 자기소개서 선택되도록      setTab(RESUME);
       router.push(MY_PAGE);
     } catch (error) {
       if (error instanceof Error) {

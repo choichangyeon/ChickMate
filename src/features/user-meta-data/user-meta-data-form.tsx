@@ -1,14 +1,15 @@
 'use client';
+import clsx from 'clsx';
+import { useSession } from 'next-auth/react';
+import { academicData, jobData, typeData } from '@/features/user-meta-data/data/user-meta-data';
+import useRegionsQuery from '@/features/user-meta-data/hooks/use-regions-query';
+import SelectField from '@/features/user-meta-data/select-field';
+import { useMetaDataForm } from '@/features/user-meta-data/hooks/use-meta-data-form';
 import ErrorComponent from '@/components/common/error-component';
 import Button from '@/components/ui/button';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import { EXPERIENCE_AMOUNT } from '@/constants/character-constants';
 import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
-import { academicData, jobData, typeData } from '@/features/user-meta-data/data/user-meta-data';
-import { useMetaDataForm } from '@/features/user-meta-data/hooks/use-meta-data-form';
-import useRegionsQuery from '@/features/user-meta-data/hooks/use-regions-query';
-import SingleSelectField from '@/features/user-meta-data/single-select-field';
-import { useSession } from 'next-auth/react';
 
 const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
 const { FILL_OUT_META_DATA_EXP } = EXPERIENCE_AMOUNT;
@@ -27,14 +28,14 @@ const UserMetaDataForm = () => {
   if (isPending || isMetaDataPending) return <LoadingSpinner />;
 
   return (
-    <div>
+    <div className={clsx('mt-10', isFirstTime && 'mt-0')}>
       {isFirstTime && (
         <span className='mb-4 block text-center font-bold text-primary-orange-600'>
           작성 완료 시 {FILL_OUT_META_DATA_EXP} 경험치 획득!
         </span>
       )}
       <form onSubmit={handleSubmit(handleOnSubmit)}>
-        <SingleSelectField
+        <SelectField
           label='*경력'
           options={typeData}
           value={watch(EXPERIENCE_NAME)}
@@ -42,7 +43,7 @@ const UserMetaDataForm = () => {
           onSelect={handleSelect}
           error={errors[EXPERIENCE_NAME]?.message}
         />
-        <SingleSelectField
+        <SelectField
           label='*학력'
           options={academicData}
           value={watch(REQUIRED_EDUCATION_NAME)}
@@ -50,7 +51,7 @@ const UserMetaDataForm = () => {
           onSelect={handleSelect}
           error={errors[REQUIRED_EDUCATION_NAME]?.message}
         />
-        <SingleSelectField
+        <SelectField
           label='*직무'
           options={jobData}
           value={watch(JOB_MID_CODE_NAME)}
@@ -58,7 +59,7 @@ const UserMetaDataForm = () => {
           onSelect={handleSelect}
           error={errors[JOB_MID_CODE_NAME]?.message}
         />
-        <SingleSelectField
+        <SelectField
           label='*지역'
           options={regions}
           value={watch(LOCATION_NAME)}
@@ -76,6 +77,7 @@ const UserMetaDataForm = () => {
             {...register(ETC)}
           />
         </div>
+
         <div className='text-center'>
           <Button type='submit' fontWeight='bold'>
             설정을 완료헀어요!

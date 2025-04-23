@@ -6,7 +6,7 @@ import { InterviewQnAType } from '@/types/DTO/interview-qna-dto';
 import QuestionStep from '@/features/interview/question-step';
 import CameraView from '@/features/interview/camera-view';
 import QuestionDisplayWithTimer from '@/features/interview/question-display-with-timer';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useInterviewStore } from '@/store/use-interview-store';
 import { patchInterviewHistoryStatus } from '@/features/interview/api/client-services';
 import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';

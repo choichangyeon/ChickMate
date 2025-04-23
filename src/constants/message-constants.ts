@@ -88,7 +88,6 @@ export const USER_META_DATA_FORM_MESSAGE = {
     [LOCATION_NAME]: '지역을 선택해 주세요.',
   } as const,
   API: {
-    GET_REGIONS_ERROR: '지역 정보를 가져오는데 실패했습니다.',
     GET_DATA_ERROR: '유저 정보를 가져오는데 실패했습니다.',
     POST_DATA_ERROR: '유저 정보를 저장하는데 실패했습니다.',
     POST_DATA_SUCCESS: '주요 이력이 저장되었습니다.',

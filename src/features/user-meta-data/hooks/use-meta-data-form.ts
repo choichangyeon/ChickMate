@@ -32,7 +32,7 @@ const { FILL_OUT_META_DATA } = CHARACTER_HISTORY_KEY;
 const { JOB_POSTING } = QUERY_KEY;
 
 export const useMetaDataForm = (userId: UserType['id']) => {
-  const { data: metaData, isPending: isMetaDataPending } = useMetaDataQuery({ userId });
+  const { data: metaData, isPending } = useMetaDataQuery({ userId });
   const { mutateAsync, error } = useMetaDataMutation(userId);
   const toggleModal = useModalStore((state) => state.toggleModal);
   const { handleExperienceUp } = useExperienceUp();
@@ -111,7 +111,7 @@ export const useMetaDataForm = (userId: UserType['id']) => {
     handleSubmit,
     handleOnSubmit,
     handleSelect,
-    isMetaDataPending,
+    isPending,
     isFirstTime,
   };
 };

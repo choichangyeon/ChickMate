@@ -1,10 +1,9 @@
 'use client';
 import clsx from 'clsx';
 import { useSession } from 'next-auth/react';
-import { academicData, jobData, typeData } from '@/features/user-meta-data/data/user-meta-data';
-import useRegionsQuery from '@/features/user-meta-data/hooks/use-regions-query';
-import SelectField from '@/features/user-meta-data/select-field';
+import { academicData, jobData, regions, typeData } from '@/features/user-meta-data/data/user-meta-data';
 import { useMetaDataForm } from '@/features/user-meta-data/hooks/use-meta-data-form';
+import SelectField from '@/features/user-meta-data/select-field';
 import ErrorComponent from '@/components/common/error-component';
 import Button from '@/components/ui/button';
 import LoadingSpinner from '@/components/ui/loading-spinner';
@@ -20,12 +19,10 @@ const UserMetaDataForm = () => {
 
   if (!userId) return <ErrorComponent />;
 
-  const { watch, register, errors, handleSubmit, handleOnSubmit, handleSelect, isMetaDataPending, isFirstTime } =
+  const { watch, register, errors, handleSubmit, handleOnSubmit, handleSelect, isPending, isFirstTime } =
     useMetaDataForm(userId);
 
-  const { data: regions = [], isPending } = useRegionsQuery();
-
-  if (isPending || isMetaDataPending) return <LoadingSpinner />;
+  if (isPending) return <LoadingSpinner />;
 
   return (
     <div className={clsx('mt-10', isFirstTime && 'mt-0')}>

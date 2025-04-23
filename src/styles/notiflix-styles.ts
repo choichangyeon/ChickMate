@@ -5,7 +5,7 @@ import { Confirm, Notify } from 'notiflix';
 export const initNotiflix = () => {
   Confirm.init({
     className: 'notiflix-confirm',
-    width: '402px',
+    width: '386px',
     zindex: 4003,
     position: 'center', // 'right-top' - 'right-bottom' - 'left-top' - 'left-bottom' - 'center-top' - 'center-bottom' - 'center-center'
     distance: '10px',
@@ -21,10 +21,10 @@ export const initNotiflix = () => {
     plainText: false,
     titleColor: '#E55A27',
     titleFontSize: '24px',
-    titleMaxLength: 34,
+    titleMaxLength: 10,
     messageColor: '#111827',
     messageFontSize: '16px',
-    messageMaxLength: 110,
+    messageMaxLength: 30,
     buttonsFontSize: '16px',
     buttonsMaxLength: 10,
     okButtonColor: '#ffffff',

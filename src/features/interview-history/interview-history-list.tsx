@@ -10,7 +10,7 @@ import LoadingSpinner from '@/components/ui/loading-spinner';
 import { INTERVIEW_TYPE, INTERVIEW_TYPE_KR } from '@/constants/interview-constants';
 import { TABS } from '@/constants/my-page-constants';
 import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
-import { UserType } from '@/types/DTO/user-dto';
+import type { UserType } from '@/types/DTO/user-dto';
 
 const { CALM } = INTERVIEW_TYPE;
 const { CALM_KR, PRESSURE_KR } = INTERVIEW_TYPE_KR;

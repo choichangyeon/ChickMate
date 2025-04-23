@@ -11,6 +11,7 @@ import Typography from '@/components/ui/typography';
 import AuthInput from '@/features/sign/auth-input';
 import { schema, SignInFormData } from '@/features/sign/data/sign-in-schema';
 import { useSignInResult } from '@/features/sign/hooks/use-sign-in-result';
+import { SIGN_IN_INPUT } from '@/features/sign/data/sign-input';
 
 const { ON_BOARDING } = PATH;
 
@@ -50,8 +51,17 @@ const SignInAuthForm = () => {
       </div>
       <form onSubmit={handleSubmit(onSubmit)} noValidate className='flex flex-col gap-8'>
         <div className='flex flex-col gap-8'>
-          <AuthInput label='EMAIL' id='email' register={register} error={errors.email} type='email' />
-          <AuthInput label='PASSWORD' id='password' register={register} error={errors.password} type='password' />
+          {SIGN_IN_INPUT.map(({ id, label, type, placeholder }) => (
+            <AuthInput
+              key={id}
+              label={label}
+              id={id}
+              type={type}
+              placeholder={placeholder}
+              register={register}
+              error={errors[id as keyof SignInFormData]}
+            />
+          ))}
         </div>
         <div className='flex flex-col gap-4'>
           <div className='flex flex-col gap-2'>

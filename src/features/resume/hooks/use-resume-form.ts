@@ -15,7 +15,7 @@ import { defaultQuestionList } from '@/features/resume/data/default-question-lis
 import { useAddResumeMutation } from '@/features/resume/hooks/use-add-resume-mutation';
 import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import type { Field } from '@/types/resume';
-import type { Resume } from '@prisma/client';
+import type { ResumeType } from '@/types/DTO/resume-dto';
 
 const { MY_PAGE } = PATH;
 const { DEFAULT } = DELAY_TIME;
@@ -23,7 +23,7 @@ const { SAVING, SAVED } = AUTO_SAVE_STATUS;
 const { RESUME_SUBMISSION } = CHARACTER_HISTORY_KEY;
 const { LIMIT } = RESUME_MESSAGE;
 
-export const useResumeForm = (resume?: Resume) => {
+export const useResumeForm = (resume?: ResumeType) => {
   const router = useRouter();
   const characterId = useCharacterStore((state) => state.characterId);
   const { handleExperienceUp } = useExperienceUp();

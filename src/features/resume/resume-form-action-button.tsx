@@ -1,10 +1,10 @@
 import Button from '@/components/ui/button';
 import Typography from '@/components/ui/typography';
-import { Resume } from '@prisma/client';
+import type { ResumeType } from '@/types/DTO/resume-dto';
 
 type Props = {
-  resume?: Resume;
-  draftResumeList?: Resume[];
+  resume?: ResumeType;
+  draftResumeList?: ResumeType[];
   autoSaveStatus: string;
   onClick: () => void;
 };

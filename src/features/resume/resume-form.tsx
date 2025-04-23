@@ -9,12 +9,12 @@ import QuestionAnswerField from '@/features/resume/question-answer-field';
 import DraftResumesModal from '@/features/resume/draft-resumes-modal';
 import ResumeFormActionButton from '@/features/resume/resume-form-action-button';
 import type { Field } from '@/types/resume';
-import type { Resume } from '@prisma/client';
+import type{ ResumeType } from '@/types/DTO/resume-dto';
 
 const { DRAFT_RESUME } = MODAL_ID;
 
 type Props = {
-  resume?: Resume;
+  resume?: ResumeType;
 };
 
 const ResumeForm = ({ resume }: Props) => {
@@ -45,7 +45,7 @@ const ResumeForm = ({ resume }: Props) => {
     refetch();
   };
 
-  const handleLoadDraft = (resume: Resume) => {
+  const handleLoadDraft = (resume: ResumeType) => {
     const { id, title, content } = resume;
 
     setTitle(title);

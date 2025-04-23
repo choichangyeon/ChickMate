@@ -25,7 +25,7 @@ const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
   const setQuestionIndex = useInterviewStore((state) => state.setQuestionIndex);
   const questionIndex = useInterviewStore((state) => state.questionIndex);
   const latestQuestionIndex = useRef(questionIndex);
-  console.log(questionIndex);
+
   useEffect(() => {
     latestQuestionIndex.current = questionIndex;
   }, [questionIndex]);

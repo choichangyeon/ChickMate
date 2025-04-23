@@ -1,12 +1,13 @@
-import Typography from '@/components/ui/typography';
-import { InterviewHistory, InterviewQnA, Resume } from '@prisma/client';
 import Image from 'next/image';
-import React from 'react';
+import Typography from '@/components/ui/typography';
+import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
+import type { InterviewQnAType } from '@/types/DTO/interview-qna-dto';
+import type { ResumeType } from '@/types/DTO/resume-dto';
 
 type Props = {
-  data: InterviewHistory & {
-    InterviewQnAList: InterviewQnA[];
-    resume: Resume;
+  data: InterviewHistoryType & {
+    InterviewQnAList: InterviewQnAType[];
+    resume: ResumeType;
   };
 };
 

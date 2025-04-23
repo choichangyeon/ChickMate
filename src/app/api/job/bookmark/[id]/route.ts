@@ -18,6 +18,7 @@ type Props = {
 
 export const POST = async (request: NextRequest, { params }: Props) => {
   try {
+    console.log('para', { params });
     const session = await getServerSession(authOptions);
 
     if (!session || !session.user) {

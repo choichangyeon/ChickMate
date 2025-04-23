@@ -1,8 +1,8 @@
+import { useState } from 'react';
 import ImprovementIcon from '@/components/icons/improvement-icon';
 import StrengthIcon from '@/components/icons/strength-icon';
 import Button from '@/components/ui/button';
 import Typography from '@/components/ui/typography';
-import { useState } from 'react';
 
 type Props = {
   feedback: FeedbackItem[];

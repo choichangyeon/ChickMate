@@ -1,8 +1,7 @@
 'use client';
+import clsx from 'clsx';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import type { InterviewHistory, User } from '@prisma/client';
-import clsx from 'clsx';
 import { useInterviewHistoryInfiniteQuery } from '@/features/interview-history/hook/use-interview-history-infinite-query';
 import EmptyList from '@/features/my-page/empty-list';
 import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
@@ -10,18 +9,20 @@ import ErrorComponent from '@/components/common/error-component';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import { INTERVIEW_TYPE, INTERVIEW_TYPE_KR } from '@/constants/interview-constants';
 import { TABS } from '@/constants/my-page-constants';
+import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
+import { UserType } from '@/types/DTO/user-dto';
 
 const { CALM } = INTERVIEW_TYPE;
 const { CALM_KR, PRESSURE_KR } = INTERVIEW_TYPE_KR;
 const { HISTORY } = TABS;
 
-const getInterviewer = (type: InterviewHistory['interviewType']) => {
+const getInterviewer = (type: InterviewHistoryType['interviewType']) => {
   return type === CALM ? `${CALM_KR} ☀️` : `${PRESSURE_KR} 🔥`;
 };
 
 const InterviewHistoryList = () => {
   const { data: session } = useSession();
-  const userId: User['id'] | undefined = session?.user?.id;
+  const userId: UserType['id'] | undefined = session?.user?.id;
   const router = useRouter();
 
   const { data, isPending, isError, fetchNextPage, hasNextPage, isFetchingNextPage } = useInterviewHistoryInfiniteQuery(
@@ -41,7 +42,7 @@ const InterviewHistoryList = () => {
     );
   if (isError) return <ErrorComponent />;
 
-  const handleGetDetailList = (historyId: InterviewHistory['id']) => {
+  const handleGetDetailList = (historyId: InterviewHistoryType['id']) => {
     router.push(`?id=${historyId}&tab=${HISTORY}`);
   };
 

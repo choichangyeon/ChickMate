@@ -1,11 +1,12 @@
-import { QUERY_KEY } from '@/constants/query-key';
-import { getInterviewHistories } from '@/features/interview-history/api/client-services';
-import type { User } from '@prisma/client';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { getInterviewHistories } from '@/features/interview-history/api/client-services';
+import type { UserType } from '@/types/DTO/user-dto';
+import { QUERY_KEY } from '@/constants/query-key';
+
 const { HISTORY } = QUERY_KEY;
 const ITEMS_PER_PAGE = 8;
 
-export const useInterviewHistoryInfiniteQuery = (userId: User['id']) => {
+export const useInterviewHistoryInfiniteQuery = (userId: UserType['id']) => {
   return useInfiniteQuery({
     queryKey: [HISTORY, userId],
     queryFn: async ({ pageParam = 1 }) => {

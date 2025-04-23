@@ -1,5 +1,7 @@
+import type { ResumeType } from './DTO/resume-dto';
+
 export type Field = {
-  id: string;
+  id: ResumeType['id'];
   question: string;
   answer: string;
 };

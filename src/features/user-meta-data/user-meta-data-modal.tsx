@@ -1,5 +1,5 @@
-import Typography from '@/components/ui/typography';
 import UserMetaDataForm from '@/features/user-meta-data/user-meta-data-form';
+import Typography from '@/components/ui/typography';
 
 const UserMetaDataModal = () => {
   return (

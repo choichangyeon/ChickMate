@@ -1,8 +1,7 @@
 import React from 'react';
 import SelectBox from '@/features/user-meta-data/select-box';
-import { SelectBoxType } from '@/types/select-box';
-
-import { UserMetaDataType } from '@/types/user-meta-data-type';
+import type { SelectBoxType } from '@/types/select-box';
+import type { UserMetaDataType } from '@/types/user-meta-data-type';
 
 type Props = {
   label: string;

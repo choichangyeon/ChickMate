@@ -1,12 +1,13 @@
+import clsx from 'clsx';
+import { useBookmarkMutation } from '@/features/job/hooks/use-bookmark-mutation';
 import { Star } from '@/components/icons/star';
 import Button from '@/components/ui/button';
 import Typography from '@/components/ui/typography';
-import { QUERY_KEY } from '@/constants/query-key';
-import { useBookmarkMutation } from '@/features/job/hooks/use-bookmark-mutation';
 import { formatRemainDay } from '@/utils/format-remain-day';
 import { formatTimestamp } from '@/utils/format-timestamp';
-import { JobPosting, UserSelectedJob } from '@prisma/client';
-import clsx from 'clsx';
+import type { JobPostingType } from '@/types/DTO/job-posting-dto';
+import type { UserType } from '@/types/DTO/user-dto';
+import type { UserSelectedJobType } from '@/types/DTO/user-selected-job-dto';
 
 const experienceType: Record<number, string> = {
   0: '경력무관',
@@ -14,13 +15,14 @@ const experienceType: Record<number, string> = {
   2: '경력',
   3: '신입/경력',
 };
-const { TABS_COUNT } = QUERY_KEY;
+
 type Props = {
-  bookmark: UserSelectedJob & { jobPosting: JobPosting };
+  bookmark: UserSelectedJobType & { jobPosting: JobPostingType };
   index: number;
   length: number;
-  userId: string;
+  userId: UserType['id'];
 };
+
 const BookmarkTab = ({ bookmark, index, length, userId }: Props) => {
   const { mutate: bookmarkMutate } = useBookmarkMutation({
     jobPostingId: bookmark.jobPostingId,

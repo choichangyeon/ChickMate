@@ -1,6 +1,8 @@
 'use client';
-
 import Link from 'next/link';
+import ResumeQnAItem from '@/features/resume-list/resume-qna-item';
+import { useResumeQuery } from '@/features/resume-list/hooks/use-resume-query';
+import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import ErrorComponent from '@/components/common/error-component';
 import LeftArrowIcon from '@/components/icons/left-arrow-icon';
@@ -8,17 +10,15 @@ import Typography from '@/components/ui/typography';
 import Button from '@/components/ui/button';
 import { PATH } from '@/constants/path-constant';
 import { QUERY_KEY } from '@/constants/query-key';
-import ResumeQnAItem from '@/features/resume-list/resume-qna-item';
-import { useResumeQuery } from '@/features/resume-list/hooks/use-resume-query';
-import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
 import type { Field } from '@/types/resume';
+import type { ResumeType } from '@/types/DTO/resume-dto';
 
 const { MY_PAGE } = PATH;
 const { DETAIL } = PATH.RESUME;
 const { RESUMES } = QUERY_KEY;
 
 type Props = {
-  id: string;
+  id: ResumeType['id'];
 };
 
 const ResumeDetailField = ({ id }: Props) => {

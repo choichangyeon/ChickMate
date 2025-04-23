@@ -1,9 +1,9 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { QUERY_KEY } from '@/constants/query-key';
-import { InterviewHistory } from '@prisma/client';
-import { deleteInterview } from '@/features/interview-history/api/client-services';
 import { useRouter } from 'next/navigation';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteInterview } from '@/features/interview-history/api/client-services';
+import { QUERY_KEY } from '@/constants/query-key';
 import { PATH } from '@/constants/path-constant';
+import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
 
 const { HISTORY, TABS_COUNT } = QUERY_KEY;
 const { MY_PAGE } = PATH;
@@ -18,9 +18,9 @@ export const useDeleteInterviewMutation = () => {
     onMutate: async (interviewId) => {
       await queryClient.cancelQueries({ queryKey: [HISTORY] });
 
-      const previousInterviewList = queryClient.getQueryData([HISTORY]) as InterviewHistory[] | undefined;
+      const previousInterviewList = queryClient.getQueryData([HISTORY]) as InterviewHistoryType[] | undefined;
 
-      queryClient.setQueryData([HISTORY], (old: InterviewHistory[] = []) =>
+      queryClient.setQueryData([HISTORY], (old: InterviewHistoryType[] = []) =>
         old.filter((interview) => interview.id !== interviewId)
       );
 

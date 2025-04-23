@@ -20,17 +20,9 @@ const BookmarkSelectedList = () => {
 
   const targetRef = useInfiniteScroll({ fetchNextPage, hasNextPage });
 
-  if (status === 'loading') {
-    return (
-      <section className='flex h-[70dvh] flex-col items-center justify-center'>
-        <LoadingSpinner />
-      </section>
-    );
-  }
-
   if (!userId) return <ErrorComponent />;
 
-  if (isPending) {
+  if (isPending || status === 'loading') {
     return (
       <section className='flex h-[70dvh] flex-col items-center justify-center'>
         <LoadingSpinner />

@@ -10,7 +10,7 @@ export const HeaderTitle = () => {
   const title = getTitleFromPath(pathname);
   return (
     <div className='px-8'>
-      <Typography size='xl' weight='bold'>
+      <Typography as='h1' size='xl' weight='bold'>
         {title}
       </Typography>
     </div>

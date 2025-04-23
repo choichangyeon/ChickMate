@@ -8,7 +8,7 @@ const ListCard = ({ title, content, icon, path }: OnBoardingCard) => {
       <section role='link' className='flex items-center rounded-xl border border-cool-gray-200 p-4'>
         <div className='mr-4'>{icon}</div>
         <div>
-          <Typography as='h2' weight='bold'>
+          <Typography as='h1' weight='bold'>
             {title}
           </Typography>
           <p className='mt-1 whitespace-pre-line'>{content}</p>

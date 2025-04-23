@@ -13,7 +13,7 @@ import { PATH } from '@/constants/path-constant';
 import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
 
 type Props = {
-  id: InterviewHistoryType['id'];
+  interviewId: InterviewHistoryType['id'];
 };
 
 const { MY_PAGE } = PATH;
@@ -22,9 +22,7 @@ const SELECT_ACTIVE_TAB = {
   HISTORY: 'history',
 };
 
-const InterviewDetailField = ({ id }: Props) => {
-  const interviewId = Number(id);
-
+const InterviewDetailField = ({ interviewId }: Props) => {
   const [activeTab, setActiveTab] = useState<string>('feedback');
   const { data, isPending, isError } = useGetInterviewDetailQuery(interviewId);
   const { mutate: deleteInterviewMutation } = useDeleteInterviewMutation();

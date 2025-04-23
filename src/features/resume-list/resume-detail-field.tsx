@@ -18,12 +18,10 @@ const { DETAIL } = PATH.RESUME;
 const { RESUMES } = QUERY_KEY;
 
 type Props = {
-  id: ResumeType['id'];
+  resumeId: ResumeType['id'];
 };
 
-const ResumeDetailField = ({ id }: Props) => {
-  const resumeId = Number(id);
-
+const ResumeDetailField = ({ resumeId }: Props) => {
   const { data: resume, isPending, isError } = useResumeQuery(resumeId);
   const { mutate: deleteResumeMutate } = useDeleteResumeMutation(RESUMES);
 

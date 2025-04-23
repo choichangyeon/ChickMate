@@ -1,8 +1,8 @@
 'use client';
 
 import Typography from '@/components/ui/typography';
-import { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
-import { InterviewQnAType } from '@/types/DTO/interview-qna-dto';
+import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
+import type { InterviewQnAType } from '@/types/DTO/interview-qna-dto';
 import QuestionStep from '@/features/interview/question-step';
 import CameraView from '@/features/interview/camera-view';
 import QuestionDisplayWithTimer from '@/features/interview/question-display-with-timer';

@@ -81,7 +81,7 @@ const JobPostingsBox = ({ userId }: Props) => {
 
     return (
       <>
-        <div className='flex flex-wrap justify-between gap-2'>
+        <div className='grid grid-cols-3 gap-2'>
           {data.jobPostingList.map((jobPosting) => (
             <JobPostingCard key={jobPosting.id} userId={userId} jobPosting={jobPosting} />
           ))}

@@ -57,7 +57,7 @@ const MyInfo = ({ session }: Props) => {
   return (
     <div className='flex flex-1 flex-col gap-4'>
       <div className='flex justify-between'>
-        <Typography size='2xl' weight='bold'>
+        <Typography as='h2' size='2xl' weight='bold'>
           <span className='text-primary-orange-600'>내 정보</span> 확인
         </Typography>
         <button onClick={() => toggleModal(USER_META_DATA)}>
@@ -76,13 +76,10 @@ const MyInfo = ({ session }: Props) => {
           />
         </div>
       ) : (
-        <ul className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
+        <ul>
           {fieldList.map(({ key, label }) => (
-            <li
-              key={key}
-              className='flex flex-col gap-2 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md'
-            >
-              <Typography size='md' weight='bold' color='secondary-amber'>
+            <li key={key} className='flex gap-4 rounded-2xl p-4'>
+              <Typography size='md' as='h3' weight='bold' color='secondary-amber'>
                 {label}
               </Typography>
               <Typography>{data[key]}</Typography>

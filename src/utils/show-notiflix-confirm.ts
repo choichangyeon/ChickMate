@@ -14,7 +14,7 @@ type Props = {
 
 /**
  * Confirm창 보여주는 함수
- * @param {String} title confirm창에서 보여줄 메시지의 제목
+ * @param {String} title confirm창에서 보여줄 제목
  * @param {String} message confirm창에서 보여줄 메시지
  * @param {String} okButtonText 확인 버튼명
  * @param {String} cancelButtonText 취소 버튼명

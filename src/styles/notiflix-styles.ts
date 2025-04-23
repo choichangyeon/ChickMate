@@ -26,7 +26,7 @@ export const initNotiflix = () => {
     messageFontSize: '16px',
     messageMaxLength: 110,
     buttonsFontSize: '16px',
-    buttonsMaxLength: 34,
+    buttonsMaxLength: 10,
     okButtonColor: '#ffffff',
     okButtonBackground: '#E55A27',
     cancelButtonColor: '#ffffff',

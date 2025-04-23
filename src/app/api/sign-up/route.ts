@@ -36,7 +36,8 @@ export async function POST(request: Request) {
     });
 
     const { password, ...result } = user;
-    return NextResponse.json({ result }, { status: 200 });
+
+    return NextResponse.json({ response: result }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: SIGN_UP_FAILED }, { status: 500 });
   }

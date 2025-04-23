@@ -33,7 +33,7 @@ const JobPostingPaginationButton = ({ totalCount, page, setPage }: Props) => {
   return (
     <>
       {totalPageCount > MIN_PAGE_COUNT && (
-        <div className='mt-6 flex flex-wrap justify-center gap-2'>
+        <div className='flex flex-wrap items-center justify-center gap-2 py-8'>
           {startPage > 1 && (
             <button onClick={() => goToPage(startPage - 1)} className='rounded border text-sm'>
               <LeftArrowIcon />

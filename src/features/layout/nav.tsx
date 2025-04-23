@@ -28,7 +28,7 @@ export const Nav = ({ session }: Props) => {
         {menus.map((menu) => (
           <li key={`menu_${menu.name}`} className={clsx('group relative', menu.class)}>
             {menu.type === 'link' ? <LinkNav menu={menu} /> : <ButtonNav menu={menu} />}
-            <span className='absolute left-full top-1/2 z-10 ml-4 hidden -translate-y-1/2 whitespace-nowrap rounded-md bg-cool-gray-900 px-2 py-1 text-sm text-white opacity-0 shadow-md transition-opacity duration-300 group-hover:inline group-hover:opacity-100'>
+            <span className='z-overlay absolute left-full top-1/2 ml-4 hidden -translate-y-1/2 whitespace-nowrap rounded-md bg-cool-gray-900 px-2 py-1 text-sm text-white opacity-0 shadow-md transition-opacity duration-300 group-hover:inline group-hover:opacity-100'>
               {menu.name}
             </span>
           </li>

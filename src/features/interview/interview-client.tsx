@@ -44,7 +44,7 @@ const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
   }, []);
 
   return (
-    <main className='flex flex-col gap-8 px-[50px] py-8'>
+    <div className='flex flex-col gap-8 px-[50px] py-8'>
       <section className='flex w-full flex-col gap-4'>
         <div className='flex items-center justify-between'>
           <Typography size='2xl' weight='bold'>
@@ -58,7 +58,7 @@ const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
         </div>
       </section>
       <QuestionDisplayWithTimer interviewHistory={interviewHistory} interviewQnAList={interviewQnAList} />
-    </main>
+    </div>
   );
 };
 

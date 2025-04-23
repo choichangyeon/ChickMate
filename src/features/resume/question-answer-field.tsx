@@ -21,7 +21,7 @@ const QuestionAnswerField = ({ field, idx, onChange, onDelete }: Props) => {
           <Typography weight='normal' color='primary-600'>
             질문 {idx + 1}
           </Typography>
-          <button type='button' onClick={() => onDelete(id)}>
+          <button type='button' onClick={() => onDelete(id)} aria-label='질문 삭제'>
             <Trash />
           </button>
         </div>

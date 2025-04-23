@@ -1,7 +1,7 @@
 import { AUTH_MESSAGE } from '@/constants/message-constants';
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 type RequestBody = {
   name: string;
@@ -11,7 +11,7 @@ type RequestBody = {
 
 const { SIGN_UP_EMPTY_FIELD, SIGN_UP_EXIST_ERROR, SIGN_UP_FAILED } = AUTH_MESSAGE.RESULT;
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const body: RequestBody = await request.json();
 

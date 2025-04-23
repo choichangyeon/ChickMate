@@ -6,9 +6,15 @@ const NAME_VALIDATION_MAX = 8;
 const NAME_VALIDATION_REGEX = /^[a-zA-Z0-9가-힣]+$/;
 const PASSWORD_VALIDATION_MIN = 6;
 
-const { VALIDATION } = AUTH_MESSAGE;
-const { NAME_LENGTH, NAME_SPECIAL_CHAR, EMAIL_INVALID, PASSWORD_LENGTH, PASSWORD_SPECIAL_CHAR, PASSWORD_CHECK } =
-  VALIDATION;
+const {
+  NAME_LENGTH,
+  NAME_SPECIAL_CHAR,
+  EMAIL_INVALID,
+  PASSWORD_LENGTH,
+  PASSWORD_SPECIAL_CHAR,
+  PASSWORD_ASCII_ONLY,
+  PASSWORD_CHECK,
+} = AUTH_MESSAGE.VALIDATION;
 
 export const schema = z
   .object({
@@ -23,7 +29,8 @@ export const schema = z
       .string()
       .trim()
       .min(PASSWORD_VALIDATION_MIN, PASSWORD_LENGTH)
-      .regex(/[^a-zA-Z0-9]/, PASSWORD_SPECIAL_CHAR),
+      .regex(/[^a-zA-Z0-9]/, PASSWORD_SPECIAL_CHAR)
+      .regex(/^[\x21-\x7E]*$/, PASSWORD_ASCII_ONLY),
     passwordCheck: z.string().trim(),
   })
   .refine(

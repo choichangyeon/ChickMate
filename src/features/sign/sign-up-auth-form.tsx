@@ -37,7 +37,7 @@ const SignUpAuthForm = () => {
   };
 
   return (
-    <div className='mx-auto flex w-full max-w-md flex-col gap-8 rounded-3xl border border-cool-gray-200 bg-white p-6'>
+    <main className='mx-auto flex w-full max-w-md flex-col gap-8 rounded-3xl border border-cool-gray-200 bg-white p-6'>
       <div>
         <Typography size='2xl' weight='normal' align='center'>
           만나서 반가워요.<span className='font-bold'>칰칰</span>씨!
@@ -67,7 +67,7 @@ const SignUpAuthForm = () => {
           회원가입
         </button>
       </form>
-    </div>
+    </main>
   );
 };
 

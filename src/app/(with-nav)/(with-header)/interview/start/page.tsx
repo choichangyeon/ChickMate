@@ -5,6 +5,7 @@ import { QUERY_KEY } from '@/constants/query-key';
 import { QueryClient, HydrationBoundary, dehydrate } from '@tanstack/react-query';
 import { getResumeList } from '@/features/resume/api/client-services';
 import { RESUME_STATUS } from '@/constants/resume-constants';
+import { getInterviewHistoryAboutInProgress } from '@/features/interview/api/server-services';
 
 const InterviewStartPage = async () => {
   const { RESUME_SUBMIT } = QUERY_KEY;
@@ -16,6 +17,7 @@ const InterviewStartPage = async () => {
     queryKey: [RESUME_SUBMIT],
     queryFn: () => getResumeList(SUBMIT),
   });
+  await getInterviewHistoryAboutInProgress();
 
   return (
     <>

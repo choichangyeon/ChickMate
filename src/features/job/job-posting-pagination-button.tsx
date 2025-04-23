@@ -12,14 +12,17 @@ type Props = {
   setPage: Dispatch<SetStateAction<number>>;
 };
 
+const PAGE_PER_GROUP = 10;
+const MIN_PAGE_COUNT = 1;
+
 const JobPostingPaginationButton = ({ totalCount, page, setPage }: Props) => {
   const router = useRouter();
   const params = useSearchParams();
 
   const totalPageCount = Math.ceil(totalCount / JOB_POSTING_DATA_LIMIT);
-  const currentGroup = Math.floor((page - 1) / 10);
-  const startPage = currentGroup * 10 + 1;
-  const endPage = Math.min(startPage + 9, totalPageCount);
+  const currentGroup = Math.floor((page - 1) / PAGE_PER_GROUP);
+  const startPage = currentGroup * PAGE_PER_GROUP + 1;
+  const endPage = Math.min(startPage + PAGE_PER_GROUP - 1, totalPageCount);
 
   const goToPage = (newPage: number) => {
     const sortOption = params.get('sortOption') || 'latest';
@@ -29,7 +32,7 @@ const JobPostingPaginationButton = ({ totalCount, page, setPage }: Props) => {
 
   return (
     <>
-      {totalPageCount > 1 && (
+      {totalPageCount > MIN_PAGE_COUNT && (
         <div className='mt-6 flex flex-wrap justify-center gap-2'>
           {startPage > 1 && (
             <button onClick={() => goToPage(startPage - 1)} className='rounded border text-sm'>

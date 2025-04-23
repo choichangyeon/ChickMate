@@ -8,7 +8,7 @@ import CameraView from '@/features/interview/camera-view';
 import QuestionDisplayWithTimer from '@/features/interview/question-display-with-timer';
 import { useEffect, useState } from 'react';
 import { useInterviewStore } from '@/store/use-interview-store';
-import { patchInterviewHistoryStatus } from './api/client-services';
+import { patchInterviewHistoryStatus } from '@/features/interview/api/client-services';
 import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 
 const { IN_PROGRESS } = INTERVIEW_HISTORY_STATUS;

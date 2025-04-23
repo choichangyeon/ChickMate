@@ -13,4 +13,5 @@ export const INTERVIEW_LIMIT_COUNT = 8;
 export const INTERVIEW_HISTORY_STATUS = {
   PENDING: 0,
   COMPLETED: 1,
+  IN_PROGRESS: 2,
 };

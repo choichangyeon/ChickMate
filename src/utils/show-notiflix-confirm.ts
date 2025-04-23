@@ -16,6 +16,8 @@ type Props = {
  * @param {Function} cancelFunction 취소 버튼을 눌렀을 때 실행하는 함수
  */
 export const showNotiflixConfirm = ({ message, okFunction, cancelFunction }: Props) => {
+  document.body.classList.add('confirm-open');
+
   Confirm.show(
     CONFIRM,
     `${message}`,

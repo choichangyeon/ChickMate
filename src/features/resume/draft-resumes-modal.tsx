@@ -28,7 +28,6 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResume
   const { mutate: deleteResumeMutate } = useDeleteResumeMutation(RESUME_DRAFT);
 
   const handleDeleteResume = (resumeId: number) => {
-    document.body.classList.add('confirm-open');
     showNotiflixConfirm({ message: CONFIRM.DELETE, okFunction: () => deleteResumeMutate(resumeId) });
 
     if (activeResumeId === resumeId) {

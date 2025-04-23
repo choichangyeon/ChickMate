@@ -32,6 +32,7 @@ const config: Config = {
           50: '#F9FAFB',
           10: '#FAFBFC',
         },
+        'naver-green': '#03C75A',
         background: 'var(--background)',
         foreground: 'var(--foreground)',
       },

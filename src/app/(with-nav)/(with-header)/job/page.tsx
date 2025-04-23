@@ -20,10 +20,13 @@ const JobPage = async () => {
           프로필에 작성된 정보를 통해 맞춤형 채용공고를 추천해드립니다
         </Typography>
       </section>
+      <div className='text-right'>
+        <Button link href={SARAMIN_URL} target='_blank'>
+          데이터 출처: 취업 사람인
+        </Button>
+      </div>
 
-      <Button link href={SARAMIN_URL} target='_blank'>
-        데이터 출처: 취업 사람인
-      </Button>
+      <JobPostingSection session={session} />
     </div>
   );
 };

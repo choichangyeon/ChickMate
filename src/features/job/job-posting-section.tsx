@@ -11,7 +11,7 @@ const JobPostingSection = async ({ session }: Props) => {
     return <JobPostingBlockComponent type='unauthenticated' />;
   }
   return (
-    <article>
+    <article className='h-full'>
       <JobPostingsBox userId={session.user.id} />
     </article>
   );

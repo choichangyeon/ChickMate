@@ -80,15 +80,14 @@ const JobPostingsBox = ({ userId }: Props) => {
     }
 
     return (
-      <div className='flex flex-col items-center justify-between gap-6'>
-        <section className='flex flex-wrap gap-5 self-stretch scrollbar-hide'>
+      <>
+        <div className='flex flex-wrap justify-between gap-2'>
           {data.jobPostingList.map((jobPosting) => (
             <JobPostingCard key={jobPosting.id} userId={userId} jobPosting={jobPosting} />
           ))}
-        </section>
-
+        </div>
         <JobPostingPaginationButton totalCount={data.totalCount} page={page} setPage={setPage} />
-      </div>
+      </>
     );
   };
 

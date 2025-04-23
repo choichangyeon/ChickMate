@@ -11,7 +11,7 @@ type Props = {
 
 const ResumeFormActionButton = ({ resume, draftResumeList, autoSaveStatus, onClick }: Props) => {
   return (
-    <div className='flex justify-between'>
+    <div className='mb-8 flex justify-between'>
       {resume ? (
         <Button variant='outline' color='dark' size='large' type='submit'>
           수정 완료

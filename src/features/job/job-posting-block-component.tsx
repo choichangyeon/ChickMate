@@ -43,16 +43,12 @@ export const JobPostingBlockComponent = ({ type }: Props) => {
       buttonName: '채용공고 불러오기!',
       onClick: () => router.refresh(),
     },
-    'no-bookmark' : {
+    'no-bookmark': {
       firstLine: '이런! 북마크한 채용 공고가 없어요!',
       secondLine: '내 맘에 쏙 든 채용 공고를 북마크 해볼까요?',
       thirdLine: '맞춤형 채용공고는 내 정보를 기반으로 진행됩니다.',
-    }
+    },
   }[type];
 
-  return (
-    <section className='flex h-[400px] flex-col items-center justify-center self-stretch'>
-      <BlockComponent {...content} />
-    </section>
-  );
+  return <BlockComponent {...content} />;
 };

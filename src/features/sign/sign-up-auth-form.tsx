@@ -36,18 +36,13 @@ const SignUpAuthForm = () => {
   };
 
   return (
-    <div className='mx-auto w-full max-w-md rounded-3xl bg-white p-6 shadow-md'>
+    <div className='mx-auto w-full max-w-md rounded-3xl border border-cool-gray-200 bg-white p-6'>
       <div className='mb-8'>
         <Typography size='2xl' weight='normal' align='center'>
-          만나서 반가워요.<span className='font-bold'>병아리</span>씨!
+          만나서 반가워요.<span className='font-bold'>칙칙</span>씨!
         </Typography>
         <Typography weight='normal' align='center'>
           우리 같이 취업을 향한 여정을 떠나볼까요?
-        </Typography>
-      </div>
-      <div className='mb-8'>
-        <Typography color='primary-600' weight='bold' align='center' as='h1'>
-          원할한 서비스 이용을 위해 회원가입 해주세요.
         </Typography>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -63,7 +58,7 @@ const SignUpAuthForm = () => {
         />
         <button
           type='submit'
-          className='bg-blue-white mt-2 w-full rounded-md border border-gray-400 px-4 py-2 text-sm font-medium text-black shadow-sm'
+          className='bg-blue-white mt-2 w-full rounded-md border border-cool-gray-200 px-4 py-2 text-sm font-medium text-black shadow-sm'
         >
           회원가입
         </button>

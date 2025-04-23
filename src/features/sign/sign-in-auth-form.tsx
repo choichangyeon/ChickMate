@@ -39,7 +39,7 @@ const SignInAuthForm = () => {
   };
 
   return (
-    <div className='mx-auto w-full max-w-md rounded-3xl bg-white p-6 shadow-md'>
+    <div className='mx-auto w-full max-w-md rounded-3xl border border-cool-gray-200 bg-white p-6'>
       <div className='mb-8'>
         <Typography size='2xl' weight='normal' align='center'>
           만나서 반가워요.<span className='font-bold'>칙칙</span>씨!
@@ -48,45 +48,40 @@ const SignInAuthForm = () => {
           우리 같이 취업을 향한 여정을 떠나볼까요?
         </Typography>
       </div>
-      <div className='mb-8'>
-        <Typography color='primary-600' weight='bold' align='center' as='h1'>
-          원할한 서비스 이용을 위해 로그인 해주세요.
-        </Typography>
-      </div>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <AuthInput label='EMAIL' id='email' register={register} error={errors.email} type='email' />
         <AuthInput label='PASSWORD' id='password' register={register} error={errors.password} type='password' />
         <button
           type='submit'
-          className='bg-blue-white mt-2 w-full rounded-md border border-gray-400 px-4 py-2 text-sm font-medium text-black shadow-sm'
+          className='bg-blue-white mt-2 w-full rounded-lg border border-cool-gray-200 px-4 py-2 text-sm font-medium text-cool-gray-700'
         >
           로그인
         </button>
       </form>
       <div className='mt-2 flex flex-col gap-2 text-center'>
-        <>
+        <div className='flex flex-col gap-2'>
           <button
             onClick={() => signIn('google', { callbackUrl: redirectToUrl })}
-            className='flex w-full items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm'
+            className='flex w-full items-center justify-center gap-2 rounded-lg border border-cool-gray-200 bg-white px-4 py-2 text-sm font-medium text-cool-gray-700'
           >
             <Image src='/assets/google_icon.png' alt='구글 로그인' width={14} height={14} />
             구글 이메일로 로그인
           </button>
           <button
             onClick={() => signIn('naver', { callbackUrl: redirectToUrl })}
-            className='flex w-full items-center justify-center gap-2 rounded-md bg-[#03C75A] px-4 py-2 text-sm font-bold text-white shadow-sm'
+            className='flex w-full items-center justify-center gap-2 rounded-lg bg-[#03C75A] px-4 py-2 text-sm font-bold text-white shadow-sm'
           >
             <Image src='/assets/naver_icon.png' alt='네이버 로그인' width={24} height={24} />
             네이버 이메일로 로그인
           </button>
-        </>
+        </div>
         <div className='my-4 flex w-full items-center'>
           <div className='flex-1 border-t'></div>
-          <span className='px-3 text-sm font-extralight text-gray-500'>OR</span>
+          <span className='px-3 text-sm text-gray-500'>OR</span>
           <div className='flex-1 border-t'></div>
         </div>
-        <Link href={PATH.AUTH.SIGN_UP} className='font-extralight'>
-          <Typography align='center'> 30초만에 회원가입하기</Typography>
+        <Link href={PATH.AUTH.SIGN_UP} className='text-cool-gray-500'>
+          30초 만에 회원가입하기
         </Link>
       </div>
     </div>

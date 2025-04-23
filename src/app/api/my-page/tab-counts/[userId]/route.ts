@@ -6,6 +6,7 @@ import { ENV } from '@/constants/env-constants';
 import { AUTH_MESSAGE, TAB_COUNT_MESSAGE } from '@/constants/message-constants';
 import { INIT_TAB_COUNTS, TABS } from '@/constants/my-page-constants';
 import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
+import { RESUME_STATUS } from '@/constants/resume-constants';
 
 const { NEXTAUTH_SECRET } = ENV;
 
@@ -20,6 +21,7 @@ const {
 const { HISTORY, RESUME, BOOKMARK } = TABS;
 
 const { COMPLETED } = INTERVIEW_HISTORY_STATUS;
+const { SUBMIT } = RESUME_STATUS;
 
 type Props = {
   params: {
@@ -36,7 +38,11 @@ export const GET = async (request: NextRequest, { params }: Props) => {
       select: {
         _count: {
           select: {
-            [RESUME]: true,
+            [RESUME]: {
+              where: {
+                status: SUBMIT,
+              },
+            },
             [BOOKMARK]: true,
             [HISTORY]: {
               where: {

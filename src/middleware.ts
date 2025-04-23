@@ -1,6 +1,6 @@
 import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
-import { PATH, QUERY_PARAMS } from './constants/path-constant';
+import { PATH, QUERY_PARAMS } from '@/constants/path-constant';
 
 const {
   AUTH: { SIGN_IN },
@@ -27,5 +27,5 @@ export const middleware = async (request: NextRequest) => {
 };
 
 export const config = {
-  matcher: ['/my-page', '/resume/:path*', '/job', '/auth/sign-in', '/interview/start', '/interview/live/:path*'],
+  matcher: ['/auth/sign-in', '/interview/live/:path*'],
 };

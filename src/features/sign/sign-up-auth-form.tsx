@@ -36,8 +36,8 @@ const SignUpAuthForm = () => {
   };
 
   return (
-    <div className='mx-auto w-full max-w-md rounded-3xl border border-cool-gray-200 bg-white p-6'>
-      <div className='mb-8'>
+    <div className='mx-auto flex w-full max-w-md flex-col gap-8 rounded-3xl border border-cool-gray-200 bg-white p-6'>
+      <div>
         <Typography size='2xl' weight='normal' align='center'>
           만나서 반가워요.<span className='font-bold'>칙칙</span>씨!
         </Typography>
@@ -45,17 +45,19 @@ const SignUpAuthForm = () => {
           우리 같이 취업을 향한 여정을 떠나볼까요?
         </Typography>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <AuthInput label='NAME' id='name' register={register} error={errors.name} type='text' />
-        <AuthInput label='EMAIL' id='email' register={register} error={errors.email} type='email' />
-        <AuthInput label='PASSWORD' id='password' register={register} error={errors.password} type='password' />
-        <AuthInput
-          label='PASSWORD CHECK'
-          id='passwordCheck'
-          register={register}
-          error={errors.passwordCheck}
-          type='password'
-        />
+      <form onSubmit={handleSubmit(onSubmit)} noValidate className='flex flex-col gap-8'>
+        <div className='flex flex-col gap-4'>
+          <AuthInput label='NAME' id='name' register={register} error={errors.name} type='text' />
+          <AuthInput label='EMAIL' id='email' register={register} error={errors.email} type='email' />
+          <AuthInput label='PASSWORD' id='password' register={register} error={errors.password} type='password' />
+          <AuthInput
+            label='PASSWORD CHECK'
+            id='passwordCheck'
+            register={register}
+            error={errors.passwordCheck}
+            type='password'
+          />
+        </div>
         <button
           type='submit'
           className='w-full rounded-lg border border-cool-gray-200 py-2 text-sm font-medium text-cool-gray-700'

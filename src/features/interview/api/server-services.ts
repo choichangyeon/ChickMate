@@ -76,7 +76,7 @@ export const getInterviewHistoryAboutInProgress = async () => {
       throw new Error(SESSION_NO_USER);
     }
 
-    const response = await prisma.interviewHistory.findMany({
+    const response: InterviewHistoryType[] = await prisma.interviewHistory.findMany({
       where: {
         userId: session.user.id,
         status: IN_PROGRESS,
@@ -86,10 +86,9 @@ export const getInterviewHistoryAboutInProgress = async () => {
       },
     });
 
-    // const test: InterviewHistoryType[] = [];
-    // if (test === null) {
-    //   return null;
-    // }
+    if (response.length === 0) {
+      return null;
+    }
 
     return response[0];
   } catch (error) {

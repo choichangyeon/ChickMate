@@ -59,32 +59,46 @@ const JobPostingsBox = ({ userId }: Props) => {
     router.push(`${JOB}?sortOption=${newSortOption}&page=1`);
   };
 
+  const renderContent = () => {
+    if (isPending) {
+      return (
+        <section className="flex h-[400px] flex-col items-center justify-center gap-4 self-stretch">
+          <LoadingSpinner size="lg" />
+          <Typography>채용 공고를 불러오는 중...</Typography>
+        </section>
+      );
+    }
+    
+    if (isError) {
+      return <JobPostingBlockComponent type="fetch-error" />;
+    }
+    
+    if (!data?.jobPostingList) {
+      return <JobPostingBlockComponent type="no-job-data" />;
+    }
+    
+    if (data.jobPostingList.length === 0) {
+      return <JobPostingBlockComponent type="no-bookmark" />;
+    }
+    
+    return (
+      <div className='flex flex-col items-center justify-between gap-6'>
+        <section className='flex flex-wrap gap-5 self-stretch scrollbar-hide'>
+          {data.jobPostingList.map((jobPosting) => (
+            <JobPostingCard key={jobPosting.id} userId={userId} jobPosting={jobPosting} />
+          ))}
+        </section>
+
+        <JobPostingPaginationButton totalCount={data.totalCount} page={page} setPage={setPage} />
+      </div>
+    );
+  };
+
+
   return (
     <>
       <JobPostingSelectBox sortOption={sortOption} changeNewParams={changeNewParams} />
-
-      {isPending ? (
-        <section className='flex h-[400px] flex-col items-center justify-center gap-4 self-stretch'>
-          <LoadingSpinner size='lg' />
-          <Typography>채용 공고를 불러오는 중...</Typography>
-        </section>
-      ) : isError ? (
-        <JobPostingBlockComponent type='fetch-error' />
-      ) : !data.jobPostingList ? (
-        <JobPostingBlockComponent type='no-job-data' />
-      ) : data.jobPostingList.length === 0 ? (
-        <JobPostingBlockComponent type='no-bookmark' />
-      ) : (
-        <div className='flex flex-col items-center justify-between gap-6'>
-          <section className='flex flex-wrap gap-5 self-stretch scrollbar-hide'>
-            {data.jobPostingList.map((jobPosting) => (
-              <JobPostingCard key={jobPosting.id} userId={userId} jobPosting={jobPosting} />
-            ))}
-          </section>
-
-          <JobPostingPaginationButton totalCount={data.totalCount} page={page} setPage={setPage} />
-        </div>
-      )}
+      {renderContent()}
     </>
   );
 };

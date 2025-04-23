@@ -27,5 +27,5 @@ export const middleware = async (request: NextRequest) => {
 };
 
 export const config = {
-  matcher: ['/auth/sign-in', '/interview/live/:path*'],
+  matcher: ['/auth/sign-in', '/interview/live/:path*', '/my-page'],
 };

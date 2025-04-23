@@ -60,8 +60,9 @@ const ResumeForm = ({ resume }: Props) => {
 
   /** UI */
   return (
-    <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-      <div className='relative w-full'>
+    <form onSubmit={handleSubmit} className='flex flex-1 flex-col gap-4'>
+      {/* 상단 고정 영역 */}
+      <div className='relative w-full shrink-0'>
         <input
           type='text'
           value={title}
@@ -79,8 +80,9 @@ const ResumeForm = ({ resume }: Props) => {
         </button>
       </div>
 
-      {fieldList.map((field, idx) => {
-        return (
+      {/* 중간 스크롤 영역 */}
+      <div className='flex flex-col flex-1 overflow-y-auto max-h-[467px] scrollbar-hide gap-2'>
+        {fieldList.map((field, idx) => (
           <QuestionAnswerField
             key={field.id}
             field={field}
@@ -88,18 +90,20 @@ const ResumeForm = ({ resume }: Props) => {
             onChange={handleFieldChange}
             onDelete={handleDeleteField}
           />
-        );
-      })}
+        ))}
+      </div>
 
-      {/** 버튼 */}
-      <ResumeFormActionButton
-        resume={resume}
-        draftResumeList={draftResumeList}
-        autoSaveStatus={autoSaveStatus}
-        onClick={handleDraftResumeListClick}
-      />
+      {/* 하단 고정 영역 */}
+      <div className='shrink-0'>
+        <ResumeFormActionButton
+          resume={resume}
+          draftResumeList={draftResumeList}
+          autoSaveStatus={autoSaveStatus}
+          onClick={handleDraftResumeListClick}
+        />
+      </div>
 
-      {/** 모달 */}
+      {/* 모달 */}
       {isModalOpen && (
         <DraftResumesModal
           draftResumeList={draftResumeList}

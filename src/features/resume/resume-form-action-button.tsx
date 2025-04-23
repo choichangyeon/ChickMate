@@ -1,5 +1,6 @@
 import Button from '@/components/ui/button';
 import Typography from '@/components/ui/typography';
+import { AUTO_SAVE_STATUS } from '@/constants/resume-constants';
 import type { ResumeType } from '@/types/DTO/resume-dto';
 
 type Props = {
@@ -8,6 +9,8 @@ type Props = {
   autoSaveStatus: string;
   onClick: () => void;
 };
+
+const { SAVED } = AUTO_SAVE_STATUS;
 
 const ResumeFormActionButton = ({ resume, draftResumeList, autoSaveStatus, onClick }: Props) => {
   return (
@@ -26,7 +29,7 @@ const ResumeFormActionButton = ({ resume, draftResumeList, autoSaveStatus, onCli
           </Button>
         </div>
       )}
-      <Typography color='gray-500'>{autoSaveStatus}</Typography>
+      <Typography color={autoSaveStatus === SAVED ? 'primary-600' : 'gray-500'}>{autoSaveStatus}</Typography>
     </div>
   );
 };

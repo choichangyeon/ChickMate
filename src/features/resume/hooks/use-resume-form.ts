@@ -37,6 +37,10 @@ export const useResumeForm = (resume?: Resume) => {
   const [resumeId, setResumeId] = useState<number | null>(resume?.id || null);
   const [autoSaveStatus, setAutoSaveStatus] = useState<string>(SAVING);
 
+  const {
+    SUBMIT: { SUCCESS_WITH_EXP, SUCCESS },
+  } = RESUME_MESSAGE;
+
   /** function */
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -82,17 +86,17 @@ export const useResumeForm = (resume?: Resume) => {
         if (isAbleToGetEXP) handleExperienceUp(RESUME_SUBMISSION);
       }
 
-      // 수정해야되는 alert창
-      alert(
+      Notify.success(
         isReqExp && isAbleToGetEXP
-          ? `경험치 획득 완료!\n자기소개서 작성이 완료되었습니다.`
-          : '자기소개서 작성이 완료되었습니다.'
+          ? SUCCESS_WITH_EXP
+          : SUCCESS
       );
 
+      // TODO: 이동하기 전 zustand를 통해 마이페이지의 탭 자기소개서 선택되도록
       router.push(MY_PAGE);
     } catch (error) {
       if (error instanceof Error) {
-        alert(error.message);
+        Notify.warning(error.message);
       }
     }
   };

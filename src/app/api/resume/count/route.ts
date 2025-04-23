@@ -38,6 +38,7 @@ export const GET = async (request: NextRequest) => {
     });
 
     if (!characterId) {
+      // TODO: 캐릭터가 없을 시 어떤 상태값을 반환할 지 고민이 필요함
       return NextResponse.json({ response: { isAbleToGetEXP: false } }, { status: 200 });
     }
 

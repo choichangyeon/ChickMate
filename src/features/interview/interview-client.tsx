@@ -28,6 +28,7 @@ const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
   useEffect(() => {
     latestQuestionIndex.current = questionIndex;
   }, [questionIndex]);
+
   useEffect(() => {
     setQuestionIndex(interviewQnAList.length - CHECK_LEAST_INDEX);
     return () => {

@@ -44,7 +44,11 @@ export const GET = async (request: NextRequest, { params }: Props) => {
               },
             },
             [BOOKMARK]: true,
-            [HISTORY]: true,
+            [HISTORY]: {
+              where: {
+                status: COMPLETED,
+              },
+            },
           },
         },
       },

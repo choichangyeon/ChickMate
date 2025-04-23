@@ -15,7 +15,7 @@ export const SIGN_UP_INPUT = [
     label: 'PASSWORD',
     id: 'password',
     type: 'password',
-    placeholder: '특수 문자를 포함한 6자 이상의 비밀번호를 입력해주세요.',
+    placeholder: '비밀번호를 입력해주세요.',
   },
   {
     label: 'PASSWORD CHECK',

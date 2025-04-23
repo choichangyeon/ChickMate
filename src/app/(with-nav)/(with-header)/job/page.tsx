@@ -10,7 +10,7 @@ const JobPage = async () => {
   const session = await getServerSession(authOptions);
 
   return (
-    <div className='px-12 py-8'>
+    <div className='flex h-full flex-col'>
       <section className='mb-4'>
         <Typography color='primary-600' as='h1' size='3xl' weight='bold'>
           맞춤형

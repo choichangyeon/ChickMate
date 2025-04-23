@@ -12,7 +12,7 @@ type Props = {
   onClick?: () => void;
 };
 
-const defaultClassName = 'w-full flex flex-col justify-center items-center gap-4';
+const defaultClassName = 'w-full flex flex-col justify-center items-center gap-4 h-full';
 
 const BlockComponent = (props: Props) => {
   const { className, firstLine, secondLine, thirdLine, buttonName, href, onClick } = props;

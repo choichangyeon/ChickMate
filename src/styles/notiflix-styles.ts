@@ -6,7 +6,6 @@ export const initNotiflix = () => {
   Confirm.init({
     className: 'notiflix-confirm',
     width: '386px',
-    zindex: 4003,
     position: 'center', // 'right-top' - 'right-bottom' - 'left-top' - 'left-bottom' - 'center-top' - 'center-bottom' - 'center-center'
     distance: '10px',
     backgroundColor: '#ffffff',
@@ -41,7 +40,7 @@ export const initNotiflix = () => {
     borderRadius: '10px',
     rtl: false,
     timeout: 2000,
-    messageMaxLength: 110,
+    messageMaxLength: 100,
     backOverlay: false,
     backOverlayColor: 'rgba(0,0,0,0.5)',
     plainText: true,
@@ -51,9 +50,8 @@ export const initNotiflix = () => {
 
     ID: 'NotiflixNotify',
     className: 'notiflix-notify',
-    zindex: 4001,
-    fontFamily: 'Quicksand',
-    fontSize: '13px',
+    fontFamily: 'SUIT Variable',
+    fontSize: '12px',
     cssAnimation: true,
     cssAnimationDuration: 400,
     cssAnimationStyle: 'fade', // 'fade' - 'zoom' - 'from-right' - 'from-top' - 'from-bottom' - 'from-left'

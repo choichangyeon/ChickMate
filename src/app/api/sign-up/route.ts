@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 import { NextRequest, NextResponse } from 'next/server';
 
-type RequestBody = {
+type Request = {
   name: string;
   email: string;
   password: string;
@@ -13,14 +13,14 @@ const { SIGN_UP_EMPTY_FIELD, SIGN_UP_EXIST_ERROR, SIGN_UP_FAILED } = AUTH_MESSAG
 
 export async function POST(request: NextRequest) {
   try {
-    const body: RequestBody = await request.json();
+    const { name, email, password }: Request = await request.json();
 
-    if (!body.name || !body.email || !body.password) {
+    if (!name || !email || !password) {
       return NextResponse.json({ message: SIGN_UP_EMPTY_FIELD }, { status: 400 });
     }
 
     const existingUser = await prisma.user.findUnique({
-      where: { email: body.email },
+      where: { email },
     });
 
     if (existingUser) {
@@ -29,13 +29,13 @@ export async function POST(request: NextRequest) {
 
     const user = await prisma.user.create({
       data: {
-        name: body.name,
-        email: body.email,
-        password: await bcrypt.hash(body.password, 10),
+        name,
+        email,
+        password: await bcrypt.hash(password, 10),
       },
     });
 
-    const { password, ...result } = user;
+    const { password: userPassword, ...result } = user;
 
     return NextResponse.json({ response: result }, { status: 200 });
   } catch (error) {

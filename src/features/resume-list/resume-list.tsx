@@ -28,7 +28,7 @@ const ResumeList = () => {
   if (isError) return <div>자소서 리스트를 불러오는데 실패하였습니다.</div>;
 
   return (
-    <ul className='flex flex-col gap-4'>
+    <ul className='flex h-full flex-col gap-4 overflow-scroll scrollbar-hide'>
       {resumeList.map((resume) => {
         return <ResumeItem key={resume.id} resume={resume} onClick={handleGetDetailList} />;
       })}

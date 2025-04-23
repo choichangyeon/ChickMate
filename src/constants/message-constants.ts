@@ -150,3 +150,10 @@ export const TAB_COUNT_MESSAGE = {
     SERVER_ERROR: '리스트 개수를 가져오는데 실패했습니다.',
   },
 };
+
+export const BOOKMARK_MESSAGE = {
+  ADD: '북마크에 추가되었습니다.',
+  REMOVE: '북마크가 취소되었습니다.',
+  ADD_ERROR: '북마크 등록에 실패했습니다.',
+  REMOVE_ERROR: '북마크 취소에 실패했습니다.',
+};

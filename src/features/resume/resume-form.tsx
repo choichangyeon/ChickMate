@@ -9,7 +9,7 @@ import QuestionAnswerField from '@/features/resume/question-answer-field';
 import DraftResumesModal from '@/features/resume/draft-resumes-modal';
 import ResumeFormActionButton from '@/features/resume/resume-form-action-button';
 import type { Field } from '@/types/resume';
-import type{ ResumeType } from '@/types/DTO/resume-dto';
+import type { ResumeType } from '@/types/DTO/resume-dto';
 
 const { DRAFT_RESUME } = MODAL_ID;
 

@@ -13,7 +13,7 @@ type Props = {
 };
 
 const QuestionDisplay = ({ interviewHistory, aiQuestion }: Props) => {
-  const { interviewType, id } = interviewHistory;
+  const { interviewType } = interviewHistory;
 
   const interviewImage = interviewType === CALM ? 2 : 3; // TODO: 면접관 이미지 확정되면 수정
   const isInterviewTypeCalm = interviewType === CALM;

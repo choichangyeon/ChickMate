@@ -47,6 +47,8 @@ export const RESUME_MESSAGE = {
   SUBMIT: {
     REQUEST_FAILURE: '유효하지 않은 자소서 양식입니다.',
     SUBMIT_SERVER_ERROR: '자소서 생성에 실패했습니다.',
+    SUCCESS_WITH_EXP: '경험치 획득 완료! 자기소개서 작성이 완료되었습니다.',
+    SUCCESS: '자기소개서 작성이 완료되었습니다.'
   },
   DRAFT: {
     NOT_FOUND: '해당 자소서를 찾을 수 없습니다.',

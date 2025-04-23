@@ -64,14 +64,14 @@ const SignInAuthForm = () => {
             onClick={() => signIn('google', { callbackUrl: redirectToUrl })}
             className='flex w-full items-center justify-center gap-2 rounded-lg border border-cool-gray-200 bg-white px-4 py-2 text-sm font-medium text-cool-gray-700'
           >
-            <Image src='/assets/google_icon.png' alt='구글 로그인' width={14} height={14} />
+            <Image src='/assets/google_icon.png' alt='구글 로고' width={14} height={14} />
             구글 이메일로 로그인
           </button>
           <button
             onClick={() => signIn('naver', { callbackUrl: redirectToUrl })}
-            className='flex w-full items-center justify-center gap-2 rounded-lg bg-[#03C75A] px-4 py-2 text-sm font-bold text-white shadow-sm'
+            className='bg-naver-green flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white'
           >
-            <Image src='/assets/naver_icon.png' alt='네이버 로그인' width={24} height={24} />
+            <Image src='/assets/naver_icon.png' alt='네이버 로고' width={24} height={24} />
             네이버 이메일로 로그인
           </button>
         </div>

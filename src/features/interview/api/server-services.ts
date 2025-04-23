@@ -5,6 +5,7 @@ import { authOptions } from '@/utils/auth-option';
 import { prisma } from '@/lib/prisma';
 import { AUTH_MESSAGE, INTERVIEW_HISTORY } from '@/constants/message-constants';
 import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
+import { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
 
 const { GET_ERROR } = INTERVIEW_HISTORY.API;
 const { SESSION_NO_USER } = AUTH_MESSAGE.ERROR;
@@ -64,6 +65,10 @@ export const getInterviewQnA = async (interviewId: number) => {
   }
 };
 
+/**
+ *
+ * @returns InProgress 상태의 인터뷰 히스토리 가져오기
+ */
 export const getInterviewHistoryAboutInProgress = async () => {
   try {
     const session = await getServerSession(authOptions);
@@ -76,8 +81,18 @@ export const getInterviewHistoryAboutInProgress = async () => {
         userId: session.user.id,
         status: IN_PROGRESS,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
 
-    console.log(response);
-  } catch (error) {}
+    // const test: InterviewHistoryType[] = [];
+    // if (test === null) {
+    //   return null;
+    // }
+
+    return response[0];
+  } catch (error) {
+    throw new Error(GET_ERROR);
+  }
 };

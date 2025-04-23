@@ -18,7 +18,10 @@ const InterviewStartPage = async () => {
     queryKey: [RESUME_SUBMIT],
     queryFn: () => getResumeList(SUBMIT),
   });
-  await getInterviewHistoryAboutInProgress();
+
+  const interviewHistoryInProgress = await getInterviewHistoryAboutInProgress();
+
+  console.log(interviewHistoryInProgress);
 
   return (
     <>

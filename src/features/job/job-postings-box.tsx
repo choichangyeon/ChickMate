@@ -1,71 +1,102 @@
 'use client';
 
-import BlockComponent from '@/components/common/block-component';
 import JobPostingCard from '@/features/job/job-posting-card';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import { QUERY_KEY } from '@/constants/query-key';
 import { useJobPostingQuery } from '@/features/job/hooks/use-job-posting-query';
-import { UserMetaDataType } from '@/types/user-meta-data-type';
+import type { UserMetaDataType } from '@/types/user-meta-data-type';
 import { useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { JobPostingBlockComponent } from '@/features/job/job-posting-block-component';
+import { ChangeEvent, useEffect, useState } from 'react';
+import Typography from '@/components/ui/typography';
+import JobPostingPaginationButton from '@/features/job/job-posting-pagination-button';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
+import { PATH } from '@/constants/path-constant';
+import JobPostingSelectBox from '@/features/job/job-posting-select-box';
 
 type Props = {
   userId: string;
 };
 
+export type SortOption = 'latest' | 'oldest' | 'deadline' | 'company' | 'bookmark';
+
+const { JOB } = PATH;
 const { META_DATA } = QUERY_KEY;
+export const JOB_POSTING_DATA_LIMIT = 15;
 
 const JobPostingsBox = ({ userId }: Props) => {
-  // TODO: 추후 변경 가능성 고려
   const queryClient = useQueryClient();
-  const router = useRouter();
   const userMetaData = queryClient.getQueryData([META_DATA, userId]) as UserMetaDataType;
 
-  const { data: jobPostingList, isError, isPending } = useJobPostingQuery({ userMetaData, userId });
+  if (!userMetaData) return <JobPostingBlockComponent type='no-profile' />;
+  const params = useSearchParams();
+  const router = useRouter();
 
-  if (isPending) {
-    // TODO: 로딩스피너
-    return (
-      <section className='flex h-[400px] flex-col items-center justify-center self-stretch'>
-        <LoadingSpinner size='lg' />
-      </section>
-    );
-  }
+  const { sortOption: initialSort, page: initialPage } = sanitizeQueryParams(params);
+  const [sortOption, setSortOption] = useState<SortOption>((initialSort as SortOption) || 'deadline');
+  const [page, setPage] = useState(Number(initialPage) || 1);
 
-  if (isError) {
-    return (
-      <section className='flex h-[400px] flex-col items-center justify-center self-stretch'>
-        <BlockComponent
-          firstLine='이런! 사용자 정보를 설정하지 않았네요!'
-          secondLine='내 정보를 작성해볼까요?'
-          thirdLine='맞춤형 채용공고는 내 정보를 기반으로 진행됩니다'
-        />
-      </section>
-    );
-  }
+  const { data, isError, isPending } = useJobPostingQuery({
+    userMetaData,
+    userId,
+    sortOption,
+    page,
+    limit: JOB_POSTING_DATA_LIMIT,
+  });
 
-  if (!jobPostingList || jobPostingList.length === 0) {
-    // TODO: 이 부분은 수정 고려
+  useEffect(() => {
+    const { sortOption, page } = sanitizeQueryParams(params);
+    setSortOption(sortOption as SortOption);
+    setPage(Number(page) || 1);
+  }, [params]);
+
+  const changeNewParams = (e: ChangeEvent<HTMLSelectElement>) => {
+    const newSortOption = e.target.value;
+    setSortOption(newSortOption as SortOption);
+    router.push(`${JOB}?sortOption=${newSortOption}&page=1`);
+  };
+
+  const renderContent = () => {
+    if (isPending) {
+      return (
+        <section className='flex h-[400px] flex-col items-center justify-center gap-4 self-stretch'>
+          <LoadingSpinner size='lg' />
+          <Typography>채용 공고를 불러오는 중...</Typography>
+        </section>
+      );
+    }
+
+    if (isError) {
+      return <JobPostingBlockComponent type='fetch-error' />;
+    }
+
+    if (!data?.jobPostingList) {
+      return <JobPostingBlockComponent type='no-job-data' />;
+    }
+
+    if (data.jobPostingList.length === 0) {
+      return <JobPostingBlockComponent type='no-bookmark' />;
+    }
+
     return (
-      <section className='flex h-[400px] flex-col items-center justify-center self-stretch'>
-        <BlockComponent
-          firstLine='이런! 나에게 맞는 채용공고가 없어요!'
-          secondLine='채용공고를 다시 요청할까요?'
-          thirdLine='맞춤형 채용공고는 내 정보를 기반으로 진행됩니다'
-          buttonName='채용공고 불러오기!'
-          onClick={() => router.refresh()}
-        />
-      </section>
+      <div className='flex flex-col items-center justify-between gap-6'>
+        <section className='flex flex-wrap gap-5 self-stretch scrollbar-hide'>
+          {data.jobPostingList.map((jobPosting) => (
+            <JobPostingCard key={jobPosting.id} userId={userId} jobPosting={jobPosting} />
+          ))}
+        </section>
+
+        <JobPostingPaginationButton totalCount={data.totalCount} page={page} setPage={setPage} />
+      </div>
     );
-  }
+  };
 
   return (
-    // TODO: 무한 스크롤 구현
-    <section className='flex flex-row flex-wrap gap-5 self-stretch scrollbar-hide'>
-      {jobPostingList.map((jobPosting) => (
-        <JobPostingCard key={jobPosting.id} userId={userId} jobPosting={jobPosting}></JobPostingCard>
-      ))}
-    </section>
+    <>
+      <JobPostingSelectBox sortOption={sortOption} changeNewParams={changeNewParams} />
+      {renderContent()}
+    </>
   );
 };
 

@@ -3,14 +3,14 @@
 import Card from '@/components/ui/card';
 import Typography from '@/components/ui/typography';
 import Bookmark from '@/features/job/bookmark';
-import { JobPosting } from '@prisma/client';
 import clsx from 'clsx';
 import Button from '@/components/ui/button';
 import { formatRemainDay } from '@/utils/format-remain-day';
 import { formatTimestamp } from '@/utils/format-timestamp';
+import type { JobPostingType } from '@/types/DTO/job-posting-dto';
 
 type Props = {
-  jobPosting: JobPosting & { isBookmarked: boolean };
+  jobPosting: JobPostingType & { isBookmarked: boolean };
   userId: string;
 };
 

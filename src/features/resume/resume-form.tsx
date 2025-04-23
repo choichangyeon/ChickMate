@@ -67,7 +67,7 @@ const ResumeForm = ({ resume }: Props) => {
           type='text'
           value={title}
           onChange={handleTitleChange}
-          placeholder='자소서 제목을 작성해주세요.'
+          placeholder='자소서 제목을 작성해 주세요.'
           required
           className='h-[64px] w-full rounded-lg border border-cool-gray-200 px-8 py-4 pr-52 text-xl font-bold placeholder-cool-gray-300 focus:outline-none'
         />

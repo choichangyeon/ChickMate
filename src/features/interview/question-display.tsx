@@ -2,13 +2,13 @@ import Image from 'next/image';
 import Typography from '@/components/ui/typography';
 import { INTERVIEW_LIMIT_COUNT, INTERVIEW_TYPE, INTERVIEW_TYPE_KR } from '@/constants/interview-constants';
 import { useInterviewStore } from '@/store/use-interview-store';
-import type { InterviewHistory } from '@prisma/client';
+import { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
 
 const { CALM } = INTERVIEW_TYPE;
 const { CALM_KR, PRESSURE_KR } = INTERVIEW_TYPE_KR;
 
 type Props = {
-  interviewHistory: InterviewHistory;
+  interviewHistory: InterviewHistoryType;
   aiQuestion: string;
 };
 

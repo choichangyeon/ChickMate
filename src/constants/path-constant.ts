@@ -1,3 +1,5 @@
+import type { User } from '@prisma/client';
+
 export const PATH = {
   MAIN: '/',
   AUTH: {
@@ -43,6 +45,7 @@ export const ROUTE_HANDLER_PATH = {
   },
   USER: {
     META_DATA: '/api/user-meta-data',
+    LIST_COUNT: (userId: User['id']) => `/api/my-page/tab-counts/${userId}`,
     INTERVIEW_HISTORY: '/api/interview-history',
     INTERVIEW_DETAIL: (id: number) => `/api/ai/interview/${id}`,
   },
@@ -63,3 +66,10 @@ export const QUERY_PARAMS = {
   ERROR: 'error',
   UNAUTH: 'unauthorized',
 };
+
+const {
+  RESUME: { ROOT },
+  INTERVIEW: { START },
+  JOB,
+} = PATH;
+export const PUBLIC_PAGE = [ROOT, START, JOB]; //비회원도 접근할 수 있는 페이지

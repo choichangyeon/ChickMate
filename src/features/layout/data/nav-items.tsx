@@ -71,10 +71,4 @@ export const Public_Nav_Items: NavItems[] = [
     icon: <SignInIcon />,
     class: 'mb-2',
   },
-  // {
-  //   path: AUTH.SIGN_UP,
-  //   name: '회원가입',
-  //   type: 'link',
-  //   icon: <SignUpIcon />,
-  // },
 ];

@@ -58,7 +58,6 @@ model User {
   resumes            Resume[]
   interviewHistories InterviewHistory[]
   userSelectedJobs   UserSelectedJob[]
-  samples            Sample[]
 
   @@map("user")
 }
@@ -69,18 +68,6 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-}
-
-model Sample {
-  id        Int      @id @default(autoincrement())
-  title     String
-  userId    String   @map("user_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("sample")
 }
 
 model Character {
@@ -150,7 +137,7 @@ model InterviewQnA {
   answer             String?
   createdAt          DateTime @default(now()) @map("created_at")
 
-  interviewHistory  InterviewHistory @relation(fields: [interviewHistoryId], references: [id], onDelete: Cascade)
+  interviewHistory InterviewHistory @relation(fields: [interviewHistoryId], references: [id], onDelete: Cascade)
 
   @@map("interview_qna")
 }

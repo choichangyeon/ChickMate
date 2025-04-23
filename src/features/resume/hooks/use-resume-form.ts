@@ -1,27 +1,35 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Notify } from 'notiflix';
 import { PATH } from '@/constants/path-constant';
 import { DELAY_TIME } from '@/constants/time-constants';
 import { AUTO_SAVE_STATUS } from '@/constants/resume-constants';
-import { defaultQuestionList } from '@/features/resume/data/default-question-list';
-import { usePreventPageUnload } from '@/features/resume/hooks/use-prevent-page-load';
-import { autoSaveResume, getCheckToGetEXP, submitResume } from '@/features/resume/api/client-services';
+import { RESUME_MESSAGE } from '@/constants/message-constants';
 import useDebounce from '@/hooks/customs/use-debounce';
-import type { Field } from '@/types/resume';
-import type { Resume } from '@prisma/client';
+import { autoSaveResume, getCheckToGetEXP } from '@/features/resume/api/client-services';
+import { usePreventPageUnload } from '@/features/resume/hooks/use-prevent-page-load';
 import { useCharacterStore } from '@/store/use-character-store';
 import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
+import { defaultQuestionList } from '@/features/resume/data/default-question-list';
+import { useAddResumeMutation } from '@/features/resume/hooks/use-add-resume-mutation';
 import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
+import type { Field } from '@/types/resume';
+import type { Resume } from '@prisma/client';
 
 const { MY_PAGE } = PATH;
 const { DEFAULT } = DELAY_TIME;
 const { SAVING, SAVED } = AUTO_SAVE_STATUS;
 const { RESUME_SUBMISSION } = CHARACTER_HISTORY_KEY;
+const { LIMIT } = RESUME_MESSAGE;
+
 export const useResumeForm = (resume?: Resume) => {
   const router = useRouter();
   const characterId = useCharacterStore((state) => state.characterId);
   const { handleExperienceUp } = useExperienceUp();
+
+  const { mutateAsync: addResumeMutateAsync } = useAddResumeMutation();
+
   /** state */
   const [isDirty, setIsDirty] = useState<boolean>(false);
   const [title, setTitle] = useState<string>(resume?.title || '');
@@ -45,8 +53,7 @@ export const useResumeForm = (resume?: Resume) => {
 
   const handleAddField = () => {
     if (fieldList.length >= 5) {
-      // 수정해야되는 alert창
-      alert('자기소개서 항목은 최대 5개까지 추가할 수 있습니다.');
+      Notify.warning(LIMIT.MAX_RESUME_FIELD);
       return;
     }
     setFieldList((prev) => [...prev, { id: crypto.randomUUID(), question: '', answer: '' }]);
@@ -55,8 +62,7 @@ export const useResumeForm = (resume?: Resume) => {
 
   const handleDeleteField = (fieldId: string) => {
     if (fieldList.length <= 1) {
-      // 수정해야되는 alert창
-      alert('자기소개서 항목은 최소 1개 이상 작성해야됩니다.');
+      Notify.warning(LIMIT.MIN_RESUME_FIELD);
       return;
     }
     setFieldList((prev) => prev.filter((field) => field.id !== fieldId));
@@ -67,9 +73,11 @@ export const useResumeForm = (resume?: Resume) => {
     event.preventDefault();
     try {
       const data = { title, fieldList };
-      const res = await submitResume({ resumeId, data });
+
+      await addResumeMutateAsync({ resumeId, data });
+
       const isAbleToGetEXP = await getCheckToGetEXP(); // 오늘 작성한 자소서 개수 체크 -> 3개 이하 -> 경험치 획득 가능
-      const isReqExp = res && characterId;
+      const isReqExp = characterId;
       if (isReqExp) {
         if (isAbleToGetEXP) handleExperienceUp(RESUME_SUBMISSION);
       }
@@ -80,6 +88,7 @@ export const useResumeForm = (resume?: Resume) => {
           ? `경험치 획득 완료!\n자기소개서 작성이 완료되었습니다.`
           : '자기소개서 작성이 완료되었습니다.'
       );
+
       router.push(MY_PAGE);
     } catch (error) {
       if (error instanceof Error) {

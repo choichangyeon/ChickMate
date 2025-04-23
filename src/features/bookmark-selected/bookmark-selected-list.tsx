@@ -20,17 +20,9 @@ const BookmarkSelectedList = () => {
 
   const targetRef = useInfiniteScroll({ fetchNextPage, hasNextPage });
 
-  if (status === 'loading') {
-    return (
-      <section className='flex h-[70dvh] flex-col items-center justify-center'>
-        <LoadingSpinner />
-      </section>
-    );
-  }
-
   if (!userId) return <ErrorComponent />;
 
-  if (isPending) {
+  if (isPending || status === 'loading') {
     return (
       <section className='flex h-[70dvh] flex-col items-center justify-center'>
         <LoadingSpinner />
@@ -44,18 +36,14 @@ const BookmarkSelectedList = () => {
   if (bookmarkList.length === 0) return <EmptyList tab={BOOKMARK} />;
 
   return (
-    <section className='flex h-[70dvh] flex-col'>
-      <div className='flex-1 overflow-hidden'>
-        <ul className='h-full overflow-y-auto scrollbar-hide'>
-          {bookmarkList.map((bookmark, idx, arr) => (
-            <BookmarkTab key={bookmark.id} bookmark={bookmark} index={idx} length={arr.length} userId={userId} />
-          ))}
-          <div ref={targetRef} className='flex h-10 w-full items-center justify-center text-sm text-gray-400'>
-            {isFetchingNextPage && <LoadingSpinner size='sm' />}
-          </div>
-        </ul>
+    <ul className='h-full overflow-y-auto scrollbar-hide'>
+      {bookmarkList.map((bookmark, idx, arr) => (
+        <BookmarkTab key={bookmark.id} bookmark={bookmark} index={idx} length={arr.length} userId={userId} />
+      ))}
+      <div ref={targetRef} className='flex h-10 w-full items-center justify-center text-sm text-gray-400'>
+        {isFetchingNextPage && <LoadingSpinner size='sm' />}
       </div>
-    </section>
+    </ul>
   );
 };
 

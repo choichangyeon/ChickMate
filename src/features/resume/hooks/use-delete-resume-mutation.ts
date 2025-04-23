@@ -1,28 +1,41 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { QUERY_KEY } from '@/constants/query-key';
 import { Resume } from '@prisma/client';
 import { deleteResume } from '@/features/resume/api/client-services';
+import { QUERY_KEY } from '@/constants/query-key';
+import { useRouter } from 'next/navigation';
+import { PATH } from '@/constants/path-constant';
 
-export const useDeleteResumeMutation = () => {
-  const { RESUME_DRAFT } = QUERY_KEY;
+const { MY_PAGE } = PATH;
+const { RESUMES, TABS_COUNT } = QUERY_KEY;
 
+export const useDeleteResumeMutation = (queryKey: string) => {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   return useMutation({
     mutationFn: (resumeId: number) => deleteResume(resumeId),
     onMutate: async (resumeId) => {
-      await queryClient.cancelQueries({ queryKey: [RESUME_DRAFT] });
-      const previousResume = queryClient.getQueryData([RESUME_DRAFT]) as Resume[] | undefined;
-      queryClient.setQueryData([RESUME_DRAFT], (old: Resume[]) => old.filter((resume) => resume.id !== resumeId));
+      await queryClient.cancelQueries({ queryKey: [queryKey] });
+      const previousResume = queryClient.getQueryData([queryKey]) as Resume[];
+
+      queryClient.setQueryData([queryKey], (old: Resume[]) => old.filter((resume) => resume.id !== resumeId));
 
       return { previousResume };
     },
-
-    onError: (err, resumeId, context) => {
+    onError: (error, resumeId, context) => {
       if (context) {
-        queryClient.setQueryData([RESUME_DRAFT], context.previousResume);
+        queryClient.setQueryData([queryKey], context.previousResume);
+      }
+      if (error) {
+        throw error;
       }
     },
-    onSettled: () => queryClient.invalidateQueries({ queryKey: [RESUME_DRAFT] }),
+    onSuccess: () => {
+      if (queryKey === RESUMES) {
+        queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
+        router.replace(MY_PAGE);
+      }
+    },
+    onSettled: () => queryClient.invalidateQueries({ queryKey: [queryKey] }),
   });
 };

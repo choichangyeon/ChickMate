@@ -31,3 +31,33 @@ export const getInterviewHistory = async (interviewId: number) => {
     throw new Error(GET_ERROR);
   }
 };
+
+/**
+ *
+ * @param interviewId
+ * @returns data ID에 해당하는 QnA 기록
+ */
+export const getInterviewQnA = async (interviewId: number) => {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session || !session.user) {
+      throw new Error(AUTH_REQUIRED);
+    }
+
+    const response = await prisma.interviewQnA.findMany({
+      where: {
+        interviewHistoryId: interviewId,
+        interviewHistory: {
+          userId: session.user.id,
+        },
+      },
+      orderBy: {
+        createdAt: 'asc',
+      },
+    });
+
+    return response;
+  } catch (error) {
+    throw new Error(GET_ERROR);
+  }
+};

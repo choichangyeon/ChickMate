@@ -1,7 +1,11 @@
+import { fetchWithSentry } from '@/utils/fetch-with-sentry';
+import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
 import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
-import { fetchWithSentry } from '@/utils/fetch-with-sentry';
-import type { User, InterviewHistory, Resume, InterviewQnA } from '@prisma/client';
+import type { InterviewQnAType } from '@/types/DTO/interview-qna-dto';
+import type { ResumeType } from '@/types/DTO/resume-dto';
+import type { UserType } from '@/types/DTO/user-dto';
+
 const {
   USER: { INTERVIEW_HISTORY, INTERVIEW_DETAIL },
 } = ROUTE_HANDLER_PATH;
@@ -9,15 +13,15 @@ const { GET, DELETE } = API_METHOD;
 const { JSON_HEADER } = API_HEADER;
 
 type Params = {
-  userId: User['id'];
+  userId: UserType['id'];
   pageParam: number;
   limit: number;
 };
 
 type Return = {
-  id: InterviewHistory['id'];
-  interviewer: InterviewHistory['interviewType'];
-  title: Resume['title'];
+  id: InterviewHistoryType['id'];
+  interviewer: InterviewHistoryType['interviewType'];
+  title: ResumeType['title'];
   isFeedbackCompleted: boolean;
   createdAt: string;
 };
@@ -45,12 +49,12 @@ export const getInterviewHistories = async ({
   };
 };
 
-type InterviewHistoryDetail = InterviewHistory & {
-  InterviewQnAList: InterviewQnA[];
-  resume: Resume;
+type InterviewHistoryDetail = InterviewHistoryType & {
+  InterviewQnAList: InterviewQnAType[];
+  resume: ResumeType;
 };
 
-type InterviewDetailProps = InterviewHistory['id'];
+type InterviewDetailProps = InterviewHistoryType['id'];
 
 export const getInterviewDetail = async (id: InterviewDetailProps): Promise<InterviewHistoryDetail> => {
   const { response: InterviewHistoryDetail } = await fetchWithSentry(INTERVIEW_DETAIL(id), { method: GET });

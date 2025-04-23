@@ -1,17 +1,15 @@
 'use client';
 
 import { useEffect } from 'react';
-import Typography from '@/components/ui/typography';
-import Button from '@/components/ui/button';
 import { MODAL_ID } from '@/constants/modal-id-constants';
 import { useModalStore } from '@/store/use-modal-store';
 import { useResumeForm } from '@/features/resume/hooks/use-resume-form';
-import { useDraftResumesQuery } from '@/features/resume/hooks/use-draft-resumes-query';
+import { useDraftResumeListQuery } from '@/features/resume/hooks/use-draft-resume-list-query';
 import QuestionAnswerField from '@/features/resume/question-answer-field';
 import DraftResumesModal from '@/features/resume/draft-resumes-modal';
-import type { Field, ResumeData } from '@/types/resume';
+import ResumeFormActionButton from '@/features/resume/resume-form-action-button';
+import type { Field } from '@/types/resume';
 import type { Resume } from '@prisma/client';
-import ResumeFormActionButton from './resume-form-action-button';
 
 const { DRAFT_RESUME } = MODAL_ID;
 
@@ -39,7 +37,7 @@ const ResumeForm = ({ resume }: Props) => {
     handleSubmit,
   } = useResumeForm(resume);
 
-  const { data: draftResumeList, isError, refetch } = useDraftResumesQuery();
+  const { data: draftResumeList, isError, refetch } = useDraftResumeListQuery();
 
   /** function */
   const handleDraftResumeListClick = () => {
@@ -81,9 +79,15 @@ const ResumeForm = ({ resume }: Props) => {
         </button>
       </div>
 
-      {fieldList.map((field) => {
+      {fieldList.map((field, idx) => {
         return (
-          <QuestionAnswerField key={field.id} field={field} onChange={handleFieldChange} onDelete={handleDeleteField} />
+          <QuestionAnswerField
+            key={field.id}
+            field={field}
+            idx={idx}
+            onChange={handleFieldChange}
+            onDelete={handleDeleteField}
+          />
         );
       })}
 

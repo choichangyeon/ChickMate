@@ -18,7 +18,7 @@ const InterviewStartPage = async () => {
   });
 
   return (
-    <main className='px-12 py-8'>
+    <>
       <article className='mb-8'>
         <section className='mb-4 flex flex-row'>
           <Typography as='h2' size='2xl' weight='bold'>
@@ -39,7 +39,7 @@ const InterviewStartPage = async () => {
           <ResumeCardsBox />
         </HydrationBoundary>
       </article>
-    </main>
+    </>
   );
 };
 

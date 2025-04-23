@@ -1,10 +1,9 @@
 'use server';
-
-import { AUTH_MESSAGE } from '@/constants/message-constants';
-import { prisma } from '@/lib/prisma';
-import { UserMetaDataType } from '@/types/user-meta-data-type';
-import { authOptions } from '@/utils/auth-option';
 import { getServerSession } from 'next-auth';
+import { prisma } from '@/lib/prisma';
+import { authOptions } from '@/utils/auth-option';
+import { AUTH_MESSAGE } from '@/constants/message-constants';
+import { UserMetaDataType } from '@/types/user-meta-data-type';
 
 const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
 

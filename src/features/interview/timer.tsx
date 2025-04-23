@@ -5,17 +5,20 @@ import { useCharacterStore } from '@/store/use-character-store';
 import { useInterviewStore } from '@/store/use-interview-store';
 import Button from '@/components/ui/button';
 import Typography from '@/components/ui/typography';
-import { INTERVIEW_LIMIT_COUNT } from '@/constants/interview-constants';
+import { INTERVIEW_HISTORY_STATUS, INTERVIEW_LIMIT_COUNT } from '@/constants/interview-constants';
 import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import { PATH } from '@/constants/path-constant';
 import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
 import { usePatchInterviewHistoryMutation } from '@/features/interview/hooks/use-interview-history-mutation';
 import { usePostAIFeedbackMutation } from '@/features/interview/hooks/use-ai-feedback-mutation';
 import type { InterviewHistory } from '@prisma/client';
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/constants/query-key';
 
 const { MY_PAGE } = PATH;
 const { INTERVIEW_COMPLETION } = CHARACTER_HISTORY_KEY;
-
+const { TABS_COUNT } = QUERY_KEY;
+const { COMPLETED } = INTERVIEW_HISTORY_STATUS;
 type Props = {
   interviewHistory: InterviewHistory;
   isRecording: boolean;
@@ -39,7 +42,7 @@ const Timer = ({
   const router = useRouter();
   const { mutate: patchInterviewHistoryMutate, error: InterviewHistoryError } = usePatchInterviewHistoryMutation();
   const { mutate: postAIFeedbackMutate, error: aiFeedbackError } = usePostAIFeedbackMutation();
-
+  const queryClient = useQueryClient();
   const characterId = useCharacterStore((state) => state.characterId);
   const { handleExperienceUp } = useExperienceUp();
 
@@ -71,8 +74,11 @@ const Timer = ({
       alert('경험치 획득 완료!'); //@TODO: 경험치 정의 완료된 후에 alert 리팩토링하면서 상수로 빼겠습니다.
     }
 
-    patchInterviewHistoryMutate(interviewHistory.id);
+    patchInterviewHistoryMutate({ interviewId: interviewHistory.id, status: COMPLETED });
     postAIFeedbackMutate(interviewHistory.id);
+    queryClient.invalidateQueries({
+      queryKey: [TABS_COUNT],
+    });
     router.push(MY_PAGE);
   };
 

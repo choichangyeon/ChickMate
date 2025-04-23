@@ -1,13 +1,12 @@
-import { AUTH_MESSAGE, USER_META_DATA_FORM_MESSAGE } from '@/constants/message-constants';
 import { prisma } from '@/lib/prisma';
 import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
-import type { User } from '@prisma/client';
-
+import { AUTH_MESSAGE, USER_META_DATA_FORM_MESSAGE } from '@/constants/message-constants';
 import { ENV } from '@/constants/env-constants';
+import type { UserType } from '@/types/DTO/user-dto';
 type Props = {
   params: {
-    userId: User['id'];
+    userId: UserType['id'];
   };
 };
 

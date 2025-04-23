@@ -22,6 +22,8 @@ const Modal = ({ portalRoot, modalId, children, className }: Props) => {
 
     // 모달 외부를 클릭했을 때 모달창이 닫힘
     const handleClickOutside = (event: MouseEvent) => {
+      if (document.body.classList.contains('confirm-open')) return;
+
       if (modalContentRef.current && !modalContentRef.current.contains(event.target as Node)) {
         toggleModal(modalId);
       }
@@ -29,6 +31,8 @@ const Modal = ({ portalRoot, modalId, children, className }: Props) => {
 
     // ESC 키를 눌렀을 때 모달창이 닫힘
     const handleEscKey = (event: KeyboardEvent) => {
+      if (document.body.classList.contains('confirm-open')) return;
+
       if (event.key === 'Escape') {
         toggleModal(modalId);
       }
@@ -45,7 +49,7 @@ const Modal = ({ portalRoot, modalId, children, className }: Props) => {
   }, [toggleModal, modalId]);
 
   return createPortal(
-    <div className='fixed inset-0 z-50 flex items-center justify-center overflow-y-auto'>
+    <div className='z-modal fixed inset-0 flex items-center justify-center overflow-y-auto'>
       <div className='fixed inset-0 bg-black opacity-70' />
       <div
         ref={modalContentRef}

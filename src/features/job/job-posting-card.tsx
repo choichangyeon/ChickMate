@@ -3,17 +3,18 @@
 import Card from '@/components/ui/card';
 import Typography from '@/components/ui/typography';
 import Bookmark from '@/features/job/bookmark';
-import { JobPosting } from '@prisma/client';
 import clsx from 'clsx';
 import Button from '@/components/ui/button';
 import { formatRemainDay } from '@/utils/format-remain-day';
 import { formatTimestamp } from '@/utils/format-timestamp';
+import type { JobPostingType } from '@/types/DTO/job-posting-dto';
 
 type Props = {
-  jobPosting: JobPosting & { isBookmarked: boolean };
+  jobPosting: JobPostingType & { isBookmarked: boolean };
+  userId: string;
 };
 
-const JobPostingCard = ({ jobPosting }: Props) => {
+const JobPostingCard = ({ jobPosting, userId }: Props) => {
   const { companyName, positionTitle, experienceName, expirationTimestamp, openingTimestamp, id, url, isBookmarked } =
     jobPosting;
   const postedAtDate = formatTimestamp({ input: openingTimestamp });
@@ -21,7 +22,7 @@ const JobPostingCard = ({ jobPosting }: Props) => {
   const remainDay = formatRemainDay(expirationTimestamp);
 
   return (
-    <Card className='h-full min-w-96 p-8'>
+    <Card className='h-full p-8'>
       <article className='flex flex-col justify-between'>
         <section className='h-24'>
           <div className='flex flex-row justify-between'>
@@ -29,7 +30,7 @@ const JobPostingCard = ({ jobPosting }: Props) => {
               {companyName}
             </Typography>
             {/* TODO: iconButton component 적용 */}
-            <Bookmark jobPostingId={id} isBookmarked={isBookmarked} />
+            <Bookmark jobPostingId={id} isBookmarked={isBookmarked} userId={userId} />
           </div>
           <Typography as='h3' weight='bold' lineClamp='2'>
             {positionTitle}

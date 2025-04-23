@@ -10,20 +10,22 @@ type Props = {
 };
 
 const DraftResumeItem = ({ resume, onDeleteClick, onDraftResumeClick }: Props) => {
+  const { id, title, createdAt } = resume;
+
   return (
-    <li key={resume.id} className='flex flex-col'>
+    <li className='flex flex-col'>
       <div className='flex justify-between'>
-        <Typography color='gray-500'>{formatDate({ input: resume.createdAt })}</Typography>
-        <button aria-label={`${resume.title} 임시저장 자소서 삭제`} onClick={() => onDeleteClick(resume.id)}>
+        <Typography color='gray-500'>{formatDate({ input: createdAt })}</Typography>
+        <button aria-label={`${title} 임시저장 자소서 삭제`} onClick={() => onDeleteClick(id)}>
           <Trash />
         </button>
       </div>
       <button
-        aria-label={`${resume.title} 임시저장 자소서 불러오기`}
+        aria-label={`${title} 임시저장 자소서 불러오기`}
         onClick={() => onDraftResumeClick(resume)}
         className='w-fit font-bold text-cool-gray-900'
       >
-        {resume.title}
+        {title}
       </button>
     </li>
   );

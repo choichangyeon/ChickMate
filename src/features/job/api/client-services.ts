@@ -2,35 +2,39 @@ import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { UserMetaDataType } from '@/types/user-meta-data-type';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
-import { JobPosting } from '@prisma/client';
+import type { SortOption } from '@/features/job/job-postings-box';
+import type { JobPostingType } from '@/types/DTO/job-posting-dto';
 
 const { POSTING, BOOKMARK_DETAIL } = ROUTE_HANDLER_PATH.JOB;
 const { JSON_HEADER } = API_HEADER;
 const { POST, DELETE, GET } = API_METHOD;
 const EMPTY_LIST_NUMBER = 0;
 
-type UserMetaDataProps = UserMetaDataType;
-
 export const getJobByUserMetaData = async (
-  userMetaData: UserMetaDataProps
-): Promise<(JobPosting & { isBookmarked: boolean })[]> => {
+  userMetaData: UserMetaDataType,
+  sortOption: SortOption,
+  page: number,
+  limit: number
+): Promise<{ jobPostingList: (JobPostingType & { isBookmarked: boolean })[]; totalCount: number }> => {
   const { requiredEducationName, locationName, experienceName, jobMidCodeName } = userMetaData;
   const queryParams = new URLSearchParams({
     requiredEducationName,
     locationName,
     experienceName,
     jobMidCodeName,
+    sortOption,
+    page: String(page),
+    limit: String(limit),
   });
   const url = `${POSTING}?${queryParams}`;
 
-  const { response } = await fetchWithSentry(url, {
+  const { response, totalCount } = await fetchWithSentry(url, {
     method: GET,
     headers: JSON_HEADER,
   });
 
-  const jobPostingList: (JobPosting & { isBookmarked: boolean })[] = response;
-
-  return jobPostingList;
+  const jobPostingList: (JobPostingType & { isBookmarked: boolean })[] = response;
+  return { jobPostingList, totalCount };
 };
 
 /**

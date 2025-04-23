@@ -1,8 +1,8 @@
+import { useState } from 'react';
 import ImprovementIcon from '@/components/icons/improvement-icon';
 import StrengthIcon from '@/components/icons/strength-icon';
 import Button from '@/components/ui/button';
 import Typography from '@/components/ui/typography';
-import React, { useState } from 'react';
 
 type Props = {
   feedback: FeedbackItem[];
@@ -32,9 +32,9 @@ const InterviewDetailFeedback = ({ feedback }: Props) => {
   return (
     <div>
       <div className='flex flex-col gap-4'>
-        <div className='ml-4 flex flex-wrap gap-2'>
+        <div className='flex flex-wrap gap-2 px-4'>
           {Object.keys(FEEDBACK_KEYS).map((key) => (
-            <div key={key} className='min-w-[84px]'>
+            <div key={key}>
               <Button
                 onClick={() => setActiveTab(key)}
                 variant={activeTab === key ? 'contained' : 'outline'}

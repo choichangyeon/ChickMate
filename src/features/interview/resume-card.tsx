@@ -28,7 +28,6 @@ const ResumeCard = ({ type = 'resume', resume, iconButton, children, isSelected,
       onSelect && onSelect();
     }
     // TODO: 이력서 상세 페이지로 이동
-    console.log(id);
   };
 
   return (

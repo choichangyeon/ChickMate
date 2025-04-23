@@ -1,8 +1,9 @@
 'use client';
-
+import { useMemo } from 'react';
 import { signOut } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { NavItems } from '@/features/layout/data/nav-items';
+import { PUBLIC_PAGE } from '@/constants/path-constant';
 
 type Props = {
   menu: NavItems;
@@ -10,9 +11,12 @@ type Props = {
 
 const ButtonNav = ({ menu }: Props) => {
   const router = useRouter();
+  const currentPath = usePathname();
+  const isPublicPage = useMemo(() => PUBLIC_PAGE.includes(currentPath), [currentPath]);
+
   const handleNavigate = async () => {
     await signOut({ redirect: false }).then(() => {
-      router.replace(menu.path);
+      if (!isPublicPage) router.replace(menu.path);
       router.refresh();
     });
   };

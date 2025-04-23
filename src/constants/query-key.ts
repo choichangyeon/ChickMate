@@ -1,4 +1,6 @@
 export const QUERY_KEY = {
+  RESUME: 'resume',
+  RESUMES: 'resumes',
   RESUME_SUBMIT: 'resume-submit',
   RESUME_DRAFT: 'resume-draft',
   CHARACTER: 'character',
@@ -8,4 +10,5 @@ export const QUERY_KEY = {
   JOB_POSTING: 'job-posting',
   CHARACTER_HISTORIES: 'characterHistories',
   HISTORY: 'interview-history',
+  TABS_COUNT: 'tabs-count',
 };

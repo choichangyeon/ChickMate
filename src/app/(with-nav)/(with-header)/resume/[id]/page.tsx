@@ -7,12 +7,11 @@ import { authOptions } from '@/utils/auth-option';
 import Typography from '@/components/ui/typography';
 import { serverActionWithSentry } from '@/utils/server-action-with-sentry';
 import ResumeForm from '@/features/resume/resume-form';
-import UserInfoSummary from '@/features/resume/user-info-summary';
 import { getResumeById, getResumeList } from '@/features/resume/api/server-services';
 import type { RouteParams } from '@/types/route-params';
 
 export const metadata: Metadata = {
-  title: '자기소개서',
+  title: '🐣ChickMate - 자기소개서',
   description: 'ChickMate에서 자기소개서를 관리해보세요.',
 };
 
@@ -41,7 +40,6 @@ const ResumePage = async ({ params }: RouteParams) => {
           </Typography>
           <ResumeForm resume={resume} />
         </section>
-        <UserInfoSummary session={session} />
       </main>
     </HydrationBoundary>
   );

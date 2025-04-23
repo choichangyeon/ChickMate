@@ -3,7 +3,6 @@ import { AUTH_MESSAGE, DB_MESSAGE, HISTORY_MESSAGE } from '@/constants/message-c
 import { prisma } from '@/lib/prisma';
 import { authOptions } from '@/utils/auth-option';
 import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
-import { User } from '@prisma/client';
 import { getServerSession } from 'next-auth';
 import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';

@@ -34,7 +34,7 @@ const JobPostingsBox = ({ userId }: Props) => {
   const router = useRouter();
 
   const { sortOption: initialSort, page: initialPage } = sanitizeQueryParams(params);
-  const [sortOption, setSortOption] = useState<SortOption>((initialSort as SortOption) || 'latest');
+  const [sortOption, setSortOption] = useState<SortOption>((initialSort as SortOption) || 'deadline');
   const [page, setPage] = useState(Number(initialPage) || 1);
 
   const { data, isError, isPending } = useJobPostingQuery({

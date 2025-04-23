@@ -35,8 +35,7 @@ const JobPostingsBox = ({ userId }: Props) => {
 
   // 새로 고침 시 option 유지되도록
   // 없을 시 새로고침 시 initialSort가 'latest'로 나옴
-  const { sortOption: initialSort, page: initialPage } = useMemo(() => sanitizeQueryParams(params), [params]);
-
+  const { sortOption: initialSort, page: initialPage } = sanitizeQueryParams(params);
   const [sortOption, setSortOption] = useState<SortOption>((initialSort as SortOption) || 'latest');
   const [page, setPage] = useState(Number(initialPage) || 1);
 

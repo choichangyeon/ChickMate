@@ -40,7 +40,7 @@ const SignUpAuthForm = () => {
     <div className='mx-auto flex w-full max-w-md flex-col gap-8 rounded-3xl border border-cool-gray-200 bg-white p-6'>
       <div>
         <Typography size='2xl' weight='normal' align='center'>
-          만나서 반가워요.<span className='font-bold'>칙칙</span>씨!
+          만나서 반가워요.<span className='font-bold'>칰칰</span>씨!
         </Typography>
         <Typography color='gray-700' weight='normal' align='center'>
           우리 같이 취업을 향한 여정을 떠나볼까요?

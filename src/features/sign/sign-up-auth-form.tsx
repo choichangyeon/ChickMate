@@ -10,6 +10,7 @@ import Typography from '@/components/ui/typography';
 import { postSignUp } from '@/features/sign/api/client-services';
 import AuthInput from '@/features/sign/auth-input';
 import { SignUpFormData, schema } from '@/features/sign/data/sign-up-schema';
+import { SIGN_UP_INPUT } from '@/features/sign/data/sign-input';
 
 const SignUpAuthForm = () => {
   const {
@@ -47,16 +48,17 @@ const SignUpAuthForm = () => {
       </div>
       <form onSubmit={handleSubmit(onSubmit)} noValidate className='flex flex-col gap-8'>
         <div className='flex flex-col gap-8'>
-          <AuthInput label='NAME' id='name' register={register} error={errors.name} type='text' />
-          <AuthInput label='EMAIL' id='email' register={register} error={errors.email} type='email' />
-          <AuthInput label='PASSWORD' id='password' register={register} error={errors.password} type='password' />
-          <AuthInput
-            label='PASSWORD CHECK'
-            id='passwordCheck'
-            register={register}
-            error={errors.passwordCheck}
-            type='password'
-          />
+          {SIGN_UP_INPUT.map(({ id, label, type, placeholder }) => (
+            <AuthInput
+              key={id}
+              label={label}
+              id={id}
+              type={type}
+              placeholder={placeholder}
+              register={register}
+              error={errors[id as keyof SignUpFormData]}
+            />
+          ))}
         </div>
         <button
           type='submit'

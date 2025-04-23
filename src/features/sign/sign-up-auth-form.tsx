@@ -1,14 +1,15 @@
 'use client';
 
-import { PATH } from '@/constants/path-constant';
 import { useRouter } from 'next/navigation';
-import { postSignUp } from '@/features/sign/api/client-services';
-import { AUTH_MESSAGE } from '@/constants/message-constants';
+import { Notify } from 'notiflix';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { PATH } from '@/constants/path-constant';
+import { AUTH_MESSAGE } from '@/constants/message-constants';
+import Typography from '@/components/ui/typography';
+import { postSignUp } from '@/features/sign/api/client-services';
 import AuthInput from '@/features/sign/auth-input';
 import { SignUpFormData, schema } from '@/features/sign/data/sign-up-schema';
-import Typography from '@/components/ui/typography';
 
 const SignUpAuthForm = () => {
   const {
@@ -17,7 +18,7 @@ const SignUpAuthForm = () => {
     formState: { errors },
   } = useForm<SignUpFormData>({
     resolver: zodResolver(schema),
-    mode: 'onBlur',
+    mode: 'onChange',
     defaultValues: { name: '', email: '', password: '', passwordCheck: '' } as SignUpFormData,
   });
   const router = useRouter();
@@ -26,10 +27,10 @@ const SignUpAuthForm = () => {
     try {
       await postSignUp(data as Required<SignUpFormData>);
       router.push(PATH.AUTH.SIGN_IN);
-      alert(AUTH_MESSAGE.RESULT.SIGN_UP_SUCCESS);
+      Notify.success(AUTH_MESSAGE.RESULT.SIGN_UP_SUCCESS);
     } catch (error) {
       if (error instanceof Error) {
-        alert(error.message);
+        Notify.failure(error.message);
       }
     }
   };

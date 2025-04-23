@@ -23,7 +23,7 @@ const InterviewStartPage = async () => {
 
   return (
     <>
-      {interviewHistoryInProgress && <AlertInProgress />}
+      {interviewHistoryInProgress && <AlertInProgress interviewId={interviewHistoryInProgress.id} />}
       <article className='mb-8'>
         <section className='mb-4 flex flex-row'>
           <Typography as='h2' size='2xl' weight='bold'>

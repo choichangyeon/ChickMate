@@ -9,8 +9,7 @@ type RequestBody = {
   password: string;
 };
 
-const { RESULT } = AUTH_MESSAGE;
-const { SIGN_UP_EMPTY_FIELD, SIGN_UP_EXIST_ERROR, SIGN_UP_FAILED } = RESULT;
+const { SIGN_UP_EMPTY_FIELD, SIGN_UP_EXIST_ERROR, SIGN_UP_FAILED } = AUTH_MESSAGE.RESULT;
 
 export async function POST(request: Request) {
   try {

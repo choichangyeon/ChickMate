@@ -10,6 +10,7 @@ import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 
 const MINUTES_IN_MS = 1 * 60 * 1000;
 const { IN_PROGRESS } = INTERVIEW_HISTORY_STATUS;
+const CHECK_LAST_INDEX = -1;
 
 type Props = {
   interviewHistory: InterviewHistoryType;
@@ -32,9 +33,10 @@ const QuestionDisplayWithTimer = ({ interviewHistory, interviewQnAList }: Props)
       <QuestionDisplay
         interviewHistory={interviewHistory}
         aiQuestion={
-          aiQuestion ||
-          interviewQnAList.at(-1)?.question ||
-          '면접 준비가 완료되었다면, 말하기 버튼을 눌러 자기 소개를 해주세요.'
+          aiQuestion || interviewQnAList.at(CHECK_LAST_INDEX)?.answer
+            ? '대기중..'
+            : interviewQnAList.at(CHECK_LAST_INDEX)?.question ||
+              '면접 준비가 완료되었다면, 말하기 버튼을 눌러 자기 소개를 해주세요.'
         }
       />
       <Timer

@@ -9,11 +9,12 @@ import QuestionDisplayWithTimer from '@/features/interview/question-display-with
 import { useEffect, useRef } from 'react';
 import { useInterviewStore } from '@/store/use-interview-store';
 import { patchInterviewHistoryStatus } from '@/features/interview/api/client-services';
-import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
+import { INTERVIEW_HISTORY_STATUS, INTERVIEW_LIMIT_COUNT } from '@/constants/interview-constants';
 
 const { IN_PROGRESS } = INTERVIEW_HISTORY_STATUS;
-const INTERVIEW_END_INDEX = 8;
+
 const CHECK_LEAST_INDEX = 1;
+const CHECK_LAST_INDEX = -1;
 
 type Props = {
   interviewHistory: InterviewHistoryType;
@@ -24,15 +25,19 @@ const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
   const setQuestionIndex = useInterviewStore((state) => state.setQuestionIndex);
   const questionIndex = useInterviewStore((state) => state.questionIndex);
   const latestQuestionIndex = useRef(questionIndex);
-
+  console.log(questionIndex);
   useEffect(() => {
     latestQuestionIndex.current = questionIndex;
   }, [questionIndex]);
 
   useEffect(() => {
-    setQuestionIndex(interviewQnAList.length - CHECK_LEAST_INDEX);
+    if (interviewQnAList.length === INTERVIEW_LIMIT_COUNT && interviewQnAList.at(CHECK_LAST_INDEX)?.answer !== null) {
+      setQuestionIndex(interviewQnAList.length);
+    } else {
+      setQuestionIndex(interviewQnAList.length - CHECK_LEAST_INDEX);
+    }
     return () => {
-      if (latestQuestionIndex.current < INTERVIEW_END_INDEX) {
+      if (latestQuestionIndex.current < INTERVIEW_LIMIT_COUNT) {
         patchInterviewHistoryStatus({ interviewId: interviewHistory.id, status: IN_PROGRESS });
       }
     };

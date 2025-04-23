@@ -6,9 +6,12 @@ import { useEffect, useState } from 'react';
 import { deleteInterviewHistory } from '@/features/interview/api/client-services';
 import { useRouter } from 'next/navigation';
 import { PATH } from '@/constants/path-constant';
+import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 
 const { WARNING, OK_BUTTON_TEXT, CANCEL_BUTTON_TEXT, MESSAGE } = NOTIFLIX_WARNING_INTERVIEW_IN_PROGRESS;
 const { LIVE } = PATH.INTERVIEW;
+const OPTIONS = 'ALL';
+const { IN_PROGRESS } = INTERVIEW_HISTORY_STATUS;
 
 type Props = {
   interviewId: number;
@@ -17,6 +20,7 @@ type Props = {
 const AlertInProgress = ({ interviewId }: Props) => {
   const [isAlert, setIsAlert] = useState(false);
   const router = useRouter();
+
   useEffect(() => {
     if (!isAlert) {
       showNotiflixConfirm({
@@ -25,7 +29,7 @@ const AlertInProgress = ({ interviewId }: Props) => {
         okButtonText: OK_BUTTON_TEXT,
         cancelButtonText: CANCEL_BUTTON_TEXT,
         okFunction: () => router.push(LIVE(interviewId)),
-        cancelFunction: () => deleteInterviewHistory({ interviewId }),
+        cancelFunction: () => deleteInterviewHistory({ interviewId, options: OPTIONS, status: IN_PROGRESS }),
       });
       setIsAlert(true);
     }

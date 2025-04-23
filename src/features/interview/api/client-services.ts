@@ -135,14 +135,24 @@ export const patchInterviewHistoryStatus = async ({ interviewId, status }: Inter
 
 /**
  * @param interviewId 인터뷰 기록 ID
+ * @param options 데이터 삭제 옵션
  */
+
 type InterviewDeleteProps = {
   interviewId: number;
+  options: string;
+  status: number;
 };
-export const deleteInterviewHistory = async ({ interviewId }: InterviewDeleteProps) => {
-  const { message } = await fetchWithSentry(INTERVIEW_START(interviewId), {
+
+export const deleteInterviewHistory = async ({ interviewId, options, status }: InterviewDeleteProps) => {
+  const queryParams = new URLSearchParams({
+    options,
+    status: String(status),
+  });
+
+  const url = `${INTERVIEW_START(interviewId)}?${queryParams}`;
+  const { message } = await fetchWithSentry(url, {
     method: DELETE,
     headers: JSON_HEADER,
   });
-  console.log(message);
 };

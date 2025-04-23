@@ -6,13 +6,13 @@ import { InterviewQnAType } from '@/types/DTO/interview-qna-dto';
 import QuestionStep from '@/features/interview/question-step';
 import CameraView from '@/features/interview/camera-view';
 import QuestionDisplayWithTimer from '@/features/interview/question-display-with-timer';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useInterviewStore } from '@/store/use-interview-store';
 import { patchInterviewHistoryStatus } from '@/features/interview/api/client-services';
 import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 
 const { IN_PROGRESS } = INTERVIEW_HISTORY_STATUS;
-const LAST_QNA_INDEX = -1;
+const INTERVIEW_END_INDEX = 8;
 const CHECK_LEAST_INDEX = 1;
 
 type Props = {
@@ -21,17 +21,19 @@ type Props = {
 };
 
 const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
-  const [lastQnA, setLastQnA] = useState<InterviewQnAType | null>(null);
   const setQuestionIndex = useInterviewStore((state) => state.setQuestionIndex);
+  const questionIndex = useInterviewStore((state) => state.questionIndex);
+  const latestQuestionIndex = useRef(questionIndex);
 
   useEffect(() => {
+    latestQuestionIndex.current = questionIndex;
+  }, [questionIndex]);
+  useEffect(() => {
     setQuestionIndex(interviewQnAList.length - CHECK_LEAST_INDEX);
-
-    if (interviewQnAList.length > CHECK_LEAST_INDEX) {
-      setLastQnA(interviewQnAList.at(LAST_QNA_INDEX) || null);
-    }
     return () => {
-      patchInterviewHistoryStatus({ interviewId: interviewHistory.id, status: IN_PROGRESS });
+      if (latestQuestionIndex.current < INTERVIEW_END_INDEX) {
+        patchInterviewHistoryStatus({ interviewId: interviewHistory.id, status: IN_PROGRESS });
+      }
     };
   }, []);
 

@@ -6,8 +6,6 @@ const {
   AUTH: { SIGN_IN, SIGN_UP },
   MY_PAGE,
   INTERVIEW,
-  RESUME,
-  JOB,
   ON_BOARDING,
 } = PATH;
 
@@ -17,7 +15,8 @@ export const middleware = async (request: NextRequest) => {
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
   const pathname = request.nextUrl.pathname;
 
-  const protectedPaths = [MY_PAGE, RESUME.ROOT, JOB, INTERVIEW.START];
+  // 로그인하지 않은 사용자가 접근하지 못하게 막는 URL
+  const protectedPaths = [INTERVIEW.LIVE_ROOT, MY_PAGE];
   if (!token && protectedPaths.some((path) => pathname.startsWith(path))) {
     const signInUrl = new URL(SIGN_IN, request.url);
     signInUrl.searchParams.set(UNAUTH, 'true');
@@ -25,6 +24,7 @@ export const middleware = async (request: NextRequest) => {
     return NextResponse.redirect(signInUrl);
   }
 
+  // 로그인한 사용자가 접근하지 못하게 막는 URL
   const authPaths = [SIGN_IN, SIGN_UP];
   if (token && authPaths.some((authPath) => pathname.startsWith(authPath))) {
     return NextResponse.redirect(new URL(ON_BOARDING, request.url));

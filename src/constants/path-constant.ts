@@ -16,6 +16,7 @@ export const PATH = {
   INTERVIEW: {
     ROOT: '/interview',
     START: '/interview/start',
+    LIVE_ROOT: '/interview/live',
     LIVE: (id: number) => `/interview/live/${id}`,
   },
   JOB: '/job',

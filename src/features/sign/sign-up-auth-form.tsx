@@ -46,7 +46,7 @@ const SignUpAuthForm = () => {
         </Typography>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} noValidate className='flex flex-col gap-8'>
-        <div className='flex flex-col gap-4'>
+        <div className='flex flex-col gap-8'>
           <AuthInput label='NAME' id='name' register={register} error={errors.name} type='text' />
           <AuthInput label='EMAIL' id='email' register={register} error={errors.email} type='email' />
           <AuthInput label='PASSWORD' id='password' register={register} error={errors.password} type='password' />

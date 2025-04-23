@@ -49,7 +49,7 @@ const SignInAuthForm = () => {
         </Typography>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} noValidate className='flex flex-col gap-8'>
-        <div className='flex flex-col gap-4'>
+        <div className='flex flex-col gap-8'>
           <AuthInput label='EMAIL' id='email' register={register} error={errors.email} type='email' />
           <AuthInput label='PASSWORD' id='password' register={register} error={errors.password} type='password' />
         </div>
@@ -72,7 +72,7 @@ const SignInAuthForm = () => {
             <button
               type='button'
               onClick={() => signIn('naver', { callbackUrl: redirectToUrl })}
-              className='bg-naver-green flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white'
+              className='flex w-full items-center justify-center gap-2 rounded-lg bg-naver-green px-4 py-2 text-sm font-medium text-white'
             >
               <Image src='/assets/naver_icon.png' alt='네이버 로고' width={24} height={24} />
               네이버 이메일로 로그인

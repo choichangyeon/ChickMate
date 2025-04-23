@@ -1,12 +1,12 @@
+import { prisma } from '@/lib/prisma';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import GoogleProvider from 'next-auth/providers/google';
-import { prisma } from '@/lib/prisma';
-import type { NextAuthOptions } from 'next-auth';
 import NaverProvider from 'next-auth/providers/naver';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { ENV } from '@/constants/env-constants';
+import type { NextAuthOptions } from 'next-auth';
 
 const { POST } = API_METHOD;
 const { JSON_HEADER } = API_HEADER;

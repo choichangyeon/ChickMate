@@ -47,7 +47,7 @@ const config: Config = {
         'rounded-full': '50%',
       },
       zIndex: {
-        alert: '4001',
+        'notiflix-alert': '4001',
         modal: '100',
         header: '90',
         overlay: '10',

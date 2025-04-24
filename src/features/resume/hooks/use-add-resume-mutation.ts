@@ -33,7 +33,7 @@ export const useAddResumeMutation = () => {
     onError: (error) => {
       throw error;
     },
-    onSettled: () => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [RESUMES] });
       queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
     },

@@ -15,7 +15,7 @@ const QuestionAnswerField = ({ field, idx, onChange, onDelete }: Props) => {
   const { id, question, answer } = field;
 
   return (
-    <div className='flex min-h-[444px] h-[444px] w-full flex-col gap-4 rounded-lg border border-cool-gray-200 p-8'>
+    <div className='flex h-[444px] min-h-[444px] w-full flex-col gap-4 rounded-lg border border-cool-gray-200 p-8'>
       <div className='flex flex-col gap-2'>
         <div className='flex w-full justify-between'>
           <Typography weight='normal' color='primary-600'>
@@ -26,7 +26,7 @@ const QuestionAnswerField = ({ field, idx, onChange, onDelete }: Props) => {
           </button>
         </div>
         <input
-          id={String(id)}
+          id={`question-${id}`}
           name='question'
           value={question}
           onChange={onChange}
@@ -37,7 +37,7 @@ const QuestionAnswerField = ({ field, idx, onChange, onDelete }: Props) => {
       </div>
       <hr className='border-cool-gray-500' />
       <textarea
-        id={String(id)}
+        id={`answer-${id}`}
         name='answer'
         value={answer}
         onChange={onChange}

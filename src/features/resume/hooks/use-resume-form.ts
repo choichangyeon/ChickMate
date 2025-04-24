@@ -50,7 +50,9 @@ export const useResumeForm = (resume?: ResumeType) => {
 
   const handleFieldChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const { id, name, value } = event.target;
-    setFieldList((prev) => prev.map((field) => (field.id === id ? { ...field, [name]: value } : field)));
+    const [, realId] = id.split('-');
+
+    setFieldList((prev) => prev.map((field) => (field.id === realId ? { ...field, [name]: value } : field)));
     setIsDirty(true);
     setAutoSaveStatus(SAVING);
   };
@@ -86,11 +88,7 @@ export const useResumeForm = (resume?: ResumeType) => {
         if (isAbleToGetEXP) handleExperienceUp(RESUME_SUBMISSION);
       }
 
-      Notify.success(
-        isReqExp && isAbleToGetEXP
-          ? SUCCESS_WITH_EXP
-          : SUCCESS
-      );
+      Notify.success(isReqExp && isAbleToGetEXP ? SUCCESS_WITH_EXP : SUCCESS);
 
       // TODO: 이동하기 전 zustand를 통해 마이페이지의 탭 자기소개서 선택되도록
       router.push(MY_PAGE);

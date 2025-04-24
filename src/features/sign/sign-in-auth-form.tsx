@@ -122,9 +122,9 @@ const SignInAuthForm = () => {
             </button>
           </div>
           <div className='my-4 flex w-full items-center gap-4'>
-            <div className='flex-1 border-t border-cool-gray-500'></div>
+            <div className='flex-1 border-t border-cool-gray-500' />
             <span className='text-sm text-cool-gray-500'>OR</span>
-            <div className='flex-1 border-t border-cool-gray-500'></div>
+            <div className='flex-1 border-t border-cool-gray-500' />
           </div>
           <Link href={PATH.AUTH.SIGN_UP} className='text-center text-cool-gray-500'>
             30초 만에 회원가입하기

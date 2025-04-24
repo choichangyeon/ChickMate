@@ -3,58 +3,15 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { signIn } from 'next-auth/react';
-import { useSearchParams } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { PATH } from '@/constants/path-constant';
 import Typography from '@/components/ui/typography';
 import AuthInput from '@/features/sign/auth-input';
-import { schema, SignInFormData } from '@/features/sign/data/sign-in-schema';
-import { useSignInResult } from '@/features/sign/hooks/use-sign-in-result';
+import { SignInFormData } from '@/features/sign/data/sign-in-schema';
 import { SIGN_IN_INPUT } from '@/features/sign/data/sign-input';
-import { useState } from 'react';
-import useDebounce from '@/hooks/customs/use-debounce';
-
-const { ON_BOARDING } = PATH;
-const DELAY_TIME = 500;
-const LOCAL_STORAGE_KEY = 'savedEmail';
+import { useSignInForm } from './hooks/use-sign-in-form';
 
 const SignInAuthForm = () => {
-  const searchParams = useSearchParams();
-  const prevUrl = searchParams.get('prevUrl');
-  const redirectToUrl = prevUrl || ON_BOARDING;
-
-  const savedEmail = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '{}') : {};
-  const [isSaveEmail, setIsSaveEmail] = useState(true);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm<SignInFormData>({
-    resolver: zodResolver(schema),
-    mode: 'onChange',
-    defaultValues: { email: savedEmail.email || '', password: '' } as SignInFormData,
-  });
-
-  const watchedEmail = watch('email');
-  const debouncedEmail = useDebounce(watchedEmail, DELAY_TIME);
-
-  useSignInResult();
-
-  const onSubmit = async (data: SignInFormData) => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ email: debouncedEmail }));
-
-    await signIn('credentials', {
-      ...data,
-      callbackUrl: redirectToUrl,
-    });
-
-    if (!isSaveEmail) {
-      localStorage.removeItem(LOCAL_STORAGE_KEY);
-    }
-  };
+  const { register, handleSubmit, errors, isSaveEmail, setIsSaveEmail, onSubmit, redirectToUrl } = useSignInForm();
 
   return (
     <main className='mx-auto flex w-full max-w-md flex-col gap-8 rounded-3xl border border-cool-gray-200 bg-white p-6'>

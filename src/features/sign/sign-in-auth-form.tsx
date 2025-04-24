@@ -12,20 +12,20 @@ import AuthInput from '@/features/sign/auth-input';
 import { schema, SignInFormData } from '@/features/sign/data/sign-in-schema';
 import { useSignInResult } from '@/features/sign/hooks/use-sign-in-result';
 import { SIGN_IN_INPUT } from '@/features/sign/data/sign-input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/customs/use-debounce';
-import { cookies } from 'next/headers';
 
 const { ON_BOARDING } = PATH;
 const DELAY_TIME = 500;
+const LOCAL_STORAGE_KEY = 'savedEmail';
 
 const SignInAuthForm = () => {
   const searchParams = useSearchParams();
   const prevUrl = searchParams.get('prevUrl');
   const redirectToUrl = prevUrl || ON_BOARDING;
 
+  const savedEmail = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '{}') : {};
   const [isSaveEmail, setIsSaveEmail] = useState(true);
-  const savedEmail = 1;
 
   const {
     register,
@@ -35,13 +35,11 @@ const SignInAuthForm = () => {
   } = useForm<SignInFormData>({
     resolver: zodResolver(schema),
     mode: 'onChange',
-    defaultValues: { email: '', password: '' } as SignInFormData,
+    defaultValues: { email: savedEmail.email || '', password: '' } as SignInFormData,
   });
 
   const watchedEmail = watch('email');
   const debouncedEmail = useDebounce(watchedEmail, DELAY_TIME);
-
-  useSignInResult();
 
   const onSubmit = async (data: SignInFormData) => {
     const response = await signIn('credentials', {
@@ -50,6 +48,7 @@ const SignInAuthForm = () => {
     });
 
     if (!response?.ok) {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ email: debouncedEmail }));
     }
   };
 

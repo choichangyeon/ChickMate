@@ -24,7 +24,7 @@ export const Nav = ({ session }: Props) => {
         <ChickLogo />
       </Link>
 
-      <ul className={clsx('flex h-full flex-col items-center gap-4', session ? 'justify-start' : 'justify-end')}>
+      <ul className={clsx('flex h-full flex-col items-center justify-start gap-4')}>
         {menus.map((menu) => (
           <li key={`menu_${menu.name}`} className={clsx('group relative', menu.class)}>
             {menu.type === 'link' ? <LinkNav menu={menu} /> : <ButtonNav menu={menu} />}

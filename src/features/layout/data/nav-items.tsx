@@ -21,7 +21,7 @@ export type NavItems = {
 
 const { ON_BOARDING, AUTH, MY_PAGE, RESUME, INTERVIEW, JOB } = PATH;
 
-export const Private_Nav_Items: NavItems[] = [
+const Nav_Items = [
   {
     path: RESUME.ROOT,
     type: 'link',
@@ -46,7 +46,6 @@ export const Private_Nav_Items: NavItems[] = [
     fullIcon: <JobFullIcon />,
     class: 'mb-2',
   },
-
   {
     path: MY_PAGE,
     type: 'link',
@@ -54,6 +53,10 @@ export const Private_Nav_Items: NavItems[] = [
     icon: <MyPageIcon />,
     fullIcon: <MyPageFullIcon />,
   },
+] as const;
+
+export const Private_Nav_Items: NavItems[] = [
+  ...Nav_Items,
   {
     path: ON_BOARDING,
     type: 'button',
@@ -64,11 +67,12 @@ export const Private_Nav_Items: NavItems[] = [
 ];
 
 export const Public_Nav_Items: NavItems[] = [
+  ...Nav_Items,
   {
     path: AUTH.SIGN_IN,
     name: '로그인',
     type: 'link',
+    class: 'mt-auto',
     icon: <SignInIcon />,
-    class: 'mb-2',
   },
 ];

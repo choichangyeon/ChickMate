@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import LoadingAnimation from '@/components/common/loading-animation';
 
 type Props = {
   size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
@@ -15,14 +16,15 @@ const spinnerSize = {
 
 const LoadingSpinner = ({ size = 'md' }: Props) => {
   return (
-    <div
-      role='status'
-      aria-label='로딩 중'
-      className={clsx(
-        'animate-spin rounded-full border-4 border-b-secondary-amber border-l-secondary-yellow border-r-secondary-amber border-t-secondary-yellow opacity-80',
-        spinnerSize[size]
-      )}
-    />
+    // <div
+    //   role='status'
+    //   aria-label='로딩 중'
+    //   className={clsx(
+    //     'animate-spin rounded-full border-4 border-b-secondary-amber border-l-secondary-yellow border-r-secondary-amber border-t-secondary-yellow opacity-80',
+    //     spinnerSize[size]
+    //   )}
+    // />
+    <LoadingAnimation />
   );
 };
 

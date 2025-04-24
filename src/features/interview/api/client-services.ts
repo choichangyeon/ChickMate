@@ -5,7 +5,6 @@ import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
 import type { ResumeType } from '@/types/DTO/resume-dto';
 import type { UserType } from '@/types/DTO/user-dto';
-import type { InterviewQnAType } from '@/types/DTO/interview-qna-dto';
 
 const {
   AI: { TTS, STT, ROOT, INTERVIEW_START, INTERVIEW_LIVE, FEEDBACK },
@@ -186,22 +185,4 @@ export const getInterviewHistoryAboutInProgress = async ({
   });
   if (!data) return null;
   return data;
-};
-
-/**
- *
- * @param interviewId
- * @returns data ID에 해당하는 QnA 기록
- */
-export const getInterviewQnA = async (interviewId: number): Promise<InterviewQnAType[]> => {
-  const queryParams = new URLSearchParams({
-    options: 'qna',
-  });
-  const url = `${INTERVIEW_LIVE(interviewId)}?${queryParams}`;
-  const { response } = await fetchWithSentry(url, {
-    method: GET,
-    headers: JSON_HEADER,
-  });
-
-  return response;
 };

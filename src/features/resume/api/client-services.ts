@@ -13,6 +13,10 @@ const { ROOT, DETAIL, SUBMIT, SUBMIT_DETAIL, DRAFT, DRAFT_DETAIL } = ROUTE_HANDL
 const { GET, POST, PATCH, DELETE } = API_METHOD;
 const { JSON_HEADER } = API_HEADER;
 
+type SubmitParams = {
+  resumeId: Resume['id'];
+  type: typeof POST | typeof PATCH;
+};
 /**
  * DB에 자소서 등록 요청
  * @param {Object} data 자소서 제목, 자소서 질문/답변
@@ -20,7 +24,7 @@ const { JSON_HEADER } = API_HEADER;
  * @param {Array} data.fieldList 자소서 질문/답변
  * @returns resumeId 자소서 ID
  */
-export const submitResume = async ({ resumeId, data }: Props): Promise<number> => {
+export const submitResume = async ({ resumeId, data }: Props): Promise<SubmitParams> => {
   const isNewResume = resumeId === null;
 
   const url = isNewResume ? SUBMIT : SUBMIT_DETAIL(resumeId);
@@ -32,7 +36,7 @@ export const submitResume = async ({ resumeId, data }: Props): Promise<number> =
     body: JSON.stringify(data),
   });
 
-  return isNewResume ? savedResume.id : resumeId;
+  return { resumeId: isNewResume ? savedResume.id : resumeId, type: method };
 };
 
 /**

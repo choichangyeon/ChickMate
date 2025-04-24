@@ -14,6 +14,7 @@ import useDebounce from '@/hooks/customs/use-debounce';
 import { useCharacterStore } from '@/store/use-character-store';
 import type { ResumeType } from '@/types/DTO/resume-dto';
 import type { Field } from '@/types/resume';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Notify } from 'notiflix';
 import { useEffect, useState } from 'react';
@@ -24,12 +25,14 @@ const { RESUME_SUBMISSION } = CHARACTER_HISTORY_KEY;
 const { RESUME } = TABS;
 
 export const useResumeForm = (resume?: ResumeType) => {
+  const session = useSession();
+  const userId = session.data?.user?.id ?? null;
   const router = useRouter();
   const characterId = useCharacterStore((state) => state.characterId);
 
   const { handleExperienceUp } = useExperienceUp();
 
-  const { mutateAsync: addResumeMutateAsync } = useAddResumeMutation();
+  const { mutateAsync: addResumeMutateAsync } = useAddResumeMutation(userId!);
 
   /** state */
   const [isDirty, setIsDirty] = useState<boolean>(false);

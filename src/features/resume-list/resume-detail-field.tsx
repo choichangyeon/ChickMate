@@ -14,17 +14,19 @@ import type { ResumeType } from '@/types/DTO/resume-dto';
 import type { Field } from '@/types/resume';
 import Link from 'next/link';
 import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
+import type { UserType } from '@/types/DTO/user-dto';
 
 const { DETAIL } = PATH.RESUME;
 const { RESUMES } = QUERY_KEY;
 const { RESUME } = TABS;
 type Props = {
   resumeId: ResumeType['id'];
+  userId: UserType['id'];
 };
 
-const ResumeDetailField = ({ resumeId }: Props) => {
+const ResumeDetailField = ({ resumeId, userId }: Props) => {
   const { data: resume, isPending, isError } = useResumeQuery(resumeId);
-  const { mutate: deleteResumeMutate } = useDeleteResumeMutation(RESUMES);
+  const { mutate: deleteResumeMutate } = useDeleteResumeMutation(RESUMES, userId);
 
   const handleDeleteResume = (resumeId: number) => {
     // TODO: confirm창 적용하기

@@ -19,7 +19,8 @@ const ViewingField = ({ session }: Props) => {
   const searchParams = useSearchParams();
   const { id, tab } = sanitizeQueryParams(searchParams);
   const targetId = id ? Number(id) : null;
-
+  const userId = session?.user.id ?? null;
+  if (!userId) return null;
   return (
     <section className='flex h-[80dvh] w-1/2 flex-col'>
       {!targetId && (
@@ -33,7 +34,7 @@ const ViewingField = ({ session }: Props) => {
         </>
       )}
       {targetId && tab === HISTORY && <InterviewDetailField interviewId={targetId} />}
-      {targetId && tab === RESUME && <ResumeDetailField resumeId={targetId} />}
+      {targetId && tab === RESUME && <ResumeDetailField resumeId={targetId} userId={userId} />}
     </section>
   );
 };

@@ -5,8 +5,7 @@ import { Confirm, Notify } from 'notiflix';
 export const initNotiflix = () => {
   Confirm.init({
     className: 'notiflix-confirm',
-    width: '402px',
-    zindex: 4003,
+    width: '386px',
     position: 'center', // 'right-top' - 'right-bottom' - 'left-top' - 'left-bottom' - 'center-top' - 'center-bottom' - 'center-center'
     distance: '10px',
     backgroundColor: '#ffffff',
@@ -21,10 +20,10 @@ export const initNotiflix = () => {
     plainText: false,
     titleColor: '#E55A27',
     titleFontSize: '24px',
-    titleMaxLength: 34,
+    titleMaxLength: 10,
     messageColor: '#111827',
     messageFontSize: '16px',
-    messageMaxLength: 110,
+    messageMaxLength: 30,
     buttonsFontSize: '16px',
     buttonsMaxLength: 10,
     okButtonColor: '#ffffff',
@@ -41,7 +40,7 @@ export const initNotiflix = () => {
     borderRadius: '10px',
     rtl: false,
     timeout: 2000,
-    messageMaxLength: 110,
+    messageMaxLength: 100,
     backOverlay: false,
     backOverlayColor: 'rgba(0,0,0,0.5)',
     plainText: true,
@@ -51,9 +50,8 @@ export const initNotiflix = () => {
 
     ID: 'NotiflixNotify',
     className: 'notiflix-notify',
-    zindex: 4001,
-    fontFamily: 'Quicksand',
-    fontSize: '13px',
+    fontFamily: 'SUIT Variable',
+    fontSize: '12px',
     cssAnimation: true,
     cssAnimationDuration: 400,
     cssAnimationStyle: 'fade', // 'fade' - 'zoom' - 'from-right' - 'from-top' - 'from-bottom' - 'from-left'

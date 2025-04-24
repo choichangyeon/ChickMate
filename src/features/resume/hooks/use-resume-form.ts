@@ -15,15 +15,14 @@ import { defaultQuestionList } from '@/features/resume/data/default-question-lis
 import { useAddResumeMutation } from '@/features/resume/hooks/use-add-resume-mutation';
 import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import type { Field } from '@/types/resume';
-import type { Resume } from '@prisma/client';
+import type { ResumeType } from '@/types/DTO/resume-dto';
 
 const { MY_PAGE } = PATH;
 const { DEFAULT } = DELAY_TIME;
 const { SAVING, SAVED } = AUTO_SAVE_STATUS;
 const { RESUME_SUBMISSION } = CHARACTER_HISTORY_KEY;
-const { LIMIT } = RESUME_MESSAGE;
 
-export const useResumeForm = (resume?: Resume) => {
+export const useResumeForm = (resume?: ResumeType) => {
   const router = useRouter();
   const characterId = useCharacterStore((state) => state.characterId);
   const { handleExperienceUp } = useExperienceUp();
@@ -37,6 +36,10 @@ export const useResumeForm = (resume?: Resume) => {
   const [resumeId, setResumeId] = useState<number | null>(resume?.id || null);
   const [autoSaveStatus, setAutoSaveStatus] = useState<string>(SAVING);
 
+  const {
+    SUBMIT: { SUCCESS_WITH_EXP, SUCCESS },
+  } = RESUME_MESSAGE;
+
   /** function */
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -46,25 +49,19 @@ export const useResumeForm = (resume?: Resume) => {
 
   const handleFieldChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const { id, name, value } = event.target;
-    setFieldList((prev) => prev.map((field) => (field.id === id ? { ...field, [name]: value } : field)));
+    const [, ...realId] = id.split('-');
+
+    setFieldList((prev) => prev.map((field) => (field.id === realId.join('-') ? { ...field, [name]: value } : field)));
     setIsDirty(true);
     setAutoSaveStatus(SAVING);
   };
 
   const handleAddField = () => {
-    if (fieldList.length >= 5) {
-      Notify.warning(LIMIT.MAX_RESUME_FIELD);
-      return;
-    }
     setFieldList((prev) => [...prev, { id: crypto.randomUUID(), question: '', answer: '' }]);
     setAutoSaveStatus(SAVING);
   };
 
   const handleDeleteField = (fieldId: string) => {
-    if (fieldList.length <= 1) {
-      Notify.warning(LIMIT.MIN_RESUME_FIELD);
-      return;
-    }
     setFieldList((prev) => prev.filter((field) => field.id !== fieldId));
     setAutoSaveStatus(SAVING);
   };
@@ -82,17 +79,13 @@ export const useResumeForm = (resume?: Resume) => {
         if (isAbleToGetEXP) handleExperienceUp(RESUME_SUBMISSION);
       }
 
-      // 수정해야되는 alert창
-      alert(
-        isReqExp && isAbleToGetEXP
-          ? `경험치 획득 완료!\n자기소개서 작성이 완료되었습니다.`
-          : '자기소개서 작성이 완료되었습니다.'
-      );
+      Notify.success(isReqExp && isAbleToGetEXP ? SUCCESS_WITH_EXP : SUCCESS);
 
+      // TODO: 이동하기 전 zustand를 통해 마이페이지의 탭 자기소개서 선택되도록
       router.push(MY_PAGE);
     } catch (error) {
       if (error instanceof Error) {
-        alert(error.message);
+        Notify.warning(error.message);
       }
     }
   };
@@ -117,9 +110,12 @@ export const useResumeForm = (resume?: Resume) => {
     });
   }, [debouncedTitle, debouncedFieldList]);
 
+  const fieldListLen = fieldList.length;
+
   return {
     title,
     fieldList,
+    fieldListLen,
     autoSaveStatus,
     resumeId,
     setTitle,

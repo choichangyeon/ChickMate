@@ -1,4 +1,5 @@
-import { USER_META_DATA_KEY } from './user-meta-data-constants';
+import { CHARACTER_HISTORY, CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
+import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 
 export const AUTH_MESSAGE = {
   VALIDATION: {
@@ -43,10 +44,15 @@ export const AI_MESSAGE = {
   },
 };
 
+const { RESUME_SUBMISSION } = CHARACTER_HISTORY_KEY;
+const EXP = CHARACTER_HISTORY[RESUME_SUBMISSION].amount;
+
 export const RESUME_MESSAGE = {
   SUBMIT: {
     REQUEST_FAILURE: '유효하지 않은 자소서 양식입니다.',
     SUBMIT_SERVER_ERROR: '자소서 생성에 실패했습니다.',
+    SUCCESS_WITH_EXP: `자기소개서 작성이 완료되었습니다. ${EXP} 경험치 획득 완료!`,
+    SUCCESS: '자기소개서 작성이 완료되었습니다.',
   },
   DRAFT: {
     NOT_FOUND: '해당 자소서를 찾을 수 없습니다.',
@@ -62,10 +68,6 @@ export const RESUME_MESSAGE = {
   DELETE_SERVER_ERROR: '자소서를 삭제하는데 실패했습니다.',
   DELETE_FORBIDDEN: '해당 자소서를 삭제할 권한이 없습니다.',
   GET_COUNT_ERROR: '경험치 지급을 위해 오늘 작성한 자소서를 확인하는데 실패했습니다.',
-  LIMIT: {
-    MAX_RESUME_FIELD: '자소서 항목은 최대 5개까지 추가할 수 있습니다.',
-    MIN_RESUME_FIELD: '자소서 항목은 최소 1개 이상 작성해야됩니다.',
-  },
   CONFIRM: {
     DELETE: '자소서를 정말로 삭제하시겠습니까?',
   },

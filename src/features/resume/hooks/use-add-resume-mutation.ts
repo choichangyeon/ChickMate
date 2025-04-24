@@ -4,7 +4,7 @@ import { QUERY_KEY } from '@/constants/query-key';
 import type { ResumeData } from '@/types/resume';
 import type { Resume } from '@prisma/client';
 
-const { RESUMES } = QUERY_KEY;
+const { RESUMES, TABS_COUNT } = QUERY_KEY;
 
 type Props = {
   resumeId: number | null;
@@ -33,6 +33,9 @@ export const useAddResumeMutation = () => {
     onError: (error) => {
       throw error;
     },
-    onSettled: () => queryClient.invalidateQueries({ queryKey: [RESUMES] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [RESUMES] });
+      queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
+    },
   });
 };

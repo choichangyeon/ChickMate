@@ -23,7 +23,12 @@ export const POST = async (request: NextRequest) => {
     if (user && (await bcrypt.compare(password, user.password!))) {
       const { password, ...userWithoutPassword } = user;
 
-      return NextResponse.json({ response: userWithoutPassword }, { status: 200 });
+      return new NextResponse(JSON.stringify(userWithoutPassword), {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
     }
   } catch (error) {
     return NextResponse.json({ message: SIGN_IN_FAILED }, { status: 500 });

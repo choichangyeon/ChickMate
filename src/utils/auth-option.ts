@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
       },
 
       async authorize(credentials, req) {
-        const res = await fetch(`${BASE_URL}/${SIGN_IN}`, {
+        const response = await fetch(`${BASE_URL}/${SIGN_IN}`, {
           method: POST,
           headers: JSON_HEADER,
           body: JSON.stringify({
@@ -42,9 +42,10 @@ export const authOptions: NextAuthOptions = {
             password: credentials?.password,
           }),
         });
-        const user = await res.json();
 
-        if (res.ok && user) {
+        const user = await response.json();
+
+        if (response.ok && user) {
           return { ...user };
         } else {
           return null;

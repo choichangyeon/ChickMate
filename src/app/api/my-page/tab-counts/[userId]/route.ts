@@ -18,7 +18,7 @@ const {
   API: { SERVER_ERROR },
 } = TAB_COUNT_MESSAGE;
 
-const { HISTORY, RESUME, BOOKMARK } = TABS;
+const { INTERVIEW_HISTORY_TAB, RESUME_TAB, BOOKMARK_TAB } = TABS;
 
 const { COMPLETED } = INTERVIEW_HISTORY_STATUS;
 const { SUBMIT } = RESUME_STATUS;
@@ -38,13 +38,13 @@ export const GET = async (request: NextRequest, { params }: Props) => {
       select: {
         _count: {
           select: {
-            [RESUME]: {
+            [RESUME_TAB]: {
               where: {
                 status: SUBMIT,
               },
             },
-            [BOOKMARK]: true,
-            [HISTORY]: {
+            [BOOKMARK_TAB]: true,
+            [INTERVIEW_HISTORY_TAB]: {
               where: {
                 status: COMPLETED,
               },

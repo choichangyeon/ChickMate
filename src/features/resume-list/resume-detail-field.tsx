@@ -1,36 +1,34 @@
 'use client';
 import Link from 'next/link';
-import ResumeQnAItem from '@/features/resume-list/resume-qna-item';
+import { useRouter } from 'next/navigation';
+import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
 import { useResumeQuery } from '@/features/resume-list/hooks/use-resume-query';
+import ResumeQnAItem from '@/features/resume-list/resume-qna-item';
 import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
-import LoadingSpinner from '@/components/ui/loading-spinner';
 import ErrorComponent from '@/components/common/error-component';
 import LeftArrowIcon from '@/components/icons/left-arrow-icon';
-import Typography from '@/components/ui/typography';
 import Button from '@/components/ui/button';
+import LoadingSpinner from '@/components/ui/loading-spinner';
+import Typography from '@/components/ui/typography';
+import { TABS } from '@/constants/my-page-constants';
 import { PATH } from '@/constants/path-constant';
 import { QUERY_KEY } from '@/constants/query-key';
-import type { Field } from '@/types/resume';
 import type { ResumeType } from '@/types/DTO/resume-dto';
+import type { Field } from '@/types/resume';
+import type { UserType } from '@/types/DTO/user-dto';
 
-const { MY_PAGE } = PATH;
 const { DETAIL } = PATH.RESUME;
 const { RESUMES } = QUERY_KEY;
-
+const { RESUME_TAB } = TABS;
 type Props = {
   resumeId: ResumeType['id'];
+  userId: UserType['id'];
 };
 
-const ResumeDetailField = ({ resumeId }: Props) => {
+const ResumeDetailField = ({ resumeId, userId }: Props) => {
   const { data: resume, isPending, isError } = useResumeQuery(resumeId);
-  const { mutate: deleteResumeMutate } = useDeleteResumeMutation(RESUMES);
-
-  const handleDeleteResume = (resumeId: number) => {
-    // TODO: confirm창 적용하기
-    if (window.confirm('자기소개서를 정말로 삭제하시겠습니까?')) {
-      deleteResumeMutate(resumeId);
-    }
-  };
+  const { mutate: deleteResumeMutate } = useDeleteResumeMutation(RESUMES, userId);
+  const router = useRouter();
 
   if (isPending)
     return (
@@ -47,10 +45,22 @@ const ResumeDetailField = ({ resumeId }: Props) => {
 
   const resumeContent = resume.content as Field[];
 
+  const handleDeleteResume = (resumeId: ResumeType['id']) => {
+    // TODO: confirm창 적용하기
+    if (window.confirm('자기소개서를 정말로 삭제하시겠습니까?')) {
+      deleteResumeMutate(resumeId);
+    }
+  };
+
+  const handlePatchResume = (resumeId: ResumeType['id']) => {
+    router.push(DETAIL(resumeId));
+    router.refresh();
+  };
+
   return (
     <section className='flex h-[80dvh] flex-col gap-8'>
       <div className='flex items-center gap-4'>
-        <Link href={MY_PAGE}>
+        <Link href={getMyPagePath(RESUME_TAB)}>
           <LeftArrowIcon />
         </Link>
         <div>
@@ -68,7 +78,7 @@ const ResumeDetailField = ({ resumeId }: Props) => {
         })}
       </ul>
       <div className='flex gap-8'>
-        <Button variant='outline' color='dark' size='large' link={true} href={`${DETAIL(resumeId)}`}>
+        <Button variant='outline' color='dark' size='large' onClick={() => handlePatchResume(resumeId)}>
           수정하기
         </Button>
         <Button variant='outline' color='dark' size='large' onClick={() => handleDeleteResume(resumeId)}>

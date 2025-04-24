@@ -1,25 +1,25 @@
 'use client';
 import clsx from 'clsx';
-import { useEffect } from 'react';
-import { useTabStore } from '@/store/use-tab-store';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useTabCountQuery } from '@/features/my-page/hook/use-tab-count-query';
+import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
 import Badge from '@/components/ui/badge';
-import type { Tabs } from '@/types/tab-type';
 import { TABS } from '@/constants/my-page-constants';
+import type { Tabs } from '@/types/tab-type';
 
-const { BOOKMARK, RESUME, HISTORY } = TABS;
+const { BOOKMARK_TAB, RESUME_TAB, INTERVIEW_HISTORY_TAB } = TABS;
 
 const tabs = [
   {
-    id: HISTORY,
+    id: INTERVIEW_HISTORY_TAB,
     title: '면접기록',
   },
   {
-    id: BOOKMARK,
+    id: BOOKMARK_TAB,
     title: '북마크한 채용공고',
   },
   {
-    id: RESUME,
+    id: RESUME_TAB,
     title: '내가 작성한 자소서',
   },
 ];
@@ -27,44 +27,46 @@ const tabs = [
 type Props = {
   userId: string;
   initialTabCounts: {
-    [RESUME]: number;
-    [HISTORY]: number;
-    [BOOKMARK]: number;
+    [RESUME_TAB]: number;
+    [INTERVIEW_HISTORY_TAB]: number;
+    [BOOKMARK_TAB]: number;
   };
 };
 
 const TabButtons = ({ userId, initialTabCounts }: Props) => {
-  const { setTab, tab: targetTab, resetTab } = useTabStore();
-  const handleChangeTab = (newTab: Tabs) => {
-    setTab(newTab);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const handleChangeTab = (targetTab: Tabs) => {
+    router.push(getMyPagePath(targetTab));
   };
-
-  useEffect(() => {
-    return () => resetTab();
-  }, []);
 
   const { data: tabCounts } = useTabCountQuery(userId, initialTabCounts);
 
   return (
     <ul className='flex h-[48px] items-center justify-evenly bg-cool-gray-100'>
-      {tabs.map((tab) => (
-        <li
-          key={`tab_${tab.id}`}
-          className={clsx(
-            'text-md h-full w-1/3 px-4 py-[14px] text-center font-bold text-cool-gray-900',
-            targetTab === tab.id && 'border-b-2 border-b-primary-orange-600'
-          )}
-        >
-          <button className='w-full' onClick={() => handleChangeTab(tab.id)}>
-            {tab.title}
-            {tabCounts[tab.id] !== 0 && (
-              <Badge mx={1} size='small' color='dark'>
-                {tabCounts[tab.id]}
-              </Badge>
+      {tabs.map((tab) => {
+        const currentTab = searchParams.get('tab') ?? INTERVIEW_HISTORY_TAB;
+        const isCurrentTab = currentTab === tab.id;
+
+        return (
+          <li
+            key={`tab_${tab.id}`}
+            className={clsx(
+              'text-md h-full w-1/3 px-4 py-[14px] text-center font-bold text-cool-gray-900',
+              isCurrentTab && 'border-b-2 border-b-primary-orange-600'
             )}
-          </button>
-        </li>
-      ))}
+          >
+            <button className='w-full' onClick={() => handleChangeTab(tab.id)}>
+              {tab.title}
+              {tabCounts[tab.id] !== 0 && (
+                <Badge mx={1} size='small' color='dark'>
+                  {tabCounts[tab.id]}
+                </Badge>
+              )}
+            </button>
+          </li>
+        );
+      })}
     </ul>
   );
 };

@@ -8,7 +8,7 @@ import LoadingSpinner from '@/components/ui/loading-spinner';
 import { useBookmarkSelectedInfiniteQuery } from '@/features/bookmark-selected/hook/use-bookmark-selected-infinite-query';
 import BookmarkTab from '@/features/bookmark-selected/bookmark-tab';
 
-const { BOOKMARK } = TABS;
+const { BOOKMARK_TAB } = TABS;
 
 const BookmarkSelectedList = () => {
   const { data: session, status } = useSession();
@@ -33,7 +33,7 @@ const BookmarkSelectedList = () => {
   if (isError) return <ErrorComponent />;
 
   const bookmarkList = data.pages.flatMap((page) => page.bookmarkList);
-  if (bookmarkList.length === 0) return <EmptyList tab={BOOKMARK} />;
+  if (bookmarkList.length === 0) return <EmptyList tab={BOOKMARK_TAB} />;
 
   return (
     <ul className='h-full overflow-y-auto scrollbar-hide'>

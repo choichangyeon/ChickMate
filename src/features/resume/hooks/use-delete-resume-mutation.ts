@@ -1,14 +1,16 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Resume } from '@prisma/client';
-import { deleteResume } from '@/features/resume/api/client-services';
+import { TABS } from '@/constants/my-page-constants';
 import { QUERY_KEY } from '@/constants/query-key';
+import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
+import { deleteResume } from '@/features/resume/api/client-services';
+import type { UserType } from '@/types/DTO/user-dto';
+import { Resume } from '@prisma/client';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { PATH } from '@/constants/path-constant';
 
-const { MY_PAGE } = PATH;
-const { RESUMES, TABS_COUNT } = QUERY_KEY;
+const { RESUMES, TABS_COUNT, HISTORY } = QUERY_KEY;
+const { RESUME_TAB } = TABS;
 
-export const useDeleteResumeMutation = (queryKey: string) => {
+export const useDeleteResumeMutation = (queryKey: string, userId?: UserType['id']) => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -32,8 +34,9 @@ export const useDeleteResumeMutation = (queryKey: string) => {
     },
     onSuccess: () => {
       if (queryKey === RESUMES) {
+        if (userId) queryClient.invalidateQueries({ queryKey: [HISTORY, userId] });
         queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
-        router.replace(MY_PAGE);
+        router.replace(getMyPagePath(RESUME_TAB));
       }
     },
     onSettled: () => queryClient.invalidateQueries({ queryKey: [queryKey] }),

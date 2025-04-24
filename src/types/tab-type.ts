@@ -1,4 +1,4 @@
 import { TABS } from '@/constants/my-page-constants';
 
-const { HISTORY, BOOKMARK, RESUME } = TABS;
-export type Tabs = typeof HISTORY | typeof BOOKMARK | typeof RESUME;
+const { INTERVIEW_HISTORY_TAB, BOOKMARK_TAB, RESUME_TAB } = TABS;
+export type Tabs = typeof INTERVIEW_HISTORY_TAB | typeof BOOKMARK_TAB | typeof RESUME_TAB;

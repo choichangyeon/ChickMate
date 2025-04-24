@@ -1,12 +1,12 @@
 export const TABS = {
-  HISTORY: 'interviewHistories',
-  BOOKMARK: 'userSelectedJobs',
-  RESUME: 'resumes',
+  INTERVIEW_HISTORY_TAB: 'interviewHistories',
+  BOOKMARK_TAB: 'userSelectedJobs',
+  RESUME_TAB: 'resumes',
 } as const;
 
-const { HISTORY, BOOKMARK, RESUME } = TABS;
+const { INTERVIEW_HISTORY_TAB, BOOKMARK_TAB, RESUME_TAB } = TABS;
 export const INIT_TAB_COUNTS = {
-  [HISTORY]: 0,
-  [BOOKMARK]: 0,
-  [RESUME]: 0,
+  [INTERVIEW_HISTORY_TAB]: 0,
+  [BOOKMARK_TAB]: 0,
+  [RESUME_TAB]: 0,
 };

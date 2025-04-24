@@ -1,33 +1,38 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Notify } from 'notiflix';
-import { PATH } from '@/constants/path-constant';
-import { DELAY_TIME } from '@/constants/time-constants';
-import { AUTO_SAVE_STATUS } from '@/constants/resume-constants';
+import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import { RESUME_MESSAGE } from '@/constants/message-constants';
-import useDebounce from '@/hooks/customs/use-debounce';
-import { autoSaveResume, getCheckToGetEXP } from '@/features/resume/api/client-services';
-import { usePreventPageUnload } from '@/features/resume/hooks/use-prevent-page-load';
-import { useCharacterStore } from '@/store/use-character-store';
+import { TABS } from '@/constants/my-page-constants';
+import { AUTO_SAVE_STATUS } from '@/constants/resume-constants';
+import { DELAY_TIME } from '@/constants/time-constants';
 import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
+import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
+import { autoSaveResume, getCheckToGetEXP } from '@/features/resume/api/client-services';
 import { defaultQuestionList } from '@/features/resume/data/default-question-list';
 import { useAddResumeMutation } from '@/features/resume/hooks/use-add-resume-mutation';
-import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
-import type { Field } from '@/types/resume';
+import { usePreventPageUnload } from '@/features/resume/hooks/use-prevent-page-load';
+import useDebounce from '@/hooks/customs/use-debounce';
+import { useCharacterStore } from '@/store/use-character-store';
 import type { ResumeType } from '@/types/DTO/resume-dto';
+import type { Field } from '@/types/resume';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { Notify } from 'notiflix';
+import { useEffect, useState } from 'react';
 
-const { MY_PAGE } = PATH;
 const { DEFAULT } = DELAY_TIME;
 const { SAVING, SAVED } = AUTO_SAVE_STATUS;
 const { RESUME_SUBMISSION } = CHARACTER_HISTORY_KEY;
+const { RESUME_TAB } = TABS;
 
 export const useResumeForm = (resume?: ResumeType) => {
+  const session = useSession();
+  const userId = session.data?.user?.id ?? null;
   const router = useRouter();
   const characterId = useCharacterStore((state) => state.characterId);
+
   const { handleExperienceUp } = useExperienceUp();
 
-  const { mutateAsync: addResumeMutateAsync } = useAddResumeMutation();
+  const { mutateAsync: addResumeMutateAsync } = useAddResumeMutation(userId!);
 
   /** state */
   const [isDirty, setIsDirty] = useState<boolean>(false);
@@ -80,9 +85,7 @@ export const useResumeForm = (resume?: ResumeType) => {
       }
 
       Notify.success(isReqExp && isAbleToGetEXP ? SUCCESS_WITH_EXP : SUCCESS);
-
-      // TODO: 이동하기 전 zustand를 통해 마이페이지의 탭 자기소개서 선택되도록
-      router.push(MY_PAGE);
+      router.push(getMyPagePath(RESUME_TAB));
     } catch (error) {
       if (error instanceof Error) {
         Notify.warning(error.message);

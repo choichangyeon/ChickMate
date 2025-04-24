@@ -29,23 +29,6 @@ export const GET = async (request: NextRequest, { params }: RouteParams) => {
     if (!session || !session.user) {
       return NextResponse.json({ message: AUTH_REQUIRED }, { status: 401 });
     }
-    const searchParams = request.nextUrl.searchParams;
-    const { options = undefined } = sanitizeQueryParams(searchParams);
-
-    if (options && options === 'qna') {
-      const response = await prisma.interviewQnA.findMany({
-        where: {
-          interviewHistoryId: interviewId,
-          interviewHistory: {
-            userId: session.user.id,
-          },
-        },
-        orderBy: {
-          createdAt: 'asc',
-        },
-      });
-      return NextResponse.json({ response }, { status: 200 });
-    }
 
     const response = await prisma.interviewHistory.findUnique({
       where: {
@@ -163,8 +146,6 @@ export const PATCH = async (request: NextRequest, { params }: RouteParams) => {
  */
 export const DELETE = async (request: NextRequest, { params }: RouteParams) => {
   const interviewId = Number(params.id);
-  const searchParams = request.nextUrl.searchParams;
-  const { options, status } = sanitizeQueryParams(searchParams);
   try {
     const token = await getToken({ req: request, secret: NEXTAUTH_SECRET });
     if (!token) return NextResponse.json({ message: EXPIRED_TOKEN }, { status: 401 });
@@ -180,6 +161,9 @@ export const DELETE = async (request: NextRequest, { params }: RouteParams) => {
         id: interviewId,
       },
     });
+
+    const searchParams = request.nextUrl.searchParams;
+    const { options, status } = sanitizeQueryParams(searchParams);
 
     if (options === 'ALL') {
       const { count } = await prisma.interviewHistory.deleteMany({

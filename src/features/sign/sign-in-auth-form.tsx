@@ -12,31 +12,45 @@ import AuthInput from '@/features/sign/auth-input';
 import { schema, SignInFormData } from '@/features/sign/data/sign-in-schema';
 import { useSignInResult } from '@/features/sign/hooks/use-sign-in-result';
 import { SIGN_IN_INPUT } from '@/features/sign/data/sign-input';
+import { useState } from 'react';
+import useDebounce from '@/hooks/customs/use-debounce';
+import { cookies } from 'next/headers';
 
 const { ON_BOARDING } = PATH;
+const DELAY_TIME = 500;
 
 const SignInAuthForm = () => {
+  const searchParams = useSearchParams();
+  const prevUrl = searchParams.get('prevUrl');
+  const redirectToUrl = prevUrl || ON_BOARDING;
+
+  const [isSaveEmail, setIsSaveEmail] = useState(true);
+  const savedEmail = 1;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<SignInFormData>({
     resolver: zodResolver(schema),
     mode: 'onChange',
     defaultValues: { email: '', password: '' } as SignInFormData,
   });
 
-  const searchParams = useSearchParams();
-  const prevUrl = searchParams.get('prevUrl');
-  const redirectToUrl = prevUrl || ON_BOARDING;
+  const watchedEmail = watch('email');
+  const debouncedEmail = useDebounce(watchedEmail, DELAY_TIME);
 
   useSignInResult();
 
   const onSubmit = async (data: SignInFormData) => {
-    await signIn('credentials', {
+    const response = await signIn('credentials', {
       ...data,
       callbackUrl: redirectToUrl,
     });
+
+    if (!response?.ok) {
+    }
   };
 
   return (
@@ -50,18 +64,32 @@ const SignInAuthForm = () => {
         </Typography>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} noValidate className='flex flex-col gap-8'>
-        <div className='flex flex-col gap-8'>
-          {SIGN_IN_INPUT.map(({ id, label, type, placeholder }) => (
-            <AuthInput
-              key={id}
-              label={label}
-              id={id}
-              type={type}
-              placeholder={placeholder}
-              register={register}
-              error={errors[id as keyof SignInFormData]}
+        <div className='flex flex-col gap-5 px-4'>
+          <div className='flex flex-col gap-8'>
+            {SIGN_IN_INPUT.map(({ id, label, type, placeholder }) => (
+              <AuthInput
+                key={id}
+                label={label}
+                id={id}
+                type={type}
+                placeholder={placeholder}
+                register={register}
+                error={errors[id as keyof SignInFormData]}
+              />
+            ))}
+          </div>
+          <div className='flex gap-2'>
+            <input
+              type='checkbox'
+              id='save-email'
+              checked={isSaveEmail}
+              onChange={(event) => setIsSaveEmail(event.target.checked)}
+              className='h-4 w-4'
             />
-          ))}
+            <label htmlFor='save-email' className='text-xs font-bold text-cool-gray-500'>
+              아이디 저장
+            </label>
+          </div>
         </div>
         <div className='flex flex-col gap-4'>
           <div className='flex flex-col gap-2'>

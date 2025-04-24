@@ -22,7 +22,7 @@ const AuthInput = <T extends FieldValues>({ label, id, register, error, type, pl
   const toggleVisibility = () => setIsPasswordVisible((prev) => !prev);
 
   return (
-    <div className='flex w-full flex-col gap-1 px-3'>
+    <div className='flex w-full flex-col gap-1'>
       <Typography as='h2' weight='bold' size='sm'>
         {label}
       </Typography>

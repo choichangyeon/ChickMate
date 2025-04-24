@@ -5,7 +5,6 @@ import { showNotiflixConfirm } from '@/utils/show-notiflix-confirm';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { PATH } from '@/constants/path-constant';
-import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 import { Session } from 'next-auth';
 import { useInProgressQuery } from './hooks/use-in-progress-query';
 import { useInProgressDeleteMutation } from './hooks/use-in-progress-mutation';
@@ -42,7 +41,10 @@ const AlertInProgress = ({ session }: Props) => {
         message: MESSAGE,
         okButtonText: OK_BUTTON_TEXT,
         cancelButtonText: CANCEL_BUTTON_TEXT,
-        okFunction: () => router.replace(LIVE(interviewId)),
+        okFunction: () => {
+          router.push(LIVE(interviewId));
+          router.refresh();
+        },
         cancelFunction: () => inProgressDeleteMutate({ interviewId, status, options: OPTIONS }),
       });
       setIsAlert(true);

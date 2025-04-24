@@ -2,8 +2,6 @@ import Trash from '@/components/icons/trash';
 import Typography from '@/components/ui/typography';
 import type { Field } from '@/types/resume';
 
-const MAX_ANSWER_LENGTH = 1000;
-
 type Props = {
   field: Field;
   fieldListLen: number;
@@ -11,6 +9,9 @@ type Props = {
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   onDelete: (fieldId: string) => void;
 };
+
+const MAX_ANSWER_LENGTH = 1000;
+const MIN_RESUME_FIELD_COUNT = 1;
 
 const QuestionAnswerField = ({ field, fieldListLen, idx, onChange, onDelete }: Props) => {
   const { id, question, answer } = field;
@@ -22,7 +23,7 @@ const QuestionAnswerField = ({ field, fieldListLen, idx, onChange, onDelete }: P
           <Typography weight='normal' color='primary-600'>
             질문 {idx + 1}
           </Typography>
-          {fieldListLen > 1 && (
+          {fieldListLen > MIN_RESUME_FIELD_COUNT && (
             <button type='button' onClick={() => onDelete(id)} aria-label='질문 삭제'>
               <Trash />
             </button>

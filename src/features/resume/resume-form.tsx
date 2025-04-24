@@ -11,11 +11,12 @@ import ResumeFormActionButton from '@/features/resume/resume-form-action-button'
 import type { Field } from '@/types/resume';
 import type { ResumeType } from '@/types/DTO/resume-dto';
 
-const { DRAFT_RESUME } = MODAL_ID;
-
 type Props = {
   resume?: ResumeType;
 };
+
+const { DRAFT_RESUME } = MODAL_ID;
+const MAX_RESIME_FIELD_COUNT = 5;
 
 const ResumeForm = ({ resume }: Props) => {
   const toggleModal = useModalStore((state) => state.toggleModal);
@@ -72,7 +73,7 @@ const ResumeForm = ({ resume }: Props) => {
           required
           className='h-[64px] w-full rounded-lg border border-cool-gray-200 px-8 py-4 pr-52 text-xl font-bold placeholder-cool-gray-300 focus:outline-none'
         />
-        {fieldListLen < 5 && (
+        {fieldListLen < MAX_RESIME_FIELD_COUNT && (
           <button
             type='button'
             onClick={handleAddField}

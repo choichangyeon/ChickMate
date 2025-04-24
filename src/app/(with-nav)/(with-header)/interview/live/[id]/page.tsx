@@ -20,7 +20,6 @@ const InterviewPage = async ({ params }: RouteParams) => {
   const interviewHistory = await getInterviewHistory(interviewId);
   const interviewQnAList = await getInterviewQnA(interviewId);
 
-  console.log('server checking', interviewQnAList);
   if (!interviewHistory) return null;
 
   if (interviewHistory.status === INTERVIEW_HISTORY_STATUS.COMPLETED) {

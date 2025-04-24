@@ -12,7 +12,7 @@ const config: Config = {
     extend: {
       screens: {
         'desktop': '1728px',
-        'tablet': '', //@미정
+        'tablet': '744px',
         'mobile': '', //@미정
       },
       colors: {

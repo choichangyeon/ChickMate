@@ -44,14 +44,12 @@ const SignInAuthForm = () => {
   useSignInResult();
 
   const onSubmit = async (data: SignInFormData) => {
-    const response = await signIn('credentials', {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ email: debouncedEmail }));
+
+    await signIn('credentials', {
       ...data,
       callbackUrl: redirectToUrl,
     });
-
-    if (!response?.ok) {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ email: debouncedEmail }));
-    }
 
     if (!isSaveEmail) {
       localStorage.removeItem(LOCAL_STORAGE_KEY);

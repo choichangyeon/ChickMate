@@ -7,19 +7,19 @@ import Badge from '@/components/ui/badge';
 import { TABS } from '@/constants/my-page-constants';
 import type { Tabs } from '@/types/tab-type';
 
-const { BOOKMARK, RESUME, HISTORY } = TABS;
+const { BOOKMARK_TAB, RESUME_TAB, INTERVIEW_HISTORY_TAB } = TABS;
 
 const tabs = [
   {
-    id: HISTORY,
+    id: INTERVIEW_HISTORY_TAB,
     title: '면접기록',
   },
   {
-    id: BOOKMARK,
+    id: BOOKMARK_TAB,
     title: '북마크한 채용공고',
   },
   {
-    id: RESUME,
+    id: RESUME_TAB,
     title: '내가 작성한 자소서',
   },
 ];
@@ -27,9 +27,9 @@ const tabs = [
 type Props = {
   userId: string;
   initialTabCounts: {
-    [RESUME]: number;
-    [HISTORY]: number;
-    [BOOKMARK]: number;
+    [RESUME_TAB]: number;
+    [INTERVIEW_HISTORY_TAB]: number;
+    [BOOKMARK_TAB]: number;
   };
 };
 
@@ -45,7 +45,7 @@ const TabButtons = ({ userId, initialTabCounts }: Props) => {
   return (
     <ul className='flex h-[48px] items-center justify-evenly bg-cool-gray-100'>
       {tabs.map((tab) => {
-        const currentTab = searchParams.get('tab') ?? HISTORY;
+        const currentTab = searchParams.get('tab') ?? INTERVIEW_HISTORY_TAB;
         const isCurrentTab = currentTab === tab.id;
 
         return (

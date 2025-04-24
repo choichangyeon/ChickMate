@@ -15,7 +15,7 @@ import type { UserType } from '@/types/DTO/user-dto';
 
 const { CALM } = INTERVIEW_TYPE;
 const { CALM_KR, PRESSURE_KR } = INTERVIEW_TYPE_KR;
-const { HISTORY } = TABS;
+const { INTERVIEW_HISTORY_TAB } = TABS;
 
 const getInterviewer = (type: InterviewHistoryType['interviewType']) => {
   return type === CALM ? `${CALM_KR} ☀️` : `${PRESSURE_KR} 🔥`;
@@ -44,11 +44,11 @@ const InterviewHistoryList = () => {
   if (isError) return <ErrorComponent />;
 
   const handleGetDetailList = (historyId: InterviewHistoryType['id']) => {
-    router.push(getMyPagePath(HISTORY, historyId));
+    router.push(getMyPagePath(INTERVIEW_HISTORY_TAB, historyId));
   };
 
   const histories = data.pages.flatMap((page) => page.histories);
-  if (histories.length === 0) return <EmptyList tab={HISTORY} />;
+  if (histories.length === 0) return <EmptyList tab={INTERVIEW_HISTORY_TAB} />;
   return (
     <ul className='h-full overflow-y-auto scrollbar-hide'>
       {histories.map((history, index) => (

@@ -6,18 +6,18 @@ import InterviewHistoryList from '@/features/interview-history/interview-history
 import ResumeList from '@/features/resume-list/resume-list';
 import { useSearchParams } from 'next/navigation';
 
-const { HISTORY, BOOKMARK, RESUME } = TABS;
+const { INTERVIEW_HISTORY_TAB, BOOKMARK_TAB, RESUME_TAB } = TABS;
 
 const ListByTab = () => {
   const searchParams = useSearchParams();
-  const currentTab = searchParams.get('tab') ?? HISTORY;
+  const currentTab = searchParams.get('tab') ?? INTERVIEW_HISTORY_TAB;
 
   switch (currentTab) {
-    case HISTORY:
+    case INTERVIEW_HISTORY_TAB:
       return <InterviewHistoryList />;
-    case BOOKMARK:
+    case BOOKMARK_TAB:
       return <BookmarkSelectedList />;
-    case RESUME:
+    case RESUME_TAB:
       return <ResumeList />;
     default:
       <InterviewHistoryList />;

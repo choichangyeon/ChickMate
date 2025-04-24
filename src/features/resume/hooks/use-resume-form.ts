@@ -22,7 +22,7 @@ import { useEffect, useState } from 'react';
 const { DEFAULT } = DELAY_TIME;
 const { SAVING, SAVED } = AUTO_SAVE_STATUS;
 const { RESUME_SUBMISSION } = CHARACTER_HISTORY_KEY;
-const { RESUME } = TABS;
+const { RESUME_TAB } = TABS;
 
 export const useResumeForm = (resume?: ResumeType) => {
   const session = useSession();
@@ -85,7 +85,7 @@ export const useResumeForm = (resume?: ResumeType) => {
       }
 
       Notify.success(isReqExp && isAbleToGetEXP ? SUCCESS_WITH_EXP : SUCCESS);
-      router.push(getMyPagePath(RESUME));
+      router.push(getMyPagePath(RESUME_TAB));
     } catch (error) {
       if (error instanceof Error) {
         Notify.warning(error.message);

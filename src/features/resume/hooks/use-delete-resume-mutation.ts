@@ -8,7 +8,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 const { RESUMES, TABS_COUNT, HISTORY } = QUERY_KEY;
-const { RESUME } = TABS;
+const { RESUME_TAB } = TABS;
 
 export const useDeleteResumeMutation = (queryKey: string, userId?: UserType['id']) => {
   const queryClient = useQueryClient();
@@ -36,7 +36,7 @@ export const useDeleteResumeMutation = (queryKey: string, userId?: UserType['id'
       if (queryKey === RESUMES) {
         if (userId) queryClient.invalidateQueries({ queryKey: [HISTORY, userId] });
         queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
-        router.replace(getMyPagePath(RESUME));
+        router.replace(getMyPagePath(RESUME_TAB));
       }
     },
     onSettled: () => queryClient.invalidateQueries({ queryKey: [queryKey] }),

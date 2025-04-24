@@ -6,7 +6,7 @@ import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import { TABS } from '@/constants/my-page-constants';
 
-const { RESUME } = TABS;
+const { RESUME_TAB } = TABS;
 
 const ResumeList = () => {
   const router = useRouter();
@@ -14,7 +14,7 @@ const ResumeList = () => {
   const { data: resumeList, isPending, isError } = useResumeListQuery();
 
   const handleGetDetailList = (resumeId: number) => {
-    router.push(getMyPagePath(RESUME, resumeId));
+    router.push(getMyPagePath(RESUME_TAB, resumeId));
   };
 
   if (isPending) {

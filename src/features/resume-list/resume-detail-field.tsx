@@ -19,7 +19,7 @@ import type { UserType } from '@/types/DTO/user-dto';
 
 const { DETAIL } = PATH.RESUME;
 const { RESUMES } = QUERY_KEY;
-const { RESUME } = TABS;
+const { RESUME_TAB } = TABS;
 type Props = {
   resumeId: ResumeType['id'];
   userId: UserType['id'];
@@ -60,7 +60,7 @@ const ResumeDetailField = ({ resumeId, userId }: Props) => {
   return (
     <section className='flex h-[80dvh] flex-col gap-8'>
       <div className='flex items-center gap-4'>
-        <Link href={getMyPagePath(RESUME)}>
+        <Link href={getMyPagePath(RESUME_TAB)}>
           <LeftArrowIcon />
         </Link>
         <div>

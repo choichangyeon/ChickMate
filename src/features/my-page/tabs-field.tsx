@@ -2,12 +2,13 @@ import { prisma } from '@/lib/prisma';
 import type { User } from '@prisma/client';
 import ListByTab from '@/features/my-page/list-by-tab';
 import TabButtons from '@/features/my-page/tab-buttons';
-import { INIT_TAB_COUNTS } from '@/constants/my-page-constants';
+import { INIT_TAB_COUNTS, TABS } from '@/constants/my-page-constants';
 import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 import { RESUME_STATUS } from '@/constants/resume-constants';
 
 const { COMPLETED } = INTERVIEW_HISTORY_STATUS;
 const { SUBMIT } = RESUME_STATUS;
+const { INTERVIEW_HISTORY_TAB, BOOKMARK_TAB, RESUME_TAB } = TABS;
 type Props = {
   userId: User['id'];
 };
@@ -17,17 +18,17 @@ const TabsField = async ({ userId }: Props) => {
     select: {
       _count: {
         select: {
-          resumes: {
+          [RESUME_TAB]: {
             where: {
               status: SUBMIT,
             },
           },
-          interviewHistories: {
+          [INTERVIEW_HISTORY_TAB]: {
             where: {
               status: COMPLETED,
             },
           },
-          userSelectedJobs: true,
+          [BOOKMARK_TAB]: true,
         },
       },
     },

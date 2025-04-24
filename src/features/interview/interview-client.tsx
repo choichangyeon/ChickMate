@@ -61,7 +61,7 @@ const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
         </div>
         <div className='flex h-[335px] gap-5'>
           <div className='flex-1 rounded-lg border border-cool-gray-200 bg-white'>면접관</div>
-          <CameraView />
+          <CameraView/>
         </div>
       </section>
       <QuestionDisplayWithTimer interviewHistory={interviewHistory} interviewQnAList={interviewQnAList} />

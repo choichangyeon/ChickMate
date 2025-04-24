@@ -70,7 +70,6 @@ export const RESUME_MESSAGE = {
   GET_COUNT_ERROR: '경험치 지급을 위해 오늘 작성한 자소서를 확인하는데 실패했습니다.',
   LIMIT: {
     MAX_RESUME_FIELD: '자소서 항목은 최대 5개까지 추가할 수 있습니다.',
-    MIN_RESUME_FIELD: '자소서 항목은 최소 1개 이상 작성해야됩니다.',
   },
   CONFIRM: {
     DELETE: '자소서를 정말로 삭제하시겠습니까?',

@@ -6,12 +6,13 @@ const MAX_ANSWER_LENGTH = 1000;
 
 type Props = {
   field: Field;
+  fieldListLen: number;
   idx: number;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   onDelete: (fieldId: string) => void;
 };
 
-const QuestionAnswerField = ({ field, idx, onChange, onDelete }: Props) => {
+const QuestionAnswerField = ({ field, fieldListLen, idx, onChange, onDelete }: Props) => {
   const { id, question, answer } = field;
 
   return (
@@ -21,9 +22,11 @@ const QuestionAnswerField = ({ field, idx, onChange, onDelete }: Props) => {
           <Typography weight='normal' color='primary-600'>
             질문 {idx + 1}
           </Typography>
-          <button type='button' onClick={() => onDelete(id)} aria-label='질문 삭제'>
-            <Trash />
-          </button>
+          {fieldListLen > 1 && (
+            <button type='button' onClick={() => onDelete(id)} aria-label='질문 삭제'>
+              <Trash />
+            </button>
+          )}
         </div>
         <input
           id={`question-${id}`}

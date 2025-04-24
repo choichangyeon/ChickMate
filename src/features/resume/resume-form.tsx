@@ -25,6 +25,7 @@ const ResumeForm = ({ resume }: Props) => {
   const {
     title,
     fieldList,
+    fieldListLen,
     autoSaveStatus,
     resumeId,
     setTitle,
@@ -81,11 +82,12 @@ const ResumeForm = ({ resume }: Props) => {
       </div>
 
       {/* 중간 스크롤 영역 */}
-      <div className='flex flex-col flex-1 overflow-y-auto max-h-[467px] scrollbar-hide gap-2'>
+      <div className='flex max-h-[467px] flex-1 flex-col gap-2 overflow-y-auto scrollbar-hide'>
         {fieldList.map((field, idx) => (
           <QuestionAnswerField
             key={field.id}
             field={field}
+            fieldListLen={fieldListLen}
             idx={idx}
             onChange={handleFieldChange}
             onDelete={handleDeleteField}

@@ -67,10 +67,6 @@ export const useResumeForm = (resume?: ResumeType) => {
   };
 
   const handleDeleteField = (fieldId: string) => {
-    if (fieldList.length <= 1) {
-      Notify.warning(LIMIT.MIN_RESUME_FIELD);
-      return;
-    }
     setFieldList((prev) => prev.filter((field) => field.id !== fieldId));
     setAutoSaveStatus(SAVING);
   };
@@ -119,9 +115,12 @@ export const useResumeForm = (resume?: ResumeType) => {
     });
   }, [debouncedTitle, debouncedFieldList]);
 
+  const fieldListLen = fieldList.length;
+
   return {
     title,
     fieldList,
+    fieldListLen,
     autoSaveStatus,
     resumeId,
     setTitle,

@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useInterviewHistoryInfiniteQuery } from '@/features/interview-history/hook/use-interview-history-infinite-query';
 import EmptyList from '@/features/my-page/empty-list';
+import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
 import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
 import ErrorComponent from '@/components/common/error-component';
 import LoadingSpinner from '@/components/ui/loading-spinner';
@@ -43,7 +44,7 @@ const InterviewHistoryList = () => {
   if (isError) return <ErrorComponent />;
 
   const handleGetDetailList = (historyId: InterviewHistoryType['id']) => {
-    router.push(`?id=${historyId}&tab=${HISTORY}`);
+    router.push(getMyPagePath(HISTORY, historyId));
   };
 
   const histories = data.pages.flatMap((page) => page.histories);

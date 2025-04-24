@@ -18,12 +18,11 @@ type Props = {
 const ViewingField = ({ session }: Props) => {
   const searchParams = useSearchParams();
   const { id, tab } = sanitizeQueryParams(searchParams);
-  const hasSearchParams = searchParams.toString();
-  const targetId = Number(id);
+  const targetId = id ? Number(id) : null;
 
   return (
     <section className='flex h-[80dvh] w-1/2 flex-col'>
-      {!hasSearchParams && (
+      {!targetId && (
         <>
           <div className='mb-8 flex w-full items-center justify-center'>
             <MyPageCharacter session={session} />
@@ -33,8 +32,8 @@ const ViewingField = ({ session }: Props) => {
           </div>
         </>
       )}
-      {tab === HISTORY && <InterviewDetailField interviewId={targetId} />}
-      {tab === RESUME && <ResumeDetailField resumeId={targetId} />}
+      {targetId && tab === HISTORY && <InterviewDetailField interviewId={targetId} />}
+      {targetId && tab === RESUME && <ResumeDetailField resumeId={targetId} />}
     </section>
   );
 };

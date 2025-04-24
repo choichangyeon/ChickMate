@@ -4,9 +4,12 @@ import { deleteResume } from '@/features/resume/api/client-services';
 import { QUERY_KEY } from '@/constants/query-key';
 import { useRouter } from 'next/navigation';
 import { PATH } from '@/constants/path-constant';
+import { TABS } from '@/constants/my-page-constants';
+import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
 
 const { MY_PAGE } = PATH;
 const { RESUMES, TABS_COUNT } = QUERY_KEY;
+const { RESUME } = TABS;
 
 export const useDeleteResumeMutation = (queryKey: string) => {
   const queryClient = useQueryClient();
@@ -33,7 +36,7 @@ export const useDeleteResumeMutation = (queryKey: string) => {
     onSuccess: () => {
       if (queryKey === RESUMES) {
         queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
-        router.replace(MY_PAGE);
+        router.replace(getMyPagePath(RESUME));
       }
     },
     onSettled: () => queryClient.invalidateQueries({ queryKey: [queryKey] }),

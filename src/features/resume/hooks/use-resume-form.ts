@@ -21,7 +21,6 @@ const { MY_PAGE } = PATH;
 const { DEFAULT } = DELAY_TIME;
 const { SAVING, SAVED } = AUTO_SAVE_STATUS;
 const { RESUME_SUBMISSION } = CHARACTER_HISTORY_KEY;
-const { LIMIT } = RESUME_MESSAGE;
 
 export const useResumeForm = (resume?: ResumeType) => {
   const router = useRouter();
@@ -58,10 +57,6 @@ export const useResumeForm = (resume?: ResumeType) => {
   };
 
   const handleAddField = () => {
-    if (fieldList.length >= 5) {
-      Notify.warning(LIMIT.MAX_RESUME_FIELD);
-      return;
-    }
     setFieldList((prev) => [...prev, { id: crypto.randomUUID(), question: '', answer: '' }]);
     setAutoSaveStatus(SAVING);
   };

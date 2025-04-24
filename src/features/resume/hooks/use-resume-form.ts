@@ -49,9 +49,9 @@ export const useResumeForm = (resume?: ResumeType) => {
 
   const handleFieldChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const { id, name, value } = event.target;
-    const [, realId] = id.split('-');
+    const [, ...realId] = id.split('-');
 
-    setFieldList((prev) => prev.map((field) => (field.id === realId ? { ...field, [name]: value } : field)));
+    setFieldList((prev) => prev.map((field) => (field.id === realId.join('-') ? { ...field, [name]: value } : field)));
     setIsDirty(true);
     setAutoSaveStatus(SAVING);
   };

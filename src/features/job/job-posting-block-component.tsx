@@ -2,7 +2,7 @@
 
 import BlockComponent from '@/components/common/block-component';
 import { PATH } from '@/constants/path-constant';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 
 type Props = {
@@ -10,19 +10,21 @@ type Props = {
 };
 
 const {
-  AUTH: { SIGN_IN },
+  AUTH: { SIGN_IN_WITH_PREV_URL },
   MY_PAGE,
 } = PATH;
 
 export const JobPostingBlockComponent = ({ type }: Props) => {
   const router = useRouter();
+  const currentPath = usePathname();
+
   const content = {
     'unauthenticated': {
       firstLine: '이런! 로그인을 하지 않았네요!',
       secondLine: '로그인이 필요합니다!',
       thirdLine: '맞춤형 채용공고는 내 정보를 기반으로 진행됩니다.',
       buttonName: '로그인하러 가기',
-      href: SIGN_IN,
+      href: SIGN_IN_WITH_PREV_URL(currentPath),
     },
     'no-profile': {
       firstLine: '이런! 사용자 정보를 설정하지 않았네요!',

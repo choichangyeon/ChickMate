@@ -5,6 +5,7 @@ export const PATH = {
   AUTH: {
     SIGN_IN: '/auth/sign-in',
     SIGN_UP: '/auth/sign-up',
+    SIGN_IN_WITH_PREV_URL: (prevPath: string) => `/auth/sign-in?prevUrl=${prevPath}`,
     CHARACTER: '/auth/character',
   },
   ON_BOARDING: '/on-boarding',
@@ -16,6 +17,7 @@ export const PATH = {
   INTERVIEW: {
     ROOT: '/interview',
     START: '/interview/start',
+    LIVE_ROOT: '/interview/live',
     LIVE: (id: number) => `/interview/live/${id}`,
   },
   JOB: '/job',

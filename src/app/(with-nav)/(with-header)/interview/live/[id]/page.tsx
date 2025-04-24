@@ -5,6 +5,7 @@ import { getInterviewHistory, getInterviewQnA } from '@/features/interview/api/s
 import type { RouteParams } from '@/types/route-params';
 import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 import InterviewClient from '@/features/interview/interview-client';
+import InterviewBlockComponent from '@/features/interview/interview-block-component';
 
 export const metadata: Metadata = {
   title: 'AI 면접',
@@ -13,17 +14,20 @@ export const metadata: Metadata = {
 
 const InterviewPage = async ({ params }: RouteParams) => {
   const session = await getServerSession(authOptions);
+  if (!session) return <InterviewBlockComponent type='unauthenticated' />;
+
   const interviewId = Number(params.id);
   const interviewHistory = await getInterviewHistory(interviewId);
   const interviewQnAList = await getInterviewQnA(interviewId);
 
-  if (!session || !interviewHistory) return null;
+  console.log('server checking', interviewQnAList);
+  if (!interviewHistory) return null;
 
   if (interviewHistory.status === INTERVIEW_HISTORY_STATUS.COMPLETED) {
     return <div>이미 완료된 면접입니다.</div>;
   }
 
-  return <InterviewClient interviewHistory={interviewHistory} interviewQnAList={interviewQnAList} />;
+  return <InterviewClient interviewHistory={interviewHistory} interviewQnAList={interviewQnAList} session={session} />;
 };
 
 export default InterviewPage;

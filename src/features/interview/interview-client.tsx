@@ -8,10 +8,15 @@ import CameraView from '@/features/interview/camera-view';
 import QuestionDisplayWithTimer from '@/features/interview/question-display-with-timer';
 import { useEffect, useRef } from 'react';
 import { useInterviewStore } from '@/store/use-interview-store';
-import { patchInterviewHistoryStatus } from '@/features/interview/api/client-services';
 import { INTERVIEW_HISTORY_STATUS, INTERVIEW_LIMIT_COUNT } from '@/constants/interview-constants';
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/constants/query-key';
+import { Session } from 'next-auth';
+import { usePatchInterviewHistoryMutation } from './hooks/use-interview-history-mutation';
+import { useQnaQuery } from './hooks/use-qna-query';
 
 const { IN_PROGRESS } = INTERVIEW_HISTORY_STATUS;
+const { IN_PROGRESS: IN_PROGRESS_KEY } = QUERY_KEY;
 
 const CHECK_LEAST_INDEX = 1;
 const CHECK_LAST_INDEX = -1;
@@ -19,12 +24,19 @@ const CHECK_LAST_INDEX = -1;
 type Props = {
   interviewHistory: InterviewHistoryType;
   interviewQnAList: InterviewQnAType[];
+  session: Session;
 };
 
-const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
+const InterviewClient = ({ interviewHistory, interviewQnAList, session }: Props) => {
   const setQuestionIndex = useInterviewStore((state) => state.setQuestionIndex);
   const questionIndex = useInterviewStore((state) => state.questionIndex);
+  const { mutate: patchInterviewHistoryMutate } = usePatchInterviewHistoryMutation();
+  const { data } = useQnaQuery(interviewHistory.id);
+  const queryClient = useQueryClient();
+
   const latestQuestionIndex = useRef(questionIndex);
+
+  console.log('this is List', interviewQnAList);
 
   useEffect(() => {
     latestQuestionIndex.current = questionIndex;
@@ -37,9 +49,11 @@ const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
       setQuestionIndex(interviewQnAList.length - CHECK_LEAST_INDEX);
     }
     return () => {
+      console.log('mounted');
       if (latestQuestionIndex.current < INTERVIEW_LIMIT_COUNT) {
-        patchInterviewHistoryStatus({ interviewId: interviewHistory.id, status: IN_PROGRESS });
+        patchInterviewHistoryMutate({ interviewId: interviewHistory.id, status: IN_PROGRESS });
       }
+      queryClient.invalidateQueries({ queryKey: [IN_PROGRESS_KEY] });
     };
   }, []);
 

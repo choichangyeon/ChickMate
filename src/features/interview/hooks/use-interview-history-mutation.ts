@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-key';
 import { patchInterviewHistoryStatus } from '@/features/interview/api/client-services';
 
-const { HISTORY } = QUERY_KEY;
+const { HISTORY, IN_PROGRESS } = QUERY_KEY;
 
 export const usePatchInterviewHistoryMutation = () => {
   const queryClient = useQueryClient();
@@ -15,6 +15,9 @@ export const usePatchInterviewHistoryMutation = () => {
     },
     onError: (error) => {
       throw error;
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: [IN_PROGRESS] });
     },
   });
 };

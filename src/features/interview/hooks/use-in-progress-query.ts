@@ -9,7 +9,7 @@ const { MIN } = STALE_TIME;
 
 export const useInProgressQuery = (userId: UserType['id']) => {
   return useQuery({
-    queryKey: [IN_PROGRESS, userId],
+    queryKey: [IN_PROGRESS],
     queryFn: () => getInterviewHistoryAboutInProgress({ userId }),
     staleTime: MIN,
   });

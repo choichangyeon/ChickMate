@@ -8,7 +8,7 @@ import { PATH } from '@/constants/path-constant';
 import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 import { Session } from 'next-auth';
 import { useInProgressQuery } from './hooks/use-in-progress-query';
-import { useInProgressMutation } from './hooks/use-in-progress-mutation';
+import { useInProgressDeleteMutation } from './hooks/use-in-progress-mutation';
 import { Notify } from 'notiflix';
 
 const {
@@ -27,7 +27,7 @@ const AlertInProgress = ({ session }: Props) => {
   const userId = session.user.id;
   const [isAlert, setIsAlert] = useState(false);
   const { data, isError } = useInProgressQuery(userId);
-  const { mutate: inProgressMutate, error: inProgressMutateError } = useInProgressMutation(userId);
+  const { mutate: inProgressDeleteMutate, error: inProgressMutateError } = useInProgressDeleteMutation();
   const router = useRouter();
 
   useEffect(() => {
@@ -42,8 +42,8 @@ const AlertInProgress = ({ session }: Props) => {
         message: MESSAGE,
         okButtonText: OK_BUTTON_TEXT,
         cancelButtonText: CANCEL_BUTTON_TEXT,
-        okFunction: () => router.push(LIVE(interviewId)),
-        cancelFunction: () => inProgressMutate({ interviewId, status, options: OPTIONS }),
+        okFunction: () => router.replace(LIVE(interviewId)),
+        cancelFunction: () => inProgressDeleteMutate({ interviewId, status, options: OPTIONS }),
       });
       setIsAlert(true);
     }

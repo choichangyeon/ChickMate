@@ -21,7 +21,6 @@ const { DELETE_SUCCEESS, GET_SERVER_ERROR } = HISTORY_MESSAGE;
  */
 export const GET = async (request: NextRequest, { params }: RouteParams) => {
   const interviewId = Number(params.id);
-
   try {
     const token = await getToken({ req: request, secret: NEXTAUTH_SECRET });
     if (!token) return NextResponse.json({ message: EXPIRED_TOKEN }, { status: 401 });
@@ -29,6 +28,23 @@ export const GET = async (request: NextRequest, { params }: RouteParams) => {
     const session = await getServerSession(authOptions);
     if (!session || !session.user) {
       return NextResponse.json({ message: AUTH_REQUIRED }, { status: 401 });
+    }
+    const searchParams = request.nextUrl.searchParams;
+    const { options = undefined } = sanitizeQueryParams(searchParams);
+
+    if (options && options === 'qna') {
+      const response = await prisma.interviewQnA.findMany({
+        where: {
+          interviewHistoryId: interviewId,
+          interviewHistory: {
+            userId: session.user.id,
+          },
+        },
+        orderBy: {
+          createdAt: 'asc',
+        },
+      });
+      return NextResponse.json({ response }, { status: 200 });
     }
 
     const response = await prisma.interviewHistory.findUnique({
@@ -166,13 +182,14 @@ export const DELETE = async (request: NextRequest, { params }: RouteParams) => {
     });
 
     if (options === 'ALL') {
-      await prisma.interviewHistory.deleteMany({
+      const { count } = await prisma.interviewHistory.deleteMany({
         where: {
           userId: session.user.id,
           status: Number(status),
         },
       });
-      return NextResponse.json({ message: DELETE_SUCCEESS }, { status: 200 });
+
+      return NextResponse.json({ message: DELETE_SUCCEESS, count }, { status: 200 });
     }
 
     if (!existing) {

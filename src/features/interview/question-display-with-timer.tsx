@@ -22,7 +22,6 @@ const QuestionDisplayWithTimer = ({ interviewHistory, interviewQnAList }: Props)
     useAudioWithTimer({ duration: MINUTES_IN_MS, interviewHistory });
 
   let lastQuestion = interviewQnAList.at(CHECK_LAST_INDEX)?.question;
-
   if (interviewQnAList.at(CHECK_LAST_INDEX)?.answer) {
     lastQuestion = null;
   }

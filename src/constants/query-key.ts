@@ -12,4 +12,5 @@ export const QUERY_KEY = {
   HISTORY: 'interview-history',
   TABS_COUNT: 'tabs-count',
   IN_PROGRESS: 'in-progress',
+  QNA: 'qna',
 };

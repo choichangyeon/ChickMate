@@ -5,6 +5,7 @@ import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
 import type { ResumeType } from '@/types/DTO/resume-dto';
 import type { UserType } from '@/types/DTO/user-dto';
+import type { InterviewQnAType } from '@/types/DTO/interview-qna-dto';
 
 const {
   AI: { TTS, STT, ROOT, INTERVIEW_START, INTERVIEW_LIVE, FEEDBACK },
@@ -131,7 +132,7 @@ type InterviewHistoryProps = {
   status: InterviewHistoryType['status'];
 };
 
-export const patchInterviewHistoryStatus = async ({ interviewId, status }: InterviewHistoryProps) => {
+export const patchInterviewHistoryStatus = async ({ interviewId, status }: InterviewHistoryProps): Promise<void> => {
   await fetchWithSentry(INTERVIEW_LIVE(interviewId), {
     method: PATCH,
     body: JSON.stringify({
@@ -152,7 +153,7 @@ type InterviewDeleteProps = {
   options: string;
 };
 
-export const deleteInterviewHistory = async ({ interviewId, options, status }: InterviewDeleteProps) => {
+export const deleteInterviewHistory = async ({ interviewId, options, status }: InterviewDeleteProps): Promise<void> => {
   const queryParams = new URLSearchParams({
     options,
     status: String(status),
@@ -163,7 +164,6 @@ export const deleteInterviewHistory = async ({ interviewId, options, status }: I
     method: DELETE,
     headers: JSON_HEADER,
   });
-  console.log(count);
 };
 
 /**
@@ -173,7 +173,9 @@ export const deleteInterviewHistory = async ({ interviewId, options, status }: I
 type InterviewInProgressProps = {
   userId: UserType['id'];
 };
-export const getInterviewHistoryAboutInProgress = async ({ userId }: InterviewInProgressProps) => {
+export const getInterviewHistoryAboutInProgress = async ({
+  userId,
+}: InterviewInProgressProps): Promise<InterviewHistoryType | null> => {
   const queryParams = new URLSearchParams({
     status: String(IN_PROGRESS),
   });
@@ -184,4 +186,22 @@ export const getInterviewHistoryAboutInProgress = async ({ userId }: InterviewIn
   });
   if (!data) return null;
   return data;
+};
+
+/**
+ *
+ * @param interviewId
+ * @returns data ID에 해당하는 QnA 기록
+ */
+export const getInterviewQnA = async (interviewId: number): Promise<InterviewQnAType[]> => {
+  const queryParams = new URLSearchParams({
+    options: 'qna',
+  });
+  const url = `${INTERVIEW_LIVE(interviewId)}?${queryParams}`;
+  const { response } = await fetchWithSentry(url, {
+    method: GET,
+    headers: JSON_HEADER,
+  });
+
+  return response;
 };

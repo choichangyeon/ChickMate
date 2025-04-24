@@ -5,10 +5,17 @@ import useResumeStore from '@/features/interview/hooks/use-resume-store';
 import { useSubmitResumesQuery } from '@/hooks/queries/use-submit-resumes-query';
 import BlockComponent from '@/components/common/block-component';
 import { PATH } from '@/constants/path-constant';
+import LoadingSpinner from '@/components/ui/loading-spinner';
+import { Session } from 'next-auth';
+import InterviewBlockComponent from './interview-block-component';
 
 const { ROOT } = PATH.RESUME;
 
-const ResumeCardsBox = () => {
+type Props = {
+  session: Session | null;
+};
+
+const ResumeCardsBox = ({ session }: Props) => {
   const { resumeId: selectedId, setResume } = useResumeStore();
   const { data: resumeList, isLoading, isError } = useSubmitResumesQuery();
 
@@ -20,7 +27,15 @@ const ResumeCardsBox = () => {
     }
   }, [resumeList]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (!session) return <InterviewBlockComponent type='unauthenticated' />;
+
+  if (isLoading) {
+    return (
+      <div className='mt-8 flex items-center justify-center'>
+        <LoadingSpinner />
+      </div>
+    );
+  }
   if (isError || !resumeList) return <div>Error...</div>;
   // TODO: 자소서 작성 페이지 라우팅 UI 구현 -> 민철님에게 요청 완료
   if (resumeList.length === 0)

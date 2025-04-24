@@ -3,37 +3,51 @@
 import { NOTIFLIX_WARNING_INTERVIEW_IN_PROGRESS } from '@/constants/notiflix-constants';
 import { showNotiflixConfirm } from '@/utils/show-notiflix-confirm';
 import { useEffect, useState } from 'react';
-import { deleteInterviewHistory } from '@/features/interview/api/client-services';
 import { useRouter } from 'next/navigation';
 import { PATH } from '@/constants/path-constant';
 import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
+import { Session } from 'next-auth';
+import { useInProgressQuery } from './hooks/use-in-progress-query';
+import { useInProgressMutation } from './hooks/use-in-progress-mutation';
+import { Notify } from 'notiflix';
 
-const { WARNING, OK_BUTTON_TEXT, CANCEL_BUTTON_TEXT, MESSAGE } = NOTIFLIX_WARNING_INTERVIEW_IN_PROGRESS;
+const {
+  WARNING,
+  DEFAULT: { OK_BUTTON_TEXT, CANCEL_BUTTON_TEXT, MESSAGE },
+  ERROR: { ERROR_MESSAGE },
+} = NOTIFLIX_WARNING_INTERVIEW_IN_PROGRESS;
 const { LIVE } = PATH.INTERVIEW;
 const OPTIONS = 'ALL';
-const { IN_PROGRESS } = INTERVIEW_HISTORY_STATUS;
 
 type Props = {
-  interviewId: number;
+  session: Session;
 };
 
-const AlertInProgress = ({ interviewId }: Props) => {
+const AlertInProgress = ({ session }: Props) => {
+  const userId = session.user.id;
   const [isAlert, setIsAlert] = useState(false);
+  const { data, isError } = useInProgressQuery(userId);
+  const { mutate: inProgressMutate, error: inProgressMutateError } = useInProgressMutation(userId);
   const router = useRouter();
 
   useEffect(() => {
-    if (!isAlert) {
+    if (!isAlert && isError) {
+      Notify.warning(ERROR_MESSAGE);
+      setIsAlert(true);
+    }
+    if (!isAlert && data) {
+      const { id: interviewId, status } = data;
       showNotiflixConfirm({
         title: WARNING,
         message: MESSAGE,
         okButtonText: OK_BUTTON_TEXT,
         cancelButtonText: CANCEL_BUTTON_TEXT,
         okFunction: () => router.push(LIVE(interviewId)),
-        cancelFunction: () => deleteInterviewHistory({ interviewId, options: OPTIONS, status: IN_PROGRESS }),
+        cancelFunction: () => inProgressMutate({ interviewId, status, options: OPTIONS }),
       });
       setIsAlert(true);
     }
-  }, [isAlert]);
+  }, [data, isError]);
 
   return null;
 };

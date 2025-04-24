@@ -1,10 +1,18 @@
 import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
+import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
+import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
+import type { ResumeType } from '@/types/DTO/resume-dto';
+import type { UserType } from '@/types/DTO/user-dto';
 
-const { TTS, STT, ROOT, INTERVIEW_START, INTERVIEW_LIVE, FEEDBACK } = ROUTE_HANDLER_PATH.AI;
-const { POST, PATCH, DELETE } = API_METHOD;
+const {
+  AI: { TTS, STT, ROOT, INTERVIEW_START, INTERVIEW_LIVE, FEEDBACK },
+  INTERVIEW_HISTORY: { DETAIL },
+} = ROUTE_HANDLER_PATH;
+const { POST, PATCH, DELETE, GET } = API_METHOD;
 const { JSON_HEADER } = API_HEADER;
+const { IN_PROGRESS } = INTERVIEW_HISTORY_STATUS;
 
 /**
  * Open AI TTS(Text to Speech) 통신
@@ -15,7 +23,7 @@ const { JSON_HEADER } = API_HEADER;
 
 type TtsProps = {
   aiQuestion: string;
-  interviewType: string;
+  interviewType: InterviewHistoryType['interviewType'];
 };
 
 export const postTextToSpeech = async ({ aiQuestion, interviewType }: TtsProps): Promise<string> => {
@@ -38,7 +46,7 @@ export const postTextToSpeech = async ({ aiQuestion, interviewType }: TtsProps):
  */
 type SttProps = {
   blob: Blob;
-  interviewId: number;
+  interviewId: InterviewHistoryType['id'];
 };
 
 export const postSpeechToText = async ({ blob, interviewId }: SttProps): Promise<string> => {
@@ -66,8 +74,8 @@ export const postSpeechToText = async ({ blob, interviewId }: SttProps): Promise
 
 type OpenAIProps = {
   userAnswer: string;
-  interviewId: number;
-  interviewType: string;
+  interviewId: InterviewHistoryType['id'];
+  interviewType: InterviewHistoryType['interviewType'];
 };
 
 export const postOpenAIQuestion = async ({ userAnswer, interviewId, interviewType }: OpenAIProps): Promise<string> => {
@@ -95,8 +103,8 @@ export const postAIInterviewFeedback = async ({ interviewId }: Pick<OpenAIProps,
  * @returns id 인터뷰 ID
  */
 type InterviewProps = {
-  resumeId: number;
-  interviewType: string;
+  resumeId: ResumeType['id'];
+  interviewType: InterviewHistoryType['interviewType'];
 };
 
 export const postInterview = async ({ resumeId, interviewType }: InterviewProps): Promise<number> => {
@@ -119,8 +127,8 @@ export const postInterview = async ({ resumeId, interviewType }: InterviewProps)
  * @param status 업데이트하고자하는 상태
  */
 type InterviewHistoryProps = {
-  interviewId: number;
-  status: number;
+  interviewId: InterviewHistoryType['id'];
+  status: InterviewHistoryType['status'];
 };
 
 export const patchInterviewHistoryStatus = async ({ interviewId, status }: InterviewHistoryProps) => {
@@ -139,9 +147,9 @@ export const patchInterviewHistoryStatus = async ({ interviewId, status }: Inter
  */
 
 type InterviewDeleteProps = {
-  interviewId: number;
+  interviewId: InterviewHistoryType['id'];
+  status: InterviewHistoryType['status'];
   options: string;
-  status: number;
 };
 
 export const deleteInterviewHistory = async ({ interviewId, options, status }: InterviewDeleteProps) => {
@@ -151,8 +159,29 @@ export const deleteInterviewHistory = async ({ interviewId, options, status }: I
   });
 
   const url = `${INTERVIEW_START(interviewId)}?${queryParams}`;
-  const { message } = await fetchWithSentry(url, {
+  const { message, count } = await fetchWithSentry(url, {
     method: DELETE,
     headers: JSON_HEADER,
   });
+  console.log(count);
+};
+
+/**
+ * @param userId 사용자 ID
+ * @returns InProgress 상태의 인터뷰 히스토리
+ */
+type InterviewInProgressProps = {
+  userId: UserType['id'];
+};
+export const getInterviewHistoryAboutInProgress = async ({ userId }: InterviewInProgressProps) => {
+  const queryParams = new URLSearchParams({
+    status: String(IN_PROGRESS),
+  });
+  const url = `${DETAIL(userId)}?${queryParams}`;
+  const { data } = await fetchWithSentry(url, {
+    method: GET,
+    headers: JSON_HEADER,
+  });
+  if (!data) return null;
+  return data;
 };

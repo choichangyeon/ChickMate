@@ -21,7 +21,11 @@ const ButtonNav = ({ menu }: Props) => {
     });
   };
 
-  return <button onClick={handleNavigate}>{menu?.icon}</button>;
+  return (
+    <button onClick={handleNavigate} aria-label={`${menu.name}`}>
+      {menu?.icon}
+    </button>
+  );
 };
 
 export default ButtonNav;

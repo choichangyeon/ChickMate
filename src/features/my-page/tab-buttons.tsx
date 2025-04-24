@@ -1,10 +1,10 @@
 'use client';
 import clsx from 'clsx';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useTabCountQuery } from '@/features/my-page/hook/use-tab-count-query';
-import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
 import Badge from '@/components/ui/badge';
 import { TABS } from '@/constants/my-page-constants';
+import { useTabCountQuery } from '@/features/my-page/hook/use-tab-count-query';
+import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
 import type { Tabs } from '@/types/tab-type';
 
 const { BOOKMARK_TAB, RESUME_TAB, INTERVIEW_HISTORY_TAB } = TABS;
@@ -59,7 +59,7 @@ const TabButtons = ({ userId, initialTabCounts }: Props) => {
             <button className='w-full' onClick={() => handleChangeTab(tab.id)}>
               {tab.title}
               {tabCounts[tab.id] !== 0 && (
-                <Badge mx={1} size='small' color='dark'>
+                <Badge mx={1} size='small' color={isCurrentTab ? 'primary' : 'dark'}>
                   {tabCounts[tab.id]}
                 </Badge>
               )}

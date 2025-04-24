@@ -1,24 +1,23 @@
 'use client';
-
+import { Session } from 'next-auth';
+import { useMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-query';
+import UserMetaDataModal from '@/features/user-meta-data/user-meta-data-modal';
+import MyInfoContent from '@/features/my-page/my-info-content';
+import BlockComponent from '@/components/common/block-component';
+import ErrorComponent from '@/components/common/error-component';
+import LoadingSpinner from '@/components/ui/loading-spinner';
+import Modal from '@/components/ui/modal';
 import Typography from '@/components/ui/typography';
 import { MODAL_ID } from '@/constants/modal-id-constants';
-import { useModalStore } from '@/store/use-modal-store';
-import UserMetaDataModal from '@/features/user-meta-data/user-meta-data-modal';
-import Modal from '@/components/ui/modal';
-import { Session } from 'next-auth';
-import SettingFill from '@/components/icons/setting-fill';
-import { useMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-query';
-import { UserMetaDataType } from '@/types/user-meta-data-type';
-import BlockComponent from '@/components/common/block-component';
 import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
-import LoadingSpinner from '@/components/ui/loading-spinner';
-import ErrorComponent from '@/components/common/error-component';
+import { useModalStore } from '@/store/use-modal-store';
+import type { UserMetaDataType } from '@/types/user-meta-data-type';
 
 type Props = {
   session: Session;
 };
 
-type FieldList = {
+export type FieldList = {
   key: keyof UserMetaDataType;
   label: string;
 };
@@ -28,11 +27,11 @@ const { USER_META_DATA } = MODAL_ID;
 const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
 
 const fieldList: FieldList[] = [
-  { key: EXPERIENCE_NAME, label: '경력' },
-  { key: REQUIRED_EDUCATION_NAME, label: '학력' },
-  { key: JOB_MID_CODE_NAME, label: '직무' },
-  { key: LOCATION_NAME, label: '지역' },
-  { key: ETC, label: '기타' },
+  { key: EXPERIENCE_NAME, label: '관련 경력' },
+  { key: REQUIRED_EDUCATION_NAME, label: '최종 학력' },
+  { key: JOB_MID_CODE_NAME, label: '지원 직무' },
+  { key: LOCATION_NAME, label: '근무 지역' },
+  { key: ETC, label: '기타 커리어' },
 ];
 
 const MyInfo = ({ session }: Props) => {
@@ -56,14 +55,9 @@ const MyInfo = ({ session }: Props) => {
 
   return (
     <div className='flex flex-1 flex-col gap-4'>
-      <div className='flex justify-between'>
-        <Typography as='h2' size='2xl' weight='bold'>
-          <span className='text-primary-orange-600'>내 정보</span> 확인
-        </Typography>
-        <button onClick={() => toggleModal(USER_META_DATA)}>
-          <SettingFill />
-        </button>
-      </div>
+      <Typography as='h2' size='2xl' weight='bold'>
+        <span className='text-primary-orange-600'>내 정보</span> 확인
+      </Typography>
       {/* 높이 조정 필요 */}
       {!data ? (
         <div className='flex flex-1 items-center justify-center'>
@@ -76,16 +70,7 @@ const MyInfo = ({ session }: Props) => {
           />
         </div>
       ) : (
-        <ul>
-          {fieldList.map(({ key, label }) => (
-            <li key={key} className='flex gap-4 rounded-2xl p-4'>
-              <Typography size='md' as='h3' weight='bold' color='secondary-amber'>
-                {label}
-              </Typography>
-              <Typography>{data[key]}</Typography>
-            </li>
-          ))}
-        </ul>
+        <MyInfoContent fieldList={fieldList} data={data} />
       )}
       {isModalOpen && (
         <Modal modalId={USER_META_DATA}>

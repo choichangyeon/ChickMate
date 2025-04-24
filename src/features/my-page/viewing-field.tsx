@@ -1,8 +1,8 @@
 'use client';
-
-import MyPageCharacter from '@/features/character/my-page-character';
 import { Session } from 'next-auth';
 import { useSearchParams } from 'next/navigation';
+import MyPageCharacter from '@/features/character/my-page-character';
+
 import MyInfo from '@/features/my-page/my-info';
 import InterviewDetailField from '@/features/interview-history/interview-detail-field';
 import ResumeDetailField from '@/features/resume-list/resume-detail-field';
@@ -22,7 +22,7 @@ const ViewingField = ({ session }: Props) => {
   const userId = session?.user.id ?? null;
   if (!userId) return null;
   return (
-    <section className='flex h-[80dvh] w-1/2 flex-col'>
+    <section className='flex h-fit w-1/2 flex-col self-center'>
       {!targetId && (
         <>
           <div className='mb-8 flex w-full items-center justify-center'>

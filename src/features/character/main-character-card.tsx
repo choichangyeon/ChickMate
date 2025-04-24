@@ -1,16 +1,15 @@
 'use client';
-
-import Image from 'next/image';
 import { Session } from 'next-auth';
+import Image from 'next/image';
+import { defaultCharacter } from '@/features/character/data/character-data';
+import CharacterExpBar from '@/features/character/character-exp-bar';
 import Typography from '@/components/ui/typography';
 import ScreenOverlay from '@/components/ui/screen-overlay';
-import BlockComponent from '@/components/common/block-component';
-import CharacterExpBar from '@/features/character/character-exp-bar';
-import { defaultCharacter } from '@/features/character/data/character-data';
 import { useCharacterCard } from '@/features/character/hooks/use-character-card';
 import CharacterDetailModal from '@/features/character/character-detail-modal';
 import CreateCharacterModal from '@/features/character/create-character-modal';
 import type { CharacterType } from '@/types/DTO/character-dto';
+import BlockComponent from '@/components/common/block-component';
 
 type Props = {
   characterData?: CharacterType;
@@ -37,7 +36,7 @@ const MainCharacterCard = ({
     <>
       <button
         onClick={handleClickCard}
-        className='relative flex h-full min-w-72 cursor-pointer flex-col justify-between overflow-hidden rounded-lg border border-cool-gray-200 p-8'
+        className='relative flex h-full min-w-72 cursor-pointer flex-col justify-between overflow-hidden rounded-lg border p-8'
       >
         {isDefault && (
           <ScreenOverlay>

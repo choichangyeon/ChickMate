@@ -36,7 +36,7 @@ const SelectInterviewerBox = () => {
   return (
     <section className='flex flex-row'>
       <aside className='mr-5 flex w-full items-start justify-start gap-5 self-stretch'>
-        <div
+        {/* <div
           onClick={() => setInterviewType(CALM)}
           className={`flex w-full cursor-pointer items-center justify-center self-stretch rounded-lg outline outline-1 outline-cool-gray-300 ${interviewType === CALM ? activeBgClass : ''}`}
         >
@@ -47,7 +47,28 @@ const SelectInterviewerBox = () => {
           className={`flex w-full cursor-pointer items-center justify-center self-stretch rounded-lg outline outline-1 outline-cool-gray-300 ${interviewType === PRESSURE ? activeBgClass : ''}`}
         >
           <Image src={`${imageBasePath}-pressure.png`} alt='불타는 면접관' width={220} height={220} />
-        </div>
+        </div> */}
+        {[CALM, PRESSURE].map((type) => (
+          <div
+            key={type}
+            onClick={() => setInterviewType(type)}
+            className={`relative flex h-full w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg outline outline-1 outline-cool-gray-300 ${interviewType === type ? activeBgClass : ''} `}
+          >
+            {/* 이 div 만 움직입니다 */}
+            <div
+              className={`absolute inset-0 flex transform items-center justify-center transition-transform duration-300 ease-in-out ${
+                interviewType === type ? 'scale-125' : 'scale-100'
+              } `}
+            >
+              <Image
+                src={`${imageBasePath}-${type === CALM ? 'calm' : 'pressure'}.png`}
+                alt={type === CALM ? '햇살 면접관' : '불타는 면접관'}
+                width={220}
+                height={220}
+              />
+            </div>
+          </div>
+        ))}
       </aside>
       <aside className='flex h-80 w-96 flex-shrink-0 flex-col items-center justify-center overflow-hidden rounded-lg bg-emerald-900/0 outline outline-1 outline-offset-[-1px] outline-yellow-500'>
         <div className='mb-4'>

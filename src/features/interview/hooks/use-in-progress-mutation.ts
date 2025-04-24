@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-key';
-import { deleteInterviewHistory, patchInterviewHistoryStatus } from '@/features/interview/api/client-services';
+import { deleteInterviewHistory } from '@/features/interview/api/client-services';
 import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
 
 const { IN_PROGRESS } = QUERY_KEY;

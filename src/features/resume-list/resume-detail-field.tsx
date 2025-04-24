@@ -1,22 +1,23 @@
 'use client';
-import Link from 'next/link';
-import ResumeQnAItem from '@/features/resume-list/resume-qna-item';
-import { useResumeQuery } from '@/features/resume-list/hooks/use-resume-query';
-import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
-import LoadingSpinner from '@/components/ui/loading-spinner';
 import ErrorComponent from '@/components/common/error-component';
 import LeftArrowIcon from '@/components/icons/left-arrow-icon';
-import Typography from '@/components/ui/typography';
 import Button from '@/components/ui/button';
+import LoadingSpinner from '@/components/ui/loading-spinner';
+import Typography from '@/components/ui/typography';
+import { TABS } from '@/constants/my-page-constants';
 import { PATH } from '@/constants/path-constant';
 import { QUERY_KEY } from '@/constants/query-key';
-import type { Field } from '@/types/resume';
+import { useResumeQuery } from '@/features/resume-list/hooks/use-resume-query';
+import ResumeQnAItem from '@/features/resume-list/resume-qna-item';
+import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
 import type { ResumeType } from '@/types/DTO/resume-dto';
+import type { Field } from '@/types/resume';
+import Link from 'next/link';
+import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
 
-const { MY_PAGE } = PATH;
 const { DETAIL } = PATH.RESUME;
 const { RESUMES } = QUERY_KEY;
-
+const { RESUME } = TABS;
 type Props = {
   resumeId: ResumeType['id'];
 };
@@ -50,7 +51,7 @@ const ResumeDetailField = ({ resumeId }: Props) => {
   return (
     <section className='flex h-[80dvh] flex-col gap-8'>
       <div className='flex items-center gap-4'>
-        <Link href={MY_PAGE}>
+        <Link href={getMyPagePath(RESUME)}>
           <LeftArrowIcon />
         </Link>
         <div>

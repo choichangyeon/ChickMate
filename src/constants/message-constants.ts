@@ -1,4 +1,5 @@
-import { USER_META_DATA_KEY } from './user-meta-data-constants';
+import { CHARACTER_HISTORY, CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
+import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 
 export const AUTH_MESSAGE = {
   VALIDATION: {
@@ -43,12 +44,15 @@ export const AI_MESSAGE = {
   },
 };
 
+const { RESUME_SUBMISSION } = CHARACTER_HISTORY_KEY;
+const EXP = CHARACTER_HISTORY[RESUME_SUBMISSION].amount;
+
 export const RESUME_MESSAGE = {
   SUBMIT: {
     REQUEST_FAILURE: '유효하지 않은 자소서 양식입니다.',
     SUBMIT_SERVER_ERROR: '자소서 생성에 실패했습니다.',
-    SUCCESS_WITH_EXP: '경험치 획득 완료! 자기소개서 작성이 완료되었습니다.',
-    SUCCESS: '자기소개서 작성이 완료되었습니다.'
+    SUCCESS_WITH_EXP: `자기소개서 작성이 완료되었습니다. ${EXP} 경험치 획득 완료!`,
+    SUCCESS: '자기소개서 작성이 완료되었습니다.',
   },
   DRAFT: {
     NOT_FOUND: '해당 자소서를 찾을 수 없습니다.',

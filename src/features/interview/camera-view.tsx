@@ -1,7 +1,8 @@
 'use client';
 
 import { useCameraStream } from '@/features/interview/hooks/use-camera-stream';
-import { Camera } from '@/components/icons/camera';
+import { BlockCamera } from '@/components/icons/block-camera';
+import { UsingCamera } from '@/components/icons/using-camera';
 import Typography from '@/components/ui/typography';
 import Image from 'next/image';
 
@@ -22,7 +23,7 @@ const CameraView = () => {
         <Typography color='gray-700' weight='bold'>
           카메라
         </Typography>
-        <Camera />
+        {isCameraOn ? <UsingCamera /> : <BlockCamera />}
       </button>
     </div>
   );

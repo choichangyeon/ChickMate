@@ -179,10 +179,10 @@ export const getInterviewHistoryAboutInProgress = async ({
     status: String(IN_PROGRESS),
   });
   const url = `${DETAIL(userId)}?${queryParams}`;
-  const { data } = await fetchWithSentry(url, {
+  const { response } = await fetchWithSentry(url, {
     method: GET,
     headers: JSON_HEADER,
   });
-  if (!data) return null;
-  return data;
+  if (!response) return null;
+  return response;
 };

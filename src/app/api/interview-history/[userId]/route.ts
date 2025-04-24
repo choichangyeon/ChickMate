@@ -47,7 +47,7 @@ export const GET = async (request: NextRequest, { params }: Props) => {
         },
       });
 
-      return NextResponse.json({ data: response[0] }, { status: 200 });
+      return NextResponse.json({ response: response[0] }, { status: 200 });
     }
     const pageNumber = Number(page);
     const limitNumber = Number(limit);

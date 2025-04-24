@@ -12,7 +12,7 @@ import AuthInput from '@/features/sign/auth-input';
 import { schema, SignInFormData } from '@/features/sign/data/sign-in-schema';
 import { useSignInResult } from '@/features/sign/hooks/use-sign-in-result';
 import { SIGN_IN_INPUT } from '@/features/sign/data/sign-input';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useDebounce from '@/hooks/customs/use-debounce';
 
 const { ON_BOARDING } = PATH;
@@ -41,6 +41,8 @@ const SignInAuthForm = () => {
   const watchedEmail = watch('email');
   const debouncedEmail = useDebounce(watchedEmail, DELAY_TIME);
 
+  useSignInResult();
+
   const onSubmit = async (data: SignInFormData) => {
     const response = await signIn('credentials', {
       ...data,
@@ -49,6 +51,10 @@ const SignInAuthForm = () => {
 
     if (!response?.ok) {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ email: debouncedEmail }));
+    }
+
+    if (!isSaveEmail) {
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
     }
   };
 

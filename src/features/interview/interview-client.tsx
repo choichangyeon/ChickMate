@@ -12,7 +12,6 @@ import { INTERVIEW_HISTORY_STATUS, INTERVIEW_LIMIT_COUNT } from '@/constants/int
 import { usePatchInterviewHistoryMutation } from '@/features/interview/hooks/use-interview-history-mutation';
 import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-key';
-import { Session } from 'next-auth';
 
 const { IN_PROGRESS } = INTERVIEW_HISTORY_STATUS;
 const { IN_PROGRESS: IN_PROGRESS_KEY } = QUERY_KEY;
@@ -23,10 +22,9 @@ const CHECK_LAST_INDEX = -1;
 type Props = {
   interviewHistory: InterviewHistoryType;
   interviewQnAList: InterviewQnAType[];
-  session: Session;
 };
 
-const InterviewClient = ({ interviewHistory, interviewQnAList, session }: Props) => {
+const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
   const setQuestionIndex = useInterviewStore((state) => state.setQuestionIndex);
   const questionIndex = useInterviewStore((state) => state.questionIndex);
   const { mutate: patchInterviewHistoryMutate } = usePatchInterviewHistoryMutation();

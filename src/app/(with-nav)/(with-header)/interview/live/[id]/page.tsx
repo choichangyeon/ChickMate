@@ -26,7 +26,7 @@ const InterviewPage = async ({ params }: RouteParams) => {
     return <div>이미 완료된 면접입니다.</div>;
   }
 
-  return <InterviewClient interviewHistory={interviewHistory} interviewQnAList={interviewQnAList} session={session} />;
+  return <InterviewClient interviewHistory={interviewHistory} interviewQnAList={interviewQnAList} />;
 };
 
 export default InterviewPage;

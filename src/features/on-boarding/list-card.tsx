@@ -5,7 +5,7 @@ import type { OnBoardingCard } from '@/features/on-boarding/data/on-boarding-lis
 const ListCard = ({ title, content, icon, path }: OnBoardingCard) => {
   return (
     <Link href={path}>
-      <section role='link' className='flex items-center rounded-xl border border-cool-gray-200 p-4'>
+      <section role='link' className='flex h-[122px] items-center rounded-xl border p-4'>
         <div className='mr-4'>{icon}</div>
         <div>
           <Typography as='h1' weight='bold'>

@@ -13,7 +13,7 @@ import { Notify } from 'notiflix';
 const {
   WARNING,
   DEFAULT: { OK_BUTTON_TEXT, CANCEL_BUTTON_TEXT, MESSAGE },
-  ERROR: { ERROR_MESSAGE },
+  ERROR: { REQUEST_ERROR },
 } = NOTIFLIX_WARNING_INTERVIEW_IN_PROGRESS;
 const { LIVE } = PATH.INTERVIEW;
 const OPTIONS = 'ALL';
@@ -31,7 +31,7 @@ const AlertInProgress = ({ session }: Props) => {
 
   useEffect(() => {
     if (!isAlert && isError) {
-      Notify.warning(ERROR_MESSAGE);
+      Notify.warning(REQUEST_ERROR);
       setIsAlert(true);
     }
     if (!isAlert && data) {

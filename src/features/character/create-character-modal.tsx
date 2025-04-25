@@ -1,8 +1,6 @@
 'use client';
 
-import LeftArrowIcon from '@/components/icons/left-arrow-icon';
-import RightArrowIcon from '@/components/icons/right-arrow-icon';
-import Button from '@/components/ui/button';
+import { Notify } from 'notiflix';
 import Modal from '@/components/ui/modal';
 import Typography from '@/components/ui/typography';
 import { CHARACTER_HISTORY_KEY, CHARACTER_INFORMATION } from '@/constants/character-constants';
@@ -18,9 +16,10 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 const { CHARACTER } = QUERY_KEY;
-const { POST_DATA_SUCCESS } = CHARACTER_MESSAGE.POST;
+const { POST_DATA_SUCCESS_WITH_EXP } = CHARACTER_MESSAGE.POST;
 const { CHARACTER_CREATE } = MODAL_ID;
 const { CREATE_CHARACTER } = CHARACTER_HISTORY_KEY;
+
 const CreateCharacterModal = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const queryClient = useQueryClient();
@@ -38,12 +37,16 @@ const CreateCharacterModal = () => {
       const res = await postCreateCharacter({ type });
       const characterId = res.id ?? null;
       setCharacterId(characterId);
+
       handleExperienceUp(CREATE_CHARACTER);
       queryClient.invalidateQueries({ queryKey: [CHARACTER] });
-      alert(POST_DATA_SUCCESS);
+
+      Notify.info(POST_DATA_SUCCESS_WITH_EXP);
       toggleModal(CHARACTER_CREATE);
     } catch (error) {
-      alert((error as Error).message);
+      if (error instanceof Error) {
+        Notify.failure(error.message);
+      }
     }
   };
 

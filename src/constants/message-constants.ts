@@ -117,7 +117,7 @@ export const CHARACTER_MESSAGE = {
   },
   POST: {
     POST_DATA_FAILED: '캐릭터를 생성하는 데 실패했습니다.',
-    POST_DATA_SUCCESS: `캐릭터 생성 ${CREATE_CHARACTER_EXP} 경험치 획득!\n캐릭터가 생성되었습니다.`, //TODO: alert 붙일 때 수정할 수도..?
+    POST_DATA_SUCCESS_WITH_EXP: `캐릭터가 생성되었습니다. ${CREATE_CHARACTER_EXP} 경험치 획득 완료!`, //TODO: alert 붙일 때 수정할 수도..?
   },
   PATCH: {
     PATCH_DATA_FAILED: '경험치 획득에 실패했습니다.',

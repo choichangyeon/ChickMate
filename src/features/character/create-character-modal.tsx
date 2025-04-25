@@ -75,7 +75,7 @@ const CreateCharacterModal = () => {
               type='button'
               onClick={goToPrev}
               disabled={characterTypes.length <= 1}
-              className='text-3xl text-gray-500 transition'
+              className='text-3xl text-cool-gray-500 transition'
               aria-label='이전 캐릭터 보기'
             >
               <LeftArrowIcon />
@@ -90,7 +90,7 @@ const CreateCharacterModal = () => {
               type='button'
               onClick={goToNext}
               disabled={characterTypes.length <= 1}
-              className='text-3xl text-gray-500 transition'
+              className='text-3xl text-cool-gray-500 transition'
               aria-label='다음 캐릭터 보기'
             >
               <RightArrowIcon />

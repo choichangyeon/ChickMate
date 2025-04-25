@@ -54,7 +54,7 @@ export const GET = async (request: NextRequest) => {
       },
     });
 
-    if (response <= MAX_COUNT_TO_GET_EXP_DURING_A_DAY) {
+    if (response < MAX_COUNT_TO_GET_EXP_DURING_A_DAY) {
       return NextResponse.json({ response: { isAbleToGetEXP: true } }, { status: 200 });
     }
     return NextResponse.json({ response: { isAbleToGetEXP: false } }, { status: 200 });

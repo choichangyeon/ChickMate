@@ -33,29 +33,3 @@ export const useInProgressDeleteMutation = () => {
     },
   });
 };
-
-type Props = {
-  interviewId: InterviewHistoryType['id'];
-  status: InterviewHistoryType['status'];
-  options: string;
-};
-type PostProps = {
-  resumeId: ResumeType['id'];
-  interviewType: InterviewHistoryType['interviewType'];
-};
-
-export const useInProgressPostMutation = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: ({ resumeId, interviewType }: PostProps) => postInterview({ resumeId, interviewType }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [IN_PROGRESS] });
-      Notify.success(DELETE_SUCCESS);
-    },
-    onError: (error) => {
-      Notify.failure(DELETE_ERROR);
-      throw error;
-    },
-  });
-};

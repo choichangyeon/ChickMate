@@ -1,8 +1,14 @@
-import { CHARACTER_HISTORY, CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
+import { EXPERIENCE_AMOUNT } from '@/constants/character-constants';
 import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 
-const { RESUME_SUBMISSION } = CHARACTER_HISTORY_KEY;
-const EXP = CHARACTER_HISTORY[RESUME_SUBMISSION].amount;
+const {
+  RESUME_SUBMISSION_EXP,
+  CREATE_CHARACTER_EXP,
+  INTERVIEW_COMPLETION_EXP,
+  FILL_OUT_META_DATA_EXP,
+  MOVE_TO_JOB_URL_EXP,
+} = EXPERIENCE_AMOUNT;
+
 const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME } = USER_META_DATA_KEY;
 
 export const AUTH_MESSAGE = {
@@ -52,7 +58,7 @@ export const RESUME_MESSAGE = {
   SUBMIT: {
     REQUEST_FAILURE: '유효하지 않은 자소서 양식입니다.',
     SUBMIT_SERVER_ERROR: '자소서 생성에 실패했습니다.',
-    SUCCESS_WITH_EXP: `자기소개서 작성이 완료되었습니다. ${EXP} 경험치 획득 완료!`,
+    SUCCESS_WITH_EXP: `자기소개서 작성이 완료되었습니다. ${RESUME_SUBMISSION_EXP} 경험치 획득 완료!`,
     SUCCESS: '자기소개서 작성이 완료되었습니다.',
   },
   DRAFT: {
@@ -86,7 +92,7 @@ export const USER_META_DATA_FORM_MESSAGE = {
     GET_DATA_ERROR: '유저 정보를 가져오는데 실패했습니다.',
     POST_DATA_ERROR: '유저 정보를 저장하는데 실패했습니다.',
     POST_DATA_SUCCESS: '주요 이력이 저장되었습니다.',
-    CHARACTER_POST_SUCCESS: '500 경험치 획득!\n주요 이력이 저장되었습니다.',
+    CHARACTER_POST_SUCCESS: `${FILL_OUT_META_DATA_EXP} 경험치 획득!\n주요 이력이 저장되었습니다.`,
   },
 };
 
@@ -111,7 +117,7 @@ export const CHARACTER_MESSAGE = {
   },
   POST: {
     POST_DATA_FAILED: '캐릭터를 생성하는 데 실패했습니다.',
-    POST_DATA_SUCCESS: `캐릭터 생성 1,000 경험치 획득!\n캐릭터가 생성되었습니다.`, //TODO: alert 붙일 때 수정할 수도..?
+    POST_DATA_SUCCESS: `캐릭터 생성 ${CREATE_CHARACTER_EXP} 경험치 획득!\n캐릭터가 생성되었습니다.`, //TODO: alert 붙일 때 수정할 수도..?
   },
   PATCH: {
     PATCH_DATA_FAILED: '경험치 획득에 실패했습니다.',

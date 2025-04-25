@@ -72,7 +72,7 @@ export const initNotiflix = () => {
     },
 
     failure: {
-      background: '#C2410C',
+      background: '#FF3D01',
       textColor: '#ffffff',
       childClassName: 'notiflix-notify-failure',
       notiflixIconColor: 'rgba(0,0,0,0.2)',
@@ -92,7 +92,7 @@ export const initNotiflix = () => {
     },
 
     info: {
-      background: '#26c0d3',
+      background: '#536EFE',
       textColor: '#ffffff',
       childClassName: 'notiflix-notify-info',
       notiflixIconColor: 'rgba(0,0,0,0.2)',

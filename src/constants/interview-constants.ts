@@ -8,7 +8,7 @@ export const INTERVIEW_TYPE_KR = {
   CALM_KR: '햇살 면접관',
 } as const;
 
-export const INTERVIEW_LIMIT_COUNT = 2;
+export const INTERVIEW_LIMIT_COUNT = 8;
 
 // 면접 완료 상태
 export const INTERVIEW_HISTORY_STATUS = {

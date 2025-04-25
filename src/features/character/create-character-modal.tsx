@@ -28,14 +28,15 @@ const CreateCharacterModal = () => {
   const type = characterTypes[currentIndex];
   const selectedCharacter = CHARACTER_INFORMATION[type][1];
   const { handleExperienceUp } = useExperienceUp();
+
   const setCharacterId = useCharacterStore((state) => state.setCharacterId);
   const toggleModal = useModalStore((state) => state.toggleModal);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await postCreateCharacter({ type });
-      const characterId = res.id ?? null;
+      const character = await postCreateCharacter({ type });
+      const characterId = character.id ?? null;
       setCharacterId(characterId);
 
       handleExperienceUp(CREATE_CHARACTER);

@@ -11,6 +11,7 @@ import { getLevelAndPercentage } from '@/features/character/utils/get-level-and-
 import { defaultCharacter } from '@/features/character/data/character-data';
 import { launchConfettiFireworks } from '@/utils/launch-confetti-fireworks';
 import type { CharacterType } from '@/types/DTO/character-dto';
+import { Notify } from 'notiflix';
 
 type Props = {
   characterData?: CharacterType;
@@ -53,6 +54,7 @@ export const useCharacterCard = ({
   useEffect(() => {
     if (prevLevelRef.current !== null && level > prevLevelRef.current) {
       launchConfettiFireworks();
+      Notify.info(`레벨 ${level} 달성`);
     }
     prevLevelRef.current = level;
   }, [level]);

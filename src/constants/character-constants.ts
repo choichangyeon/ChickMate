@@ -59,7 +59,7 @@ const { CREATE_CHARACTER, RESUME_SUBMISSION, INTERVIEW_COMPLETION, FILL_OUT_META
 export const CHARACTER_HISTORY = {
   [CREATE_CHARACTER]: { amount: 1000 },
   [RESUME_SUBMISSION]: { amount: 300 },
-  [INTERVIEW_COMPLETION]: { amount: 300 },
+  [INTERVIEW_COMPLETION]: { amount: 800 },
   [FILL_OUT_META_DATA]: { amount: 500 },
   [MOVE_TO_JOB_URL]: { amount: 100 },
 } as const;

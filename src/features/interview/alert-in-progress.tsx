@@ -31,6 +31,7 @@ const AlertInProgress = ({ session }: Props) => {
 
   console.log('data>>>>>>>', data);
   if (isPending && !isAlert) {
+    return null;
   }
   if (isError && !isAlert) {
     Notify.warning(REQUEST_ERROR);
@@ -55,31 +56,6 @@ const AlertInProgress = ({ session }: Props) => {
     setIsAlert(true);
     return null;
   }
-
-  // useEffect(() => {
-  //   if (!isAlert && isError) {
-  //     Notify.warning(REQUEST_ERROR);
-  //     setIsAlert(true);
-  //   }
-  //   if (!isAlert && data) {
-  //     const { id: interviewId, status } = data;
-  // showNotiflixConfirm({
-  //   title: WARNING,
-  //   message: MESSAGE,
-  //   okButtonText: OK_BUTTON_TEXT,
-  //   cancelButtonText: CANCEL_BUTTON_TEXT,
-  //   okFunction: () => {
-  //     router.push(LIVE(interviewId));
-  //     router.refresh();
-  //   },
-  //   cancelFunction: async () => {
-  //     await inProgressDeleteMutate({ interviewId, status, options: OPTIONS });
-  //   },
-  // });
-  //     setIsAlert(true);
-  //   }
-  // }, [data, isError]);
-  // 1) 에러 확인용 effect
 
   return null;
 };

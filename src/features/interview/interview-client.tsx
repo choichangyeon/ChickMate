@@ -13,6 +13,7 @@ import { usePatchInterviewHistoryMutation } from '@/features/interview/hooks/use
 import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-key';
 import { Notify } from 'notiflix';
+import { useRouter } from 'next/navigation';
 
 const { IN_PROGRESS: IN_PROGRESS_STATUS } = INTERVIEW_HISTORY_STATUS;
 const { IN_PROGRESS, HISTORY } = QUERY_KEY;
@@ -30,6 +31,7 @@ const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
   const hasCompleted = useInterviewStore((state) => state.hasCompleted);
   const setCompleted = useInterviewStore((state) => state.setCompleted);
   const { mutateAsync: patchInterviewHistoryMutate } = usePatchInterviewHistoryMutation();
+  const router = useRouter();
   const queryClient = useQueryClient();
   const completedState = useRef(hasCompleted);
 
@@ -38,11 +40,11 @@ const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
   }, [hasCompleted]);
 
   useEffect(() => {
-    if (interviewQnAList.length === INTERVIEW_LIMIT_COUNT && interviewQnAList.at(CHECK_LAST_INDEX)?.answer !== null) {
-      setQuestionIndex(interviewQnAList.length);
-    } else {
-      setQuestionIndex(interviewQnAList.length - CHECK_LEAST_INDEX);
-    }
+    const hasAnsweredAll =
+      interviewQnAList.length === INTERVIEW_LIMIT_COUNT && interviewQnAList.at(CHECK_LAST_INDEX)?.answer != null;
+    const startIndex = hasAnsweredAll ? interviewQnAList.length : interviewQnAList.length - CHECK_LEAST_INDEX;
+    setQuestionIndex(startIndex);
+
     const unmounted = async () => {
       try {
         if (!completedState.current) {
@@ -56,8 +58,8 @@ const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
       }
     };
     return () => {
-      queryClient.invalidateQueries({ queryKey: [IN_PROGRESS] });
       unmounted();
+      router.refresh();
     };
   }, []);
 

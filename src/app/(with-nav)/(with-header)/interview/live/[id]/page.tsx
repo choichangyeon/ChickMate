@@ -5,7 +5,7 @@ import { getInterviewHistory, getInterviewQnA } from '@/features/interview/api/s
 import type { RouteParams } from '@/types/route-params';
 import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 import InterviewBlockComponent from '@/features/interview/interview-block-component';
-import InterviewClientWrapper from '@/features/interview/interview-client-wrapper';
+import InterviewClient from '@/features/interview/interview-client';
 
 export const metadata: Metadata = {
   title: 'AI 면접',
@@ -26,7 +26,7 @@ const InterviewPage = async ({ params }: RouteParams) => {
     return <InterviewBlockComponent type='completedPageError' />;
   }
 
-  return <InterviewClientWrapper interviewHistory={interviewHistory} interviewQnAList={interviewQnAList} />;
+  return <InterviewClient interviewHistory={interviewHistory} interviewQnAList={interviewQnAList} />;
 };
 
 export default InterviewPage;

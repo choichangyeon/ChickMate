@@ -117,7 +117,7 @@ export const CHARACTER_MESSAGE = {
   },
   POST: {
     POST_DATA_FAILED: '캐릭터를 생성하는 데 실패했습니다.',
-    POST_DATA_SUCCESS_WITH_EXP: `캐릭터가 생성되었습니다. ${CREATE_CHARACTER_EXP} 경험치 획득 완료!`, //TODO: alert 붙일 때 수정할 수도..?
+    POST_DATA_SUCCESS_WITH_EXP: `캐릭터가 생성되었습니다. ${CREATE_CHARACTER_EXP} 경험치 획득 완료!`,
   },
   PATCH: {
     PATCH_DATA_FAILED: '경험치 획득에 실패했습니다.',
@@ -145,6 +145,7 @@ export const INTERVIEW_HISTORY = {
     PATCH_SERVER_ERROR: '면접 기록 수정에 실패했습니다.',
     NOT_FOUND: '해당 면접 기록을 찾을 수 없습니다.',
     FORBIDDEN: '해당 면접 기록을 수정할 권한이 없습니다.',
+    SUCCESS_WITH_EXP: `면접이 완료되었습니다. ${INTERVIEW_COMPLETION_EXP} 경험치 획득 완료!`,
   },
 };
 

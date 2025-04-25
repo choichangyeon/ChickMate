@@ -87,9 +87,9 @@ const SignInAuthForm = () => {
               id='save-email'
               checked={isSaveEmail}
               onChange={(event) => setIsSaveEmail(event.target.checked)}
-              className='h-4 w-4'
+              className='h-4 w-4 cursor-pointer'
             />
-            <label htmlFor='save-email' className='text-xs font-bold text-cool-gray-500'>
+            <label htmlFor='save-email' className='cursor-pointer text-xs font-bold text-cool-gray-500'>
               아이디 저장
             </label>
           </div>

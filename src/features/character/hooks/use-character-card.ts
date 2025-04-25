@@ -1,8 +1,7 @@
 'use client';
 
 import { Session } from 'next-auth';
-import { Character } from '@prisma/client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useModalStore } from '@/store/use-modal-store';
 import { CHARACTER_INFORMATION } from '@/constants/character-constants';
@@ -11,9 +10,10 @@ import { PATH } from '@/constants/path-constant';
 import { getLevelAndPercentage } from '@/features/character/utils/get-level-and-percentage';
 import { defaultCharacter } from '@/features/character/data/character-data';
 import { launchConfettiFireworks } from '@/utils/launch-confetti-fireworks';
+import type { CharacterType } from '@/types/DTO/character-dto';
 
 type Props = {
-  characterData?: Character;
+  characterData?: CharacterType;
   overlayText?: string;
   requiredModal?: boolean;
   session?: Session;

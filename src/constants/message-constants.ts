@@ -1,6 +1,10 @@
 import { CHARACTER_HISTORY, CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 
+const { RESUME_SUBMISSION } = CHARACTER_HISTORY_KEY;
+const EXP = CHARACTER_HISTORY[RESUME_SUBMISSION].amount;
+const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME } = USER_META_DATA_KEY;
+
 export const AUTH_MESSAGE = {
   VALIDATION: {
     NAME_LENGTH: '이름은 2~8자여야 합니다.',
@@ -44,9 +48,6 @@ export const AI_MESSAGE = {
   },
 };
 
-const { RESUME_SUBMISSION } = CHARACTER_HISTORY_KEY;
-const EXP = CHARACTER_HISTORY[RESUME_SUBMISSION].amount;
-
 export const RESUME_MESSAGE = {
   SUBMIT: {
     REQUEST_FAILURE: '유효하지 않은 자소서 양식입니다.',
@@ -73,7 +74,6 @@ export const RESUME_MESSAGE = {
   },
 };
 
-const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME } = USER_META_DATA_KEY;
 export const USER_META_DATA_FORM_MESSAGE = {
   VALIDATION: {
     [EXPERIENCE_NAME]: '경력을 선택해 주세요.',
@@ -124,7 +124,7 @@ export const HISTORY_MESSAGE = {
   VALIDATION: {
     QUERY_PARAMS_TYPE: 'page 또는 limit이 유효하지 않습니다.',
   },
-  DELETE_SUCCEESS: '인터뷰 기록을 삭제했습니다.',
+  DELETE_SUCCESS: '인터뷰 기록을 삭제했습니다.',
   GET_SERVER_ERROR: '히스토리를 불러올 수 없습니다.',
 };
 

@@ -57,8 +57,7 @@ export const useAudioWithTimer = ({ duration, interviewHistory }: Props) => {
     setIsAIVoicePlaying(true);
     const data = await handleVoiceToAIFlow({ blob, interviewType, interviewId });
 
-    // if (unmountedRef.current || !data) {
-    if (!data) {
+    if (unmountedRef.current || !data) {
       setIsAIVoicePlaying(false);
       return;
     }
@@ -78,7 +77,7 @@ export const useAudioWithTimer = ({ duration, interviewHistory }: Props) => {
   // 페이지 벗어날 때 음성 중단
   useEffect(() => {
     return () => {
-      // unmountedRef.current = true;
+      unmountedRef.current = true;
 
       if (audioRef.current) {
         audioRef.current.pause();

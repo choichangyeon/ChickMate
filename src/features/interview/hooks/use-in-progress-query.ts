@@ -11,6 +11,7 @@ export const useInProgressQuery = (userId: UserType['id']) => {
   return useQuery({
     queryKey: [IN_PROGRESS],
     queryFn: () => getInterviewHistoryAboutInProgress({ userId }),
-    staleTime: MIN,
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
 };

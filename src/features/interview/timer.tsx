@@ -44,6 +44,7 @@ const Timer = ({
   const { mutate: postAIFeedbackMutate, error: aiFeedbackError } = usePostAIFeedbackMutation();
   const queryClient = useQueryClient();
   const characterId = useCharacterStore((state) => state.characterId);
+  const setCompleted = useInterviewStore((state) => state.setCompleted);
   const { handleExperienceUp } = useExperienceUp();
 
   const questionIndex = useInterviewStore((state) => state.questionIndex);
@@ -73,7 +74,7 @@ const Timer = ({
       handleExperienceUp(INTERVIEW_COMPLETION);
       alert('경험치 획득 완료!'); //@TODO: 경험치 정의 완료된 후에 alert 리팩토링하면서 상수로 빼겠습니다.
     }
-
+    setCompleted(true);
     patchInterviewHistoryMutate({ interviewId: interviewHistory.id, status: COMPLETED });
     postAIFeedbackMutate(interviewHistory.id);
     queryClient.invalidateQueries({

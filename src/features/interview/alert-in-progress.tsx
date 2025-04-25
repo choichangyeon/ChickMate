@@ -25,31 +25,61 @@ type Props = {
 const AlertInProgress = ({ session }: Props) => {
   const userId = session.user.id;
   const [isAlert, setIsAlert] = useState(false);
-  const { data, isError } = useInProgressQuery(userId);
-  const { mutate: inProgressDeleteMutate, error: inProgressMutateError } = useInProgressDeleteMutation();
+  const { data, isError, isPending } = useInProgressQuery(userId);
+  const { mutateAsync: inProgressDeleteMutate } = useInProgressDeleteMutation();
   const router = useRouter();
 
-  useEffect(() => {
-    if (!isAlert && isError) {
-      Notify.warning(REQUEST_ERROR);
-      setIsAlert(true);
-    }
-    if (!isAlert && data) {
-      const { id: interviewId, status } = data;
-      showNotiflixConfirm({
-        title: WARNING,
-        message: MESSAGE,
-        okButtonText: OK_BUTTON_TEXT,
-        cancelButtonText: CANCEL_BUTTON_TEXT,
-        okFunction: () => {
-          router.push(LIVE(interviewId));
-          router.refresh();
-        },
-        cancelFunction: () => inProgressDeleteMutate({ interviewId, status, options: OPTIONS }),
-      });
-      setIsAlert(true);
-    }
-  }, [data, isError]);
+  console.log('data>>>>>>>', data);
+  if (isPending && !isAlert) {
+  }
+  if (isError && !isAlert) {
+    Notify.warning(REQUEST_ERROR);
+    setIsAlert(true);
+    return null;
+  }
+  if (data && !isAlert) {
+    const { id: interviewId, status } = data;
+    showNotiflixConfirm({
+      title: WARNING,
+      message: MESSAGE,
+      okButtonText: OK_BUTTON_TEXT,
+      cancelButtonText: CANCEL_BUTTON_TEXT,
+      okFunction: () => {
+        router.push(LIVE(interviewId));
+        router.refresh();
+      },
+      cancelFunction: async () => {
+        await inProgressDeleteMutate({ interviewId, status, options: OPTIONS });
+      },
+    });
+    setIsAlert(true);
+    return null;
+  }
+
+  // useEffect(() => {
+  //   if (!isAlert && isError) {
+  //     Notify.warning(REQUEST_ERROR);
+  //     setIsAlert(true);
+  //   }
+  //   if (!isAlert && data) {
+  //     const { id: interviewId, status } = data;
+  // showNotiflixConfirm({
+  //   title: WARNING,
+  //   message: MESSAGE,
+  //   okButtonText: OK_BUTTON_TEXT,
+  //   cancelButtonText: CANCEL_BUTTON_TEXT,
+  //   okFunction: () => {
+  //     router.push(LIVE(interviewId));
+  //     router.refresh();
+  //   },
+  //   cancelFunction: async () => {
+  //     await inProgressDeleteMutate({ interviewId, status, options: OPTIONS });
+  //   },
+  // });
+  //     setIsAlert(true);
+  //   }
+  // }, [data, isError]);
+  // 1) 에러 확인용 effect
 
   return null;
 };

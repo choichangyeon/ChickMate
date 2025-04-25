@@ -20,7 +20,7 @@ const MyInfoContent = ({ fieldList, data }: Props) => {
         {fieldList.map(({ key, label }, index) => {
           const isLastChild = fieldList.length === index + 1;
           return (
-            <li className={clsx(isLastChild ? 'mb-0' : 'mb-4')}>
+            <li key={`my_info_list_${key}`} className={clsx(isLastChild ? 'mb-0' : 'mb-4')}>
               <dl className='flex items-center'>
                 <dt className='mr-10 w-[180px] font-bold'>{label}</dt>
                 <dd className='text-coolgray-500'>{data[key]}</dd>

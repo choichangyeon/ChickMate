@@ -7,7 +7,7 @@ import BlockComponent from '@/components/common/block-component';
 import { PATH } from '@/constants/path-constant';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import { Session } from 'next-auth';
-import InterviewBlockComponent from './interview-block-component';
+import InterviewBlockComponent from '@/features/interview/interview-block-component';
 
 const { ROOT } = PATH.RESUME;
 

@@ -12,6 +12,7 @@ import { INTERVIEW_HISTORY_STATUS, INTERVIEW_LIMIT_COUNT } from '@/constants/int
 import { usePatchInterviewHistoryMutation } from '@/features/interview/hooks/use-interview-history-mutation';
 import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-key';
+import { Notify } from 'notiflix';
 
 const { IN_PROGRESS: IN_PROGRESS_STATUS } = INTERVIEW_HISTORY_STATUS;
 const { IN_PROGRESS, HISTORY } = QUERY_KEY;
@@ -43,19 +44,15 @@ const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
       setQuestionIndex(interviewQnAList.length - CHECK_LEAST_INDEX);
     }
     const unmounted = async () => {
-      console.log('here');
       try {
         if (!completedState.current) {
-          // 면접완료를 누르지 않고 나가면 patch가 안됨 그렇다고 InterviewLimit가 상관없이 patch를 보내면
-          // 면접이 완료된 상태인데 IN_Progress로 상태가 지정될 수 있어
           await patchInterviewHistoryMutate({ interviewId: interviewHistory.id, status: IN_PROGRESS_STATUS });
           queryClient.invalidateQueries({ queryKey: [HISTORY] });
           queryClient.invalidateQueries({ queryKey: [IN_PROGRESS] });
         }
         setCompleted(false);
       } catch (error) {
-        // TODO: ERROR 처리
-        console.log('Error?');
+        Notify.failure((error as Error).message);
       }
     };
     return () => {

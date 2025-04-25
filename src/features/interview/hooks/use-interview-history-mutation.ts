@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { patchInterviewHistoryStatus } from '@/features/interview/api/client-services';
-import { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
+import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
 
 type Props = {
   interviewId: InterviewHistoryType['id'];

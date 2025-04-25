@@ -14,6 +14,7 @@ import { usePostAIFeedbackMutation } from '@/features/interview/hooks/use-ai-fee
 import type { InterviewHistory } from '@prisma/client';
 import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-key';
+import { Notify } from 'notiflix';
 
 const { MY_PAGE } = PATH;
 const { INTERVIEW_COMPLETION } = CHARACTER_HISTORY_KEY;
@@ -85,8 +86,7 @@ const Timer = ({
       });
       router.push(MY_PAGE);
     } catch (error) {
-      // TODO: ERROR Alert
-      console.log('error', error);
+      Notify.failure((error as Error).message);
     }
   };
 

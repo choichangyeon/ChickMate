@@ -20,10 +20,10 @@ const InterviewPage = async ({ params }: RouteParams) => {
   const interviewHistory = await getInterviewHistory(interviewId);
   const interviewQnAList = await getInterviewQnA(interviewId);
 
-  if (!interviewHistory) return null;
+  if (!interviewHistory) return <InterviewBlockComponent type='getInterviewHistoryError' />;
 
   if (interviewHistory.status === INTERVIEW_HISTORY_STATUS.COMPLETED) {
-    return <div>이미 완료된 면접입니다.</div>;
+    return <InterviewBlockComponent type='completedPageError' />;
   }
 
   return <InterviewClientWrapper interviewHistory={interviewHistory} interviewQnAList={interviewQnAList} />;

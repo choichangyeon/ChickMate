@@ -17,6 +17,7 @@ import { PATH } from '@/constants/path-constant';
 import { QUERY_KEY } from '@/constants/query-key';
 import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
 import { useFuncDebounce } from '@/hooks/customs/use-func-debounce';
+import { HISTORY_MESSAGE } from '@/constants/message-constants';
 
 type Props = {
   interviewId: InterviewHistoryType['id'];
@@ -28,6 +29,7 @@ const SELECT_ACTIVE_TAB = {
   HISTORY: 'history',
 };
 const { TABS_COUNT } = QUERY_KEY;
+const { DELETE_SUCCESS } = HISTORY_MESSAGE;
 
 const InterviewDetailField = ({ interviewId }: Props) => {
   const [activeTab, setActiveTab] = useState<string>(SELECT_ACTIVE_TAB.FEEDBACK);
@@ -40,7 +42,7 @@ const InterviewDetailField = ({ interviewId }: Props) => {
   const handleDeleteHistory = async () => {
     try {
       const res = await deleteInterviewAsyncMutation(interviewId);
-      Notify.success(res.message);
+      Notify.success(DELETE_SUCCESS);
       router.replace(MY_PAGE);
       queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
     } catch (error) {

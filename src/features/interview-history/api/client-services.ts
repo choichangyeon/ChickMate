@@ -62,9 +62,8 @@ export const getInterviewDetail = async (id: InterviewDetailProps): Promise<Inte
   return InterviewHistoryDetail;
 };
 
-export const deleteInterview = async (id: InterviewDetailProps): Promise<{ message: string }> => {
-  const response = await fetchWithSentry(INTERVIEW_DETAIL(id), {
+export const deleteInterview = async (id: InterviewDetailProps): Promise<void> => {
+  await fetchWithSentry(INTERVIEW_DETAIL(id), {
     method: DELETE,
   });
-  return response;
 };

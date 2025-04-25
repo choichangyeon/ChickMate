@@ -24,7 +24,7 @@ const {
   AUTH: { SIGN_IN },
 } = PATH;
 const {
-  API: { POST_DATA_SUCCESS, CHARACTER_POST_SUCCESS },
+  API: { POST_DATA_SUCCESS, CHARACTER_POST_SUCCESS_WITH_EXP },
 } = USER_META_DATA_FORM_MESSAGE;
 const { USER_META_DATA } = MODAL_ID;
 const { FILL_OUT_META_DATA } = CHARACTER_HISTORY_KEY;
@@ -91,7 +91,7 @@ export const useMetaDataForm = (userId: UserType['id']) => {
     try {
       await mutateAsync(values);
       if (isFirstTime) handleExperienceUp(FILL_OUT_META_DATA);
-      alert(isFirstTime ? CHARACTER_POST_SUCCESS : POST_DATA_SUCCESS);
+      alert(isFirstTime ? CHARACTER_POST_SUCCESS_WITH_EXP : POST_DATA_SUCCESS);
       toggleModal(USER_META_DATA);
       queryClient.invalidateQueries({
         queryKey: [JOB_POSTING, userId],

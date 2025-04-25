@@ -92,7 +92,7 @@ export const USER_META_DATA_FORM_MESSAGE = {
     GET_DATA_ERROR: '유저 정보를 가져오는데 실패했습니다.',
     POST_DATA_ERROR: '유저 정보를 저장하는데 실패했습니다.',
     POST_DATA_SUCCESS: '주요 이력이 저장되었습니다.',
-    CHARACTER_POST_SUCCESS: `${FILL_OUT_META_DATA_EXP} 경험치 획득!\n주요 이력이 저장되었습니다.`,
+    CHARACTER_POST_SUCCESS_WITH_EXP: `주요 이력이 저장되었습니다. ${FILL_OUT_META_DATA_EXP} 경험치 획득 완료!`,
   },
 };
 

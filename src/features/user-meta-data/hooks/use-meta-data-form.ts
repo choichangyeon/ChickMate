@@ -3,6 +3,7 @@ import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
+import { Notify } from 'notiflix';
 import { useMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-query';
 import useMetaDataMutation from '@/features/user-meta-data/hooks/use-meta-data-mutation';
 import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
@@ -91,7 +92,7 @@ export const useMetaDataForm = (userId: UserType['id']) => {
     try {
       await mutateAsync(values);
       if (isFirstTime) handleExperienceUp(FILL_OUT_META_DATA);
-      alert(isFirstTime ? CHARACTER_POST_SUCCESS_WITH_EXP : POST_DATA_SUCCESS);
+      Notify.success(isFirstTime ? CHARACTER_POST_SUCCESS_WITH_EXP : POST_DATA_SUCCESS);
       toggleModal(USER_META_DATA);
       queryClient.invalidateQueries({
         queryKey: [JOB_POSTING, userId],

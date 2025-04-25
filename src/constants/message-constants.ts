@@ -167,5 +167,5 @@ export const BOOKMARK_MESSAGE = {
   ADD_ERROR: '북마크 등록에 실패했습니다.',
   REMOVE_ERROR: '북마크 취소에 실패했습니다.',
   GET_COUNT_ERROR: '경험치 지급을 위해 오늘 등록한 북마크를 확인하는데 실패했습니다.',
-  SUCCESS_WITH_EXP: `${BOOKMARK_JOB_POSTING_EXP} 경험치 획득 완료!`,
+  SUCCESS_WITH_EXP: `북마크에 추가되었습니다. ${BOOKMARK_JOB_POSTING_EXP} 경험치 획득 완료!`,
 };

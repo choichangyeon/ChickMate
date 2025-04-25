@@ -3,6 +3,7 @@
 import { Session } from 'next-auth';
 import { useEffect, useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { Notify } from 'notiflix';
 import { useModalStore } from '@/store/use-modal-store';
 import { CHARACTER_INFORMATION } from '@/constants/character-constants';
 import { MODAL_ID } from '@/constants/modal-id-constants';
@@ -11,7 +12,6 @@ import { getLevelAndPercentage } from '@/features/character/utils/get-level-and-
 import { defaultCharacter } from '@/features/character/data/character-data';
 import { launchConfettiFireworks } from '@/utils/launch-confetti-fireworks';
 import type { CharacterType } from '@/types/DTO/character-dto';
-import { Notify } from 'notiflix';
 
 type Props = {
   characterData?: CharacterType;

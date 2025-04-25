@@ -67,7 +67,7 @@ export const initNotiflix = () => {
       childClassName: 'notiflix-notify-success',
       notiflixIconColor: '#D1D5DB',
       fontAwesomeClassName: 'fas fa-check-circle',
-      fontAwesomeIconColor: 'D1D5DB',
+      fontAwesomeIconColor: '#D1D5DB',
       backOverlayColor: 'rgba(55, 65, 81, 0.6)',
     },
 
@@ -97,7 +97,7 @@ export const initNotiflix = () => {
       childClassName: 'notiflix-notify-info',
       notiflixIconColor: '#D1D5DB',
       fontAwesomeClassName: 'fas fa-info-circle',
-      fontAwesomeIconColor: 'D1D5DB',
+      fontAwesomeIconColor: '#D1D5DB',
       backOverlayColor: 'rgba(55, 65, 81, 0.6)',
     },
   });

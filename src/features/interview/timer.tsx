@@ -76,10 +76,13 @@ const Timer = ({
         handleExperienceUp(INTERVIEW_COMPLETION);
         alert('경험치 획득 완료!'); //@TODO: 경험치 정의 완료된 후에 alert 리팩토링하면서 상수로 빼겠습니다.
       }
+
       setCompleted(true);
+
       await patchInterviewHistoryMutate({ interviewId: interviewHistory.id, status: COMPLETED });
       queryClient.invalidateQueries({ queryKey: [HISTORY] });
       queryClient.removeQueries({ queryKey: [IN_PROGRESS] });
+
       postAIFeedbackMutate(interviewHistory.id);
       queryClient.invalidateQueries({
         queryKey: [TABS_COUNT],

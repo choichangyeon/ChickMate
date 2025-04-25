@@ -30,7 +30,7 @@ const AlertInProgress = ({ session }: Props) => {
   const userId = session.user.id;
   const [isAlert, setIsAlert] = useState(false);
   const { data, isError, isPending } = useInProgressQuery(userId);
-  const { mutateAsync: inProgressDeleteMutate } = useInProgressDeleteMutation();
+  const { mutate: inProgressDeleteMutate } = useInProgressDeleteMutation();
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -53,14 +53,19 @@ const AlertInProgress = ({ session }: Props) => {
         router.push(LIVE(interviewId));
         router.refresh();
       },
-      cancelFunction: async () => {
-        try {
-          await inProgressDeleteMutate({ interviewId, status, options: OPTIONS });
-          queryClient.invalidateQueries({ queryKey: [IN_PROGRESS] });
-          Notify.success(DELETE_SUCCESS);
-        } catch (error) {
-          Notify.failure(DELETE_ERROR);
-        }
+      cancelFunction: () => {
+        inProgressDeleteMutate(
+          { interviewId, status, options: OPTIONS },
+          {
+            onSuccess: () => {
+              queryClient.removeQueries({ queryKey: [IN_PROGRESS] });
+              Notify.success(DELETE_SUCCESS);
+            },
+            onError: (error: Error) => {
+              Notify.failure(DELETE_ERROR);
+            },
+          }
+        );
       },
     });
     setIsAlert(true);

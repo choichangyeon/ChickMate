@@ -1,7 +1,7 @@
 import ErrorComponent from '@/components/common/error-component';
 import LeftArrowIcon from '@/components/icons/left-arrow-icon';
 import Button from '@/components/ui/button';
-import LoadingSpinner from '@/components/ui/loading-spinner';
+import LoadingAnimation from '@/components/common/loading-animation';
 import Typography from '@/components/ui/typography';
 import { HISTORY_MESSAGE } from '@/constants/message-constants';
 import { PATH } from '@/constants/path-constant';
@@ -68,7 +68,7 @@ const InterviewDetailField = ({ interviewId }: Props) => {
   if (isPending)
     return (
       <div className='flex h-full w-full items-center justify-center'>
-        <LoadingSpinner />
+        <LoadingAnimation />
       </div>
     );
 

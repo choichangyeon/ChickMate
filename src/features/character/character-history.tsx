@@ -4,9 +4,9 @@ import Typography from '@/components/ui/typography';
 import { formatDate } from '@/utils/format-date';
 import { useCharacterHistoryInfiniteQuery } from '@/features/character/hooks/use-character-history-infinite-query';
 import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
-import LoadingSpinner from '@/components/ui/loading-spinner';
 import type { CharacterType } from '@/types/DTO/character-dto';
 import type { CharacterHistoryType } from '@/types/DTO/character-history-dto';
+import LoadingAnimation from '@/components/common/loading-animation';
 
 type Props = {
   characterData: CharacterType;
@@ -25,7 +25,7 @@ const CharacterHistoryList = ({ characterData }: Props) => {
   if (isPending)
     return (
       <div className='flex h-[297px] items-center justify-center'>
-        <LoadingSpinner />
+        <LoadingAnimation />
       </div>
     );
   if (isError) return <div>에러 발생</div>;

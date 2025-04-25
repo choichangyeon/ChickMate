@@ -10,6 +10,9 @@ import { useMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-
 import UserMetaDataModal from '@/features/user-meta-data/user-meta-data-modal';
 import { useModalStore } from '@/store/use-modal-store';
 import { Session } from 'next-auth';
+import { UserMetaDataType } from '@/types/user-meta-data-type';
+import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
+import LoadingAnimation from '@/components/common/loading-animation';
 
 type Props = {
   session: Session;
@@ -25,8 +28,8 @@ const MyInfo = ({ session }: Props) => {
 
   if (isPending)
     return (
-      <div className='flex h-[30vh] flex-1 items-center justify-center'>
-        <LoadingSpinner />
+      <div className='flex flex-1 items-center justify-center'>
+        <LoadingAnimation />
       </div>
     );
   if (isError)

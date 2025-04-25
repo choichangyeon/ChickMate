@@ -8,7 +8,8 @@ import EmptyList from '@/features/my-page/empty-list';
 import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
 import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
 import ErrorComponent from '@/components/common/error-component';
-import LoadingSpinner from '@/components/ui/loading-spinner';
+import LoadingAnimation from '@/components/common/loading-animation';
+import { INTERVIEW_TYPE, INTERVIEW_TYPE_KR } from '@/constants/interview-constants';
 import { TABS } from '@/constants/my-page-constants';
 import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
 import type { UserType } from '@/types/DTO/user-dto';
@@ -32,7 +33,7 @@ const InterviewHistoryList = () => {
   if (isPending)
     return (
       <div className='flex h-full items-center justify-center'>
-        <LoadingSpinner />
+        <LoadingAnimation />
       </div>
     );
   if (isError) return <ErrorComponent />;

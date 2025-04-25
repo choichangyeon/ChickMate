@@ -8,6 +8,7 @@ import ErrorComponent from '@/components/common/error-component';
 import Button from '@/components/ui/button';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import { EXPERIENCE_AMOUNT } from '@/constants/character-constants';
+import LoadingAnimation from '@/components/common/loading-animation';
 import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 
 const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
@@ -22,7 +23,9 @@ const UserMetaDataForm = () => {
   const { watch, register, errors, handleSubmit, handleOnSubmit, handleSelect, isPending, isFirstTime } =
     useMetaDataForm(userId);
 
-  if (isPending) return <LoadingSpinner />;
+  const { data: regions = [], isPending } = useRegionsQuery();
+
+  if (isPending || isMetaDataPending) return <LoadingAnimation />;
 
   return (
     <div className={clsx('mt-10', isFirstTime && 'mt-0')}>

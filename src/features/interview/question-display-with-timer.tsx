@@ -29,7 +29,7 @@ const QuestionDisplayWithTimer = ({ interviewHistory, interviewQnAList }: Props)
   if (!interviewQnAList && interviewHistory.status === IN_PROGRESS) {
     return (
       <section className='mt-20 flex items-center justify-center'>
-        <LoadingSpinner />
+        <LoadingAnimation />
       </section>
     );
   }

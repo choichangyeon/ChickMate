@@ -1,7 +1,7 @@
 'use client';
 
 import JobPostingCard from '@/features/job/job-posting-card';
-import LoadingSpinner from '@/components/ui/loading-spinner';
+import LoadingAnimation from '@/components/common/loading-animation';
 import { QUERY_KEY } from '@/constants/query-key';
 import { useJobPostingQuery } from '@/features/job/hooks/use-job-posting-query';
 import type { UserMetaDataType } from '@/types/user-meta-data-type';
@@ -61,7 +61,7 @@ const JobPostingsBox = ({ userId }: Props) => {
     if (isPending) {
       return (
         <section className='flex h-[400px] flex-col items-center justify-center gap-4 self-stretch'>
-          <LoadingSpinner size='lg' />
+          <LoadingAnimation />
           <Typography>채용 공고를 불러오는 중...</Typography>
         </section>
       );

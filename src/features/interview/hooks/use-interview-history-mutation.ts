@@ -12,12 +12,10 @@ export const usePatchInterviewHistoryMutation = () => {
       patchInterviewHistoryStatus({ interviewId, status }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [HISTORY] });
+      queryClient.removeQueries({ queryKey: [IN_PROGRESS] });
     },
     onError: (error) => {
       throw error;
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: [IN_PROGRESS] });
     },
   });
 };

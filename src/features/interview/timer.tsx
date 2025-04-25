@@ -17,7 +17,7 @@ import { QUERY_KEY } from '@/constants/query-key';
 
 const { MY_PAGE } = PATH;
 const { INTERVIEW_COMPLETION } = CHARACTER_HISTORY_KEY;
-const { TABS_COUNT } = QUERY_KEY;
+const { TABS_COUNT, HISTORY, IN_PROGRESS } = QUERY_KEY;
 const { COMPLETED } = INTERVIEW_HISTORY_STATUS;
 type Props = {
   interviewHistory: InterviewHistory;
@@ -40,7 +40,7 @@ const Timer = ({
   stopRecordingWithTimer,
 }: Props) => {
   const router = useRouter();
-  const { mutate: patchInterviewHistoryMutate, error: InterviewHistoryError } = usePatchInterviewHistoryMutation();
+  const { mutateAsync: patchInterviewHistoryMutate, error: InterviewHistoryError } = usePatchInterviewHistoryMutation();
   const { mutate: postAIFeedbackMutate, error: aiFeedbackError } = usePostAIFeedbackMutation();
   const queryClient = useQueryClient();
   const characterId = useCharacterStore((state) => state.characterId);
@@ -69,18 +69,25 @@ const Timer = ({
   };
 
   const handleCompletedButtonClick = async () => {
-    if (characterId) {
-      //@TODO: 캐릭터 아이디 있을 때만
-      handleExperienceUp(INTERVIEW_COMPLETION);
-      alert('경험치 획득 완료!'); //@TODO: 경험치 정의 완료된 후에 alert 리팩토링하면서 상수로 빼겠습니다.
+    try {
+      if (characterId) {
+        //@TODO: 캐릭터 아이디 있을 때만
+        handleExperienceUp(INTERVIEW_COMPLETION);
+        alert('경험치 획득 완료!'); //@TODO: 경험치 정의 완료된 후에 alert 리팩토링하면서 상수로 빼겠습니다.
+      }
+      setCompleted(true);
+      await patchInterviewHistoryMutate({ interviewId: interviewHistory.id, status: COMPLETED });
+      queryClient.invalidateQueries({ queryKey: [HISTORY] });
+      queryClient.removeQueries({ queryKey: [IN_PROGRESS] });
+      postAIFeedbackMutate(interviewHistory.id);
+      queryClient.invalidateQueries({
+        queryKey: [TABS_COUNT],
+      });
+      router.push(MY_PAGE);
+    } catch (error) {
+      // TODO: ERROR Alert
+      console.log('error', error);
     }
-    setCompleted(true);
-    patchInterviewHistoryMutate({ interviewId: interviewHistory.id, status: COMPLETED });
-    postAIFeedbackMutate(interviewHistory.id);
-    queryClient.invalidateQueries({
-      queryKey: [TABS_COUNT],
-    });
-    router.push(MY_PAGE);
   };
 
   return (

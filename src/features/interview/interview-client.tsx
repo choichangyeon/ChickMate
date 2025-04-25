@@ -13,8 +13,8 @@ import { usePatchInterviewHistoryMutation } from '@/features/interview/hooks/use
 import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-key';
 
-const { IN_PROGRESS } = INTERVIEW_HISTORY_STATUS;
-const { IN_PROGRESS: IN_PROGRESS_KEY } = QUERY_KEY;
+const { IN_PROGRESS: IN_PROGRESS_STATUS } = INTERVIEW_HISTORY_STATUS;
+const { IN_PROGRESS, HISTORY } = QUERY_KEY;
 
 const CHECK_LEAST_INDEX = 1;
 const CHECK_LAST_INDEX = -1;
@@ -27,7 +27,8 @@ type Props = {
 const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
   const setQuestionIndex = useInterviewStore((state) => state.setQuestionIndex);
   const hasCompleted = useInterviewStore((state) => state.hasCompleted);
-  const { mutate: patchInterviewHistoryMutate } = usePatchInterviewHistoryMutation();
+  const setCompleted = useInterviewStore((state) => state.setCompleted);
+  const { mutateAsync: patchInterviewHistoryMutate } = usePatchInterviewHistoryMutation();
   const queryClient = useQueryClient();
   const completedState = useRef(hasCompleted);
 
@@ -41,15 +42,25 @@ const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
     } else {
       setQuestionIndex(interviewQnAList.length - CHECK_LEAST_INDEX);
     }
-    return () => {
-      if (!completedState.current) {
-        console.log('unmounted');
-        // 면접완료를 누르지 않고 나가면 patch가 안됨 그렇다고 InterviewLimit가 상관없이 patch를 보내면
-        // 면접이 완료된 상태인데 IN_Progress로 상태가 지정될 수 있어
-        patchInterviewHistoryMutate({ interviewId: interviewHistory.id, status: IN_PROGRESS });
-      }
+    const unmounted = async () => {
       console.log('here');
-      queryClient.invalidateQueries({ queryKey: [IN_PROGRESS_KEY] });
+      try {
+        if (!completedState.current) {
+          // 면접완료를 누르지 않고 나가면 patch가 안됨 그렇다고 InterviewLimit가 상관없이 patch를 보내면
+          // 면접이 완료된 상태인데 IN_Progress로 상태가 지정될 수 있어
+          await patchInterviewHistoryMutate({ interviewId: interviewHistory.id, status: IN_PROGRESS_STATUS });
+          queryClient.invalidateQueries({ queryKey: [HISTORY] });
+          queryClient.invalidateQueries({ queryKey: [IN_PROGRESS] });
+        }
+        setCompleted(false);
+      } catch (error) {
+        // TODO: ERROR 처리
+        console.log('Error?');
+      }
+    };
+    return () => {
+      queryClient.invalidateQueries({ queryKey: [IN_PROGRESS] });
+      unmounted();
     };
   }, []);
 

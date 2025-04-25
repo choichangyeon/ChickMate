@@ -19,6 +19,7 @@ import { QUERY_KEY } from '@/constants/query-key';
 import type { UserMetaDataType } from '@/types/user-meta-data-type';
 import type { SelectBoxType } from '@/types/select-box';
 import type { UserType } from '@/types/DTO/user-dto';
+import { getErrorMessage } from '@/utils/get-error-message';
 
 const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
 const {
@@ -74,10 +75,8 @@ export const useMetaDataForm = (userId: UserType['id']) => {
   }, [metaData, reset]);
 
   useEffect(() => {
-    if (error instanceof Error) {
-      alert(error.message);
-      window.location.replace(SIGN_IN);
-    }
+    alert(getErrorMessage(error));
+    window.location.replace(SIGN_IN);
   }, [error]);
 
   const handleSelect = useCallback(
@@ -99,7 +98,7 @@ export const useMetaDataForm = (userId: UserType['id']) => {
         exact: true,
       });
     } catch (error) {
-      if (error instanceof Error) alert(error.message);
+      alert(getErrorMessage(error));
     }
   };
 

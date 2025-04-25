@@ -14,6 +14,7 @@ import useDebounce from '@/hooks/customs/use-debounce';
 import { useCharacterStore } from '@/store/use-character-store';
 import type { ResumeType } from '@/types/DTO/resume-dto';
 import type { Field } from '@/types/resume';
+import { getErrorMessage } from '@/utils/get-error-message';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Notify } from 'notiflix';
@@ -88,9 +89,7 @@ export const useResumeForm = (resume?: ResumeType) => {
       Notify.success(isReqExp && isAbleToGetEXP ? SUCCESS_WITH_EXP : SUCCESS);
       router.push(getMyPagePath(RESUME_TAB));
     } catch (error) {
-      if (error instanceof Error) {
-        Notify.warning(error.message);
-      }
+      Notify.warning(getErrorMessage(error));
     }
   };
 

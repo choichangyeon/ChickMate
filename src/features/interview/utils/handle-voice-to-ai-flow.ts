@@ -1,4 +1,5 @@
 import { postOpenAIQuestion, postSpeechToText, postTextToSpeech } from '@/features/interview/api/client-services';
+import { getErrorMessage } from '@/utils/get-error-message';
 
 type Props = {
   blob: Blob;
@@ -16,8 +17,6 @@ export const handleVoiceToAIFlow = async ({ blob, interviewId, interviewType }: 
 
     return { audio, aiQuestion };
   } catch (error) {
-    if (error instanceof Error) {
-      alert(error.message);
-    }
+    alert(getErrorMessage(error));
   }
 };

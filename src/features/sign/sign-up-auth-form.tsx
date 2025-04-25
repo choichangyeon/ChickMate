@@ -11,6 +11,7 @@ import { postSignUp } from '@/features/sign/api/client-services';
 import AuthInput from '@/features/sign/auth-input';
 import { SignUpFormData, schema } from '@/features/sign/data/sign-up-schema';
 import { SIGN_UP_INPUT } from '@/features/sign/data/sign-input';
+import { getErrorMessage } from '@/utils/get-error-message';
 
 const SignUpAuthForm = () => {
   const {
@@ -30,9 +31,7 @@ const SignUpAuthForm = () => {
       router.push(PATH.AUTH.SIGN_IN);
       Notify.success(AUTH_MESSAGE.RESULT.SIGN_UP_SUCCESS);
     } catch (error) {
-      if (error instanceof Error) {
-        Notify.failure(error.message);
-      }
+      Notify.failure(getErrorMessage(error));
     }
   };
 

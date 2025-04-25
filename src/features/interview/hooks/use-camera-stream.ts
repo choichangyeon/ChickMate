@@ -1,4 +1,5 @@
 import { INTERVIEW_MESSAGE } from '@/constants/message-constants';
+import { getErrorMessage } from '@/utils/get-error-message';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 const { CAMERA_ACCESS } = INTERVIEW_MESSAGE;
@@ -34,9 +35,7 @@ export const useCameraStream = () => {
       if (onStreamReady) onStreamReady(stream);
       setIsCameraOn(true);
     } catch (error) {
-      if (error instanceof Error) {
-        alert(CAMERA_ACCESS);
-      }
+      alert(getErrorMessage(CAMERA_ACCESS));
     }
   }, []);
 

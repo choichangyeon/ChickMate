@@ -3,15 +3,58 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { signIn } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { PATH } from '@/constants/path-constant';
 import Typography from '@/components/ui/typography';
 import AuthInput from '@/features/sign/auth-input';
-import { SignInFormData } from '@/features/sign/data/sign-in-schema';
+import { schema, SignInFormData } from '@/features/sign/data/sign-in-schema';
+import { useSignInResult } from '@/features/sign/hooks/use-sign-in-result';
 import { SIGN_IN_INPUT } from '@/features/sign/data/sign-input';
-import { useSignInForm } from './hooks/use-sign-in-form';
+import { useState } from 'react';
+import useDebounce from '@/hooks/customs/use-debounce';
+
+const { ON_BOARDING } = PATH;
+const DELAY_TIME = 500;
+const LOCAL_STORAGE_KEY = 'savedEmail';
 
 const SignInAuthForm = () => {
-  const { register, handleSubmit, errors, isSaveEmail, setIsSaveEmail, onSubmit, redirectToUrl } = useSignInForm();
+  const searchParams = useSearchParams();
+  const prevUrl = searchParams.get('prevUrl');
+  const redirectToUrl = prevUrl || ON_BOARDING;
+
+  const savedEmail = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '{}') : {};
+  const [isSaveEmail, setIsSaveEmail] = useState(true);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm<SignInFormData>({
+    resolver: zodResolver(schema),
+    mode: 'onChange',
+    defaultValues: { email: savedEmail.email || '', password: '' } as SignInFormData,
+  });
+
+  const watchedEmail = watch('email');
+  const debouncedEmail = useDebounce(watchedEmail, DELAY_TIME);
+
+  useSignInResult();
+
+  const onSubmit = async (data: SignInFormData) => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ email: debouncedEmail }));
+
+    await signIn('credentials', {
+      ...data,
+      callbackUrl: redirectToUrl,
+    });
+
+    if (!isSaveEmail) {
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
+    }
+  };
 
   return (
     <main className='mx-auto flex w-full max-w-md flex-col gap-8 rounded-3xl border border-cool-gray-200 bg-white p-6'>
@@ -70,7 +113,7 @@ const SignInAuthForm = () => {
             <button
               type='button'
               onClick={() => signIn('naver', { callbackUrl: redirectToUrl })}
-              className='flex w-full items-center justify-center gap-2 rounded-lg bg-naver-green px-4 py-2 text-sm font-medium text-white'
+              className='bg-naver-green flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white'
             >
               <Image src='/assets/naver_icon.png' alt='네이버 로고' width={24} height={24} />
               네이버 이메일로 로그인

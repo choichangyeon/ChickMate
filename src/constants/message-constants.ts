@@ -15,12 +15,12 @@ export const AUTH_MESSAGE = {
   },
   RESULT: {
     SIGN_UP_SUCCESS: '회원 가입에 성공했습니다.',
-    SIGN_UP_FAILED: '회원 가입에 실패했습니다.',
+    SIGN_UP_FAILED: '회원 가입에 실패했습니다. 다시 시도해 주세요.',
     SIGN_UP_EXIST_ERROR: '이미 존재하는 이메일입니다.',
     SIGN_UP_EMPTY_FIELD: '모든 값을 입력해주세요.',
     SIGN_IN_FAILED: '이메일 또는 비밀번호가 잘못 되었습니다.',
     SOCIAL_SIGN_IN_EXIST_ERROR: '다른 로그인 방식으로 이미 가입된 계정입니다.',
-    SOCIAL_SIGN_IN_FAILED: '소셜 로그인에 실패했어요. 다시 시도해 주세요.',
+    SOCIAL_SIGN_IN_FAILED: '소셜 로그인에 실패했습니다. 다시 시도해 주세요.',
     AUTH_REQUIRED: '사용자 인증이 필요합니다.',
   },
   ERROR: {

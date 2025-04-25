@@ -1,16 +1,22 @@
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Notify } from 'notiflix';
+import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useDeleteInterviewMutation } from '@/features/interview-history/hook/use-delete-interview-mutation';
+import { useGetInterviewDetailQuery } from '@/features/interview-history/hook/use-get-interview-detail-query';
+import InterviewDetailFeedback, { FeedbackItem } from '@/features/interview-history/interview-detail-feedback';
+import InterviewDetailHistory from '@/features/interview-history/interview-detail-history';
+import { getErrorMessage } from '@/utils/get-error-message';
 import ErrorComponent from '@/components/common/error-component';
 import LeftArrowIcon from '@/components/icons/left-arrow-icon';
 import Button from '@/components/ui/button';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import Typography from '@/components/ui/typography';
 import { PATH } from '@/constants/path-constant';
-import { useDeleteInterviewMutation } from '@/features/interview-history/hook/use-delete-interview-mutation';
-import { useGetInterviewDetailQuery } from '@/features/interview-history/hook/use-get-interview-detail-query';
-import InterviewDetailFeedback, { FeedbackItem } from '@/features/interview-history/interview-detail-feedback';
-import InterviewDetailHistory from '@/features/interview-history/interview-detail-history';
+import { QUERY_KEY } from '@/constants/query-key';
 import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
-import Link from 'next/link';
-import { useState } from 'react';
+import { useFuncDebounce } from '@/hooks/customs/use-func-debounce';
 
 type Props = {
   interviewId: InterviewHistoryType['id'];
@@ -21,11 +27,28 @@ const SELECT_ACTIVE_TAB = {
   FEEDBACK: 'feedback',
   HISTORY: 'history',
 };
+const { TABS_COUNT } = QUERY_KEY;
 
 const InterviewDetailField = ({ interviewId }: Props) => {
-  const [activeTab, setActiveTab] = useState<string>('feedback');
-  const { data, isPending, isError } = useGetInterviewDetailQuery(interviewId);
-  const { mutate: deleteInterviewMutation } = useDeleteInterviewMutation();
+  const [activeTab, setActiveTab] = useState<string>(SELECT_ACTIVE_TAB.FEEDBACK);
+  const { data, isPending, error, isError } = useGetInterviewDetailQuery(interviewId);
+  const { mutateAsync: deleteInterviewAsyncMutation } = useDeleteInterviewMutation();
+
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  const handleDeleteHistory = async () => {
+    try {
+      const res = await deleteInterviewAsyncMutation(interviewId);
+      Notify.success(res.message);
+      router.replace(MY_PAGE);
+      queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
+    } catch (error) {
+      Notify.failure(getErrorMessage(error));
+    }
+  };
+
+  const debounceDelete = useFuncDebounce(handleDeleteHistory, 2000);
 
   if (isPending)
     return (
@@ -33,12 +56,11 @@ const InterviewDetailField = ({ interviewId }: Props) => {
         <LoadingSpinner />
       </div>
     );
-  if (isError)
-    return (
-      <div className='flex h-full w-full items-center justify-center'>
-        <ErrorComponent />
-      </div>
-    );
+
+  if (isError) {
+    if (error) Notify.failure(error.message);
+    return <ErrorComponent />;
+  }
 
   const feedback = data.feedback as FeedbackItem[];
 
@@ -89,7 +111,7 @@ const InterviewDetailField = ({ interviewId }: Props) => {
       {activeTab === SELECT_ACTIVE_TAB.FEEDBACK && <InterviewDetailFeedback feedback={feedback} />}
       {activeTab === SELECT_ACTIVE_TAB.HISTORY && <InterviewDetailHistory data={data} />}
       <div className='mt-auto pt-6'>
-        <Button size='fixed' onClick={() => deleteInterviewMutation(interviewId)}>
+        <Button size='fixed' onClick={debounceDelete}>
           삭제하기
         </Button>
       </div>

@@ -1,6 +1,6 @@
-import { Character } from '@prisma/client';
+import type { CharacterType } from '@/types/DTO/character-dto';
 
-export const defaultCharacter: Character = {
+export const defaultCharacter: CharacterType = {
   id: 0,
   userId: 'guest',
   type: 'clay',

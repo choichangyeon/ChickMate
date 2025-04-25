@@ -2,13 +2,14 @@
 
 import Typography from '@/components/ui/typography';
 import { formatDate } from '@/utils/format-date';
-import { Character, CharacterHistory } from '@prisma/client';
 import { useCharacterHistoryInfiniteQuery } from '@/features/character/hooks/use-character-history-infinite-query';
 import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
 import LoadingSpinner from '@/components/ui/loading-spinner';
+import type { CharacterType } from '@/types/DTO/character-dto';
+import type { CharacterHistoryType } from '@/types/DTO/character-history-dto';
 
 type Props = {
-  characterData: Character;
+  characterData: CharacterType;
 };
 
 const CharacterHistoryList = ({ characterData }: Props) => {
@@ -44,7 +45,7 @@ const CharacterHistoryList = ({ characterData }: Props) => {
         ) : (
           <>
             <ul className='flex flex-col gap-4'>
-              {characterHistories.map((history: CharacterHistory) => (
+              {characterHistories.map((history: CharacterHistoryType) => (
                 <li key={history.id} className='flex w-full items-end justify-between'>
                   <div className='flex flex-col justify-end'>
                     <Typography size='sm' color='gray-500'>

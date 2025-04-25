@@ -1,19 +1,19 @@
 'use client';
 
 import Image from 'next/image';
-import { Character } from '@prisma/client';
-import { defaultCharacter } from '@/features/character/data/character-data';
-import CharacterExpBar from '@/features/character/character-exp-bar';
-import Typography from '@/components/ui/typography';
 import { Session } from 'next-auth';
+import Typography from '@/components/ui/typography';
 import ScreenOverlay from '@/components/ui/screen-overlay';
+import BlockComponent from '@/components/common/block-component';
+import CharacterExpBar from '@/features/character/character-exp-bar';
+import { defaultCharacter } from '@/features/character/data/character-data';
 import { useCharacterCard } from '@/features/character/hooks/use-character-card';
 import CharacterDetailModal from '@/features/character/character-detail-modal';
 import CreateCharacterModal from '@/features/character/create-character-modal';
-import BlockComponent from '@/components/common/block-component';
+import type { CharacterType } from '@/types/DTO/character-dto';
 
 type Props = {
-  characterData?: Character;
+  characterData?: CharacterType;
   requiredModal?: boolean;
   overlayText?: string;
   session?: Session;

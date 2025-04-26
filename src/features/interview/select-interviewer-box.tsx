@@ -12,7 +12,9 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-key';
-import SunsetAnimation from '@/components/common/sunset-animation';
+import Sunset from '@/lottie/sunset.json';
+import Pressure from '@/lottie/pressure.json';
+import LottieAnimation from '@/components/common/lottie-animation';
 
 const { CALM, PRESSURE } = INTERVIEW_TYPE;
 const { LIVE } = PATH.INTERVIEW;
@@ -43,13 +45,13 @@ const SelectInterviewerBox = () => {
           onClick={() => setInterviewType(CALM)}
           className={`flex w-full cursor-pointer items-center justify-center self-stretch rounded-lg outline outline-1 outline-cool-gray-300 ${interviewType === CALM ? activeBgClass : ''}`}
         >
-          <SunsetAnimation />
+          <LottieAnimation active={interviewType === CALM} animationData={Sunset} />
         </div>
         <div
           onClick={() => setInterviewType(PRESSURE)}
           className={`flex w-full cursor-pointer items-center justify-center self-stretch rounded-lg outline outline-1 outline-cool-gray-300 ${interviewType === PRESSURE ? activeBgClass : ''}`}
         >
-          <Image src={`${imageBasePath}-pressure.png`} alt='불타는 면접관' width={220} height={220} />
+          <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure} speed={0.4} />
         </div>
       </aside>
       <aside className='flex h-80 w-96 flex-shrink-0 flex-col items-center justify-center overflow-hidden rounded-lg bg-emerald-900/0 outline outline-1 outline-offset-[-1px] outline-yellow-500'>
@@ -92,25 +94,3 @@ const SelectInterviewerBox = () => {
 };
 
 export default SelectInterviewerBox;
-
-// {[CALM, PRESSURE].map((type) => (
-//   <div
-//     key={type}
-//     onClick={() => setInterviewType(type)}
-//     className={`relative flex h-full w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg outline outline-1 outline-cool-gray-300 ${interviewType === type ? activeBgClass : ''} `}
-//   >
-//     {/* 이 div 만 움직입니다 */}
-//     <div
-//       className={`absolute inset-0 flex transform items-center justify-center transition-transform duration-300 ease-in-out ${
-//         interviewType === type ? 'scale-125' : 'scale-100'
-//       } `}
-//     >
-//       <Image
-//         src={`${imageBasePath}-${type === CALM ? 'calm' : 'pressure'}.png`}
-//         alt={type === CALM ? '햇살 면접관' : '불타는 면접관'}
-//         width={220}
-//         height={220}
-//       />
-//     </div>
-//   </div>
-// ))}

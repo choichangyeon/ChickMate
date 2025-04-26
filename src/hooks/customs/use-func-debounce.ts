@@ -7,12 +7,12 @@ import { useRef } from 'react';
  * @param delay - 디바운스 지연 시간
  * @returns 디바운싱이 적용된 콜백 함수
  */
-export const useFuncDebounce = (cbFunc: () => void, delay: number) => {
+export const useFuncDebounce = <T extends (...args: any[]) => unknown>(cbFunc: T, delay: number) => {
   const timerRef = useRef(true);
-  return () => {
+  return (...args: Parameters<T>) => {
     if (timerRef.current) {
       timerRef.current = false;
-      cbFunc();
+      cbFunc(...args);
       setTimeout(() => {
         timerRef.current = true;
       }, delay);

@@ -56,9 +56,8 @@ const InterviewDetailFeedback = ({ feedback }: Props) => {
             key === activeTab && (
               <div key={key} className='flex flex-col gap-4'>
                 <section className='flex items-center gap-4 rounded-lg border border-gray-200 p-4'>
-                  <div className='min-w-[94px]'>
-                    <StrengthIcon />
-                  </div>
+                  <StrengthIcon />
+
                   <div>
                     <Typography size='xl' weight='bold'>
                       {STRENGTH_LABEL}
@@ -69,9 +68,7 @@ const InterviewDetailFeedback = ({ feedback }: Props) => {
                   </div>
                 </section>
                 <section className='flex items-center gap-4 rounded-lg border border-gray-200 p-4'>
-                  <div className='min-w-[94px]'>
-                    <ImprovementIcon />
-                  </div>
+                  <ImprovementIcon />
                   <div>
                     <Typography size='xl' weight='bold'>
                       {IMPROVEMENT_LABEL}

@@ -13,6 +13,9 @@ const suit = localFont({
 export const metadata: Metadata = {
   title: '🐣Chick Mate - 당신의 취업 메이트',
   description: '취업, 어렵지 않아요! Chick Mate가 함께할게요😉',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 const RootLayout = ({

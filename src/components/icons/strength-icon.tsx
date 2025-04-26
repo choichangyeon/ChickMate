@@ -1,6 +1,6 @@
 const StrengthIcon = () => {
   return (
-    <svg width='94' height='92' viewBox='0 0 94 92' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <svg width='94' height='92' viewBox='0 0 94 92' fill='none' xmlns='http://www.w3.org/2000/svg' aria-hidden={true}>
       <g clipPath='url(#clip0_1981_15601)'>
         <path
           d='M49.34 63.92C49.34 60.8383 51.8383 58.34 54.92 58.34C58.0017 58.34 60.5 60.8383 60.5 63.92C60.5 67.0017 58.0017 69.5 54.92 69.5C51.8383 69.5 49.34 67.0017 49.34 63.92Z'

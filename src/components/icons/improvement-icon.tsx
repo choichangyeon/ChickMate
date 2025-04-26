@@ -1,6 +1,6 @@
 const ImprovementIcon = () => {
   return (
-    <svg width='94' height='92' viewBox='0 0 94 92' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <svg width='94' height='92' viewBox='0 0 94 92' fill='none' xmlns='http://www.w3.org/2000/svg' aria-hidden={true}>
       <g clipPath='url(#clip0_1981_15585)'>
         <path
           d='M49.34 28.08C49.34 31.1617 51.8383 33.66 54.92 33.66C58.0017 33.66 60.5 31.1617 60.5 28.08C60.5 24.9983 58.0017 22.5 54.92 22.5C51.8383 22.5 49.34 24.9983 49.34 28.08Z'

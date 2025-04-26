@@ -1,58 +1,43 @@
+'use client';
 import { buttonStyle } from '@/styles/button-styles';
-import Link from 'next/link';
 
-type ButtonBaseProps = {
-  children: React.ReactNode;
-  variant?: 'outline' | 'ghost' | 'contained';
-  color?: 'primary' | 'secondary' | 'dark';
-  size?: 'large' | 'medium' | 'small';
-  square?: boolean;
-};
-type ButtonProps = ButtonBaseProps & {
-  link?: false;
+type ButtonProps = {
   type?: 'button' | 'submit' | 'reset';
-  href?: never;
   disabled?: boolean;
-  target?: never;
+  children: React.ReactNode;
+  size?: 'small' | 'medium' | 'large' | 'fixed';
+  square?: boolean;
+  fontWeight?: 'normal' | 'medium' | 'bold' | 'black';
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
-type LinkButtonProps = ButtonBaseProps & {
-  link: true;
-  href: string;
-  type?: never;
-  onClick?: never;
-  target?: '_self' | '_blank' | '_parent' | '_top';
-};
 
-const Button = (props: ButtonProps | LinkButtonProps) => {
+const Button = (props: ButtonProps) => {
   const {
     children,
-    color = 'primary',
-    variant = 'contained',
-    link,
+    type = 'button',
+    onClick = null,
+    disabled,
     size = 'medium',
     square = false,
-    target = '_self',
+    fontWeight = 'medium',
   } = props;
 
-  if (link) {
-    return (
-      <Link href={props.href} target={target} className={buttonStyle({ variant, color, size, square })}>
-        {children}
-      </Link>
-    );
-  }
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (!onClick) return;
+    event.currentTarget.blur();
+    onClick(event);
+  };
 
-  const { type = 'button', onClick, disabled } = props;
   return (
     <button
       type={type}
-      className={buttonStyle({ variant, color, size, square, disabled })}
-      onClick={onClick}
+      className={buttonStyle({ size, square, disabled, fontWeight })}
+      onClick={handleClick}
       disabled={disabled}
     >
       {children}
     </button>
   );
 };
+
 export default Button;

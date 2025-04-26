@@ -1,24 +1,24 @@
-import Link from 'next/link';
-import clsx from 'clsx';
-import { useRouter } from 'next/navigation';
-import { Notify } from 'notiflix';
-import { useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
-import { useDeleteInterviewMutation } from '@/features/interview-history/hook/use-delete-interview-mutation';
-import { useGetInterviewDetailQuery } from '@/features/interview-history/hook/use-get-interview-detail-query';
-import InterviewDetailFeedback, { FeedbackItem } from '@/features/interview-history/interview-detail-feedback';
-import InterviewDetailHistory from '@/features/interview-history/interview-detail-history';
-import { getErrorMessage } from '@/utils/get-error-message';
 import ErrorComponent from '@/components/common/error-component';
 import LeftArrowIcon from '@/components/icons/left-arrow-icon';
 import Button from '@/components/ui/button';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import Typography from '@/components/ui/typography';
-import { useFuncDebounce } from '@/hooks/customs/use-func-debounce';
+import { HISTORY_MESSAGE } from '@/constants/message-constants';
 import { PATH } from '@/constants/path-constant';
 import { QUERY_KEY } from '@/constants/query-key';
-import { HISTORY_MESSAGE } from '@/constants/message-constants';
+import { useDeleteInterviewMutation } from '@/features/interview-history/hook/use-delete-interview-mutation';
+import { useGetInterviewDetailQuery } from '@/features/interview-history/hook/use-get-interview-detail-query';
+import InterviewDetailFeedback, { FeedbackItem } from '@/features/interview-history/interview-detail-feedback';
+import InterviewDetailHistory from '@/features/interview-history/interview-detail-history';
+import { useFuncDebounce } from '@/hooks/customs/use-func-debounce';
 import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
+import { getErrorMessage } from '@/utils/get-error-message';
+import { useQueryClient } from '@tanstack/react-query';
+import clsx from 'clsx';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Notify } from 'notiflix';
+import { useState } from 'react';
 
 type Props = {
   interviewId: InterviewHistoryType['id'];
@@ -35,7 +35,7 @@ const { DELETE_SUCCESS } = HISTORY_MESSAGE;
 
 const InterviewDetailField = ({ interviewId }: Props) => {
   const [activeTab, setActiveTab] = useState<string>(INTERVIEW_FEEDBACK);
-  const { data, isPending, error, isError } = useGetInterviewDetailQuery(interviewId);
+  const { data, isPending, isError, error: getError } = useGetInterviewDetailQuery(interviewId);
   const { mutateAsync: deleteInterviewAsyncMutation } = useDeleteInterviewMutation();
 
   const queryClient = useQueryClient();
@@ -62,8 +62,7 @@ const InterviewDetailField = ({ interviewId }: Props) => {
     );
 
   if (isError) {
-    if (error) Notify.failure(error.message);
-    return <ErrorComponent />;
+    return <ErrorComponent errorMessage={getError?.message} />;
   }
 
   const feedback = data.feedback as FeedbackItem[];

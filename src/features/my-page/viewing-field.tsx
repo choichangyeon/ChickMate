@@ -22,7 +22,7 @@ const ViewingField = ({ session }: Props) => {
   const userId = session?.user.id ?? null;
   if (!userId) return null;
   return (
-    <section className={clsx('flex w-1/2 flex-col self-center', targetId ? 'h-full' : 'h-fit')}>
+    <section className={clsx('min-width-[634px] flex w-1/2 flex-col self-center', targetId ? 'h-full' : 'h-fit')}>
       {!targetId && (
         <>
           <div className='mb-8 flex w-full items-center justify-center'>

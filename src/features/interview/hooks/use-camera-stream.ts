@@ -35,7 +35,7 @@ export const useCameraStream = () => {
       if (onStreamReady) onStreamReady(stream);
       setIsCameraOn(true);
     } catch (error) {
-      alert(getErrorMessage(CAMERA_ACCESS));
+      alert(getErrorMessage(error, CAMERA_ACCESS));
     }
   }, []);
 

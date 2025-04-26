@@ -21,10 +21,6 @@ const SelectInterviewerBox = () => {
   const router = useRouter();
   const { resumeId } = useResumeStore();
   const resetQuestionIndex = useInterviewStore((state) => state.resetQuestionIndex);
-
-  {
-    /** TODO: clay이냐 poly 타입이냐에 따라 수정해야됨 */
-  }
   const charterType = 'poly';
   const imageBasePath = `/assets/character/interviewer/${charterType}-interviewer`;
 

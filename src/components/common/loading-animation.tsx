@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Lottie from 'lottie-react';
-import Loading from '@/lottie/loding.json';
+import Loading from '@/lottie/loading.json';
 import clsx from 'clsx';
 
 type Props = {

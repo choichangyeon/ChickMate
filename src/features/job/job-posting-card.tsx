@@ -1,13 +1,13 @@
 'use client';
 
 import Card from '@/components/ui/card';
+import LinkButton from '@/components/ui/link-button';
 import Typography from '@/components/ui/typography';
 import Bookmark from '@/features/job/bookmark';
-import clsx from 'clsx';
-import Button from '@/components/ui/button';
+import type { JobPostingType } from '@/types/DTO/job-posting-dto';
 import { formatRemainDay } from '@/utils/format-remain-day';
 import { formatTimestamp } from '@/utils/format-timestamp';
-import type { JobPostingType } from '@/types/DTO/job-posting-dto';
+import clsx from 'clsx';
 
 type Props = {
   jobPosting: JobPostingType & { isBookmarked: boolean };
@@ -29,7 +29,6 @@ const JobPostingCard = ({ jobPosting, userId }: Props) => {
             <Typography weight='bold' color='gray-500'>
               {companyName}
             </Typography>
-            {/* TODO: iconButton component 적용 */}
             <Bookmark jobPostingId={id} isBookmarked={isBookmarked} userId={userId} />
           </div>
           <Typography as='h3' weight='bold' lineClamp='2'>
@@ -54,14 +53,10 @@ const JobPostingCard = ({ jobPosting, userId }: Props) => {
               날짜정보 오류
             </Typography>
           )}
-          {url ? (
-            <Button target='_blank' link href={url} variant='outline' color='dark' square>
+          {url && (
+            <LinkButton target='_blank' href={url} square>
               바로 가기
-            </Button>
-          ) : (
-            <Button disabled variant='outline' color='dark' square>
-              페이지 접근 불가
-            </Button>
+            </LinkButton>
           )}
         </section>
       </article>

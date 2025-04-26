@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import clsx from 'clsx';
 import ImprovementIcon from '@/components/icons/improvement-icon';
 import StrengthIcon from '@/components/icons/strength-icon';
-import Button from '@/components/ui/button';
 import Typography from '@/components/ui/typography';
 
 type Props = {
@@ -35,15 +35,17 @@ const InterviewDetailFeedback = ({ feedback }: Props) => {
         <div className='flex flex-wrap gap-2 px-4'>
           {Object.keys(FEEDBACK_KEYS).map((key) => (
             <div key={key}>
-              <Button
+              <button
                 onClick={() => setActiveTab(key)}
-                variant={activeTab === key ? 'contained' : 'outline'}
-                size='small'
+                className={clsx(
+                  'rounded-[50px] px-5 py-1',
+                  activeTab === key ? 'bg-primary-orange-600' : 'border border-primary-orange-600'
+                )}
               >
                 <Typography size='xs' weight='bold' color={activeTab === key ? 'white' : 'primary-600'}>
                   {FEEDBACK_KEYS[key]}
                 </Typography>
-              </Button>
+              </button>
             </div>
           ))}
         </div>

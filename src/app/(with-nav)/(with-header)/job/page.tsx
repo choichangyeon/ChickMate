@@ -1,8 +1,8 @@
+import LinkButton from '@/components/ui/link-button';
+import Typography from '@/components/ui/typography';
+import JobPostingSection from '@/features/job/job-posting-section';
 import { authOptions } from '@/utils/auth-option';
 import { getServerSession } from 'next-auth';
-import Typography from '@/components/ui/typography';
-import Button from '@/components/ui/button';
-import JobPostingSection from '@/features/job/job-posting-section';
 
 const SARAMIN_URL = 'http://www.saramin.co.kr';
 
@@ -21,9 +21,9 @@ const JobPage = async () => {
         </Typography>
       </section>
       <div className='text-right'>
-        <Button link href={SARAMIN_URL} target='_blank'>
+        <LinkButton href={SARAMIN_URL} target='_blank'>
           데이터 출처: 취업 사람인
-        </Button>
+        </LinkButton>
       </div>
 
       <JobPostingSection session={session} />

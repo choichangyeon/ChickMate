@@ -133,6 +133,10 @@
   }
 }
 
+.button-hover-focus {
+  @apply hover:border-primary-orange-600 hover:text-primary-orange-600 focus:bg-primary-orange-600 focus:text-cool-gray-10;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);

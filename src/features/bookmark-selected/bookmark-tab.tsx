@@ -1,13 +1,13 @@
-import clsx from 'clsx';
-import { useBookmarkMutation } from '@/features/job/hooks/use-bookmark-mutation';
 import { Star } from '@/components/icons/star';
-import Button from '@/components/ui/button';
+import LinkButton from '@/components/ui/link-button';
 import Typography from '@/components/ui/typography';
-import { formatRemainDay } from '@/utils/format-remain-day';
-import { formatTimestamp } from '@/utils/format-timestamp';
+import { useBookmarkMutation } from '@/features/job/hooks/use-bookmark-mutation';
 import type { JobPostingType } from '@/types/DTO/job-posting-dto';
 import type { UserType } from '@/types/DTO/user-dto';
 import type { UserSelectedJobType } from '@/types/DTO/user-selected-job-dto';
+import { formatRemainDay } from '@/utils/format-remain-day';
+import { formatTimestamp } from '@/utils/format-timestamp';
+import clsx from 'clsx';
 
 const experienceType: Record<number, string> = {
   0: '경력무관',
@@ -70,22 +70,10 @@ const BookmarkTab = ({ bookmark, index, length, userId }: Props) => {
           ) : (
             <Typography color='primary-600'>날짜정보 오류</Typography>
           )}
-          {bookmark.jobPosting.url ? (
-            <Button
-              target='_blank'
-              size='small'
-              link
-              href={bookmark.jobPosting.url}
-              variant='outline'
-              color='dark'
-              square
-            >
+          {bookmark.jobPosting.url && (
+            <LinkButton target='_blank' size='small' href={bookmark.jobPosting.url} square>
               바로 가기
-            </Button>
-          ) : (
-            <Button disabled variant='outline' size='small' color='dark' square>
-              페이지 접근 불가
-            </Button>
+            </LinkButton>
           )}
         </div>
       </div>

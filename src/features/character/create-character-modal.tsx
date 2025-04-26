@@ -1,21 +1,21 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
-import { useQueryClient } from '@tanstack/react-query';
-import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
-import { postCreateCharacter } from '@/features/character/api/client-services';
-import { useModalStore } from '@/store/use-modal-store';
-import { useCharacterStore } from '@/store/use-character-store';
+import LeftArrowIcon from '@/components/icons/left-arrow-icon';
+import RightArrowIcon from '@/components/icons/right-arrow-icon';
+import Button from '@/components/ui/button';
 import Modal from '@/components/ui/modal';
+import Typography from '@/components/ui/typography';
 import { CHARACTER_HISTORY_KEY, CHARACTER_INFORMATION } from '@/constants/character-constants';
 import { CHARACTER_MESSAGE } from '@/constants/message-constants';
 import { MODAL_ID } from '@/constants/modal-id-constants';
 import { QUERY_KEY } from '@/constants/query-key';
-import Typography from '@/components/ui/typography';
-import Button from '@/components/ui/button';
-import RightArrowIcon from '@/components/icons/right-arrow-icon';
-import LeftArrowIcon from '@/components/icons/left-arrow-icon';
+import { postCreateCharacter } from '@/features/character/api/client-services';
+import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
+import { useCharacterStore } from '@/store/use-character-store';
+import { useModalStore } from '@/store/use-modal-store';
+import { useQueryClient } from '@tanstack/react-query';
+import Image from 'next/image';
+import { useState } from 'react';
 
 const { CHARACTER } = QUERY_KEY;
 const { POST_DATA_SUCCESS } = CHARACTER_MESSAGE.POST;
@@ -103,7 +103,7 @@ const CreateCharacterModal = () => {
               {selectedCharacter.name}
             </Typography>
           </div>
-          <Button type='submit' size='small' square variant='outline'>
+          <Button type='submit' size='small' square>
             캐릭터 생성
           </Button>
         </div>

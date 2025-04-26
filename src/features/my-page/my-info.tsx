@@ -54,11 +54,10 @@ const MyInfo = ({ session }: Props) => {
     );
 
   return (
-    <div className='flex flex-1 flex-col gap-4'>
+    <section className='flex flex-1 flex-col gap-4'>
       <Typography as='h2' size='2xl' weight='bold'>
         <span className='text-primary-orange-600'>내 정보</span> 확인
       </Typography>
-      {/* 높이 조정 필요 */}
       {!data ? (
         <div className='flex flex-1 items-center justify-center'>
           <BlockComponent
@@ -77,7 +76,7 @@ const MyInfo = ({ session }: Props) => {
           <UserMetaDataModal />
         </Modal>
       )}
-    </div>
+    </section>
   );
 };
 

@@ -15,8 +15,18 @@ type Props = {
 };
 
 const JobPostingCard = ({ jobPosting, userId }: Props) => {
-  const { companyName, positionTitle, experienceName, expirationTimestamp, openingTimestamp, id, url, isBookmarked } =
-    jobPosting;
+  const {
+    companyName,
+    positionTitle,
+    experienceName,
+    expirationTimestamp,
+    openingTimestamp,
+    keyword,
+    industryName,
+    id,
+    url,
+    isBookmarked,
+  } = jobPosting;
   const postedAtDate = formatTimestamp({ input: openingTimestamp });
   const expiredAtDate = formatTimestamp({ input: expirationTimestamp });
   const remainDay = formatRemainDay(expirationTimestamp);
@@ -24,15 +34,16 @@ const JobPostingCard = ({ jobPosting, userId }: Props) => {
   return (
     <Card className='h-full p-8'>
       <article className='flex flex-col justify-between'>
-        <section className='h-24'>
-          <div className='flex flex-row justify-between'>
-            <Typography weight='bold' color='gray-500'>
-              {companyName}
-            </Typography>
-            <Bookmark jobPostingId={id} isBookmarked={isBookmarked} userId={userId} />
-          </div>
+        <header className='flex flex-row justify-between'>
+          <Typography weight='bold' color='gray-500'>
+            {companyName}
+          </Typography>
+          <Bookmark jobPostingId={id} isBookmarked={isBookmarked} userId={userId} />
+        </header>
+        <main>
           <Typography as='h3' weight='bold' lineClamp='2'>
             {positionTitle}
+            <span className='pl-2 text-cool-gray-500'>- {keyword}</span>
           </Typography>
           <div className='flex flex-row items-center gap-4'>
             <Typography size='sm' color='gray-500'>
@@ -42,8 +53,8 @@ const JobPostingCard = ({ jobPosting, userId }: Props) => {
               {postedAtDate}~{expiredAtDate}
             </Typography>
           </div>
-        </section>
-        <section className={badgeClassName}>
+        </main>
+        <footer className={badgeClassName}>
           {remainDay ? (
             <Typography color='primary-600' weight='bold' size='xl'>
               D-{remainDay}
@@ -58,7 +69,7 @@ const JobPostingCard = ({ jobPosting, userId }: Props) => {
               바로 가기
             </LinkButton>
           )}
-        </section>
+        </footer>
       </article>
     </Card>
   );

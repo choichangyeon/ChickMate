@@ -37,7 +37,7 @@ const MainCharacterCard = ({
     <>
       <div
         onClick={handleClickCard}
-        className='relative flex h-full min-w-72 cursor-pointer flex-col justify-between overflow-hidden rounded-lg border-2 p-8'
+        className='relative flex h-full min-w-72 cursor-pointer flex-col justify-between overflow-hidden rounded-lg border border-cool-gray-200 p-8'
       >
         {isDefault && (
           <ScreenOverlay>

@@ -13,6 +13,7 @@ import InterviewDetailHistory from '@/features/interview-history/interview-detai
 import { useFuncDebounce } from '@/hooks/customs/use-func-debounce';
 import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
 import { getErrorMessage } from '@/utils/get-error-message';
+import { showNotiflixConfirm } from '@/utils/show-notiflix-confirm';
 import { useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -35,24 +36,34 @@ const { DELETE_SUCCESS } = HISTORY_MESSAGE;
 
 const InterviewDetailField = ({ interviewId }: Props) => {
   const [activeTab, setActiveTab] = useState<string>(INTERVIEW_FEEDBACK);
-  const { data, isPending, isError, error: getError } = useGetInterviewDetailQuery(interviewId);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const { data, isPending, isError, error: getError } = useGetInterviewDetailQuery(interviewId, !isDeleting);
   const { mutateAsync: deleteInterviewAsyncMutation } = useDeleteInterviewMutation();
 
   const queryClient = useQueryClient();
   const router = useRouter();
 
+  const confirmDeleteHistory = () => {
+    showNotiflixConfirm({
+      message: '면접기록을 삭제하시곘습니까?',
+      okFunction: handleDeleteHistory,
+    });
+  };
+
   const handleDeleteHistory = async () => {
     try {
+      setIsDeleting(true);
       await deleteInterviewAsyncMutation(interviewId);
       Notify.success(DELETE_SUCCESS);
       router.replace(MY_PAGE);
       queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
     } catch (error) {
+      setIsDeleting(false);
       Notify.failure(getErrorMessage(error));
     }
   };
 
-  const debounceDelete = useFuncDebounce(handleDeleteHistory, 2000);
+  const debounceDelete = useFuncDebounce(confirmDeleteHistory, 2000);
 
   if (isPending)
     return (

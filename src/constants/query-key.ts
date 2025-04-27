@@ -11,4 +11,5 @@ export const QUERY_KEY = {
   CHARACTER_HISTORIES: 'characterHistories',
   HISTORY: 'interview-history',
   TABS_COUNT: 'tabs-count',
+  IN_PROGRESS: 'in-progress',
 };

@@ -3,8 +3,8 @@
 import Timer from '@/features/interview/timer';
 import { useAudioWithTimer } from '@/features/interview/hooks/use-audio-with-timer';
 import QuestionDisplay from '@/features/interview/question-display';
-import { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
-import { InterviewQnAType } from '@/types/DTO/interview-qna-dto';
+import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
+import type { InterviewQnAType } from '@/types/DTO/interview-qna-dto';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 
@@ -22,7 +22,6 @@ const QuestionDisplayWithTimer = ({ interviewHistory, interviewQnAList }: Props)
     useAudioWithTimer({ duration: MINUTES_IN_MS, interviewHistory });
 
   let lastQuestion = interviewQnAList.at(CHECK_LAST_INDEX)?.question;
-
   if (interviewQnAList.at(CHECK_LAST_INDEX)?.answer) {
     lastQuestion = null;
   }

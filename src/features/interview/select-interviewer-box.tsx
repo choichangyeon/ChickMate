@@ -10,19 +10,25 @@ import { postInterview } from '@/features/interview/api/client-services';
 import { useRouter } from 'next/navigation';
 import { PATH } from '@/constants/path-constant';
 import { useInterviewStore } from '@/store/use-interview-store';
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/constants/query-key';
 
 const { CALM, PRESSURE } = INTERVIEW_TYPE;
 const { LIVE } = PATH.INTERVIEW;
+const { IN_PROGRESS } = QUERY_KEY;
 
 const activeBgClass = 'outline-primary-orange-600 bg-cool-gray-10';
 
 const SelectInterviewerBox = () => {
   const [interviewType, setInterviewType] = useState<string>(CALM);
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { resumeId } = useResumeStore();
   const resetQuestionIndex = useInterviewStore((state) => state.resetQuestionIndex);
 
-  {/** TODO: clay이냐 poly 타입이냐에 따라 수정해야됨 */}
+  {
+    /** TODO: clay이냐 poly 타입이냐에 따라 수정해야됨 */
+  }
   const charterType = 'poly';
   const imageBasePath = `/assets/character/interviewer/${charterType}-interviewer`;
 

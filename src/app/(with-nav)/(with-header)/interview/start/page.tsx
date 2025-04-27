@@ -5,12 +5,16 @@ import { QUERY_KEY } from '@/constants/query-key';
 import { QueryClient, HydrationBoundary, dehydrate } from '@tanstack/react-query';
 import { getResumeList } from '@/features/resume/api/client-services';
 import { RESUME_STATUS } from '@/constants/resume-constants';
+import AlertInProgress from '@/features/interview/alert-in-progress';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/utils/auth-option';
 
 const InterviewStartPage = async () => {
   const { RESUME_SUBMIT } = QUERY_KEY;
   const { SUBMIT } = RESUME_STATUS;
 
   const queryClient = new QueryClient();
+  const session = await getServerSession(authOptions);
 
   await queryClient.prefetchQuery({
     queryKey: [RESUME_SUBMIT],
@@ -19,6 +23,7 @@ const InterviewStartPage = async () => {
 
   return (
     <>
+      {session && <AlertInProgress session={session} />}
       <article className='mb-8'>
         <section className='mb-4 flex flex-row'>
           <Typography as='h2' size='2xl' weight='bold'>
@@ -36,7 +41,7 @@ const InterviewStartPage = async () => {
           </Typography>
         </section>
         <HydrationBoundary state={dehydrate(queryClient)}>
-          <ResumeCardsBox />
+          <ResumeCardsBox session={session} />
         </HydrationBoundary>
       </article>
     </>

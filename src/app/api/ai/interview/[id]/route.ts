@@ -5,8 +5,8 @@ import { authOptions } from '@/utils/auth-option';
 import { getServerSession } from 'next-auth';
 import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
-import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 import type { RouteParams } from '@/types/route-params';
+import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
 
 const { NEXTAUTH_SECRET } = ENV;
 const { EXPIRED_TOKEN } = AUTH_MESSAGE.ERROR;
@@ -21,7 +21,6 @@ const { DELETE_SUCCEESS, GET_SERVER_ERROR } = HISTORY_MESSAGE;
  */
 export const GET = async (request: NextRequest, { params }: RouteParams) => {
   const interviewId = Number(params.id);
-
   try {
     const token = await getToken({ req: request, secret: NEXTAUTH_SECRET });
     if (!token) return NextResponse.json({ message: EXPIRED_TOKEN }, { status: 401 });
@@ -147,7 +146,6 @@ export const PATCH = async (request: NextRequest, { params }: RouteParams) => {
  */
 export const DELETE = async (request: NextRequest, { params }: RouteParams) => {
   const interviewId = Number(params.id);
-
   try {
     const token = await getToken({ req: request, secret: NEXTAUTH_SECRET });
     if (!token) return NextResponse.json({ message: EXPIRED_TOKEN }, { status: 401 });
@@ -163,6 +161,20 @@ export const DELETE = async (request: NextRequest, { params }: RouteParams) => {
         id: interviewId,
       },
     });
+
+    const searchParams = request.nextUrl.searchParams;
+    const { options, status } = sanitizeQueryParams(searchParams);
+
+    if (options === 'ALL') {
+      const { count } = await prisma.interviewHistory.deleteMany({
+        where: {
+          userId: session.user.id,
+          status: Number(status),
+        },
+      });
+
+      return NextResponse.json({ message: DELETE_SUCCEESS, count }, { status: 200 });
+    }
 
     if (!existing) {
       return NextResponse.json({ message: NOT_FOUND }, { status: 404 });

@@ -1,14 +1,16 @@
 'use client';
 
-import Modal from '@/components/ui/modal';
-import MyCharacter from '@/features/character/my-character';
 import { Session } from 'next-auth';
-import { useGetCharacterQuery } from '@/features/character/hooks/use-get-character-query';
-import { useCharacterStoreSync } from '@/features/character/hooks/use-character-store-sync';
 import { useState } from 'react';
-import { MODAL_ID } from '@/constants/modal-id-constants';
-import CharacterHistoryList from '@/features/character/character-history';
+import Modal from '@/components/ui/modal';
 import Typography from '@/components/ui/typography';
+import LoadingSpinner from '@/components/ui/loading-spinner';
+import ErrorComponent from '@/components/common/error-component';
+import { MODAL_ID } from '@/constants/modal-id-constants';
+import MyCharacter from '@/features/character/my-character';
+import CharacterHistoryList from '@/features/character/character-history';
+import { useCharacterStoreSync } from '@/features/character/hooks/use-character-store-sync';
+import { useGetCharacterQuery } from '@/features/character/hooks/use-get-character-query';
 
 type Props = {
   session: Session;
@@ -23,11 +25,15 @@ const CharacterDetailModal = ({ session }: Props) => {
   useCharacterStoreSync(characterData);
 
   if (isPending) {
-    return <div>캐릭터 정보를 불러오는 중입니다...</div>;
+    return (
+      <div className='flex h-full w-full items-center justify-center'>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (isError) {
-    return <div>캐릭터 정보를 불러올 수 없습니다...</div>;
+    return <ErrorComponent />;
   }
 
   return (

@@ -42,6 +42,10 @@ const typographyVariant = cva('', {
       '3': 'line-clamp-3',
       '4': 'line-clamp-4',
     },
+    srOnly: {
+      true: 'sr-only',
+      false: '',
+    },
   },
   defaultVariants: {
     size: 'md',
@@ -67,9 +71,12 @@ const Typography = <T extends AllowedTags = 'p'>({
   align,
   lineClamp,
   children,
+  srOnly,
 }: TypographyProps<T>) => {
   const Component = as || 'p';
-  return <Component className={typographyVariant({ size, color, weight, align, lineClamp })}>{children}</Component>;
+  return (
+    <Component className={typographyVariant({ size, color, weight, align, lineClamp, srOnly })}>{children}</Component>
+  );
 };
 
 export default Typography;

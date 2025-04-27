@@ -40,6 +40,7 @@ const CharacterDetailModal = ({ session }: Props) => {
     <Modal modalId={MODAL_ID.CHARACTER_DETAIL}>
       <div className='mb-4 flex justify-around'>
         <button
+          aria-label='My mate 탭으로 전환'
           onClick={() => setSelectedTab('info')}
           className={`cursor-pointer px-4 py-2 ${
             selectedTab === 'info' ? 'border-b-2 border-primary-orange-600 font-bold' : 'text-cool-gray-500'
@@ -50,6 +51,7 @@ const CharacterDetailModal = ({ session }: Props) => {
           </Typography>
         </button>
         <button
+          aria-label='history 탭으로 전환'
           onClick={() => setSelectedTab('history')}
           className={`cursor-pointer px-4 py-2 ${
             selectedTab === 'history'

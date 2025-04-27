@@ -4,6 +4,7 @@ import { useModalStore } from '@/store/use-modal-store';
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import Close from '@/components/icons/close';
+import Typography from './typography';
 
 type Props = {
   modalId: string;
@@ -92,7 +93,7 @@ const Modal = ({ portalRoot, modalId, children, className }: Props) => {
         ref={modalContentRef}
         role='dialog'
         aria-labelledby={`${modalId}-title`}
-        className='animate-fadeIn relative max-h-[650px] w-full max-w-[434px] flex-col overflow-scroll rounded-3xl border border-cool-gray-200 bg-white p-8 scrollbar-hide'
+        className='relative max-h-[650px] w-full max-w-[434px] animate-fadeIn flex-col overflow-scroll rounded-3xl border border-cool-gray-200 bg-white p-8 scrollbar-hide'
       >
         <button onClick={() => toggleModal(modalId)} className='absolute right-4 top-4'>
           <Close />

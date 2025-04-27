@@ -12,10 +12,10 @@ type Props = {
  */
 const Card = ({ children, className, onClick }: Props) => {
   return (
-    <section className={clsx(cardClassName, className)} onClick={onClick}>
+    <div className={clsx(cardClassName, className)} onClick={onClick}>
       {/* content area */}
       <div className={contentClassName}>{children}</div>
-    </section>
+    </div>
   );
 };
 

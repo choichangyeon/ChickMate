@@ -32,7 +32,7 @@ const CharacterDetailModal = ({ session }: Props) => {
 
   return (
     <Modal modalId={MODAL_ID.CHARACTER_DETAIL}>
-      <div className='mb-4 flex justify-around'>
+      <main className='mb-4 flex justify-around'>
         <button
           onClick={() => setSelectedTab('info')}
           className={`cursor-pointer px-4 py-2 ${
@@ -55,7 +55,7 @@ const CharacterDetailModal = ({ session }: Props) => {
             History
           </Typography>
         </button>
-      </div>
+      </main>
       {selectedTab === 'info' && !!characterData ? (
         <MyCharacter session={session} characterData={characterData} />
       ) : (

@@ -33,7 +33,7 @@ const UserMetaDataForm = () => {
       )}
       <form onSubmit={handleSubmit(handleOnSubmit)}>
         <SelectField
-          label='*경력'
+          label='*관련 경력'
           options={typeData}
           value={watch(EXPERIENCE_NAME)}
           fieldKey={EXPERIENCE_NAME}
@@ -41,7 +41,7 @@ const UserMetaDataForm = () => {
           error={errors[EXPERIENCE_NAME]?.message}
         />
         <SelectField
-          label='*학력'
+          label='*최종 학력'
           options={academicData}
           value={watch(REQUIRED_EDUCATION_NAME)}
           fieldKey={REQUIRED_EDUCATION_NAME}
@@ -57,7 +57,7 @@ const UserMetaDataForm = () => {
           error={errors[JOB_MID_CODE_NAME]?.message}
         />
         <SelectField
-          label='*지역'
+          label='*희망 근무 지역'
           options={regions}
           value={watch(LOCATION_NAME)}
           fieldKey={LOCATION_NAME}

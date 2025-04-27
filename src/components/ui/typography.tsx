@@ -72,10 +72,13 @@ const Typography = <T extends AllowedTags = 'p'>({
   lineClamp,
   children,
   srOnly,
+  ...props
 }: TypographyProps<T>) => {
   const Component = as || 'p';
   return (
-    <Component className={typographyVariant({ size, color, weight, align, lineClamp, srOnly })}>{children}</Component>
+    <Component className={typographyVariant({ size, color, weight, align, lineClamp, srOnly })} {...props}>
+      {children}
+    </Component>
   );
 };
 

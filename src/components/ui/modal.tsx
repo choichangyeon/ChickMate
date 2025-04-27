@@ -75,6 +75,7 @@ const Modal = ({ portalRoot, modalId, children, className }: Props) => {
         'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
       );
       focusableElements?.[0]?.focus();
+      focusableElements?.[0]?.blur();
     }, 0);
 
     return () => {

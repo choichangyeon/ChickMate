@@ -38,18 +38,55 @@ const Modal = ({ portalRoot, modalId, children, className }: Props) => {
       }
     };
 
+    // 모달 내부에서 focus되도록 유지함
+    const handleKeyDownForFocusTrap = (event: KeyboardEvent) => {
+      if (event.key !== 'Tab') return;
+      if (!modalContentRef.current) return;
+
+      const focusableElements = modalContentRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+      );
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (!firstElement || !lastElement) return;
+
+      if (event.shiftKey) {
+        // Shift + Tab
+        if (document.activeElement === firstElement) {
+          event.preventDefault();
+          lastElement.focus();
+        }
+      } else {
+        // Tab
+        if (document.activeElement === lastElement) {
+          event.preventDefault();
+          firstElement.focus();
+        }
+      }
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
     document.addEventListener('keydown', handleEscKey);
+    document.addEventListener('keydown', handleKeyDownForFocusTrap);
+
+    setTimeout(() => {
+      const focusableElements = modalContentRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+      );
+      focusableElements?.[0]?.focus();
+    }, 0);
 
     return () => {
       document.body.style.overflow = '';
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('keydown', handleEscKey);
+      document.removeEventListener('keydown', handleKeyDownForFocusTrap);
     };
   }, [toggleModal, modalId]);
 
   return createPortal(
-    <div className='z-modal fixed inset-0 flex items-center justify-center overflow-y-auto'>
+    <div className='fixed inset-0 z-modal flex items-center justify-center overflow-y-auto'>
       <div className='fixed inset-0 bg-black opacity-70' />
       <div
         ref={modalContentRef}

@@ -4,7 +4,6 @@ import LoadingAnimation from '@/components/common/loading-animation';
 import ErrorComponent from '@/components/common/error-component';
 import LeftArrowIcon from '@/components/icons/left-arrow-icon';
 import Button from '@/components/ui/button';
-import LoadingSpinner from '@/components/ui/loading-spinner';
 import Typography from '@/components/ui/typography';
 import { TABS } from '@/constants/my-page-constants';
 import { PATH } from '@/constants/path-constant';

@@ -35,7 +35,7 @@ const MainCharacterCard = ({
 
   return (
     <>
-      <div
+      <button
         onClick={handleClickCard}
         className='relative flex h-full min-w-72 cursor-pointer flex-col justify-between overflow-hidden rounded-lg border border-cool-gray-200 p-8'
       >
@@ -70,7 +70,7 @@ const MainCharacterCard = ({
             <CharacterExpBar type='main' percent={percent} />
           </div>
         </div>
-      </div>
+      </button>
 
       {isCreateModalOpen && <CreateCharacterModal />}
       {isDetailModalOpen && session && <CharacterDetailModal session={session} />}

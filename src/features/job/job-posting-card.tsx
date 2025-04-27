@@ -22,59 +22,57 @@ const JobPostingCard = ({ jobPosting, userId }: Props) => {
     expirationTimestamp,
     openingTimestamp,
     keyword,
-    industryName,
     id,
     url,
     isBookmarked,
   } = jobPosting;
+
   const postedAtDate = formatTimestamp({ input: openingTimestamp });
   const expiredAtDate = formatTimestamp({ input: expirationTimestamp });
   const remainDay = formatRemainDay(expirationTimestamp);
 
   return (
-    <Card className='h-full p-8'>
-      <article className='flex flex-col justify-between'>
-        <header className='flex flex-row justify-between'>
-          <Typography weight='bold' color='gray-500'>
-            {companyName}
+    <Card className='flex h-full w-[408px] flex-col justify-between p-8'>
+      <header className='mb-4 flex flex-row justify-between'>
+        <Typography weight='bold' color='gray-500'>
+          {companyName}
+        </Typography>
+        <Bookmark jobPostingId={id} isBookmarked={isBookmarked} userId={userId} />
+      </header>
+
+      <main className='mb-8 flex flex-col gap-2'>
+        <Typography as='h3' weight='bold' lineClamp='2'>
+          {positionTitle}
+          <span className='pl-2 text-cool-gray-500'>- {keyword}</span>
+        </Typography>
+        <div className='flex flex-row items-center gap-4'>
+          <Typography size='sm' color='gray-500'>
+            {experienceName}
           </Typography>
-          <Bookmark jobPostingId={id} isBookmarked={isBookmarked} userId={userId} />
-        </header>
-        <main>
-          <Typography as='h3' weight='bold' lineClamp='2'>
-            {positionTitle}
-            <span className='pl-2 text-cool-gray-500'>- {keyword}</span>
+          <Typography size='sm' color='gray-500'>
+            {postedAtDate} ~ {expiredAtDate}
           </Typography>
-          <div className='flex flex-row items-center gap-4'>
-            <Typography size='sm' color='gray-500'>
-              {experienceName}
-            </Typography>
-            <Typography size='sm' color='gray-500'>
-              {postedAtDate}~{expiredAtDate}
-            </Typography>
-          </div>
-        </main>
-        <footer className={badgeClassName}>
-          {remainDay ? (
-            <Typography color='primary-600' weight='bold' size='xl'>
-              D-{remainDay}
-            </Typography>
-          ) : (
-            <Typography color='primary-600' weight='bold' size='xl'>
-              날짜정보 오류
-            </Typography>
-          )}
-          {url && (
-            <LinkButton target='_blank' href={url} square>
-              바로 가기
-            </LinkButton>
-          )}
-        </footer>
-      </article>
+        </div>
+      </main>
+
+      <footer className='flex items-center justify-between'>
+        {remainDay ? (
+          <Typography color='primary-600' weight='bold' size='xl'>
+            D-{remainDay}
+          </Typography>
+        ) : (
+          <Typography color='primary-600' weight='bold' size='xl'>
+            날짜정보 오류
+          </Typography>
+        )}
+        {url && (
+          <LinkButton target='_blank' href={url} square>
+            바로 가기
+          </LinkButton>
+        )}
+      </footer>
     </Card>
   );
 };
-
-const badgeClassName = clsx('flex justify-between');
 
 export default JobPostingCard;

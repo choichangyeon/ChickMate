@@ -90,12 +90,16 @@ const Modal = ({ portalRoot, modalId, children, className }: Props) => {
       <div className='fixed inset-0 bg-black opacity-70' />
       <div
         ref={modalContentRef}
+        role='dialog'
+        aria-labelledby={`${modalId}-title`}
         className='relative max-h-[650px] w-full max-w-[434px] flex-col overflow-scroll rounded-3xl border border-cool-gray-200 bg-white p-8 scrollbar-hide'
       >
         <button onClick={() => toggleModal(modalId)} className='absolute right-4 top-4'>
           <Close />
         </button>
-        <div className={className}>{children}</div>
+        <div id={`${modalId}-description`} className={className}>
+          {children}
+        </div>
       </div>
     </div>,
     portalRoot || document.body

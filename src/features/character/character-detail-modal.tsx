@@ -33,7 +33,7 @@ const CharacterDetailModal = ({ session }: Props) => {
   return (
     <Modal modalId={MODAL_ID.CHARACTER_DETAIL}>
       <div className='mb-4 flex justify-around'>
-        <div
+        <button
           onClick={() => setSelectedTab('info')}
           className={`cursor-pointer px-4 py-2 ${
             selectedTab === 'info' ? 'border-b-2 border-primary-orange-600 font-bold' : 'text-cool-gray-500'
@@ -42,8 +42,8 @@ const CharacterDetailModal = ({ session }: Props) => {
           <Typography size='2xl' weight='bold' color={selectedTab === 'info' ? 'primary-600' : 'gray-500'}>
             My Mate
           </Typography>
-        </div>
-        <div
+        </button>
+        <button
           onClick={() => setSelectedTab('history')}
           className={`cursor-pointer px-4 py-2 ${
             selectedTab === 'history'
@@ -54,7 +54,7 @@ const CharacterDetailModal = ({ session }: Props) => {
           <Typography size='2xl' weight='bold' color={selectedTab === 'history' ? 'primary-600' : 'gray-500'}>
             History
           </Typography>
-        </div>
+        </button>
       </div>
       {selectedTab === 'info' && !!characterData ? (
         <MyCharacter session={session} characterData={characterData} />

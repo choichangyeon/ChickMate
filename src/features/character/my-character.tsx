@@ -42,7 +42,9 @@ const MyCharacter = ({ session, characterData = defaultCharacter, overlayText, r
             <Typography size='2xl' color='primary-600' weight='black'>
               LV {level}
             </Typography>
-            <Typography weight='bold'>{session?.user.name}님</Typography>
+            <div className='max-w-56 truncate'>
+              <Typography weight='bold'>{session?.user.name}님</Typography>
+            </div>
           </div>
           <Typography weight='normal'>{characterName}</Typography>
         </div>

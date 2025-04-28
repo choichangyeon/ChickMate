@@ -1,7 +1,6 @@
 export const QUERY_KEY = {
   RESUME: 'resume',
   RESUMES: 'resumes',
-  RESUME_SUBMIT: 'resume-submit',
   RESUME_DRAFT: 'resume-draft',
   CHARACTER: 'character',
   BOOKMARK: 'bookmark',

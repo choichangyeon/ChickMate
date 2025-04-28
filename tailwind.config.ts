@@ -12,8 +12,10 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        'desktop': '1280px',
-        'tablet': '744px',
+        mobile: { max: '743px' },
+        tablet: { min: '744px', max: '1279px' },
+        desktop: { min: '1280px', max: '1919px' },
+        wide: { min: '1920px' },
       },
       colors: {
         'primary-orange': {

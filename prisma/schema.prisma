@@ -180,22 +180,3 @@ model Jobs {
 
   @@map("jobs")
 }
-
-model MainRegion {
-  id         Int         @id @default(autoincrement())
-  name       String
-  value      String
-  subRegions SubRegion[]
-
-  @@map("main_region")
-}
-
-model SubRegion {
-  id           Int        @id @default(autoincrement())
-  mainRegionId Int        @map("mainRegion_id")
-  name         String
-  value        String
-  mainRegion   MainRegion @relation(fields: [mainRegionId], references: [id], onDelete: Cascade)
-
-  @@map("sub_region")
-}

@@ -17,16 +17,16 @@ export const useDeleteInterviewMutation = () => {
       );
       return { previousInterviewList };
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [HISTORY],
-      });
-    },
     onError: (err, interviewId, context) => {
       if (context?.previousInterviewList) {
         queryClient.setQueryData([HISTORY], context.previousInterviewList);
       }
       throw err;
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: [HISTORY],
+      });
     },
   });
 };

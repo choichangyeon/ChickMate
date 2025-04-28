@@ -39,25 +39,27 @@ const SelectInterviewerBox = () => {
       <aside className='flex h-80 items-start justify-start gap-5 self-stretch'>
         <div
           onClick={() => setInterviewType(CALM)}
-          className={`w-100 h-80 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === CALM ? activeClass : deActiveClass}`}
+          className={`w-88 h-72 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === CALM ? activeClass : deActiveClass}`}
         >
           <LottieAnimation active={interviewType === CALM} animationData={Sunset} />
         </div>
         <div
           onClick={() => setInterviewType(PRESSURE)}
-          className={`w-100 h-80 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
+          className={`w-88 h-72 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
         >
           <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure} speed={0.4} />
         </div>
       </aside>
-      <aside className='flex h-80 w-96 min-w-36 flex-col items-center justify-center overflow-hidden rounded-lg bg-emerald-900/0 outline outline-1 outline-offset-[-1px] outline-yellow-500'>
+      <aside className='flex h-72 w-80 min-w-36 flex-col items-center justify-center overflow-hidden rounded-lg bg-emerald-900/0 outline outline-1 outline-offset-[-1px] outline-yellow-500'>
         <div className='mb-4'>
           {/* TODO: 이 부분은 면접관을 설명하는 부분, 추후 수정 가능 */}
           {interviewType === 'calm' ? (
             <>
-              <Typography as='h3' size='3xl' weight='bold' align='center' className='mb-2'>
-                햇살 면접관
-              </Typography>
+              <div className='mb-2'>
+                <Typography as='h3' weight='bold' size='3xl' align='center'>
+                  햇살 면접관
+                </Typography>
+              </div>
               <Typography color='gray-300' align='center'>
                 이 면접관은 침착하고 편안한 느낌으로
               </Typography>
@@ -67,9 +69,11 @@ const SelectInterviewerBox = () => {
             </>
           ) : (
             <>
-              <Typography as='h3' size='3xl' weight='bold' align='center' className='mb-2'>
-                불타는 면접관
-              </Typography>
+              <div className='mb-2'>
+                <Typography as='h3' size='3xl' weight='bold' align='center'>
+                  불타는 면접관
+                </Typography>
+              </div>
               <Typography color='gray-300' align='center'>
                 이 면접관은 냉철하고 비판적인 사고를
               </Typography>

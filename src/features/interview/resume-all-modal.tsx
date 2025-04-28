@@ -6,9 +6,14 @@ import useResumeStore from '@/features/interview/hooks/use-resume-store';
 import ResumeItem from '@/features/resume-list/resume-item';
 import LoadingAnimation from '@/components/common/loading-animation';
 import InterviewBlockComponent from '@/features/interview/interview-block-component';
+import { useModalStore } from '@/store/use-modal-store';
+import { MODAL_ID } from '@/constants/modal-id-constants';
+
+const { COMPLETED_RESUME } = MODAL_ID;
 
 const ResumeAllModal = () => {
   const { data: resumeList, isPending, isError } = useSubmitResumesQuery();
+  const toggleModal = useModalStore((state) => state.toggleModal);
   const { setResume } = useResumeStore();
 
   if (isPending) {
@@ -51,6 +56,7 @@ const ResumeAllModal = () => {
                 resume={resume}
                 onClick={() => {
                   setResume(resume.id);
+                  toggleModal(COMPLETED_RESUME);
                 }}
                 hrOption={false}
               />

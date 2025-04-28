@@ -16,3 +16,8 @@ export const INTERVIEW_HISTORY_STATUS = {
   COMPLETED: 1, // 면접을 끝까지 완료함
   IN_PROGRESS: 2, // 면접 진행 중
 };
+
+export const INTERVIEW_HISTORY_BADGE = {
+  DONE: '면접 완료',
+  NOT_DONE: '면접 보기 전',
+};

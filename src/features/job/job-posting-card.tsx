@@ -44,7 +44,7 @@ const JobPostingCard = ({ jobPosting, userId }: Props) => {
         <div className='mb-8 flex flex-col gap-2'>
           <Typography as='h3' weight='bold' lineClamp='2'>
             {positionTitle}
-            <span className='pl-2 text-cool-gray-500'>- {keyword}</span>
+            {keyword && <span className='pl-2 text-cool-gray-500'>- {keyword}</span>}
           </Typography>
           <div className='flex flex-row items-center gap-4'>
             <Typography size='sm' color='gray-500'>

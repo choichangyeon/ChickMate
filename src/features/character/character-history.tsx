@@ -44,7 +44,7 @@ const CharacterHistoryList = ({ characterData }: Props) => {
           </div>
         ) : (
           <>
-            <ul className='flex flex-col gap-4'>
+            <ul className='flex h-full flex-col gap-4'>
               {characterHistories.map((history: CharacterHistoryType) => (
                 <li key={history.id} className='flex w-full items-end justify-between'>
                   <div className='flex flex-col justify-end'>

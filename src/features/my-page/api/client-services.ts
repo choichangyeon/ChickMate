@@ -10,9 +10,9 @@ const { GET } = API_METHOD;
 const { JSON_HEADER } = API_HEADER;
 
 /**
- * 면접기록, 북마크한 채용공고, 내가 작성한 자소서의 개수를 반환
+ * 내 면접기록, 내 채용공고, 내 자소서의 개수를 반환
  * @param userId - 현재 로그인 중인 user의 id
- * @returns 면접기록 / 북마크한 채용공고 / 내가 작성한 자소서의 개수
+ * @returns 내 면접기록 / 내 채용공고 / 내 자소서
  */
 export const getTabCount = async (userId: User['id']) => {
   const { response } = await fetchWithSentry(LIST_COUNT(userId), {

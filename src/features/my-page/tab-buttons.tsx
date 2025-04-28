@@ -12,15 +12,15 @@ const { BOOKMARK_TAB, RESUME_TAB, INTERVIEW_HISTORY_TAB } = TABS;
 const tabs = [
   {
     id: INTERVIEW_HISTORY_TAB,
-    title: '면접기록',
+    title: '내 면접기록',
   },
   {
     id: BOOKMARK_TAB,
-    title: '북마크한 채용공고',
+    title: '내 채용공고',
   },
   {
     id: RESUME_TAB,
-    title: '내가 작성한 자소서',
+    title: '내 자소서',
   },
 ];
 

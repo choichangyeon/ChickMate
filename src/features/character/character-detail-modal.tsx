@@ -4,7 +4,7 @@ import { Session } from 'next-auth';
 import { useState } from 'react';
 import Modal from '@/components/ui/modal';
 import Typography from '@/components/ui/typography';
-import LoadingSpinner from '@/components/ui/loading-spinner';
+import LoadingAnimation from '@/components/common/loading-animation';
 import ErrorComponent from '@/components/common/error-component';
 import { MODAL_ID } from '@/constants/modal-id-constants';
 import MyCharacter from '@/features/character/my-character';
@@ -27,7 +27,7 @@ const CharacterDetailModal = ({ session }: Props) => {
   if (isPending) {
     return (
       <div className='flex h-full w-full items-center justify-center'>
-        <LoadingSpinner />
+        <LoadingAnimation />
       </div>
     );
   }

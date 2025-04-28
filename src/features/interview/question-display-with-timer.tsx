@@ -5,8 +5,8 @@ import { useAudioWithTimer } from '@/features/interview/hooks/use-audio-with-tim
 import QuestionDisplay from '@/features/interview/question-display';
 import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
 import type { InterviewQnAType } from '@/types/DTO/interview-qna-dto';
-import LoadingSpinner from '@/components/ui/loading-spinner';
 import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
+import LoadingAnimation from '@/components/common/loading-animation';
 
 const MINUTES_IN_MS = 1 * 60 * 1000;
 const { IN_PROGRESS } = INTERVIEW_HISTORY_STATUS;
@@ -29,7 +29,7 @@ const QuestionDisplayWithTimer = ({ interviewHistory, interviewQnAList }: Props)
   if (!interviewQnAList && interviewHistory.status === IN_PROGRESS) {
     return (
       <section className='mt-20 flex items-center justify-center'>
-        <LoadingSpinner />
+        <LoadingAnimation />
       </section>
     );
   }

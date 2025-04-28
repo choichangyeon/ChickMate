@@ -74,6 +74,11 @@ export const POST = async (request: NextRequest) => {
       where: { id: interviewId },
       data: {
         feedback: parsedResponse,
+        resume: {
+          update: {
+            tryCount: { increment: 1 },
+          },
+        },
       },
     });
 

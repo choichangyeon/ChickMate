@@ -1,7 +1,6 @@
 'use client';
 import BlockComponent from '@/components/common/block-component';
 import ErrorComponent from '@/components/common/error-component';
-import LoadingSpinner from '@/components/ui/loading-spinner';
 import Modal from '@/components/ui/modal';
 import Typography from '@/components/ui/typography';
 import { MODAL_ID } from '@/constants/modal-id-constants';
@@ -10,6 +9,7 @@ import { useMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-
 import UserMetaDataModal from '@/features/user-meta-data/user-meta-data-modal';
 import { useModalStore } from '@/store/use-modal-store';
 import { Session } from 'next-auth';
+import LoadingAnimation from '@/components/common/loading-animation';
 
 type Props = {
   session: Session;
@@ -25,8 +25,8 @@ const MyInfo = ({ session }: Props) => {
 
   if (isPending)
     return (
-      <div className='flex h-[30vh] flex-1 items-center justify-center'>
-        <LoadingSpinner />
+      <div className='flex flex-1 items-center justify-center'>
+        <LoadingAnimation />
       </div>
     );
   if (isError)

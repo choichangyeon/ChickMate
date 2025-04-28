@@ -7,22 +7,23 @@ import { PATH } from '@/constants/path-constant';
 import { postInterview } from '@/features/interview/api/client-services';
 import useResumeStore from '@/features/interview/hooks/use-resume-store';
 import { useInterviewStore } from '@/store/use-interview-store';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Sunset from '@/lottie/sunset.json';
+import Pressure from '@/lottie/pressure.json';
+import LottieAnimation from '@/components/common/lottie-animation';
 
 const { CALM, PRESSURE } = INTERVIEW_TYPE;
 const { LIVE } = PATH.INTERVIEW;
 
-const activeBgClass = 'outline-primary-orange-600 bg-cool-gray-10';
+const activeClass = 'border-primary-orange-600 bg-cool-gray-10';
+const deActiveClass = 'border-cool-gray-300';
 
 const SelectInterviewerBox = () => {
   const [interviewType, setInterviewType] = useState<string>(CALM);
   const router = useRouter();
   const { resumeId } = useResumeStore();
   const resetQuestionIndex = useInterviewStore((state) => state.resetQuestionIndex);
-  const charterType = 'poly';
-  const imageBasePath = `/assets/character/interviewer/${charterType}-interviewer`;
 
   const handleClickSetInterviewType = async () => {
     if (resumeId) {
@@ -34,29 +35,31 @@ const SelectInterviewerBox = () => {
   };
 
   return (
-    <section className='flex flex-row'>
-      <aside className='mr-5 flex w-full items-start justify-start gap-5 self-stretch'>
+    <section className='flex flex-wrap gap-5'>
+      <aside className='flex h-80 items-start justify-start gap-5 self-stretch'>
         <div
           onClick={() => setInterviewType(CALM)}
-          className={`flex w-full cursor-pointer items-center justify-center self-stretch rounded-lg outline outline-1 outline-cool-gray-300 ${interviewType === CALM ? activeBgClass : ''}`}
+          className={`w-88 h-72 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === CALM ? activeClass : deActiveClass}`}
         >
-          <Image src={`${imageBasePath}-calm.png`} alt='햇살 면접관' width={220} height={220} />
+          <LottieAnimation active={interviewType === CALM} animationData={Sunset} />
         </div>
         <div
           onClick={() => setInterviewType(PRESSURE)}
-          className={`flex w-full cursor-pointer items-center justify-center self-stretch rounded-lg outline outline-1 outline-cool-gray-300 ${interviewType === PRESSURE ? activeBgClass : ''}`}
+          className={`w-88 h-72 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
         >
-          <Image src={`${imageBasePath}-pressure.png`} alt='불타는 면접관' width={220} height={220} />
+          <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure} speed={0.4} />
         </div>
       </aside>
-      <aside className='flex h-80 w-96 flex-shrink-0 flex-col items-center justify-center overflow-hidden rounded-lg bg-emerald-900/0 outline outline-1 outline-offset-[-1px] outline-yellow-500'>
+      <aside className='flex h-72 w-80 min-w-36 flex-col items-center justify-center overflow-hidden rounded-lg bg-emerald-900/0 outline outline-1 outline-offset-[-1px] outline-yellow-500'>
         <div className='mb-4'>
           {/* TODO: 이 부분은 면접관을 설명하는 부분, 추후 수정 가능 */}
           {interviewType === 'calm' ? (
             <>
-              <Typography as='h3' size='3xl' weight='bold' align='center' className='mb-2'>
-                햇살 면접관
-              </Typography>
+              <div className='mb-2'>
+                <Typography as='h3' weight='bold' size='3xl' align='center'>
+                  햇살 면접관
+                </Typography>
+              </div>
               <Typography color='gray-300' align='center'>
                 이 면접관은 침착하고 편안한 느낌으로
               </Typography>
@@ -66,9 +69,11 @@ const SelectInterviewerBox = () => {
             </>
           ) : (
             <>
-              <Typography as='h3' size='3xl' weight='bold' align='center' className='mb-2'>
-                불타는 면접관
-              </Typography>
+              <div className='mb-2'>
+                <Typography as='h3' size='3xl' weight='bold' align='center'>
+                  불타는 면접관
+                </Typography>
+              </div>
               <Typography color='gray-300' align='center'>
                 이 면접관은 냉철하고 비판적인 사고를
               </Typography>

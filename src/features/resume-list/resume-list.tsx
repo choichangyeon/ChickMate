@@ -1,9 +1,9 @@
 'use client';
 import { useRouter } from 'next/navigation';
+import LoadingAnimation from '@/components/common/loading-animation';
 import ResumeItem from '@/features/resume-list/resume-item';
 import { useResumeListQuery } from '@/features/resume-list/hooks/use-resume-list-query';
 import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
-import LoadingSpinner from '@/components/ui/loading-spinner';
 import { TABS } from '@/constants/my-page-constants';
 
 const { RESUME_TAB } = TABS;
@@ -20,7 +20,7 @@ const ResumeList = () => {
   if (isPending) {
     return (
       <div className='flex h-[70dvh] items-center justify-center'>
-        <LoadingSpinner />
+        <LoadingAnimation />
       </div>
     );
   }

@@ -13,15 +13,18 @@ import { useCharacterStore } from '@/store/use-character-store';
 import { useInterviewStore } from '@/store/use-interview-store';
 import type { InterviewHistory } from '@prisma/client';
 import { useQueryClient } from '@tanstack/react-query';
-
 import { Notify } from 'notiflix';
-
 import { useRouter } from 'next/navigation';
+import { INTERVIEW_HISTORY } from '@/constants/message-constants';
 
 const { MY_PAGE } = PATH;
 const { INTERVIEW_COMPLETION } = CHARACTER_HISTORY_KEY;
 const { TABS_COUNT, HISTORY, IN_PROGRESS } = QUERY_KEY;
 const { COMPLETED } = INTERVIEW_HISTORY_STATUS;
+const {
+  API: { SUCCESS_WITH_EXP },
+} = INTERVIEW_HISTORY;
+
 type Props = {
   interviewHistory: InterviewHistory;
   isRecording: boolean;
@@ -57,10 +60,10 @@ const Timer = ({
     /** TODO: 에러 처리 알림에 대한 고민 필요 */
   }
   if (InterviewHistoryError) {
-    alert(InterviewHistoryError.message);
+    Notify.warning(InterviewHistoryError.message);
   }
   if (aiFeedbackError) {
-    alert(aiFeedbackError.message);
+    Notify.warning(aiFeedbackError.message);
   }
 
   const handleButtonClick = () => {
@@ -76,7 +79,7 @@ const Timer = ({
       if (characterId) {
         //@TODO: 캐릭터 아이디 있을 때만
         handleExperienceUp(INTERVIEW_COMPLETION);
-        alert('경험치 획득 완료!'); //@TODO: 경험치 정의 완료된 후에 alert 리팩토링하면서 상수로 빼겠습니다.
+        Notify.success(SUCCESS_WITH_EXP);
       }
 
       setCompleted(true);

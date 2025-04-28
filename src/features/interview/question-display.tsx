@@ -14,8 +14,6 @@ type Props = {
 
 const QuestionDisplay = ({ interviewHistory, aiQuestion }: Props) => {
   const { interviewType } = interviewHistory;
-
-  const interviewImage = interviewType === CALM ? 2 : 3; // TODO: 면접관 이미지 확정되면 수정
   const isInterviewTypeCalm = interviewType === CALM;
 
   const questionIndex = useInterviewStore((state) => state.questionIndex);
@@ -27,7 +25,7 @@ const QuestionDisplay = ({ interviewHistory, aiQuestion }: Props) => {
         {/** TODO: header에 있는 이미지랑 통일 */}
         <div className='h-12 w-12 overflow-hidden rounded-full'>
           <Image
-            src={`/assets/character/header/level${interviewImage}.jpeg`}
+            src={`/assets/character/interviewer/poly-interviewer-icon-${interviewType}.png`}
             width={48}
             height={48}
             alt={interviewType}

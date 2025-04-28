@@ -33,7 +33,6 @@ const Modal = ({ portalRoot, modalId, children, className }: Props) => {
     // ESC 키를 눌렀을 때 모달창이 닫힘
     const handleEscKey = (event: KeyboardEvent) => {
       if (document.body.classList.contains('confirm-open')) return;
-
       if (event.key === 'Escape') {
         toggleModal(modalId);
       }

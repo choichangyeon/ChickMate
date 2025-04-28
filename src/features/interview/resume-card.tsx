@@ -1,27 +1,28 @@
 'use client';
 
+import Badge from '@/components/ui/badge';
 import Card from '@/components/ui/card';
 import Typography from '@/components/ui/typography';
+import { INTERVIEW_HISTORY_BADGE } from '@/constants/interview-constants';
 import { formatDate } from '@/utils/format-date';
 import { Resume } from '@prisma/client';
 import clsx from 'clsx';
 
+const { DONE, NOT_DONE } = INTERVIEW_HISTORY_BADGE;
+const badgeClassName = clsx('flex flex-row gap-4');
+
 type Props = {
   type?: 'resume' | 'interview';
   resume: Resume;
-  children?: React.ReactNode;
-  // TODO: iconButton type 수정
-  iconButton?: boolean;
   isSelected?: boolean;
   onSelect?: () => void;
 };
 
-const ResumeCard = ({ type = 'resume', resume, iconButton, children, isSelected, onSelect }: Props) => {
-  const { id, title, updatedAt, createdAt } = resume;
+const ResumeCard = ({ type = 'resume', resume, isSelected, onSelect }: Props) => {
+  const { title, updatedAt, createdAt, tryCount } = resume;
   const updatedAtDate = formatDate({ input: updatedAt });
   const createdAtDate = formatDate({ input: createdAt });
 
-  // TODO: isSelected Style 설정하기
   const selectedClassName = isSelected ? 'cursor-pointer outline-primary-orange-600 bg-cool-gray-10' : 'cursor-pointer';
   const handleClick = () => {
     if (type === 'interview') {
@@ -31,15 +32,7 @@ const ResumeCard = ({ type = 'resume', resume, iconButton, children, isSelected,
   };
 
   return (
-    <Card onClick={handleClick} className={selectedClassName}>
-      {iconButton && (
-        // TODO: iconButton component 적용
-        <div className='absolute right-[20px] top-[12px] h-6 w-6'>
-          <div className='absolute left-[4px] top-[4px] h-0.5 w-4 bg-black' />
-          <div className='absolute left-[8px] top-[2px] h-1 w-2 bg-black' />
-          <div className='absolute left-[5px] top-[8px] h-3.5 w-3.5 bg-black' />
-        </div>
-      )}
+    <Card onClick={handleClick} className={clsx(selectedClassName, 'w-80 flex-shrink-0')}>
       <div>
         <Typography size='sm' color='gray-500'>
           {updatedAt ? updatedAtDate : createdAtDate}
@@ -48,12 +41,18 @@ const ResumeCard = ({ type = 'resume', resume, iconButton, children, isSelected,
           {title}
         </Typography>
       </div>
-      {/* TODO: badge area */}
-      <div className={badgeClassName}>{children} </div>
+      <div className={badgeClassName}>
+        {tryCount > 0 ? (
+          <>
+            <Badge>{DONE}</Badge>
+            <Badge variant='outline'>{tryCount}회</Badge>
+          </>
+        ) : (
+          <Badge color='dark'>{NOT_DONE}</Badge>
+        )}
+      </div>
     </Card>
   );
 };
-
-const badgeClassName = clsx('flex gap-4');
 
 export default ResumeCard;

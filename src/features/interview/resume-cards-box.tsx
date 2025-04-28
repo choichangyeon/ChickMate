@@ -2,14 +2,11 @@
 import ResumeCard from '@/features/interview/resume-card';
 import { useEffect } from 'react';
 import useResumeStore from '@/features/interview/hooks/use-resume-store';
-import { useSubmitResumesQuery } from '@/hooks/queries/use-submit-resumes-query';
-import BlockComponent from '@/components/common/block-component';
-import { PATH } from '@/constants/path-constant';
-import LoadingSpinner from '@/components/ui/loading-spinner';
+
+import LoadingAnimation from '@/components/common/loading-animation';
 import { Session } from 'next-auth';
 import InterviewBlockComponent from '@/features/interview/interview-block-component';
-
-const { ROOT } = PATH.RESUME;
+import { useResumeListQuery } from '@/features/resume-list/hooks/use-resume-list-query';
 
 type Props = {
   session: Session | null;
@@ -17,10 +14,10 @@ type Props = {
 
 const ResumeCardsBox = ({ session }: Props) => {
   const { resumeId: selectedId, setResume } = useResumeStore();
-  const { data: resumeList, isLoading, isError } = useSubmitResumesQuery();
+  const { data: resumeList, isPending, isError } = useResumeListQuery();
 
   useEffect(() => {
-    if (selectedId === null && isLoading === false) {
+    if (selectedId === null && isPending === false) {
       if (resumeList && resumeList.length > 0) {
         setResume(resumeList[0].id);
       }
@@ -29,25 +26,24 @@ const ResumeCardsBox = ({ session }: Props) => {
 
   if (!session) return <InterviewBlockComponent type='unauthenticated' />;
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <div className='mt-8 flex items-center justify-center'>
-        <LoadingSpinner />
+        <LoadingAnimation />
       </div>
     );
   }
-  if (isError || !resumeList) return <div>Error...</div>;
-  // TODO: 자소서 작성 페이지 라우팅 UI 구현 -> 민철님에게 요청 완료
+  if (isError || !resumeList)
+    return (
+      <section className='flex h-44 max-w-[100vw] flex-col items-center justify-center'>
+        <InterviewBlockComponent type='getResumeListError' />
+      </section>
+    );
+
   if (resumeList.length === 0)
     return (
       <section className='flex h-44 max-w-[100vw] flex-col items-center justify-center'>
-        <BlockComponent
-          firstLine='이런! 작성한 자소서가 없어요!'
-          secondLine='자소서를 작성하러 가볼까요?'
-          thirdLine='AI면접은 자소서기반으로 진행됩니다'
-          buttonName='자소서 작성하기'
-          href={ROOT}
-        ></BlockComponent>
+        <InterviewBlockComponent type='emptyResumeError' />
       </section>
     );
 

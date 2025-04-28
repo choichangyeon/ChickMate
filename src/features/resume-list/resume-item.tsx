@@ -5,9 +5,10 @@ import type { ResumeType } from '@/types/DTO/resume-dto';
 type Props = {
   resume: ResumeType;
   onClick: (resumeId: ResumeType['id']) => void;
+  hrOption?: boolean;
 };
 
-const ResumeItem = ({ resume, onClick }: Props) => {
+const ResumeItem = ({ resume, onClick, hrOption = true }: Props) => {
   const { id, title, createdAt, tryCount } = resume;
   const hasNotInterviewed = tryCount === 0;
 
@@ -30,7 +31,7 @@ const ResumeItem = ({ resume, onClick }: Props) => {
           )}
         </div>
       </li>
-      <hr className='border-cool-gray-300' />
+      {hrOption && <hr className='border-cool-gray-300' />}
     </div>
   );
 };

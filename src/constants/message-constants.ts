@@ -1,5 +1,15 @@
-import { CHARACTER_HISTORY, CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
+import { EXPERIENCE_AMOUNT } from '@/constants/character-constants';
 import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
+
+const {
+  RESUME_SUBMISSION_EXP,
+  CREATE_CHARACTER_EXP,
+  INTERVIEW_COMPLETION_EXP,
+  FILL_OUT_META_DATA_EXP,
+  BOOKMARK_JOB_POSTING_EXP,
+} = EXPERIENCE_AMOUNT;
+
+const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME } = USER_META_DATA_KEY;
 
 export const AUTH_MESSAGE = {
   VALIDATION: {
@@ -44,14 +54,11 @@ export const AI_MESSAGE = {
   },
 };
 
-const { RESUME_SUBMISSION } = CHARACTER_HISTORY_KEY;
-const EXP = CHARACTER_HISTORY[RESUME_SUBMISSION].amount;
-
 export const RESUME_MESSAGE = {
   SUBMIT: {
     REQUEST_FAILURE: '유효하지 않은 자소서 양식입니다.',
     SUBMIT_SERVER_ERROR: '자소서 생성에 실패했습니다.',
-    SUCCESS_WITH_EXP: `자기소개서 작성이 완료되었습니다. ${EXP} 경험치 획득 완료!`,
+    SUCCESS_WITH_EXP: `자기소개서 작성이 완료되었습니다. ${RESUME_SUBMISSION_EXP} 경험치 획득 완료!`,
     SUCCESS: '자기소개서 작성이 완료되었습니다.',
   },
   DRAFT: {
@@ -73,7 +80,6 @@ export const RESUME_MESSAGE = {
   },
 };
 
-const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME } = USER_META_DATA_KEY;
 export const USER_META_DATA_FORM_MESSAGE = {
   VALIDATION: {
     [EXPERIENCE_NAME]: '경력을 선택해 주세요.',
@@ -86,7 +92,7 @@ export const USER_META_DATA_FORM_MESSAGE = {
     GET_DATA_ERROR: '유저 정보를 가져오는데 실패했습니다.',
     POST_DATA_ERROR: '유저 정보를 저장하는데 실패했습니다.',
     POST_DATA_SUCCESS: '주요 이력이 저장되었습니다.',
-    CHARACTER_POST_SUCCESS: '500 경험치 획득!\n주요 이력이 저장되었습니다.',
+    CHARACTER_POST_SUCCESS_WITH_EXP: `주요 이력이 저장되었습니다. ${FILL_OUT_META_DATA_EXP} 경험치 획득 완료!`,
   },
 };
 
@@ -111,7 +117,7 @@ export const CHARACTER_MESSAGE = {
   },
   POST: {
     POST_DATA_FAILED: '캐릭터를 생성하는 데 실패했습니다.',
-    POST_DATA_SUCCESS: `캐릭터 생성 1,000 경험치 획득!\n캐릭터가 생성되었습니다.`, //TODO: alert 붙일 때 수정할 수도..?
+    POST_DATA_SUCCESS_WITH_EXP: `캐릭터가 생성되었습니다. ${CREATE_CHARACTER_EXP} 경험치 획득 완료!`,
   },
   PATCH: {
     PATCH_DATA_FAILED: '경험치 획득에 실패했습니다.',
@@ -124,7 +130,7 @@ export const HISTORY_MESSAGE = {
   VALIDATION: {
     QUERY_PARAMS_TYPE: 'page 또는 limit이 유효하지 않습니다.',
   },
-  DELETE_SUCCEESS: '인터뷰 기록을 삭제했습니다.',
+  DELETE_SUCCESS: '인터뷰 기록을 삭제했습니다.',
   GET_SERVER_ERROR: '히스토리를 불러올 수 없습니다.',
 };
 
@@ -139,6 +145,7 @@ export const INTERVIEW_HISTORY = {
     PATCH_SERVER_ERROR: '면접 기록 수정에 실패했습니다.',
     NOT_FOUND: '해당 면접 기록을 찾을 수 없습니다.',
     FORBIDDEN: '해당 면접 기록을 수정할 권한이 없습니다.',
+    SUCCESS_WITH_EXP: `면접이 완료되었습니다. ${INTERVIEW_COMPLETION_EXP} 경험치 획득 완료!`,
   },
 };
 
@@ -159,4 +166,6 @@ export const BOOKMARK_MESSAGE = {
   REMOVE: '북마크가 취소되었습니다.',
   ADD_ERROR: '북마크 등록에 실패했습니다.',
   REMOVE_ERROR: '북마크 취소에 실패했습니다.',
+  GET_COUNT_ERROR: '경험치 지급을 위해 오늘 등록한 북마크를 확인하는데 실패했습니다.',
+  SUCCESS_WITH_EXP: `북마크에 추가되었습니다. ${BOOKMARK_JOB_POSTING_EXP} 경험치 획득 완료!`,
 };

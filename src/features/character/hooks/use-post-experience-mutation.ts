@@ -1,7 +1,7 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-key';
 import { patchCharacterExperience, PatchCharacterProps } from '@/features/character/api/client-services';
-import { Character } from '@prisma/client';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import type { CharacterType } from '@/types/DTO/character-dto';
 
 const { CHARACTER } = QUERY_KEY;
 
@@ -12,8 +12,8 @@ export const usePostExperienceMutation = () => {
       patchCharacterExperience({ characterId, amount, history }),
     onMutate: async ({ characterId, amount }) => {
       await queryClient.cancelQueries({ queryKey: [CHARACTER] });
-      const previousCharacter = queryClient.getQueryData([CHARACTER]) as Character | undefined;
-      queryClient.setQueryData([CHARACTER], (old: Character | undefined) => {
+      const previousCharacter = queryClient.getQueryData([CHARACTER]) as CharacterType | undefined;
+      queryClient.setQueryData([CHARACTER], (old: CharacterType | undefined) => {
         if (!old) return old;
         return {
           ...old,

@@ -32,7 +32,7 @@ const ResumeCard = ({ type = 'resume', resume, isSelected, onSelect }: Props) =>
   };
 
   return (
-    <Card onClick={handleClick} className={selectedClassName}>
+    <Card onClick={handleClick} className={clsx(selectedClassName, 'w-80 flex-shrink-0')}>
       <div>
         <Typography size='sm' color='gray-500'>
           {updatedAt ? updatedAtDate : createdAtDate}

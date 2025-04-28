@@ -39,7 +39,7 @@ const MyInfo = ({ session }: Props) => {
 
   return (
     <section className='flex w-full flex-1 flex-col gap-4'>
-      <Typography as='h2' size='2xl' weight='bold'>
+      <Typography as='h2' className='mobile:text-lg text-2xl font-bold'>
         <div className='flex items-center'>
           <span className='text-primary-orange-600'>내 정보</span> 확인
           <div className='ml-3 desktop:hidden' onClick={() => toggleModal(USER_META_DATA)}>
@@ -47,19 +47,21 @@ const MyInfo = ({ session }: Props) => {
           </div>
         </div>
       </Typography>
-      {!data ? (
-        <div className='flex flex-1 items-center justify-center py-4 desktop:py-0'>
-          <BlockComponent
-            firstLine='이런! 내 정보가 없어요!'
-            secondLine='내 정보를 등록해볼까요?'
-            thirdLine='ChickMate와 함께 성장해요.'
-            buttonName='내 정보 등록하기'
-            onClick={() => toggleModal(USER_META_DATA)}
-          />
-        </div>
-      ) : (
-        <MyInfoContent data={data} />
-      )}
+      <div className='mobile:hidden'>
+        {!data ? (
+          <div className='flex flex-1 items-center justify-center py-4 desktop:py-0'>
+            <BlockComponent
+              firstLine='이런! 내 정보가 없어요!'
+              secondLine='내 정보를 등록해볼까요?'
+              thirdLine='ChickMate와 함께 성장해요.'
+              buttonName='내 정보 등록하기'
+              onClick={() => toggleModal(USER_META_DATA)}
+            />
+          </div>
+        ) : (
+          <MyInfoContent data={data} />
+        )}
+      </div>
       {isModalOpen && (
         <Modal modalId={USER_META_DATA}>
           <UserMetaDataModal />

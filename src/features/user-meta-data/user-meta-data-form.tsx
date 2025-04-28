@@ -25,7 +25,7 @@ const UserMetaDataForm = () => {
   if (isPending) return <LoadingAnimation />;
 
   return (
-    <div className={clsx('mt-10', isFirstTime && 'mt-0')}>
+    <div className={clsx('mobile:mt-4 mt-10', isFirstTime && 'mt-0')}>
       {isFirstTime && (
         <span className='mb-4 block text-center font-bold text-primary-orange-600'>
           작성 완료 시 {FILL_OUT_META_DATA_EXP} 경험치 획득!

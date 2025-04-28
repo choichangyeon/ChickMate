@@ -3,16 +3,22 @@
 import React from 'react';
 import Lottie from 'lottie-react';
 import Loading from '@/lottie/loading.json';
+import BlackLoading from '@/lottie/black-loading.json';
 import clsx from 'clsx';
 
 type Props = {
   className?: string;
+  option?: 'default' | 'black';
 };
 
-const LoadingAnimation = ({ className }: Props) => {
+const LoadingAnimation = ({ className, option = 'default' }: Props) => {
   return (
     <div className='flex h-full w-full items-center justify-center'>
-      <Lottie animationData={Loading} loop={true} autoplay={true} className={clsx('w-full', className)} />
+      {option === 'black' ? (
+        <Lottie animationData={BlackLoading} loop={Infinity} autoplay={true} className={clsx('w-full', className)} />
+      ) : (
+        <Lottie animationData={Loading} loop={Infinity} autoplay={true} className={clsx('w-full', className)} />
+      )}
     </div>
   );
 };

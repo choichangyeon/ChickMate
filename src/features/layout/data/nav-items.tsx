@@ -28,7 +28,7 @@ const Nav_Items = [
     name: '자소서',
     icon: <ResumeIcon />,
     fullIcon: <ResumeFullIcon />,
-    class: 'mb-2',
+    class: 'mb-2 mobile:m-0',
   },
   {
     path: INTERVIEW.START,
@@ -36,7 +36,7 @@ const Nav_Items = [
     name: 'AI 면접',
     icon: <InterviewIcon />,
     fullIcon: <InterviewFullIcon />,
-    class: 'mb-2',
+    class: 'mb-2 mobile:m-0',
   },
   {
     path: JOB,
@@ -44,7 +44,7 @@ const Nav_Items = [
     name: '맞춤 채용 공고',
     icon: <JobIcon />,
     fullIcon: <JobFullIcon />,
-    class: 'mb-2',
+    class: 'mb-2 mobile:m-0',
   },
   {
     path: MY_PAGE,
@@ -61,7 +61,7 @@ export const Private_Nav_Items: NavItems[] = [
     path: ON_BOARDING,
     type: 'button',
     name: '로그아웃',
-    class: 'mt-auto',
+    class: 'mt-auto mobile:m-0 h-[36px]',
     icon: <LogoutIcon />,
   },
 ];
@@ -72,7 +72,7 @@ export const Public_Nav_Items: NavItems[] = [
     path: AUTH.SIGN_IN,
     name: '로그인',
     type: 'link',
-    class: 'mt-auto',
+    class: 'mt-auto mobile:m-0',
     icon: <SignInIcon />,
   },
 ];

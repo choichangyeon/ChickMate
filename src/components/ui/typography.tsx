@@ -55,7 +55,7 @@ const typographyVariant = cva('', {
   },
 });
 
-type AllowedTags = 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+type AllowedTags = 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
 type TypographyProps<T extends AllowedTags = 'p'> = {
   as?: T;

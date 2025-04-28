@@ -57,7 +57,7 @@ const MyPageCharacterCard = ({
             />
           </div>
           <div className='flex flex-1 flex-col justify-between py-6 pr-9'>
-            <Typography size='sm' align='right'>
+            <Typography size='sm' align='right' as='span'>
               ChickMate
             </Typography>
             <div className='flex flex-col gap-1'>

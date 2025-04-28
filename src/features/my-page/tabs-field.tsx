@@ -37,9 +37,9 @@ const TabsField = async ({ userId }: Props) => {
   const initialTabCounts = result?._count ?? INIT_TAB_COUNTS;
 
   return (
-    <section className='h-[80dvh] max-h-[643px] w-1/2 max-w-[634px] overflow-hidden rounded-t-[8px] border bg-cool-gray-10'>
+    <section className='h-full w-1/2 min-w-[440px] max-w-[634px] overflow-hidden rounded-t-[8px] border bg-cool-gray-10'>
       <TabButtons userId={userId} initialTabCounts={initialTabCounts} />
-      <div className='h-full max-h-[595px] p-8'>
+      <div className='h-full p-8'>
         <ListByTab />
       </div>
     </section>

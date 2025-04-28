@@ -8,6 +8,8 @@ type ButtonProps = {
   size?: 'small' | 'medium' | 'large' | 'fixed';
   square?: boolean;
   fontWeight?: 'normal' | 'medium' | 'bold' | 'black';
+  target?: never;
+  labelledby?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
@@ -20,6 +22,7 @@ const Button = (props: ButtonProps) => {
     size = 'medium',
     square = false,
     fontWeight = 'medium',
+    labelledby = '',
   } = props;
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -34,6 +37,7 @@ const Button = (props: ButtonProps) => {
       className={buttonStyle({ size, square, disabled, fontWeight })}
       onClick={handleClick}
       disabled={disabled}
+      aria-labelledby={labelledby}
     >
       {children}
     </button>

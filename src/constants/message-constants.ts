@@ -88,7 +88,6 @@ export const USER_META_DATA_FORM_MESSAGE = {
     [LOCATION_NAME]: '지역을 선택해 주세요.',
   } as const,
   API: {
-    GET_REGIONS_ERROR: '지역 정보를 가져오는데 실패했습니다.',
     GET_DATA_ERROR: '유저 정보를 가져오는데 실패했습니다.',
     POST_DATA_ERROR: '유저 정보를 저장하는데 실패했습니다.',
     POST_DATA_SUCCESS: '주요 이력이 저장되었습니다.',
@@ -130,7 +129,8 @@ export const HISTORY_MESSAGE = {
   VALIDATION: {
     QUERY_PARAMS_TYPE: 'page 또는 limit이 유효하지 않습니다.',
   },
-  DELETE_SUCCESS: '인터뷰 기록을 삭제했습니다.',
+  DELETE_SUCCESS: '면접 기록을 삭제했습니다.',
+  DELETE_FAIL: '면접 기록 삭제에 실패했습니다.',
   GET_SERVER_ERROR: '히스토리를 불러올 수 없습니다.',
 };
 

@@ -7,10 +7,10 @@ type Props = InterviewHistoryType['id'];
 
 const { HISTORY } = QUERY_KEY;
 
-export const useGetInterviewDetailQuery = (id: Props) => {
+export const useGetInterviewDetailQuery = (id: Props, condition: boolean = true) => {
   return useQuery({
     queryKey: [HISTORY, id],
     queryFn: () => getInterviewDetail(id),
-    enabled: !!id,
+    enabled: !!id && condition,
   });
 };

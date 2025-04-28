@@ -1,10 +1,10 @@
 'use client';
 import clsx from 'clsx';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useTabCountQuery } from '@/features/my-page/hook/use-tab-count-query';
-import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
 import Badge from '@/components/ui/badge';
 import { TABS } from '@/constants/my-page-constants';
+import { useTabCountQuery } from '@/features/my-page/hook/use-tab-count-query';
+import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
 import type { Tabs } from '@/types/tab-type';
 
 const { BOOKMARK_TAB, RESUME_TAB, INTERVIEW_HISTORY_TAB } = TABS;
@@ -12,15 +12,15 @@ const { BOOKMARK_TAB, RESUME_TAB, INTERVIEW_HISTORY_TAB } = TABS;
 const tabs = [
   {
     id: INTERVIEW_HISTORY_TAB,
-    title: '면접기록',
+    title: '내 면접기록',
   },
   {
     id: BOOKMARK_TAB,
-    title: '북마크한 채용공고',
+    title: '내 채용공고',
   },
   {
     id: RESUME_TAB,
-    title: '내가 작성한 자소서',
+    title: '내 자소서',
   },
 ];
 
@@ -59,7 +59,7 @@ const TabButtons = ({ userId, initialTabCounts }: Props) => {
             <button className='w-full' onClick={() => handleChangeTab(tab.id)}>
               {tab.title}
               {tabCounts[tab.id] !== 0 && (
-                <Badge mx={1} size='small' color='dark'>
+                <Badge mx={1} size='small' color={isCurrentTab ? 'primary' : 'dark'}>
                   {tabCounts[tab.id]}
                 </Badge>
               )}

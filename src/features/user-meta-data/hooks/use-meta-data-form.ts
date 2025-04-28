@@ -1,29 +1,26 @@
 'use client';
+import { Notify } from 'notiflix';
 import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
-import { Notify } from 'notiflix';
-import { useMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-query';
-import useMetaDataMutation from '@/features/user-meta-data/hooks/use-meta-data-mutation';
 import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
 import { userMetaFormSchema, UserMetaSchema } from '@/features/user-meta-data/data/user-meta-form-schema';
+import useMetaDataMutation from '@/features/user-meta-data/hooks/use-meta-data-mutation';
+import { useMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-query';
+import { getErrorMessage } from '@/utils/get-error-message';
 import { useCharacterStore } from '@/store/use-character-store';
 import { useModalStore } from '@/store/use-modal-store';
-import { DEFAULT, USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
-import { PATH } from '@/constants/path-constant';
+import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import { USER_META_DATA_FORM_MESSAGE } from '@/constants/message-constants';
 import { MODAL_ID } from '@/constants/modal-id-constants';
-import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import { QUERY_KEY } from '@/constants/query-key';
-import type { UserMetaDataType } from '@/types/user-meta-data-type';
-import type { SelectBoxType } from '@/types/select-box';
+import { DEFAULT, USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 import type { UserType } from '@/types/DTO/user-dto';
+import type { SelectBoxType } from '@/types/select-box';
+import type { UserMetaDataType } from '@/types/user-meta-data-type';
 
 const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
-const {
-  AUTH: { SIGN_IN },
-} = PATH;
 const {
   API: { POST_DATA_SUCCESS, CHARACTER_POST_SUCCESS_WITH_EXP },
 } = USER_META_DATA_FORM_MESSAGE;
@@ -32,8 +29,8 @@ const { FILL_OUT_META_DATA } = CHARACTER_HISTORY_KEY;
 const { JOB_POSTING } = QUERY_KEY;
 
 export const useMetaDataForm = (userId: UserType['id']) => {
-  const { data: metaData, isPending: isMetaDataPending } = useMetaDataQuery({ userId });
-  const { mutateAsync, error } = useMetaDataMutation(userId);
+  const { data: metaData, isPending } = useMetaDataQuery({ userId });
+  const { mutateAsync } = useMetaDataMutation(userId);
   const toggleModal = useModalStore((state) => state.toggleModal);
   const { handleExperienceUp } = useExperienceUp();
   const characterId = useCharacterStore((state) => state.characterId);
@@ -73,13 +70,6 @@ export const useMetaDataForm = (userId: UserType['id']) => {
     }
   }, [metaData, reset]);
 
-  useEffect(() => {
-    if (error instanceof Error) {
-      alert(error.message);
-      window.location.replace(SIGN_IN);
-    }
-  }, [error]);
-
   const handleSelect = useCallback(
     (key: keyof UserMetaDataType, selected: SelectBoxType['value']) => {
       setValue(key, selected);
@@ -99,7 +89,7 @@ export const useMetaDataForm = (userId: UserType['id']) => {
         exact: true,
       });
     } catch (error) {
-      if (error instanceof Error) alert(error.message);
+      Notify.failure(getErrorMessage(error));
     }
   };
 
@@ -111,7 +101,7 @@ export const useMetaDataForm = (userId: UserType['id']) => {
     handleSubmit,
     handleOnSubmit,
     handleSelect,
-    isMetaDataPending,
+    isPending,
     isFirstTime,
   };
 };

@@ -2,24 +2,18 @@
 import clsx from 'clsx';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { getInterviewerName } from '@/features/interview-history/utils/get-interviewer-name';
 import { useInterviewHistoryInfiniteQuery } from '@/features/interview-history/hook/use-interview-history-infinite-query';
 import EmptyList from '@/features/my-page/empty-list';
 import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
 import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
 import ErrorComponent from '@/components/common/error-component';
 import LoadingSpinner from '@/components/ui/loading-spinner';
-import { INTERVIEW_TYPE, INTERVIEW_TYPE_KR } from '@/constants/interview-constants';
 import { TABS } from '@/constants/my-page-constants';
 import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
 import type { UserType } from '@/types/DTO/user-dto';
 
-const { CALM } = INTERVIEW_TYPE;
-const { CALM_KR, PRESSURE_KR } = INTERVIEW_TYPE_KR;
 const { INTERVIEW_HISTORY_TAB } = TABS;
-
-const getInterviewer = (type: InterviewHistoryType['interviewType']) => {
-  return type === CALM ? `${CALM_KR} ☀️` : `${PRESSURE_KR} 🔥`;
-};
 
 const InterviewHistoryList = () => {
   const { data: session } = useSession();
@@ -64,7 +58,7 @@ const InterviewHistoryList = () => {
         >
           <div>
             <span className='text-md block font-bold text-cool-gray-900'>{history.title}</span>
-            <span className='text-sm'>{getInterviewer(history.interviewer)}</span>
+            <span className='text-sm'>{getInterviewerName(history.interviewer)}</span>
           </div>
           <div>
             <span

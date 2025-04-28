@@ -55,7 +55,6 @@ export const ROUTE_HANDLER_PATH = {
     INTERVIEW_HISTORY: '/api/interview-history',
     INTERVIEW_DETAIL: (id: number) => `/api/ai/interview/${id}`,
   },
-  REGIONS: '/api/regions',
   JOB: {
     POSTING: '/api/job/posting',
     BOOKMARK: '/api/job/bookmark',

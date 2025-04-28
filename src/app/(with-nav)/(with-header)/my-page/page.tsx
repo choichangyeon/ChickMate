@@ -9,7 +9,7 @@ const MyPage = async () => {
   if (!session) return null;
 
   return (
-    <article className='flex w-full items-center justify-between gap-2 px-12 py-8'>
+    <article className='flex h-full w-full items-stretch justify-evenly gap-5'>
       <ViewingField session={session} />
       <TabsField userId={session?.user.id} />
     </article>

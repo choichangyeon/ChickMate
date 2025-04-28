@@ -1,6 +1,16 @@
-const Trash = () => {
+type Props = React.SVGProps<SVGSVGElement> & {
+  className?: string;
+};
+
+const Trash = ({ className = '', ...props }: Props) => {
   return (
-    <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <svg
+      className={`h-6 w-6 ${className}`}
+      viewBox='0 0 24 24'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+      {...props}
+    >
       <path
         fillRule='evenodd'
         clipRule='evenodd'

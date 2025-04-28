@@ -53,22 +53,23 @@ const SelectInterviewerBox = ({ session }: Props) => {
   };
 
   return (
-    <section className='flex flex-wrap gap-5'>
-      <aside className='flex h-80 items-start justify-start gap-5 desktop:self-stretch tablet:w-full tablet:justify-evenly'>
+    <section className='flex w-full flex-wrap gap-5'>
+      <aside className='flex h-80 items-start justify-start gap-5 tablet:w-full tablet:justify-evenly mobile:flex-wrap mobile:justify-center'>
         <div
           onClick={() => setInterviewType(CALM)}
-          className={`w-88 h-72 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border tablet:self-stretch ${interviewType === CALM ? activeClass : deActiveClass}`}
+          className={`w-88 h-72 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border tablet:self-stretch mobile:w-56 ${interviewType === CALM ? activeClass : deActiveClass}`}
         >
           <LottieAnimation active={interviewType === CALM} animationData={Sunset} />
         </div>
         <div
           onClick={() => setInterviewType(PRESSURE)}
-          className={`w-88 h-72 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border tablet:self-stretch ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
+          className={`w-88 h-72 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border tablet:self-stretch mobile:w-56 ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
         >
           <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure} speed={0.4} />
         </div>
       </aside>
-      <aside className='flex h-72 w-80 min-w-36 flex-col items-center justify-center overflow-hidden rounded-lg border border-secondary-amber bg-cool-gray-10 tablet:h-52 tablet:w-full'>
+      <aside className='hidden mobile:block'> 예시</aside>
+      <aside className='flex h-72 w-80 min-w-36 flex-col items-center justify-center overflow-hidden rounded-lg border border-secondary-amber bg-cool-gray-10 tablet:h-52 tablet:w-full mobile:hidden'>
         <div className='mb-4'>
           {/* TODO: 이 부분은 면접관을 설명하는 부분, 추후 수정 가능 */}
           {interviewType === 'calm' ? (

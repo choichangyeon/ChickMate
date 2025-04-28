@@ -82,10 +82,10 @@ const LottieAnimationInner = (
       animationData={animationData}
       loop={false}
       autoplay={false}
-      className={clsx(className, 'flex h-full w-full items-center justify-center')}
+      className={clsx(className, 'flex h-full w-full items-center justify-center mobile:w-auto')}
       // TODO: 이 부분은 추후 수정가능
       rendererSettings={{
-        preserveAspectRatio: 'none',
+        preserveAspectRatio: 'xMidYMid slice',
       }}
     />
   );

@@ -7,6 +7,7 @@ import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
 import type { CharacterType } from '@/types/DTO/character-dto';
 import type { CharacterHistoryType } from '@/types/DTO/character-history-dto';
 import LoadingAnimation from '@/components/common/loading-animation';
+import ErrorComponent from '@/components/common/error-component';
 
 type Props = {
   characterData: CharacterType;
@@ -28,7 +29,7 @@ const CharacterHistoryList = ({ characterData }: Props) => {
         <LoadingAnimation />
       </div>
     );
-  if (isError) return <div>에러 발생</div>;
+  if (isError) return <ErrorComponent />;
 
   const characterHistories = data.pages.flatMap((page) => page.histories);
 

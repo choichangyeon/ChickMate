@@ -14,7 +14,7 @@ const { AUTH_REQUIRED } = AUTH_MESSAGE.RESULT;
 const { DB_SERVER_ERROR, DB_REQUEST_ERROR } = DB_MESSAGE.ERROR;
 const { USER_ID_VALIDATION } = DB_MESSAGE.VALIDATION;
 const { NOT_FOUND, GET_ERROR, PATCH_SERVER_ERROR, FORBIDDEN } = INTERVIEW_HISTORY.API;
-const { DELETE_FAIL } = HISTORY_MESSAGE;
+const { DELETE_FAIL, DELETE_SUCCESS } = HISTORY_MESSAGE;
 
 /**
  * 원하는 인터뷰 기록 조회 요청
@@ -141,8 +141,6 @@ export const PATCH = async (request: NextRequest, { params }: RouteParams) => {
  * 원하는 인터뷰 기록 삭제 요청
  */
 export const DELETE = async (request: NextRequest, { params }: RouteParams) => {
-  const interviewId = Number(params.id);
-
   try {
     const interviewId = Number(params.id);
     const token = await getToken({ req: request, secret: NEXTAUTH_SECRET });

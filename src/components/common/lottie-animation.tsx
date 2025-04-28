@@ -24,6 +24,12 @@ const LottieAnimationInner = (
   ref: React.Ref<LottieHandle>
 ) => {
   const lottieRef = useRef<LottieRefCurrentProps>(null);
+  const isFirstRender = useRef(true);
+
+  // 컴포넌트 마운트 시 0 프레임으로 초기화
+  useEffect(() => {
+    lottieRef.current?.goToAndStop(0, true);
+  }, []);
 
   // 속도 설정 메서드
   const handleSetSpeed = (newSpeed: number) => {
@@ -45,8 +51,15 @@ const LottieAnimationInner = (
     lottieRef.current?.goToAndPlay(lastFrame, true);
   };
 
-  // active prop 변화에 따라 자동 재생/역재생
+  // active prop 변화에 따라 자동 재생/역재생 (마운트 첫 실행 건너뛰기)
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      if (active) {
+        handlePlay();
+      }
+      return;
+    }
     if (active) {
       handlePlay();
     } else {

@@ -19,7 +19,8 @@ import LottieAnimation from '@/components/common/lottie-animation';
 const { CALM, PRESSURE } = INTERVIEW_TYPE;
 const { LIVE } = PATH.INTERVIEW;
 
-const activeBgClass = 'outline-primary-orange-600 bg-cool-gray-10';
+const activeClass = 'border-primary-orange-600 bg-cool-gray-10';
+const deActiveClass = 'border-cool-gray-300';
 
 const SelectInterviewerBox = () => {
   const [interviewType, setInterviewType] = useState<string>(CALM);
@@ -39,22 +40,22 @@ const SelectInterviewerBox = () => {
   };
 
   return (
-    <section className='flex flex-row'>
-      <aside className='mr-5 flex w-full items-start justify-start gap-5 self-stretch'>
+    <section className='flex flex-wrap gap-5'>
+      <aside className='flex h-80 items-start justify-start gap-5 self-stretch'>
         <div
           onClick={() => setInterviewType(CALM)}
-          className={`flex w-full cursor-pointer items-center justify-center self-stretch rounded-lg outline outline-1 outline-cool-gray-300 ${interviewType === CALM ? activeBgClass : ''}`}
+          className={`w-100 h-80 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === CALM ? activeClass : deActiveClass}`}
         >
           <LottieAnimation active={interviewType === CALM} animationData={Sunset} />
         </div>
         <div
           onClick={() => setInterviewType(PRESSURE)}
-          className={`flex w-full cursor-pointer items-center justify-center self-stretch rounded-lg outline outline-1 outline-cool-gray-300 ${interviewType === PRESSURE ? activeBgClass : ''}`}
+          className={`w-100 h-80 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
         >
           <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure} speed={0.4} />
         </div>
       </aside>
-      <aside className='flex h-80 w-96 flex-shrink-0 flex-col items-center justify-center overflow-hidden rounded-lg bg-emerald-900/0 outline outline-1 outline-offset-[-1px] outline-yellow-500'>
+      <aside className='flex h-80 w-96 min-w-36 flex-col items-center justify-center overflow-hidden rounded-lg bg-emerald-900/0 outline outline-1 outline-offset-[-1px] outline-yellow-500'>
         <div className='mb-4'>
           {/* TODO: 이 부분은 면접관을 설명하는 부분, 추후 수정 가능 */}
           {interviewType === 'calm' ? (

@@ -17,7 +17,8 @@ type Props = {
 };
 
 const ResumeCard = ({ type = 'resume', resume, iconButton, children, isSelected, onSelect }: Props) => {
-  const { id, title, updatedAt, createdAt } = resume;
+  console.log(resume);
+  const { id, title, updatedAt, createdAt, tryCount } = resume;
   const updatedAtDate = formatDate({ input: updatedAt });
   const createdAtDate = formatDate({ input: createdAt });
 

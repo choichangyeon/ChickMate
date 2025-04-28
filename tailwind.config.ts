@@ -94,6 +94,7 @@ const config: Config = {
         'notiflix-alert': '4001',
         modal: '100',
         header: '90',
+        nav: '90',
         overlay: '10',
       },
       keyframes: {

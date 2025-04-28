@@ -92,7 +92,7 @@ const Modal = ({ portalRoot, modalId, children, className }: Props) => {
         ref={modalContentRef}
         role='dialog'
         aria-labelledby={`${modalId}-title`}
-        className='animate-fadeIn relative max-h-[650px] w-full max-w-[434px] flex-col overflow-scroll rounded-3xl border border-cool-gray-200 bg-white p-8 scrollbar-hide'
+        className='mobile:max-w-auto mobile:max-h-[70vh] mobile:w-[80vw] relative max-h-[650px] w-full max-w-[434px] animate-fadeIn flex-col overflow-scroll rounded-3xl border border-cool-gray-200 bg-white p-8 scrollbar-hide'
       >
         <Typography as='h2' srOnly id={`${modalId}-title`}>
           {modalId}

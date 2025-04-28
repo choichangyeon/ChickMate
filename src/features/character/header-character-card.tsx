@@ -52,7 +52,7 @@ const HeaderCharacterCard = ({
                   <Typography weight='bold' size='md'>
                     <span className='pr-2 text-primary-orange-600'>LV {level} </span>
                   </Typography>
-                  <Typography weight='bold' size='md'>
+                  <Typography size='md' className='mobile:max-w-32 mobile:truncate font-bold'>
                     {session && session.user.name}님
                   </Typography>
                 </div>

@@ -62,7 +62,7 @@ const ResumeForm = ({ resume }: Props) => {
 
   /** UI */
   return (
-    <form onSubmit={handleSubmit} className='flex flex-1 flex-col gap-4'>
+    <form onSubmit={handleSubmit} className='flex flex-1 flex-col gap-4 pb-[50px]'>
       {/* 상단 고정 영역 */}
       <div className='relative w-full shrink-0'>
         <input

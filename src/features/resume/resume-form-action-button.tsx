@@ -22,10 +22,10 @@ const ResumeFormActionButton = ({ resume, draftResumeList, autoSaveStatus, onCli
       ) : (
         <div className='flex gap-8 mobile:flex-col mobile:gap-1'>
           <Button size='fixed' type='button' onClick={onClick}>
-            임시 저장된 글 | {draftResumeList?.length ?? 0}
+            <span className='mobile:text-sm'>임시 저장된 글 | {draftResumeList?.length ?? 0}</span>
           </Button>
           <Button size='fixed' type='submit'>
-            저장하기
+            <span className='mobile:text-sm'>저장하기</span>
           </Button>
         </div>
       )}

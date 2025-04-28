@@ -32,7 +32,7 @@ const Badge = ({
   return (
     <span
       className={clsx(
-        'rounded-[50px] text-center',
+        'whitespace-nowrap rounded-[50px] text-center',
         badgeStyle({ color, variant, size, mr, ml, mt, mb, my, mx, display })
       )}
     >

@@ -10,6 +10,7 @@ import CreateCharacterModal from '@/features/character/create-character-modal';
 import { useCharacterCard } from '@/features/character/hooks/use-character-card';
 import CharacterDetailModal from '@/features/character/character-detail-modal';
 import type { CharacterType } from '@/types/DTO/character-dto';
+import Badge from '@/components/ui/badge';
 
 type Props = {
   session?: Session;
@@ -34,7 +35,10 @@ const HeaderCharacterCard = ({
 
   return (
     <>
-      <div onClick={handleClickCard} className='relative flex cursor-pointer items-center gap-4 px-8'>
+      <div
+        onClick={handleClickCard}
+        className='mobile:px-0 mobile:gap-0 relative flex cursor-pointer items-center gap-4 px-8'
+      >
         {isDefault && (
           <ScreenOverlay>
             {session ? <Typography>캐릭터 선택하러 가기</Typography> : '이런! 로그인을 하지 않았어요!'}
@@ -43,8 +47,8 @@ const HeaderCharacterCard = ({
         <div className={`${isDefault && 'opacity-60'} flex items-center gap-4`}>
           <div>
             <div className='flex flex-col'>
-              <div className='flex w-56 items-center justify-between'>
-                <div className='flex w-36 truncate'>
+              <div className='mobile:w-auto flex w-56 items-center justify-between'>
+                <div className='mobile:w-auto flex w-36 truncate'>
                   <Typography weight='bold' size='md'>
                     <span className='pr-2 text-primary-orange-600'>LV {level} </span>
                   </Typography>
@@ -52,9 +56,10 @@ const HeaderCharacterCard = ({
                     {session && session.user.name}님
                   </Typography>
                 </div>
-                {/* 추후 tag 공통 컴포넌트 */}
-                <div className='rounded-xl border p-1 text-center text-xs font-normal text-cool-gray-900'>
-                  {characterName}
+                <div className='mobile:sr-only'>
+                  <Badge color='dark' variant='outline' size='small'>
+                    {characterName}
+                  </Badge>
                 </div>
               </div>
               <CharacterExpBar type='header' percent={percent} />

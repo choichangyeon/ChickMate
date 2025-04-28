@@ -1,10 +1,4 @@
 'use client';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
-import { useResumeQuery } from '@/features/resume-list/hooks/use-resume-query';
-import ResumeQnAItem from '@/features/resume-list/resume-qna-item';
-import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
 import ErrorComponent from '@/components/common/error-component';
 import LeftArrowIcon from '@/components/icons/left-arrow-icon';
 import Button from '@/components/ui/button';
@@ -13,9 +7,15 @@ import Typography from '@/components/ui/typography';
 import { TABS } from '@/constants/my-page-constants';
 import { PATH } from '@/constants/path-constant';
 import { QUERY_KEY } from '@/constants/query-key';
+import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
+import { useResumeQuery } from '@/features/resume-list/hooks/use-resume-query';
+import ResumeQnAItem from '@/features/resume-list/resume-qna-item';
+import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
 import type { ResumeType } from '@/types/DTO/resume-dto';
-import type { Field } from '@/types/resume';
 import type { UserType } from '@/types/DTO/user-dto';
+import type { Field } from '@/types/resume';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const { DETAIL } = PATH.RESUME;
 const { RESUMES } = QUERY_KEY;
@@ -78,10 +78,10 @@ const ResumeDetailField = ({ resumeId, userId }: Props) => {
         })}
       </ul>
       <div className='flex gap-8'>
-        <Button variant='outline' color='dark' size='large' onClick={() => handlePatchResume(resumeId)}>
+        <Button size='fixed' onClick={() => handlePatchResume(resumeId)}>
           수정하기
         </Button>
-        <Button variant='outline' color='dark' size='large' onClick={() => handleDeleteResume(resumeId)}>
+        <Button size='fixed' onClick={() => handleDeleteResume(resumeId)}>
           삭제하기
         </Button>
       </div>

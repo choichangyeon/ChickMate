@@ -77,7 +77,7 @@ const ResumeForm = ({ resume }: Props) => {
           <button
             type='button'
             onClick={handleAddField}
-            className='absolute right-4 top-1/2 w-[174px] -translate-y-1/2 rounded-3xl border border-cool-gray-900 bg-transparent px-5 py-1 font-bold text-cool-gray-900'
+            className='button-hover-focus absolute right-4 top-1/2 w-[174px] -translate-y-1/2 rounded-3xl border border-cool-gray-900 bg-transparent px-5 py-1 font-bold text-cool-gray-900'
           >
             질문 추가 +
           </button>

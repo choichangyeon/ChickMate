@@ -1,20 +1,22 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useCharacterStore } from '@/store/use-character-store';
-import { useInterviewStore } from '@/store/use-interview-store';
 import Button from '@/components/ui/button';
 import Typography from '@/components/ui/typography';
-import { INTERVIEW_HISTORY_STATUS, INTERVIEW_LIMIT_COUNT } from '@/constants/interview-constants';
 import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
+import { INTERVIEW_HISTORY_STATUS, INTERVIEW_LIMIT_COUNT } from '@/constants/interview-constants';
 import { PATH } from '@/constants/path-constant';
+import { QUERY_KEY } from '@/constants/query-key';
 import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
-import { usePatchInterviewHistoryMutation } from '@/features/interview/hooks/use-interview-history-mutation';
 import { usePostAIFeedbackMutation } from '@/features/interview/hooks/use-ai-feedback-mutation';
+import { usePatchInterviewHistoryMutation } from '@/features/interview/hooks/use-interview-history-mutation';
+import { useCharacterStore } from '@/store/use-character-store';
+import { useInterviewStore } from '@/store/use-interview-store';
 import type { InterviewHistory } from '@prisma/client';
 import { useQueryClient } from '@tanstack/react-query';
-import { QUERY_KEY } from '@/constants/query-key';
+
 import { Notify } from 'notiflix';
+
+import { useRouter } from 'next/navigation';
 
 const { MY_PAGE } = PATH;
 const { INTERVIEW_COMPLETION } = CHARACTER_HISTORY_KEY;
@@ -112,11 +114,11 @@ const Timer = ({
       </div>
       <div>
         {isFinalQuestionAsked ? (
-          <Button variant='outline' color='dark' square onClick={handleCompletedButtonClick}>
+          <Button square onClick={handleCompletedButtonClick}>
             면접 완료하기
           </Button>
         ) : (
-          <Button variant='outline' color='dark' disabled={isAIVoicePlaying} square onClick={handleButtonClick}>
+          <Button disabled={isAIVoicePlaying} square onClick={handleButtonClick}>
             {isRecording ? '답변 완료하기' : isAIVoicePlaying ? '질문 생성 중...' : '말하기'}
           </Button>
         )}

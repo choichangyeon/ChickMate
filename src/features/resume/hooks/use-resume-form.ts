@@ -61,7 +61,8 @@ export const useResumeForm = (resume?: ResumeType) => {
     setAutoSaveStatus(SAVING);
   };
 
-  const handleAddField = () => {
+  const handleAddField = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.currentTarget.blur();
     setFieldList((prev) => [...prev, { id: crypto.randomUUID(), question: '', answer: '' }]);
     setAutoSaveStatus(SAVING);
   };

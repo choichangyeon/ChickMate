@@ -16,15 +16,15 @@ const ResumeFormActionButton = ({ resume, draftResumeList, autoSaveStatus, onCli
   return (
     <div className='mb-8 flex justify-between'>
       {resume ? (
-        <Button variant='outline' color='dark' size='large' type='submit'>
+        <Button size='fixed' type='submit'>
           수정 완료
         </Button>
       ) : (
         <div className='flex gap-8'>
-          <Button variant='outline' color='dark' size='large' type='button' onClick={onClick}>
+          <Button size='fixed' type='button' onClick={onClick}>
             임시 저장된 글 | {draftResumeList?.length ?? 0}
           </Button>
-          <Button variant='outline' color='dark' size='large' type='submit'>
+          <Button size='fixed' type='submit'>
             저장하기
           </Button>
         </div>

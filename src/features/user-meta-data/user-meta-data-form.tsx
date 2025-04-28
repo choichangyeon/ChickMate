@@ -1,14 +1,14 @@
 'use client';
-import { useSession } from 'next-auth/react';
-import { academicData, jobData, typeData } from '@/features/user-meta-data/data/user-meta-data';
-import useRegionsQuery from '@/features/user-meta-data/hooks/use-regions-query';
-import SingleSelectField from '@/features/user-meta-data/single-select-field';
-import { useMetaDataForm } from '@/features/user-meta-data/hooks/use-meta-data-form';
 import ErrorComponent from '@/components/common/error-component';
 import Button from '@/components/ui/button';
 import LoadingSpinner from '@/components/ui/loading-spinner';
-import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 import { CHARACTER_HISTORY, CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
+import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
+import { academicData, jobData, typeData } from '@/features/user-meta-data/data/user-meta-data';
+import { useMetaDataForm } from '@/features/user-meta-data/hooks/use-meta-data-form';
+import useRegionsQuery from '@/features/user-meta-data/hooks/use-regions-query';
+import SingleSelectField from '@/features/user-meta-data/single-select-field';
+import { useSession } from 'next-auth/react';
 
 const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
 const { FILL_OUT_META_DATA } = CHARACTER_HISTORY_KEY;
@@ -78,8 +78,8 @@ const UserMetaDataForm = () => {
           />
         </div>
         <div className='text-center'>
-          <Button variant='outline' color='dark' type='submit'>
-            <span className='font-bold'>설정을 완료헀어요!</span>
+          <Button type='submit' fontWeight='bold'>
+            설정을 완료헀어요!
           </Button>
         </div>
       </form>

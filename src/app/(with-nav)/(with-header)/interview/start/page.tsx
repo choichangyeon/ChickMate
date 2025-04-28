@@ -42,7 +42,7 @@ const InterviewStartPage = async () => {
       </article>
       <article>
         <HydrationBoundary state={dehydrate(queryClient)}>
-          <section className='mb-4 flex flex-row justify-between'>
+          <section className='mb-4 flex flex-row gap-4'>
             <Typography as='h2' size='2xl' weight='bold'>
               면접 볼&nbsp;
               <span className='text-primary-orange-600'>자소서</span>를 선택해 주세요

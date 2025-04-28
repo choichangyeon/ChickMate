@@ -5,7 +5,7 @@ import useResumeStore from '@/features/interview/hooks/use-resume-store';
 import { useSubmitResumesQuery } from '@/hooks/queries/use-submit-resumes-query';
 import BlockComponent from '@/components/common/block-component';
 import { PATH } from '@/constants/path-constant';
-import LoadingSpinner from '@/components/ui/loading-spinner';
+import LoadingAnimation from '@/components/common/loading-animation';
 import { Session } from 'next-auth';
 import InterviewBlockComponent from '@/features/interview/interview-block-component';
 
@@ -32,7 +32,7 @@ const ResumeCardsBox = ({ session }: Props) => {
   if (isLoading) {
     return (
       <div className='mt-8 flex items-center justify-center'>
-        <LoadingSpinner />
+        <LoadingAnimation />
       </div>
     );
   }

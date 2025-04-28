@@ -2,10 +2,11 @@
 import ResumeCard from '@/features/interview/resume-card';
 import { useEffect } from 'react';
 import useResumeStore from '@/features/interview/hooks/use-resume-store';
-import { useSubmitResumesQuery } from '@/hooks/queries/use-submit-resumes-query';
+
 import LoadingAnimation from '@/components/common/loading-animation';
 import { Session } from 'next-auth';
 import InterviewBlockComponent from '@/features/interview/interview-block-component';
+import { useResumeListQuery } from '@/features/resume-list/hooks/use-resume-list-query';
 
 type Props = {
   session: Session | null;
@@ -13,7 +14,7 @@ type Props = {
 
 const ResumeCardsBox = ({ session }: Props) => {
   const { resumeId: selectedId, setResume } = useResumeStore();
-  const { data: resumeList, isPending, isError } = useSubmitResumesQuery();
+  const { data: resumeList, isPending, isError } = useResumeListQuery();
 
   useEffect(() => {
     if (selectedId === null && isPending === false) {

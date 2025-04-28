@@ -23,7 +23,7 @@ const MyCharacter = ({ session, characterData = defaultCharacter, overlayText, r
     session,
   });
   return (
-    <div className='flex w-full flex-col items-center justify-center gap-4'>
+    <div className='flex h-[330px] w-full flex-col items-center justify-center gap-4'>
       <div className='flex h-[226px] w-full items-center justify-center bg-[url("/assets/visual_assets.png")] bg-cover'>
         <Image
           src={`/assets/character/card/${type}-level${level}.png`}

@@ -41,7 +41,7 @@ const MyInfoContent = ({ data }: Props) => {
           );
         })}
       </ul>
-      <Button variant='outline' color='dark' onClick={() => toggleModal(USER_META_DATA)}>
+      <Button size='fixed' onClick={() => toggleModal(USER_META_DATA)}>
         수정하기
       </Button>
     </div>

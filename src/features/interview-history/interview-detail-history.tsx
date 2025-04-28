@@ -1,11 +1,11 @@
-import Image from 'next/image';
-import { useRef } from 'react';
+import Typography from '@/components/ui/typography';
 import { useInterSectionObserverHook } from '@/features/interview-history/hook/use-intersection-observer-hook';
 import { getInterviewerName } from '@/features/interview-history/utils/get-interviewer-name';
-import Typography from '@/components/ui/typography';
 import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
 import type { InterviewQnAType } from '@/types/DTO/interview-qna-dto';
 import type { ResumeType } from '@/types/DTO/resume-dto';
+import Image from 'next/image';
+import { useRef } from 'react';
 
 type Props = {
   data: InterviewHistoryType & {
@@ -16,7 +16,7 @@ type Props = {
 
 const InterviewDetailHistory = ({ data }: Props) => {
   const history = data.InterviewQnAList;
-  const lastItemRef = useRef<HTMLLIElement | null>(null);
+  const lastItemRef = useRef<HTMLDivElement | null>(null);
   const { isVisible } = useInterSectionObserverHook(lastItemRef);
 
   return (
@@ -26,7 +26,7 @@ const InterviewDetailHistory = ({ data }: Props) => {
       )}
       <ol className='flex h-full flex-col gap-4 overflow-y-auto pr-2 scrollbar-hide'>
         {history.map((interviewQna, idx) => (
-          <li key={idx} ref={history.length === idx + 1 ? lastItemRef : null}>
+          <li key={idx}>
             <div className='flex gap-4'>
               <div>
                 <Image
@@ -52,7 +52,7 @@ const InterviewDetailHistory = ({ data }: Props) => {
             </div>
             <div>
               <span className='block text-right text-secondary-amber'>내 답변</span>
-              <div className='py-2'>
+              <div className='py-2' ref={history.length === idx + 1 ? lastItemRef : null}>
                 <Typography weight='normal' color='gray-700' align='right'>
                   {interviewQna.answer}
                 </Typography>

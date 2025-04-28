@@ -11,11 +11,16 @@ export const useInfiniteScroll = ({ fetchNextPage, hasNextPage }: Props) => {
   useEffect(() => {
     if (!targetRef.current || !hasNextPage) return;
 
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        fetchNextPage();
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          fetchNextPage();
+        }
+      },
+      {
+        threshold: 0,
       }
-    });
+    );
 
     observer.observe(targetRef.current);
 

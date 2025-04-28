@@ -19,7 +19,7 @@ export const Nav = ({ session }: Props) => {
   const menus: NavItems[] = useMemo(() => (session ? Private_Nav_Items : Public_Nav_Items), [session]);
 
   return (
-    <nav className='nav-shadow mobile:w-full mobile:h-[52px] mobile:fixed mobile:bottom-0 flex h-screen w-[52px] flex-col items-center justify-center bg-cool-gray-900 px-1 py-8 text-cool-gray-50'>
+    <nav className='nav-shadow mobile:z-nav mobile:w-full mobile:h-[52px] mobile:fixed mobile:bottom-0 flex h-screen w-[52px] flex-col items-center justify-center bg-cool-gray-900 px-1 py-8 text-cool-gray-50'>
       <Link href={ON_BOARDING} className='mobile:hidden mb-12 block' aria-label='홈으로 이동하기'>
         <ChickLogo />
       </Link>

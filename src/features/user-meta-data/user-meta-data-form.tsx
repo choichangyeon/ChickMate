@@ -6,7 +6,6 @@ import { useMetaDataForm } from '@/features/user-meta-data/hooks/use-meta-data-f
 import SelectField from '@/features/user-meta-data/select-field';
 import ErrorComponent from '@/components/common/error-component';
 import Button from '@/components/ui/button';
-import LoadingSpinner from '@/components/ui/loading-spinner';
 import { EXPERIENCE_AMOUNT } from '@/constants/character-constants';
 import LoadingAnimation from '@/components/common/loading-animation';
 import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
@@ -23,9 +22,7 @@ const UserMetaDataForm = () => {
   const { watch, register, errors, handleSubmit, handleOnSubmit, handleSelect, isPending, isFirstTime } =
     useMetaDataForm(userId);
 
-  const { data: regions = [], isPending } = useRegionsQuery();
-
-  if (isPending || isMetaDataPending) return <LoadingAnimation />;
+  if (isPending) return <LoadingAnimation />;
 
   return (
     <div className={clsx('mt-10', isFirstTime && 'mt-0')}>

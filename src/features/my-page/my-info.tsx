@@ -1,7 +1,6 @@
 'use client';
 import BlockComponent from '@/components/common/block-component';
 import ErrorComponent from '@/components/common/error-component';
-import LoadingSpinner from '@/components/ui/loading-spinner';
 import Modal from '@/components/ui/modal';
 import Typography from '@/components/ui/typography';
 import { MODAL_ID } from '@/constants/modal-id-constants';
@@ -10,8 +9,6 @@ import { useMetaDataQuery } from '@/features/user-meta-data/hooks/use-meta-data-
 import UserMetaDataModal from '@/features/user-meta-data/user-meta-data-modal';
 import { useModalStore } from '@/store/use-modal-store';
 import { Session } from 'next-auth';
-import { UserMetaDataType } from '@/types/user-meta-data-type';
-import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
 import LoadingAnimation from '@/components/common/loading-animation';
 
 type Props = {

@@ -25,7 +25,7 @@ const MyInfo = ({ session }: Props) => {
 
   if (isPending)
     return (
-      <div className='flex flex-1 items-center justify-center'>
+      <div className='flex h-[30vh] flex-1 items-center justify-center'>
         <LoadingSpinner />
       </div>
     );

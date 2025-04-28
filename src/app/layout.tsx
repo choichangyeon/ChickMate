@@ -29,7 +29,7 @@ const RootLayout = ({
         <AuthProvider>
           <RQProvider>
             <NotiflixProvider />
-            <div className='mobile:flex-col mx-[auto] flex min-h-[100dvh]'>{children}</div>
+            <div className='mx-[auto] flex min-h-[100dvh]'>{children}</div>
           </RQProvider>
         </AuthProvider>
       </body>

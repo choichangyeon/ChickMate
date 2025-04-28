@@ -5,8 +5,8 @@ import { authOptions } from '@/utils/auth-option';
 import { getServerSession } from 'next-auth';
 import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
-import type { RouteParams } from '@/types/route-params';
 import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
+import type { RouteParams } from '@/types/route-params';
 
 const { NEXTAUTH_SECRET } = ENV;
 const { EXPIRED_TOKEN } = AUTH_MESSAGE.ERROR;
@@ -173,7 +173,7 @@ export const DELETE = async (request: NextRequest, { params }: RouteParams) => {
         },
       });
 
-      return NextResponse.json({ message: DELETE_SUCCEESS, count }, { status: 200 });
+      return NextResponse.json({ message: DELETE_SUCCESS, count }, { status: 200 });
     }
 
     if (!existing) {

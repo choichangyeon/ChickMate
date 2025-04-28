@@ -14,8 +14,10 @@ const config: Config = {
       screens: {
         mobile: { max: '743px' },
         tablet: { min: '744px', max: '1279px' },
-        desktop: { min: '1280px', max: '1919px' },
-        wide: { min: '1920px' },
+        desktop: { min: '1280px' },
+      },
+      maxWidth: {
+        max: '1920px',
       },
       colors: {
         'primary-orange': {

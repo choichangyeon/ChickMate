@@ -8,6 +8,7 @@ import { RESUME_STATUS } from '@/constants/resume-constants';
 import AlertInProgress from '@/features/interview/alert-in-progress';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/utils/auth-option';
+import ResumeAllButton from '@/features/interview/resume-all-button';
 
 const InterviewStartPage = async () => {
   const { RESUME_SUBMIT } = QUERY_KEY;
@@ -34,13 +35,14 @@ const InterviewStartPage = async () => {
         <SelectInterviewerBox />
       </article>
       <article>
-        <section className='mb-4 flex flex-row'>
-          <Typography as='h2' size='2xl' weight='bold'>
-            면접 볼&nbsp;
-            <span className='text-primary-orange-600'>자소서</span>를 선택해 주세요
-          </Typography>
-        </section>
         <HydrationBoundary state={dehydrate(queryClient)}>
+          <section className='mb-4 flex flex-row justify-between'>
+            <Typography as='h2' size='2xl' weight='bold'>
+              면접 볼&nbsp;
+              <span className='text-primary-orange-600'>자소서</span>를 선택해 주세요
+            </Typography>
+            <ResumeAllButton session={session} />
+          </section>
           <ResumeCardsBox session={session} />
         </HydrationBoundary>
       </article>

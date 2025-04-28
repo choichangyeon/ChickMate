@@ -7,7 +7,7 @@ import { useModalStore } from '@/store/use-modal-store';
 import { MODAL_ID } from '@/constants/modal-id-constants';
 import Modal from '@/components/ui/modal';
 
-const { COMPLETED_RESUME } = MODAL_ID;
+const { ALL_RESUME_LIST } = MODAL_ID;
 
 type Props = {
   session: Session | null;
@@ -15,7 +15,7 @@ type Props = {
 
 const ResumeAllButton = ({ session }: Props) => {
   const toggleModal = useModalStore((state) => state.toggleModal);
-  const isModalOpen = useModalStore((state) => state.getIsModalOpen(COMPLETED_RESUME));
+  const isModalOpen = useModalStore((state) => state.getIsModalOpen(ALL_RESUME_LIST));
 
   if (!session) return null;
 
@@ -24,13 +24,13 @@ const ResumeAllButton = ({ session }: Props) => {
       <button
         onClick={(event) => {
           event.preventDefault();
-          toggleModal(COMPLETED_RESUME);
+          toggleModal(ALL_RESUME_LIST);
         }}
       >
         <Typography color='gray-500'>전체보기</Typography>
       </button>
       {isModalOpen && (
-        <Modal modalId={COMPLETED_RESUME}>
+        <Modal modalId={ALL_RESUME_LIST}>
           <ResumeAllModal />
         </Modal>
       )}

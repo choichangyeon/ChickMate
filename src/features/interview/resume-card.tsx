@@ -22,7 +22,6 @@ const ResumeCard = ({ type = 'resume', resume, isSelected, onSelect }: Props) =>
   const updatedAtDate = formatDate({ input: updatedAt });
   const createdAtDate = formatDate({ input: createdAt });
 
-  // TODO: isSelected Style 설정하기
   const selectedClassName = isSelected ? 'cursor-pointer outline-primary-orange-600 bg-cool-gray-10' : 'cursor-pointer';
   const handleClick = () => {
     if (type === 'interview') {

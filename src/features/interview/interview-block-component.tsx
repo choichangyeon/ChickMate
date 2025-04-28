@@ -2,7 +2,6 @@
 
 import BlockComponent from '@/components/common/block-component';
 import { PATH } from '@/constants/path-constant';
-import { useRouter } from 'next/navigation';
 import React from 'react';
 
 type Props = {

@@ -27,8 +27,6 @@ const SelectInterviewerBox = () => {
   const router = useRouter();
   const { resumeId } = useResumeStore();
   const resetQuestionIndex = useInterviewStore((state) => state.resetQuestionIndex);
-  const charterType = 'poly';
-  const imageBasePath = `/assets/character/interviewer/${charterType}-interviewer`;
 
   const handleClickSetInterviewType = async () => {
     if (resumeId) {

@@ -35,18 +35,18 @@ export const useBookmarkMutation = ({ jobPostingId, userId }: Props) => {
 
       return { previousJobPostings };
     },
-    onSuccess: () => {
-      if (userId) {
-        queryClient.invalidateQueries({ queryKey: [JOB_POSTING, userId] });
-        queryClient.invalidateQueries({ queryKey: [BOOKMARK, userId] });
-        queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
-      }
-    },
     onError: (error, isBookmarked, context) => {
       if (context?.previousJobPostings) {
         queryClient.setQueryData([JOB_POSTING, userId], context.previousJobPostings);
       }
       throw error;
+    },
+    onSettled: () => {
+      if (userId) {
+        queryClient.invalidateQueries({ queryKey: [JOB_POSTING, userId] });
+        queryClient.invalidateQueries({ queryKey: [BOOKMARK, userId] });
+        queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
+      }
     },
   });
 };

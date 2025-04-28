@@ -12,9 +12,8 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        desktop: '1728px',
-        tablet: '744px',
-        mobile: '',
+        'desktop': '1280px',
+        'tablet': '744px',
       },
       colors: {
         'primary-orange': {
@@ -27,7 +26,7 @@ const config: Config = {
           '10': '#FAFBFC',
           '50': '#F9FAFB',
           '100': '#F3F4F6',
-          '200': '##E5E7EB',
+          '200': '#E5E7EB',
           '300': '#D1D5DB',
           '500': '#6B7280',
           '700': '#374151',

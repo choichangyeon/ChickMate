@@ -69,6 +69,9 @@ export const GET = async (request: NextRequest) => {
       case 'company':
         orderByCondition = { companyName: 'asc' };
         break;
+      case 'bookmark':
+        orderByCondition = { expirationTimestamp: 'asc' }; 
+        break;
       default:
         orderByCondition = { createdAt: 'desc' };
     }

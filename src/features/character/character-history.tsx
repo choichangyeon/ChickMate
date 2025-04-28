@@ -33,7 +33,7 @@ const CharacterHistoryList = ({ characterData }: Props) => {
   const characterHistories = data.pages.flatMap((page) => page.histories);
 
   return (
-    <div className='flex h-[297px] w-full flex-col gap-4'>
+    <div className='flex h-[330px] w-full flex-col gap-4'>
       <div className='flex h-full flex-col gap-4 overflow-y-auto scroll-smooth pr-2 scrollbar-hide'>
         {characterHistories.length === 0 ? (
           <div className='flex h-full flex-col items-center justify-center'>

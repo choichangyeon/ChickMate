@@ -13,10 +13,10 @@ type Props = {
 
 const ResumeCardsBox = ({ session }: Props) => {
   const { resumeId: selectedId, setResume } = useResumeStore();
-  const { data: resumeList, isLoading, isError } = useSubmitResumesQuery();
+  const { data: resumeList, isPending, isError } = useSubmitResumesQuery();
 
   useEffect(() => {
-    if (selectedId === null && isLoading === false) {
+    if (selectedId === null && isPending === false) {
       if (resumeList && resumeList.length > 0) {
         setResume(resumeList[0].id);
       }
@@ -25,7 +25,7 @@ const ResumeCardsBox = ({ session }: Props) => {
 
   if (!session) return <InterviewBlockComponent type='unauthenticated' />;
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <div className='mt-8 flex items-center justify-center'>
         <LoadingAnimation />

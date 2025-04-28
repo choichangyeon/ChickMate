@@ -9,6 +9,7 @@ import { Resume } from '@prisma/client';
 import clsx from 'clsx';
 
 const { DONE, NOT_DONE } = INTERVIEW_HISTORY_BADGE;
+const badgeClassName = clsx('flex flex-row gap-4');
 
 type Props = {
   type?: 'resume' | 'interview';
@@ -53,7 +54,5 @@ const ResumeCard = ({ type = 'resume', resume, isSelected, onSelect }: Props) =>
     </Card>
   );
 };
-
-const badgeClassName = clsx('flex flex-row gap-4');
 
 export default ResumeCard;

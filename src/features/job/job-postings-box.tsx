@@ -81,11 +81,11 @@ const JobPostingsBox = ({ userId }: Props) => {
 
     return (
       <>
-        <div className='grid grid-cols-3 gap-2'>
+        <ul className='grid gap-2 grid-cols-[repeat(auto-fill,_minmax(380px,_1fr))]'>
           {data.jobPostingList.map((jobPosting) => (
             <JobPostingCard key={jobPosting.id} userId={userId} jobPosting={jobPosting} />
           ))}
-        </div>
+        </ul>
         <JobPostingPaginationButton totalCount={data.totalCount} page={page} setPage={setPage} />
       </>
     );

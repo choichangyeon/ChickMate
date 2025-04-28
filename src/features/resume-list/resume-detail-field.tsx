@@ -17,6 +17,10 @@ import type { UserType } from '@/types/DTO/user-dto';
 import type { Field } from '@/types/resume';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { showNotiflixConfirm } from '@/utils/show-notiflix-confirm';
+import { RESUME_MESSAGE } from '@/constants/message-constants';
+import { Notify } from 'notiflix';
+import { getErrorMessage } from '@/utils/get-error-message';
 
 const { DETAIL } = PATH.RESUME;
 const { RESUMES } = QUERY_KEY;
@@ -25,10 +29,13 @@ type Props = {
   resumeId: ResumeType['id'];
   userId: UserType['id'];
 };
-
+const {
+  CONFIRM: { DELETE },
+  DELETE_REQUEST_SUCCESS,
+} = RESUME_MESSAGE;
 const ResumeDetailField = ({ resumeId, userId }: Props) => {
   const { data: resume, isPending, isError } = useResumeQuery(resumeId);
-  const { mutate: deleteResumeMutate } = useDeleteResumeMutation(RESUMES, userId);
+  const { mutateAsync: deleteResumeMutate } = useDeleteResumeMutation(RESUMES, userId);
   const router = useRouter();
 
   if (isPending)
@@ -46,14 +53,23 @@ const ResumeDetailField = ({ resumeId, userId }: Props) => {
 
   const resumeContent = resume.content as Field[];
 
-  const handleDeleteResume = (resumeId: ResumeType['id']) => {
-    // TODO: confirm창 적용하기
-    if (window.confirm('자기소개서를 정말로 삭제하시겠습니까?')) {
-      deleteResumeMutate(resumeId);
+  const confirmDelete = () => {
+    showNotiflixConfirm({
+      message: DELETE,
+      okFunction: handleDeleteResume,
+    });
+  };
+
+  const handleDeleteResume = async () => {
+    try {
+      await deleteResumeMutate(resumeId);
+      Notify.success(DELETE_REQUEST_SUCCESS);
+    } catch (error) {
+      Notify.failure(getErrorMessage(error));
     }
   };
 
-  const handlePatchResume = (resumeId: ResumeType['id']) => {
+  const handlePatchResume = () => {
     router.push(DETAIL(resumeId));
     router.refresh();
   };
@@ -79,10 +95,10 @@ const ResumeDetailField = ({ resumeId, userId }: Props) => {
         })}
       </ul>
       <div className='flex gap-8'>
-        <Button size='fixed' onClick={() => handlePatchResume(resumeId)}>
+        <Button size='fixed' onClick={handlePatchResume}>
           수정하기
         </Button>
-        <Button size='fixed' onClick={() => handleDeleteResume(resumeId)}>
+        <Button size='fixed' onClick={confirmDelete}>
           삭제하기
         </Button>
       </div>

@@ -5,7 +5,7 @@ const UserMetaDataModal = () => {
   return (
     <section>
       <Typography as='h2' size='2xl' align='center' weight='bold'>
-        주요 이력 작성하기
+        내 정보 등록하기
       </Typography>
       <UserMetaDataForm />
     </section>

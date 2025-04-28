@@ -132,8 +132,6 @@ const InterviewDetailField = ({ interviewId }: Props) => {
         {activeTab === INTERVIEW_FEEDBACK && <InterviewDetailFeedback feedback={feedback} />}
         {activeTab === INTERVIEW_HISTORY && <InterviewDetailHistory data={data} />}
       </div>
-      {activeTab === SELECT_ACTIVE_TAB.FEEDBACK && <InterviewDetailFeedback feedback={feedback} />}
-      {activeTab === SELECT_ACTIVE_TAB.HISTORY && <InterviewDetailHistory data={data} />}
       <div className='mt-auto pt-6'>
         <Button size='fixed' onClick={debounceDelete}>
           삭제하기

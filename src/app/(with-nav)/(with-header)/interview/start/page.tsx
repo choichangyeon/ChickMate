@@ -9,6 +9,12 @@ import AlertInProgress from '@/features/interview/alert-in-progress';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/utils/auth-option';
 import ResumeAllButton from '@/features/interview/resume-all-button';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'AI 면접',
+  description: 'ChickMate에서 AI와 함께 면접을 진행해보세요.',
+};
 
 const InterviewStartPage = async () => {
   const { RESUME_SUBMIT } = QUERY_KEY;

@@ -19,6 +19,9 @@ const config: Config = {
       maxWidth: {
         max: '1920px',
       },
+      maxWidth: {
+        max: '1920px',
+      },
       colors: {
         'primary-orange': {
           '600': '#E55A27',

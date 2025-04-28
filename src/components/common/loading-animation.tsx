@@ -12,7 +12,7 @@ type Props = {
 const LoadingAnimation = ({ className }: Props) => {
   return (
     <div className='flex h-full w-full items-center justify-center'>
-      <Lottie animationData={Loading} loop autoplay className={clsx('w-full', className)} />
+      <Lottie animationData={Loading} loop={true} autoplay={true} className={clsx('w-full', className)} />
     </div>
   );
 };

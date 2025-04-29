@@ -41,30 +41,20 @@ Chick Mate의 대표 캐릭터 칰칰이와 함께 AI 면접관을 통해 면접
     </tr>
     <tr>
       <td width="300px" align="center">
-        <b>초기 담당</b><br />
+        <b>담당</b><br />
         AI 선택 페이지<br />
-        맞춤 채용 공고 페이지<br /><br />
-        <b>리팩토링 단계</b><br />
-				반응형 스타일 개선<br />
-        AI 면접 이어하기 기능<br />
+        맞춤 채용 공고 페이지
       </td>
       <td width="300px" align="center">
-        <b>초기 담당</b><br />
+        <b>담당</b><br />
         AI 진행 페이지<br />
-        자소서 작성 페이지<br />
-        텍스트/모달 공통 컴포넌트<br /><br />
-        <b>리팩토링 단계</b><br />
-        캐릭터 레벨업 모션 추가<br />
-        모달 컴포넌트 리팩토링
+        자소서 작성 페이지
       </td>
       <td width="300px" align="center">
-        <b>초기 담당</b><br />
-        마이페이지 탭 관리<br />
-        버튼/뱃지 컴포넌트<br />
-        홈 화면 스타일링<br /><br />
-        <b>리팩토링 단계</b><br />
-        반응형 스타일 개선<br />
-        버튼 debouncing 적용
+        <b>담당</b><br />
+        렌딩/온보딩 페이지<br />
+        마이페이지 전반적인 관리<br />
+        middleware 관리
       </td>
     </tr>
     <tr>
@@ -83,21 +73,14 @@ Chick Mate의 대표 캐릭터 칰칰이와 함께 AI 면접관을 통해 면접
     </tr>
     <tr>
       <td width="300px" align="center">
-        <b>초기 담당</b><br />
+        <b>담당</b><br />
+        로그인/회원가입 페이지<br />
         캐릭터 및 경험치 관리<br />
         마이페이지 면접 기록<br />
-        로그인/회원가입<br />
-        L2CP의 에러 사냥꾼<br /><br />
-        <b>리팩토링 단계</b><br />
-        옵션에 따른 채용 공고 및 페이지네이션<br />
-        자소서 mutation 수정
       </td>
       <td width="300px" align="center">
-        <b>초기 담당</b><br />
-        전체 UI 디자인<br /><br />
-        <b>리팩토링 단계</b><br />
-        컴포넌트 일관성 개선<br />
-        디자인 시스템 정리
+        <b>담당</b><br />
+        전체 UI 디자인<br />
       </td>
     </tr>
   </tbody>

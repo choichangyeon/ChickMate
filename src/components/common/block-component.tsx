@@ -19,7 +19,7 @@ const BlockComponent = (props: Props) => {
   const { className, firstLine, secondLine, thirdLine, buttonName, href, onClick } = props;
   return (
     <section className={clsx(className, defaultClassName)}>
-      <div className='flex flex-col items-center justify-center'>
+      <div className='flex flex-col items-center justify-center whitespace-nowrap'>
         <Typography color='primary-600' weight='bold'>
           {firstLine}
         </Typography>

@@ -1,8 +1,18 @@
 import { SVGProps } from 'react';
 
-export const UserScanFill = (props: SVGProps<SVGSVGElement>) => {
+type Props = SVGProps<SVGSVGElement> & {
+  className?: string;
+};
+
+export const UserScanFill = ({ className = '', ...props }: Props) => {
   return (
-    <svg width='370' height='232' viewBox='0 0 370 232' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <svg
+      className={`h-[232px] w-[370px] ${className}`}
+      viewBox='0 0 370 232'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+      {...props}
+    >
       <circle cx='185' cy='67.5' r='22.5' fill='#6B7280' stroke='#6B7280' stroke-width='8.775' stroke-linecap='round' />
       <path
         d='M185.001 97.5C203.148 97.5002 218.783 106.453 225.901 119.347C226.32 120.106 226.104 121.052 225.41 121.572C214.144 130.005 200.156 135 185.001 135C169.845 135 155.856 130.005 144.59 121.572C143.896 121.052 143.68 120.106 144.099 119.347C151.217 106.453 166.853 97.5 185.001 97.5Z'

@@ -10,6 +10,7 @@ import { useInterviewStore } from '@/store/use-interview-store';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Sunset from '@/lottie/sunset_2.json';
+import Sunset2 from '@/lottie/sunset.json';
 import Pressure from '@/lottie/pressure_2.json';
 import LottieAnimation from '@/components/common/lottie-animation';
 import { Session } from 'next-auth';
@@ -52,18 +53,18 @@ const SelectInterviewerBox = ({ session }: Props) => {
     }
   };
   return (
-    <section className='flex w-full gap-5 mobile:flex-col'>
+    <section className='flex w-full gap-5 mobile:flex-col tablet:flex-wrap tablet:justify-center'>
       {/* desktop & tablet - 이전 w-88 h-72*/}
-      <section className='flex items-start justify-start gap-5 self-stretch mobile:hidden tablet:h-52 tablet:w-full'>
+      <section className='flex items-start justify-start gap-5 self-stretch mobile:hidden tablet:h-full tablet:w-full tablet:items-center tablet:justify-center'>
         <div
           onClick={() => setInterviewType(CALM)}
-          className={`aspect-[3/2] max-w-[30rem] cursor-pointer overflow-hidden rounded-lg border tablet:h-48 tablet:w-72 ${interviewType === CALM ? activeClass : deActiveClass}`}
+          className={`tablet:w-84 aspect-[3/2] cursor-pointer overflow-hidden rounded-lg border desktop:max-w-[30rem] ${interviewType === CALM ? activeClass : deActiveClass}`}
         >
           <LottieAnimation active={interviewType === CALM} animationData={Sunset} />
         </div>
         <div
           onClick={() => setInterviewType(PRESSURE)}
-          className={`aspect-[3/2] max-w-[30rem] cursor-pointer overflow-hidden rounded-lg border tablet:h-48 tablet:w-72 ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
+          className={`tablet:w-84 aspect-[3/2] cursor-pointer overflow-hidden rounded-lg border desktop:max-w-[30rem] ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
         >
           <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure} />
         </div>
@@ -91,7 +92,7 @@ const SelectInterviewerBox = ({ session }: Props) => {
           )}
         </div>
       </section>
-      <section className='hidden aspect-[3/2] h-52 w-[600px] min-w-36 flex-col items-center justify-center overflow-hidden rounded-lg border border-secondary-amber bg-cool-gray-10 tablet:flex'>
+      <section className='hidden h-48 w-full min-w-36 flex-col items-center justify-center overflow-hidden rounded-lg border border-secondary-amber bg-cool-gray-10 tablet:flex'>
         <div className='mb-4'>
           <div className='mb-2'>
             <Typography as='h3' weight='bold' size='3xl' align='center'>

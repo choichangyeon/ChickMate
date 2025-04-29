@@ -56,7 +56,7 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResume
       {!isError && draftResumeList?.length === EMPTY_DRAFT_COUNT ? (
         <Typography color='gray-500'>임시 저장된 자기소개서가 없습니다</Typography>
       ) : (
-        <ul className='flex flex-col gap-4'>
+        <ul className='flex flex-col gap-4 mobile:gap-2'>
           {draftResumeList?.map((resume) => {
             return (
               <DraftResumeItem

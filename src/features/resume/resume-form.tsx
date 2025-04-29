@@ -62,7 +62,7 @@ const ResumeForm = ({ resume }: Props) => {
 
   /** UI */
   return (
-    <form onSubmit={handleSubmit} className='flex flex-1 flex-col gap-4'>
+    <form onSubmit={handleSubmit} className='flex flex-1 flex-col gap-4 pb-[50px]'>
       {/* 상단 고정 영역 */}
       <div className='relative w-full shrink-0'>
         <input
@@ -71,13 +71,13 @@ const ResumeForm = ({ resume }: Props) => {
           onChange={handleTitleChange}
           placeholder='자소서 제목을 작성해 주세요.'
           required
-          className='h-[64px] w-full rounded-lg border border-cool-gray-200 px-8 py-4 pr-52 text-xl font-bold placeholder-cool-gray-300 focus:outline-none'
+          className='h-[64px] w-full rounded-lg border border-cool-gray-200 px-8 py-4 pr-52 text-xl font-bold placeholder-cool-gray-300 focus:outline-none mobile:pr-32 mobile:text-lg'
         />
         {fieldListLen < MAX_RESIME_FIELD_COUNT && (
           <button
             type='button'
             onClick={handleAddField}
-            className='button-hover-focus absolute right-4 top-1/2 w-[174px] -translate-y-1/2 rounded-3xl border border-cool-gray-900 bg-transparent px-5 py-1 font-bold text-cool-gray-900'
+            className='button-hover-focus absolute right-4 top-1/2 w-[174px] -translate-y-1/2 rounded-3xl border border-cool-gray-900 bg-transparent px-5 py-1 font-bold text-cool-gray-900 mobile:w-[100px] mobile:px-1 mobile:text-sm'
           >
             질문 추가 +
           </button>

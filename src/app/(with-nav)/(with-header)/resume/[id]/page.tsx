@@ -33,14 +33,12 @@ const ResumePage = async ({ params }: RouteParams) => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <main className='flex w-full gap-4 px-[50px] py-8'>
-        <section className='flex w-full flex-col gap-4'>
-          <Typography as='h2' size='2xl' weight='bold'>
-            <span className='text-primary-orange-600'>자소서</span>를 작성 해 볼까요?
-          </Typography>
-          <ResumeForm resume={resume} />
-        </section>
-      </main>
+      <section className='mx-auto flex w-full max-w-[853px] flex-col gap-4'>
+        <Typography as='h2' size='2xl' weight='bold'>
+          <span className='text-primary-orange-600'>자소서</span>를 작성 해 볼까요?
+        </Typography>
+        <ResumeForm resume={resume} />
+      </section>
     </HydrationBoundary>
   );
 };

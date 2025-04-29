@@ -1,8 +1,5 @@
-<div align="center">
-  <img alt="chickmate-lo" src="https://image" />
-</div>
+![Image](https://github.com/user-attachments/assets/c187ba17-cd04-442c-92e4-4a9ca3579af0)
 
-<br>
 <br>
 
 ## 🐣 프로젝트 소개
@@ -109,13 +106,15 @@ Chick Mate의 대표 캐릭터 칰칰이와 함께 AI 면접관을 통해 면접
   - 페이지별 feature 브랜치 운영 (`feat/#이슈번호-이슈명`, `refactor/#이슈번호-이슈명`)
 - ### [Pull Request 템플릿을 활용한 코드 리뷰](https://github.com/BEST-L2CP/ChickMate/pulls?q=is%3Apr+is%3Aclosed)
 
-<br><br>
+<br>
 
 ## 🗣️ 기술적 의사결정 과정
 
 - #### [[Git] Git branch 전략 설정](https://chickmate.palms.blog/changyon99-1)
 - #### [[클라이언트 상태 관리] 클라이언트 상태 관리 라이브러리 선택 과정](https://chickmate.palms.blog/minjo-1)
 - #### [[TypeScript] type 별칭 vs interface 어떤 걸 쓸까요?](https://chickmate.palms.blog/dhye-1)
+
+<br>
 
 ## 🚀 트러블 슈팅
 
@@ -161,7 +160,8 @@ Chick Mate의 대표 캐릭터 칰칰이와 함께 AI 면접관을 통해 면접
 
 ## Backend
 
-<img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" /> <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" /> <img src="https://img.shields.io/badge/Amazon_RDS-527FFF?style=for-the-badge&logo=amazonaws&logoColor=white" /> <br>
+<img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" /> <img src="https://img.shields.io/badge/Amazon_RDS-527FFF?style=for-the-badge&logo=amazonaws&logoColor=white" /> <img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" />
+
 
 ## Deployment
 

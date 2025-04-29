@@ -10,14 +10,19 @@ const JobPage = async () => {
   const session = await getServerSession(authOptions);
 
   return (
-    <div className='flex h-full flex-col'>
-      <header className='mb-4 flex justify-between'>
+    <article className='flex h-full flex-col'>
+      <div className='mb-4 flex justify-between'>
         <div>
-          <Typography color='primary-600' as='h2' size='3xl' weight='bold'>
+          <Typography as='h2' className='text-3xl font-bold text-primary-orange-600 mobile:text-xl tablet:text-2xl'>
             맞춤형
             <span className='text-cool-gray-900'> 채용공고</span>
           </Typography>
-          <Typography color='gray-500' as='h3' size='xl'>
+          <Typography
+            color='gray-500'
+            as='h3'
+            size='xl'
+            className='text-xl text-cool-gray-500 mobile:text-base tablet:text-lg'
+          >
             프로필에 작성된 정보를 통해 맞춤형 채용공고를 추천해드립니다
           </Typography>
         </div>
@@ -26,10 +31,10 @@ const JobPage = async () => {
             데이터 출처: 취업 사람인
           </LinkButton>
         </div>
-      </header>
+      </div>
 
       <JobPostingSection session={session} />
-    </div>
+    </article>
   );
 };
 

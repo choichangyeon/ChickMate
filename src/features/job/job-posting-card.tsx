@@ -7,7 +7,6 @@ import Bookmark from '@/features/job/bookmark';
 import type { JobPostingType } from '@/types/DTO/job-posting-dto';
 import { formatRemainDay } from '@/utils/format-remain-day';
 import { formatTimestamp } from '@/utils/format-timestamp';
-import clsx from 'clsx';
 
 type Props = {
   jobPosting: JobPostingType & { isBookmarked: boolean };
@@ -32,7 +31,7 @@ const JobPostingCard = ({ jobPosting, userId }: Props) => {
   const remainDay = formatRemainDay(expirationTimestamp);
 
   return (
-    <Card className='flex h-full w-[380px] flex-col justify-between p-8'>
+    <Card className='flex-shrink-1 flex h-full w-full min-w-0 flex-col justify-between p-8'>
       <div>
         <div className='flex w-full justify-between'>
           <Typography weight='bold' color='gray-500'>

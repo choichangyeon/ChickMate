@@ -80,14 +80,14 @@ const JobPostingsBox = ({ userId }: Props) => {
     }
 
     return (
-      <>
-        <ul className='grid gap-2 grid-cols-[repeat(auto-fill,_minmax(380px,_1fr))]'>
+      <div className='mx-auto flex h-[calc(100%-100px)] w-full max-w-screen-xl flex-col justify-between'>
+        <ul className='grid w-full grid-cols-1 gap-4 lg:grid-cols-3 desktop:grid-cols-3'>
           {data.jobPostingList.map((jobPosting) => (
             <JobPostingCard key={jobPosting.id} userId={userId} jobPosting={jobPosting} />
           ))}
         </ul>
         <JobPostingPaginationButton totalCount={data.totalCount} page={page} setPage={setPage} />
-      </>
+      </div>
     );
   };
 

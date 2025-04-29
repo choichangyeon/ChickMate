@@ -18,7 +18,7 @@ const DesktopHome = () => {
       </div>
 
       <div className='mb-16 text-xl font-thin'>
-        칰메이트와 함께하는 <span className='font-semibold'>AI 스마트 에이전트!</span>
+        칰메이트와 함께하는 <span className='font-semibold'>AI 면접 에이전트!</span>
       </div>
       <Link
         href={ON_BOARDING}

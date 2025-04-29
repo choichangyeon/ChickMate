@@ -218,8 +218,8 @@
 
   @screen mobile {
     .mobile-bg-class {
-      @apply flex w-screen flex-col items-center justify-center;
-      background-image: url('/assets/mobile_chickchick.png'), url('/assets/sub_background.png');
+      @apply flex w-screen flex-col items-center justify-around;
+      background-image: url('/assets/tablet_chickchick.png'), url('/assets/sub_background.png'); /* 순서 변경 */
       background-repeat: no-repeat, repeat;
       background-size: contain, contain;
       background-position: center, center;

@@ -1,15 +1,13 @@
 import Typography from '@/components/ui/typography';
 import { PATH } from '@/constants/path-constant';
 import Link from 'next/link';
-import React from 'react';
-
 const { ON_BOARDING } = PATH;
 
-const TabletHome = () => {
+const MobileHome = () => {
   return (
-    <main className='tablet-bg-class'>
+    <main className='mobile-bg-class'>
       <div>
-        <Typography as='h1' className='text-8xl font-black text-primary-orange-600'>
+        <Typography as='h1' className='text-6xl font-black text-primary-orange-600'>
           Chick Mate
         </Typography>
         <h2 className='text-center text-xl font-thin'>
@@ -18,7 +16,7 @@ const TabletHome = () => {
       </div>
       <Link
         href={ON_BOARDING}
-        className='button-hover-focus block w-[536px] rounded-[50px] border border-cool-gray-900 p-[10px] text-center text-2xl font-thin'
+        className='button-hover-focus block rounded-[50px] border border-cool-gray-900 px-[10px] py-[8px] text-center text-xl font-light'
       >
         지금 바로 시작해볼까요?
       </Link>
@@ -26,4 +24,4 @@ const TabletHome = () => {
   );
 };
 
-export default TabletHome;
+export default MobileHome;

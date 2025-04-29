@@ -2,6 +2,7 @@
 import { DEVICE, useDeviceType } from '@/hooks/customs/useDeviceType';
 import DesktopHome from '@/features/home/desktop-home';
 import TabletHome from '@/features/home/tablet-home';
+import MobileHome from './mobile-home';
 const { MOBILE, TABLET, DESKTOP } = DEVICE;
 const RenderHome = () => {
   const device = useDeviceType();
@@ -11,7 +12,7 @@ const RenderHome = () => {
     case TABLET:
       return <TabletHome />;
     case MOBILE:
-      return <div>으으</div>;
+      return <MobileHome />;
     default:
       return <DesktopHome />;
   }

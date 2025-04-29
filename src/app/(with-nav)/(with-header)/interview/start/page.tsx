@@ -29,7 +29,7 @@ const InterviewStartPage = async () => {
   });
 
   return (
-    <article className='mobile:flex-wrap'>
+    <article className='mobile:flex-wrap mobile:pb-[56px]'>
       {session && <AlertInProgress session={session} />}
       <div className='mb-8'>
         <div className='mb-4 flex flex-row mobile:hidden'>
@@ -46,7 +46,7 @@ const InterviewStartPage = async () => {
         </div>
         <SelectInterviewerBox />
       </div>
-      <div>
+      <div className='mobile:mb-2'>
         <HydrationBoundary state={dehydrate(queryClient)}>
           <div className='mb-4 flex flex-row gap-4 mobile:gap-2'>
             <div className='mobile:hidden'>

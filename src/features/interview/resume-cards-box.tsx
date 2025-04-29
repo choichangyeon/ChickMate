@@ -60,7 +60,7 @@ const ResumeCardsBox = ({ session }: Props) => {
           />
         ))}
       </section>
-      <section className='hidden max-h-[200px] max-w-[100vw] flex-col gap-5 mobile:flex mobile:pb-[56px]'>
+      <section className='hidden max-h-[200px] max-w-[100vw] flex-col gap-5 mobile:flex'>
         <ul className='flex w-full flex-col overflow-y-auto scrollbar-hide'>
           {resumeList.map((resume) => {
             return (

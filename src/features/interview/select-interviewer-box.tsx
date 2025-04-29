@@ -52,23 +52,46 @@ const SelectInterviewerBox = ({ session }: Props) => {
     }
   };
   return (
-    <section className='flex w-full flex-wrap gap-5 mobile:flex-col'>
+    <section className='flex w-full gap-5 mobile:flex-col'>
       {/* desktop & tablet - 이전 w-88 h-72*/}
-      <section className='flex h-80 items-start justify-start gap-5 mobile:hidden tablet:h-52 tablet:w-full'>
+      <section className='flex items-start justify-start gap-5 self-stretch mobile:hidden tablet:h-52 tablet:w-full'>
         <div
           onClick={() => setInterviewType(CALM)}
-          className={`w-74 h-80 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border tablet:h-48 tablet:w-72 ${interviewType === CALM ? activeClass : deActiveClass}`}
+          className={`aspect-[3/2] max-w-[30rem] cursor-pointer overflow-hidden rounded-lg border tablet:h-48 tablet:w-72 ${interviewType === CALM ? activeClass : deActiveClass}`}
         >
           <LottieAnimation active={interviewType === CALM} animationData={Sunset} />
         </div>
         <div
           onClick={() => setInterviewType(PRESSURE)}
-          className={`w-74 h-80 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border tablet:h-48 tablet:w-72 ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
+          className={`aspect-[3/2] max-w-[30rem] cursor-pointer overflow-hidden rounded-lg border tablet:h-48 tablet:w-72 ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
         >
           <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure} />
         </div>
+        <div className='hidden aspect-[3/2] w-[30rem] min-w-36 flex-col items-center justify-center self-stretch overflow-hidden rounded-lg border border-secondary-amber bg-cool-gray-10 desktop:flex'>
+          <div className='mb-2'>
+            <Typography as='h3' weight='bold' size='3xl' align='center'>
+              실전 면접 준비!
+            </Typography>
+          </div>
+          <div className='mb-2'>
+            <Typography color='gray-300' align='center'>
+              원하는 면접관과
+            </Typography>
+            <Typography color='gray-300' align='center'>
+              작성한 자소서를 선택한 뒤,
+            </Typography>
+            <Typography color='gray-300' align='center'>
+              면접을 시작하세요!
+            </Typography>
+          </div>
+          {resumeId && (
+            <Button onClick={handleClickSetInterviewType} fontWeight='bold'>
+              면접 시작하기
+            </Button>
+          )}
+        </div>
       </section>
-      <section className='flex h-80 w-80 min-w-36 flex-col items-center justify-center overflow-hidden rounded-lg border border-secondary-amber bg-cool-gray-10 mobile:hidden tablet:h-52 tablet:w-[600px]'>
+      <section className='hidden aspect-[3/2] h-52 w-[600px] min-w-36 flex-col items-center justify-center overflow-hidden rounded-lg border border-secondary-amber bg-cool-gray-10 tablet:flex'>
         <div className='mb-4'>
           <div className='mb-2'>
             <Typography as='h3' weight='bold' size='3xl' align='center'>

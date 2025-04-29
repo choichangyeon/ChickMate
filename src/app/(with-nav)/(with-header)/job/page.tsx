@@ -1,10 +1,8 @@
-import LinkButton from '@/components/ui/link-button';
 import Typography from '@/components/ui/typography';
 import JobPostingSection from '@/features/job/job-posting-section';
+import SaraminButton from '@/features/job/saramin-button';
 import { authOptions } from '@/utils/auth-option';
 import { getServerSession } from 'next-auth';
-
-const SARAMIN_URL = 'http://www.saramin.co.kr';
 
 const JobPage = async () => {
   const session = await getServerSession(authOptions);
@@ -13,7 +11,10 @@ const JobPage = async () => {
     <article className='flex h-full flex-col'>
       <div className='mb-4 flex justify-between'>
         <div>
-          <Typography as='h2' className='text-3xl font-bold text-primary-orange-600 mobile:text-xl tablet:text-2xl'>
+          <Typography
+            as='h2'
+            className='text-3xl font-bold text-primary-orange-600 mobile:hidden mobile:text-xl tablet:text-2xl'
+          >
             맞춤형
             <span className='text-cool-gray-900'> 채용공고</span>
           </Typography>
@@ -21,15 +22,14 @@ const JobPage = async () => {
             color='gray-500'
             as='h3'
             size='xl'
-            className='text-xl text-cool-gray-500 mobile:text-base tablet:text-lg'
+            className='text-xl text-cool-gray-500 mobile:text-base mobile:text-primary-orange-600 tablet:text-lg'
           >
             프로필에 작성된 정보를 통해 맞춤형 채용공고를 추천해드립니다
           </Typography>
         </div>
-        <div>
-          <LinkButton href={SARAMIN_URL} target='_blank'>
-            데이터 출처: 취업 사람인
-          </LinkButton>
+
+        <div className='hidden desktop:block'>
+          <SaraminButton />
         </div>
       </div>
 

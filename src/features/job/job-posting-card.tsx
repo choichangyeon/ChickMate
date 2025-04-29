@@ -32,46 +32,61 @@ const JobPostingCard = ({ jobPosting, userId }: Props) => {
 
   return (
     <Card className='flex-shrink-1 flex h-full w-full min-w-0 flex-col justify-between p-8'>
-      <div>
+      <dl>
         <div className='flex w-full justify-between'>
-          <Typography weight='bold' color='gray-500'>
-            {companyName}
-          </Typography>
-          <Bookmark jobPostingId={id} isBookmarked={isBookmarked} userId={userId} />
+          <dt className='sr-only'>기업 명</dt>
+          <dd className='font-bold text-gray-500'>{companyName}</dd>
+          <dt className='sr-only'>북마크 {isBookmarked ? '추가' : '해제'}</dt>
+          <dd>
+            <Bookmark jobPostingId={id} isBookmarked={isBookmarked} userId={userId} />
+          </dd>
         </div>
-
-        <div className='mb-8 flex flex-col gap-2'>
-          <Typography as='h3' weight='bold' lineClamp='2'>
-            {positionTitle}
-            {keyword && <span className='pl-2 text-cool-gray-500'>- {keyword}</span>}
-          </Typography>
-          <div className='flex flex-row items-center gap-4'>
-            <Typography size='sm' color='gray-500'>
-              {experienceName}
-            </Typography>
-            <Typography size='sm' color='gray-500'>
-              {postedAtDate} ~ {expiredAtDate}
-            </Typography>
-          </div>
+        <dt className='sr-only'>공고 제목</dt>
+        <dd className='font-bold'>{positionTitle}</dd>
+        {keyword && (
+          <>
+            <dt className='sr-only'>채용 분야</dt>
+            <dd className='text-cool-gray-500'>{keyword}</dd>
+          </>
+        )}
+        <div>
+          <dt className='sr-only'>채용 조건</dt>
+          <dd className='text-sm text-cool-gray-500'> {experienceName}</dd>
+          <dt className='sr-only'>채용 기간</dt>
+          <dd className='text-sm text-cool-gray-500'>
+            {postedAtDate} ~ {expiredAtDate}
+          </dd>
         </div>
-      </div>
+      </dl>
 
-      <div className='flex items-center justify-between'>
+      <dl className='mt-2 flex items-center justify-between'>
         {remainDay ? (
-          <Typography color='primary-600' weight='bold' size='xl'>
-            D-{remainDay}
-          </Typography>
+          <>
+            <dt className='sr-only'>마감 기한</dt>
+            <dd>
+              <Typography as='span' className='text-xl font-bold text-primary-orange-600 mobile:text-base'>
+                D-{remainDay}
+              </Typography>
+            </dd>
+          </>
         ) : (
-          <Typography color='primary-600' weight='bold' size='xl'>
-            날짜정보 오류
-          </Typography>
+          <dd>
+            <Typography color='primary-600' weight='bold' size='xl'>
+              날짜정보 오류
+            </Typography>
+          </dd>
         )}
         {url && (
-          <LinkButton target='_blank' href={url} square>
-            바로 가기
-          </LinkButton>
+          <>
+            <dt className='sr-only'>채용 공고 페이지 이동</dt>
+            <dd>
+              <LinkButton target='_blank' href={url} square>
+                바로 가기
+              </LinkButton>
+            </dd>
+          </>
         )}
-      </div>
+      </dl>
     </Card>
   );
 };

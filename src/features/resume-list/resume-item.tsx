@@ -14,22 +14,22 @@ const ResumeItem = ({ resume, onClick, hrOption = true }: Props) => {
   const hasNotInterviewed = tryCount === 0;
 
   return (
-    <div className='flex flex-col gap-4 mobile:p-2'>
+    <div className='flex flex-col mobile:p-2 gap-4'>
       <li onClick={() => onClick(id)} className='flex cursor-pointer flex-col'>
         <Typography size='sm' weight='normal' color='gray-500'>
           <span className='mobile:text-xs'>{formatDate({ input: createdAt })}</span>
         </Typography>
         <div className='flex items-end justify-between'>
           <Typography weight='bold' lineClamp='1'>
-            <span className='mobile:break-words mobile:text-sm'>{title}</span>
+            <span className='break-words mobile:text-sm'>{title}</span>
           </Typography>
           {hasNotInterviewed ? (
             <Typography size='sm' weight='bold' color='gray-500'>
-              <span className='mobile:ml-2 mobile:whitespace-nowrap mobile:text-xs'>면접 보기 전</span>
+              <span className='whitespace-nowrap mobile:ml-2 mobile:text-xs'>면접 보기 전</span>
             </Typography>
           ) : (
             <Typography size='sm' weight='bold' color='primary-600'>
-              <span className='mobile:text-xs'>{tryCount}회 면접 완료</span>
+              <span className='whitespace-nowrap mobile:text-xs'>{tryCount}회 면접 완료</span>
             </Typography>
           )}
         </div>

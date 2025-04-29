@@ -41,14 +41,14 @@ const ResumeAllModal = () => {
     <div>
       <div className='mb-4 flex flex-col items-center justify-center'>
         <Typography size='2xl' weight='bold'>
-          내 자소서 리스트
+          <span className='mobile:text-xl'>내 자소서 리스트</span>
         </Typography>
         <Typography weight='bold' color='primary-600'>
-          면접 볼 자소서를 선택하세요!
+          <span className='mobile:text-sm'>면접 볼 자소서를 선택하세요!</span>
         </Typography>
       </div>
       <div>
-        <ul className='flex h-full flex-col gap-4 overflow-scroll scrollbar-hide'>
+        <ul className='flex h-full flex-col gap-4 overflow-scroll scrollbar-hide mobile:gap-0'>
           {resumeList.map((resume) => {
             return (
               <ResumeItem

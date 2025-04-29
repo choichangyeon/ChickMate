@@ -54,7 +54,7 @@ const SelectInterviewerBox = ({ session }: Props) => {
   return (
     <section className='flex w-full flex-wrap gap-5 mobile:flex-col'>
       {/* desktop & tablet - 이전 w-88 h-72*/}
-      <aside className='flex h-80 items-start justify-start gap-5 mobile:hidden tablet:h-52 tablet:w-full'>
+      <section className='flex h-80 items-start justify-start gap-5 mobile:hidden tablet:h-52 tablet:w-full'>
         <div
           onClick={() => setInterviewType(CALM)}
           className={`w-74 h-80 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border tablet:h-48 tablet:w-72 ${interviewType === CALM ? activeClass : deActiveClass}`}
@@ -67,8 +67,8 @@ const SelectInterviewerBox = ({ session }: Props) => {
         >
           <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure} />
         </div>
-      </aside>
-      <aside className='flex h-80 w-80 min-w-36 flex-col items-center justify-center overflow-hidden rounded-lg border border-secondary-amber bg-cool-gray-10 mobile:hidden tablet:h-52 tablet:w-[600px]'>
+      </section>
+      <section className='flex h-80 w-80 min-w-36 flex-col items-center justify-center overflow-hidden rounded-lg border border-secondary-amber bg-cool-gray-10 mobile:hidden tablet:h-52 tablet:w-[600px]'>
         <div className='mb-4'>
           <div className='mb-2'>
             <Typography as='h3' weight='bold' size='3xl' align='center'>
@@ -90,9 +90,9 @@ const SelectInterviewerBox = ({ session }: Props) => {
             면접 시작하기
           </Button>
         )}
-      </aside>
+      </section>
       {/* mobile */}
-      <aside className='hidden w-full flex-wrap items-center justify-center gap-5 mobile:flex'>
+      <section className='hidden w-full flex-wrap items-center justify-center gap-5 mobile:flex'>
         <div
           onClick={() => setInterviewType(CALM)}
           className={`h-36 w-52 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === CALM ? activeClass : deActiveClass}`}
@@ -105,8 +105,8 @@ const SelectInterviewerBox = ({ session }: Props) => {
         >
           <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure} />
         </div>
-      </aside>
-      <aside className='hidden w-full flex-col items-center justify-center gap-2 mobile:flex'>
+      </section>
+      <section className='hidden w-full flex-col items-center justify-center gap-2 mobile:flex'>
         <div className='flex flex-row'>
           <Typography weight='black' color='primary-600'>
             Chick Mate&nbsp;
@@ -122,7 +122,7 @@ const SelectInterviewerBox = ({ session }: Props) => {
             면접 시작하기
           </Button>
         )}
-      </aside>
+      </section>
     </section>
   );
 };

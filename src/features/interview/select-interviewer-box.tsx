@@ -24,7 +24,7 @@ const {
 } = AUTH_MESSAGE;
 const { LIVE } = PATH.INTERVIEW;
 
-const activeClass = 'border-primary-orange-600 bg-cool-gray-10 border-2 shadow-lg';
+const activeClass = 'border-primary-orange-600 bg-cool-gray-10 border-2 shadow-lg shadow-primary-orange-600/20';
 const deActiveClass = 'border-cool-gray-300';
 
 type Props = {
@@ -55,22 +55,22 @@ const SelectInterviewerBox = ({ session }: Props) => {
   };
   return (
     <section className='flex w-full flex-wrap gap-5 mobile:flex-col'>
-      {/* desktop & tablet */}
-      <aside className='flex h-80 items-start justify-start gap-5 tablet:h-64 tablet:w-full mobile:hidden'>
+      {/* desktop & tablet - 이전 w-88 h-72*/}
+      <aside className='flex h-80 items-start justify-start gap-5 mobile:hidden tablet:h-64 tablet:w-full'>
         <div
           onClick={() => setInterviewType(CALM)}
-          className={`w-88 h-72 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border tablet:h-56 tablet:w-72 ${interviewType === CALM ? activeClass : deActiveClass}`}
+          className={`w-76 h-80 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border tablet:h-52 tablet:w-72 ${interviewType === CALM ? activeClass : deActiveClass}`}
         >
-          <LottieAnimation active={interviewType === CALM} animationData={Sunset} />
+          <LottieAnimation active={interviewType === CALM} animationData={Sunset2} />
         </div>
         <div
           onClick={() => setInterviewType(PRESSURE)}
-          className={`w-88 h-72 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border tablet:h-56 tablet:w-72 ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
+          className={`w-76 h-80 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border tablet:h-52 tablet:w-72 ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
         >
-          <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure} speed={0.4} />
+          <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure2} />
         </div>
       </aside>
-      <aside className='flex h-72 w-80 min-w-36 flex-col items-center justify-center overflow-hidden rounded-lg border border-secondary-amber bg-cool-gray-10 tablet:h-52 tablet:w-[600px] mobile:hidden'>
+      <aside className='flex h-80 w-80 min-w-36 flex-col items-center justify-center overflow-hidden rounded-lg border border-secondary-amber bg-cool-gray-10 mobile:hidden tablet:h-52 tablet:w-[600px]'>
         <div className='mb-4'>
           {/* TODO: 이 부분은 면접관을 설명하는 부분, 추후 수정 가능 */}
           {interviewType === 'calm' ? (
@@ -113,13 +113,13 @@ const SelectInterviewerBox = ({ session }: Props) => {
       <aside className='hidden w-full flex-wrap items-center justify-center gap-5 mobile:flex'>
         <div
           onClick={() => setInterviewType(CALM)}
-          className={`h-40 w-56 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === CALM ? activeClass : deActiveClass}`}
+          className={`h-40 w-52 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === CALM ? activeClass : deActiveClass}`}
         >
           <LottieAnimation active={interviewType === CALM} animationData={Sunset2} />
         </div>
         <div
           onClick={() => setInterviewType(PRESSURE)}
-          className={`h-40 w-56 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
+          className={`h-40 w-52 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
         >
           <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure2} />
         </div>

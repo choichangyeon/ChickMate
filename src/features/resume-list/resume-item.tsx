@@ -14,23 +14,28 @@ const ResumeItem = ({ resume, onClick, hrOption = true }: Props) => {
   const hasNotInterviewed = tryCount === 0;
 
   return (
-    <li onClick={() => onClick(id)} className={clsx(hrOption && 'border-b', 'cursor-pointer py-2')}>
-      <Typography size='sm' weight='normal' color='gray-500'>
-        {formatDate({ input: createdAt })}
-      </Typography>
-      <div className='flex items-end justify-between'>
-        <Typography weight='bold'>{title}</Typography>
-        {hasNotInterviewed ? (
-          <Typography size='sm' as='span' weight='bold' color='gray-500'>
-            면접 보기 전
+    <div className='flex flex-col gap-4 mobile:p-2'>
+      <li onClick={() => onClick(id)} className='flex cursor-pointer flex-col'>
+        <Typography size='sm' weight='normal' color='gray-500'>
+          <span className='mobile:text-xs'>{formatDate({ input: createdAt })}</span>
+        </Typography>
+        <div className='flex items-end justify-between'>
+          <Typography weight='bold' lineClamp='1'>
+            <span className='mobile:break-words mobile:text-sm'>{title}</span>
           </Typography>
-        ) : (
-          <Typography size='sm' weight='bold' as='span' color='primary-600'>
-            {tryCount}회 면접 완료
-          </Typography>
-        )}
-      </div>
-    </li>
+          {hasNotInterviewed ? (
+            <Typography size='sm' weight='bold' color='gray-500'>
+              <span className='mobile:ml-2 mobile:whitespace-nowrap mobile:text-xs'>면접 보기 전</span>
+            </Typography>
+          ) : (
+            <Typography size='sm' weight='bold' color='primary-600'>
+              <span className='mobile:text-xs'>{tryCount}회 면접 완료</span>
+            </Typography>
+          )}
+        </div>
+      </li>
+      {hrOption && <hr className='border-cool-gray-300' />}
+    </div>
   );
 };
 

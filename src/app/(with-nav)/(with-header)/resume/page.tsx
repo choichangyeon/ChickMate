@@ -26,7 +26,9 @@ const ResumePage = async () => {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <section className='mx-auto flex w-full max-w-[853px] flex-col gap-4'>
         <Typography as='h2' size='2xl' weight='bold'>
-          <span className='text-primary-orange-600'>자소서</span>를 작성해 볼까요?
+          <span className='mobile:text-xl'>
+            <span className='text-primary-orange-600'>자소서</span>를 작성해 볼까요?
+          </span>
         </Typography>
         <ResumeForm />
       </section>

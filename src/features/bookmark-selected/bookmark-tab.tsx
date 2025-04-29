@@ -47,16 +47,14 @@ const BookmarkTab = ({ bookmark, index, length, userId }: Props) => {
           <Typography size='sm' color='gray-500' weight='bold'>
             {companyName}
           </Typography>
-          <Typography weight='bold' size='lg' lineClamp='1'>
-            {positionTitle}
-          </Typography>
+          <Typography className='line-clamp-1 text-lg font-bold mobile:text-base'>{positionTitle}</Typography>
         </div>
         <button type='button' onClick={handleDeleteBookmark} aria-label='북마크 버튼'>
           <Star width='18' height='18' color='#FDE047' stroke='#FDE047' />
         </button>
       </div>
       <div className='flex w-full flex-row items-center justify-between'>
-        <div className='flex flex-row gap-6'>
+        <div className='flex flex-row gap-6 mobile:flex-col mobile:gap-2'>
           <Typography size='xs' color='gray-500'>
             {experienceType[experienceCode]}
           </Typography>
@@ -64,11 +62,11 @@ const BookmarkTab = ({ bookmark, index, length, userId }: Props) => {
             {postedAtDate}~{expiredAtDate}
           </Typography>
         </div>
-        <div className='flex flex-row items-center justify-between gap-3'>
+        <div className='flex flex-row items-center justify-between gap-3 mobile:flex-col mobile:gap-1'>
           {remainDay ? (
             <Typography color='primary-600'>D-{remainDay}</Typography>
           ) : (
-            <Typography color='primary-600'>날짜정보 오류</Typography>
+            <Typography className='text-primary-orange-600 mobile:text-sm'>날짜정보 오류</Typography>
           )}
           {bookmark.jobPosting.url && (
             <LinkButton target='_blank' size='small' href={bookmark.jobPosting.url} square>

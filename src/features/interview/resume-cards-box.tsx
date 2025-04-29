@@ -64,8 +64,8 @@ const ResumeCardsBox = ({ session }: Props) => {
         <ul className='flex w-full flex-col overflow-y-auto scrollbar-hide'>
           {resumeList.map((resume) => {
             return (
-              <div className={` ${resume.id === selectedId ? 'bg-primary-orange-600/20' : ''} `}>
-                <ResumeItem key={resume.id} resume={resume} onClick={() => setResume(resume.id)} hrOption={false} />
+              <div key={resume.id} className={`${resume.id === selectedId ? 'bg-primary-orange-600/20' : ''} `}>
+                <ResumeItem resume={resume} onClick={() => setResume(resume.id)} hrOption={false} />
               </div>
             );
           })}

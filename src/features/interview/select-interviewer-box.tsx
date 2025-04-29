@@ -57,49 +57,33 @@ const SelectInterviewerBox = ({ session }: Props) => {
       <aside className='flex h-80 items-start justify-start gap-5 mobile:hidden tablet:h-52 tablet:w-full'>
         <div
           onClick={() => setInterviewType(CALM)}
-          className={`w-76 h-80 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border tablet:h-48 tablet:w-72 ${interviewType === CALM ? activeClass : deActiveClass}`}
+          className={`w-74 h-80 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border tablet:h-48 tablet:w-72 ${interviewType === CALM ? activeClass : deActiveClass}`}
         >
           <LottieAnimation active={interviewType === CALM} animationData={Sunset} />
         </div>
         <div
           onClick={() => setInterviewType(PRESSURE)}
-          className={`w-76 h-80 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border tablet:h-48 tablet:w-72 ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
+          className={`w-74 h-80 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border tablet:h-48 tablet:w-72 ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
         >
           <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure} />
         </div>
       </aside>
       <aside className='flex h-80 w-80 min-w-36 flex-col items-center justify-center overflow-hidden rounded-lg border border-secondary-amber bg-cool-gray-10 mobile:hidden tablet:h-52 tablet:w-[600px]'>
         <div className='mb-4'>
-          {/* TODO: 이 부분은 면접관을 설명하는 부분, 추후 수정 가능 */}
-          {interviewType === 'calm' ? (
-            <>
-              <div className='mb-2'>
-                <Typography as='h3' weight='bold' size='3xl' align='center'>
-                  햇살 면접관
-                </Typography>
-              </div>
-              <Typography color='gray-300' align='center'>
-                이 면접관은 침착하고 편안한 느낌으로
-              </Typography>
-              <Typography color='gray-300' align='center'>
-                면접자를 평가합니다.
-              </Typography>
-            </>
-          ) : (
-            <>
-              <div className='mb-2'>
-                <Typography as='h3' size='3xl' weight='bold' align='center'>
-                  불타는 면접관
-                </Typography>
-              </div>
-              <Typography color='gray-300' align='center'>
-                이 면접관은 냉철하고 비판적인 사고를
-              </Typography>
-              <Typography color='gray-300' align='center'>
-                통해 면접자를 평가합니다.
-              </Typography>
-            </>
-          )}
+          <div className='mb-2'>
+            <Typography as='h3' weight='bold' size='3xl' align='center'>
+              실전 면접 준비!
+            </Typography>
+          </div>
+          <Typography color='gray-300' align='center'>
+            원하는 면접관과
+          </Typography>
+          <Typography color='gray-300' align='center'>
+            작성한 자소서를 선택한 뒤,
+          </Typography>
+          <Typography color='gray-300' align='center'>
+            면접을 시작하세요!
+          </Typography>
         </div>
         {resumeId && (
           <Button onClick={handleClickSetInterviewType} fontWeight='bold'>

@@ -99,34 +99,91 @@ const Timer = ({
   };
 
   return (
-    <div className='flex h-[220px] w-[526px] flex-shrink-0 flex-col items-center justify-center gap-4 rounded-lg border border-cool-gray-200 bg-cool-gray-10 p-8'>
-      <div className='flex flex-col items-center'>
-        <Typography size='2xl' weight='bold'>
-          {isFinalQuestionAsked ? '완료 버튼을 누르고 피드백을 확인해보세요' : '제한시간 안에 답변을 완료하세요'}
+    <>
+      <div className='hidden w-full flex-col items-center justify-center gap-2 mobile:flex'>
+        <Typography size='lg' weight='bold' align='center'>
+          {isFinalQuestionAsked ? (
+            <>
+              <span className='text-primary-orange-600'>완료 버튼</span> 을 누르고 피드백을 확인해보세요
+            </>
+          ) : (
+            <>
+              <span className='text-primary-orange-600'>제한시간</span> 안에 답변을 완료하세요
+            </>
+          )}
         </Typography>
-        <Typography size='sm' weight='medium' color='gray-500'>
-          {!isFinalQuestionAsked && '타이머가 종료되면 자동으로 답변이 종료됩니다'}
-        </Typography>
-      </div>
-      <div>
         {!isFinalQuestionAsked && (
-          <Typography color='primary-600' size='6xl' weight='black'>
-            {formattedTime.minutes} : {formattedTime.seconds}
-          </Typography>
+          <span className='hidden mobile:flex'>
+            <Typography color='primary-600' size='2xl' weight='black'>
+              {formattedTime.minutes} : {formattedTime.seconds}
+            </Typography>
+          </span>
         )}
+        <div>
+          {isFinalQuestionAsked ? (
+            <Button square onClick={handleCompletedButtonClick}>
+              면접 완료하기
+            </Button>
+          ) : (
+            <Button disabled={isAIVoicePlaying} square onClick={handleButtonClick}>
+              {isRecording ? '답변 완료하기' : isAIVoicePlaying ? '질문 생성 중...' : '말하기'}
+            </Button>
+          )}
+        </div>
       </div>
-      <div>
-        {isFinalQuestionAsked ? (
-          <Button square onClick={handleCompletedButtonClick}>
-            면접 완료하기
-          </Button>
-        ) : (
-          <Button disabled={isAIVoicePlaying} square onClick={handleButtonClick}>
-            {isRecording ? '답변 완료하기' : isAIVoicePlaying ? '질문 생성 중...' : '말하기'}
-          </Button>
-        )}
+      <div className='flex h-[220px] w-[526px] flex-shrink-0 flex-col items-center justify-center gap-4 rounded-lg border border-cool-gray-200 bg-cool-gray-10 p-8 mobile:hidden tablet:w-[220px] tablet:gap-2'>
+        <div className='flex flex-col items-center'>
+          <span className='hidden desktop:flex'>
+            <Typography size='2xl' weight='bold'>
+              {isFinalQuestionAsked ? '완료 버튼을 누르고 피드백을 확인해보세요' : '제한시간 안에 답변을 완료하세요'}
+            </Typography>
+          </span>
+          <span className='hidden tablet:flex'>
+            <Typography size='lg' weight='bold' align='center'>
+              {isFinalQuestionAsked ? '완료 버튼을 누르고 피드백을 확인해보세요' : '제한시간 안에 답변을 완료하세요'}
+            </Typography>
+          </span>
+
+          <span className='hidden desktop:flex'>
+            <Typography size='sm' weight='medium' color='gray-500'>
+              {!isFinalQuestionAsked && '타이머가 종료되면 자동으로 답변이 종료됩니다'}
+            </Typography>
+          </span>
+          <span className='desktop:hidden'>
+            <Typography size='xs' weight='medium' color='gray-500' align='center'>
+              {!isFinalQuestionAsked && '타이머가 종료되면 자동으로 답변이 종료됩니다'}
+            </Typography>
+          </span>
+        </div>
+        <div>
+          {!isFinalQuestionAsked && (
+            <>
+              <span className='tablet:hidden'>
+                <Typography color='primary-600' size='6xl' weight='black'>
+                  {formattedTime.minutes} : {formattedTime.seconds}
+                </Typography>
+              </span>
+              <span className='desktop:hidden'>
+                <Typography color='primary-600' size='3xl' weight='black'>
+                  {formattedTime.minutes} : {formattedTime.seconds}
+                </Typography>
+              </span>
+            </>
+          )}
+        </div>
+        <div>
+          {isFinalQuestionAsked ? (
+            <Button square onClick={handleCompletedButtonClick}>
+              면접 완료하기
+            </Button>
+          ) : (
+            <Button disabled={isAIVoicePlaying} square onClick={handleButtonClick}>
+              {isRecording ? '답변 완료하기' : isAIVoicePlaying ? '질문 생성 중...' : '말하기'}
+            </Button>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

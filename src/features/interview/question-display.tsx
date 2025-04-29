@@ -20,7 +20,7 @@ const QuestionDisplay = ({ interviewHistory, aiQuestion }: Props) => {
   const isFinalQuestionAsked = questionIndex >= INTERVIEW_LIMIT_COUNT;
 
   return (
-    <div className='flex w-full flex-col items-start gap-4'>
+    <div className='flex w-full flex-col items-start gap-4 mobile:rounded-lg mobile:bg-cool-gray-50 mobile:p-4'>
       <div className='flex w-full items-center gap-4'>
         {/** TODO: header에 있는 이미지랑 통일 */}
         <div className='h-12 w-12 overflow-hidden rounded-full'>
@@ -36,10 +36,22 @@ const QuestionDisplay = ({ interviewHistory, aiQuestion }: Props) => {
           {isInterviewTypeCalm ? CALM_KR : PRESSURE_KR}
         </Typography>
       </div>
-      <div className='w-full border-t border-cool-gray-500 px-16 py-2'>
-        <Typography color='gray-700' weight='normal'>
-          {isFinalQuestionAsked ? '면접보시느라 고생 많으셨습니다.' : aiQuestion}
-        </Typography>
+      <div className='w-full overflow-hidden border-t border-cool-gray-500 px-16 py-2 mobile:px-2 tablet:px-8'>
+        <span className='hidden desktop:flex'>
+          <Typography color='gray-700' weight='normal'>
+            {isFinalQuestionAsked ? '면접보시느라 고생 많으셨습니다.' : aiQuestion}
+          </Typography>
+        </span>
+        <span className='hidden tablet:flex'>
+          <Typography color='gray-700' weight='normal' size='sm'>
+            {isFinalQuestionAsked ? '면접보시느라 고생 많으셨습니다.' : aiQuestion}
+          </Typography>
+        </span>
+        <span className='hidden mobile:flex'>
+          <Typography color='gray-700' weight='normal' size='xs'>
+            {isFinalQuestionAsked ? '면접보시느라 고생 많으셨습니다.' : aiQuestion}
+          </Typography>
+        </span>
       </div>
     </div>
   );

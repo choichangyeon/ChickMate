@@ -35,16 +35,29 @@ const QuestionDisplayWithTimer = ({ interviewHistory, interviewQnAList }: Props)
   }
 
   return (
-    <section className='flex gap-5'>
-      <QuestionDisplay interviewHistory={interviewHistory} aiQuestion={aiQuestion || lastQuestion || '대기 중...'} />
-      <Timer
-        interviewHistory={interviewHistory}
-        isRecording={isRecording}
-        isAIVoicePlaying={isAIVoicePlaying}
-        formattedTime={formattedTime}
-        startRecordingWithTimer={startRecordingWithTimer}
-        stopRecordingWithTimer={stopRecordingWithTimer}
-      />
+    <section className='mobile:pb-[56px]'>
+      <div className='flex gap-5 mobile:hidden'>
+        <QuestionDisplay interviewHistory={interviewHistory} aiQuestion={aiQuestion || lastQuestion || '대기 중...'} />
+        <Timer
+          interviewHistory={interviewHistory}
+          isRecording={isRecording}
+          isAIVoicePlaying={isAIVoicePlaying}
+          formattedTime={formattedTime}
+          startRecordingWithTimer={startRecordingWithTimer}
+          stopRecordingWithTimer={stopRecordingWithTimer}
+        />
+      </div>
+      <div className='hidden flex-wrap gap-5 mobile:flex'>
+        <Timer
+          interviewHistory={interviewHistory}
+          isRecording={isRecording}
+          isAIVoicePlaying={isAIVoicePlaying}
+          formattedTime={formattedTime}
+          startRecordingWithTimer={startRecordingWithTimer}
+          stopRecordingWithTimer={stopRecordingWithTimer}
+        />
+        <QuestionDisplay interviewHistory={interviewHistory} aiQuestion={aiQuestion || lastQuestion || '대기 중...'} />
+      </div>
     </section>
   );
 };

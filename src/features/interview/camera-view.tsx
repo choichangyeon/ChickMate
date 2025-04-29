@@ -15,11 +15,11 @@ const CameraView = () => {
 
   return (
     <div
-      className={`relative flex-1 overflow-hidden rounded-lg border border-cool-gray-200 ${isCameraOn ? `bg-white` : `bg-cool-gray-300`}`}
+      className={`relative w-full overflow-hidden rounded-lg border border-cool-gray-200 mobile:h-[220px] tablet:h-[380px] ${isCameraOn ? `bg-white` : `bg-cool-gray-300`}`}
     >
       {!isCameraOn && (
-        <div className='mt-16 flex items-center justify-center'>
-          <UserScanFill />
+        <div className='mt-16 flex items-center justify-center mobile:mt-0'>
+          <UserScanFill className='mobile:h-30 mobile:w-60' />
         </div>
       )}
       <video ref={videoRef} autoPlay playsInline className={`isCameraOn h-full w-full rounded-lg object-cover`} />

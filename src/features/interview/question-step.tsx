@@ -11,7 +11,7 @@ const QuestionStep = () => {
   const steps = Array.from({ length: QUESTION_STEP }, (item, index) => index + 1);
 
   return (
-    <div className='flex gap-2'>
+    <div className='flex gap-2 mobile:overflow-x-auto mobile:scrollbar-hide'>
       {steps.map((step) => {
         const isActive = questionIndex === step;
 

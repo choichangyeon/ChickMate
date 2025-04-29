@@ -14,6 +14,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/constants/query-key';
 import { Notify } from 'notiflix';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const { IN_PROGRESS: IN_PROGRESS_STATUS } = INTERVIEW_HISTORY_STATUS;
 const { IN_PROGRESS, HISTORY } = QUERY_KEY;
@@ -73,7 +74,15 @@ const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
           <QuestionStep />
         </div>
         <div className='flex h-[335px] gap-5'>
-          <div className='flex-1 rounded-lg border border-cool-gray-200 bg-white'>면접관</div>
+          <div className='relative flex flex-1 items-center justify-center overflow-hidden rounded-lg border border-cool-gray-200 bg-white'>
+            <Image
+              src={`/assets/character/interviewer/poly-interviewer-${interviewHistory.interviewType}.png`}
+              width={300}
+              height={300}
+              alt={interviewHistory.interviewType}
+              priority
+            />
+          </div>
           <CameraView />
         </div>
       </section>

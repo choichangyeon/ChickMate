@@ -19,10 +19,11 @@ type Props = {
   className?: string;
   speed?: number; // 재생 속도 (1 = 기본)
   active?: boolean; // 활성화 상태, true면 정방향 재생, false면 역방향
+  option?: string;
 };
 
 const LottieAnimationInner = (
-  { animationData, className, speed = 1, active = false }: Props,
+  { animationData, className, speed = 1, active = false, option = 'none' }: Props,
   ref: React.Ref<LottieHandle>
 ) => {
   const lottieRef = useRef<LottieRefCurrentProps>(null);
@@ -84,8 +85,9 @@ const LottieAnimationInner = (
       autoplay={false}
       className={clsx(className, 'flex h-full w-full items-center justify-center mobile:w-auto')}
       // TODO: 이 부분은 추후 수정가능
+      //'xMidYMid slice' - 화면을 채우지 않고 잘리도록 나오는 것
       rendererSettings={{
-        preserveAspectRatio: 'xMidYMid slice',
+        preserveAspectRatio: option,
       }}
     />
   );

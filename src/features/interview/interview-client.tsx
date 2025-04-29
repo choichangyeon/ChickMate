@@ -65,7 +65,7 @@ const InterviewClient = ({ interviewHistory, interviewQnAList }: Props) => {
   }, []);
 
   return (
-    <div className='flex flex-col gap-8 px-[50px] py-8 mobile:gap-4'>
+    <div className='flex flex-col gap-8 px-[50px] mobile:gap-4'>
       <section className='flex w-full flex-col gap-4'>
         <div className='flex items-center justify-between mobile:flex-wrap mobile:gap-4'>
           <span className='hidden desktop:block'>

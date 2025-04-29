@@ -35,7 +35,7 @@ const QuestionDisplayWithTimer = ({ interviewHistory, interviewQnAList }: Props)
   }
 
   return (
-    <section className='mobile:pb-[56px]'>
+    <section className='mobile:mb-2 mobile:pb-[56px]'>
       <div className='flex gap-5 mobile:hidden'>
         <QuestionDisplay interviewHistory={interviewHistory} aiQuestion={aiQuestion || lastQuestion || '대기 중...'} />
         <Timer
@@ -47,7 +47,7 @@ const QuestionDisplayWithTimer = ({ interviewHistory, interviewQnAList }: Props)
           stopRecordingWithTimer={stopRecordingWithTimer}
         />
       </div>
-      <div className='hidden flex-wrap gap-5 mobile:flex'>
+      <div className='mb-2 hidden flex-wrap gap-5 mobile:flex'>
         <Timer
           interviewHistory={interviewHistory}
           isRecording={isRecording}

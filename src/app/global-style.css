@@ -199,6 +199,7 @@
 
 @layer components {
   .main-bg-class {
+    @apply flex w-screen flex-col items-center justify-center;
     background-image: url('/assets/background.png'), url('/assets/sub_background.png');
     background-size: cover;
     background-repeat: no-repeat;
@@ -207,6 +208,7 @@
 
   @screen tablet {
     .tablet-bg-class {
+      @apply flex w-screen flex-col items-center justify-around;
       background-image: url('/assets/tablet_chickchick.png'), url('/assets/sub_background.png');
       background-repeat: no-repeat, repeat;
       background-size: contain, contain;
@@ -216,6 +218,7 @@
 
   @screen mobile {
     .mobile-bg-class {
+      @apply flex w-screen flex-col items-center justify-center;
       background-image: url('/assets/mobile_chickchick.png'), url('/assets/sub_background.png');
       background-repeat: no-repeat, repeat;
       background-size: contain, contain;

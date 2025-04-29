@@ -14,7 +14,9 @@ const CameraView = () => {
   };
 
   return (
-    <div className='relative flex-1 overflow-hidden rounded-lg border border-cool-gray-200 bg-white'>
+    <div
+      className={`relative flex-1 overflow-hidden rounded-lg border border-cool-gray-200 ${isCameraOn ? `bg-white` : `bg-cool-gray-300`}`}
+    >
       {!isCameraOn && (
         <div className='mt-16 flex items-center justify-center'>
           <UserScanFill />

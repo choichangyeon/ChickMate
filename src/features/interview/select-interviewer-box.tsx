@@ -12,25 +12,43 @@ import { useState } from 'react';
 import Sunset from '@/lottie/sunset.json';
 import Pressure from '@/lottie/pressure.json';
 import LottieAnimation from '@/components/common/lottie-animation';
+import { Session } from 'next-auth';
+import { Notify } from 'notiflix';
+import { AUTH_MESSAGE } from '@/constants/message-constants';
 
 const { CALM, PRESSURE } = INTERVIEW_TYPE;
+const {
+  ERROR: { SESSION_NO_USER },
+} = AUTH_MESSAGE;
 const { LIVE } = PATH.INTERVIEW;
 
 const activeClass = 'border-primary-orange-600 bg-cool-gray-10';
 const deActiveClass = 'border-cool-gray-300';
 
-const SelectInterviewerBox = () => {
+type Props = {
+  session: Session | null;
+};
+
+const SelectInterviewerBox = ({ session }: Props) => {
   const [interviewType, setInterviewType] = useState<string>(CALM);
   const router = useRouter();
   const { resumeId } = useResumeStore();
   const resetQuestionIndex = useInterviewStore((state) => state.resetQuestionIndex);
 
   const handleClickSetInterviewType = async () => {
+    if (!session) {
+      Notify.warning(SESSION_NO_USER);
+      return;
+    }
     if (resumeId) {
-      const interviewId = await postInterview({ resumeId, interviewType });
-      resetQuestionIndex();
-      // 동적 라우팅 페이지 라우팅
-      router.push(`${LIVE(interviewId)}`);
+      try {
+        const interviewId = await postInterview({ resumeId, interviewType });
+        resetQuestionIndex();
+        // 동적 라우팅 페이지 라우팅
+        router.push(`${LIVE(interviewId)}`);
+      } catch (error) {
+        Notify.failure((error as Error).message);
+      }
     }
   };
 

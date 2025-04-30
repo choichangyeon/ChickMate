@@ -62,7 +62,6 @@ const JobPostingsBox = ({ userId }: Props) => {
     return (
       <section className='flex h-[400px] flex-col items-center justify-center gap-4 self-stretch'>
         <LoadingAnimation />
-        <Typography>채용 공고를 불러오는 중...</Typography>
       </section>
     );
   }

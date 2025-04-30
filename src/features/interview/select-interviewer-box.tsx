@@ -9,9 +9,10 @@ import useResumeStore from '@/features/interview/hooks/use-resume-store';
 import { useInterviewStore } from '@/store/use-interview-store';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import Sunset from '@/lottie/sunset_2.json';
-import Sunset2 from '@/lottie/sunset.json';
-import Pressure from '@/lottie/pressure_2.json';
+import Sunset from '@/lottie/sunset-2.json';
+import Sunset3 from '@/lottie/sunset-3.json';
+import Pressure from '@/lottie/pressure-2.json';
+import Pressure3 from '@/lottie/pressure-3.json';
 import LottieAnimation from '@/components/common/lottie-animation';
 import { Session } from 'next-auth';
 import { Notify } from 'notiflix';
@@ -58,17 +59,17 @@ const SelectInterviewerBox = ({ session }: Props) => {
       <section className='flex items-start justify-start gap-5 self-stretch mobile:hidden tablet:h-full tablet:w-full tablet:items-center tablet:justify-center'>
         <div
           onClick={() => setInterviewType(CALM)}
-          className={`tablet:w-84 aspect-[3/2] cursor-pointer overflow-hidden rounded-lg border desktop:max-w-[30rem] ${interviewType === CALM ? activeClass : deActiveClass}`}
+          className={`tablet:w-84 aspect-[6/4] cursor-pointer overflow-hidden rounded-lg border desktop:max-w-[40rem] ${interviewType === CALM ? activeClass : deActiveClass}`}
         >
-          <LottieAnimation active={interviewType === CALM} animationData={Sunset} />
+          <LottieAnimation active={interviewType === CALM} animationData={Sunset3} />
         </div>
         <div
           onClick={() => setInterviewType(PRESSURE)}
-          className={`tablet:w-84 aspect-[3/2] cursor-pointer overflow-hidden rounded-lg border desktop:max-w-[30rem] ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
+          className={`tablet:w-84 aspect-[6/4] cursor-pointer overflow-hidden rounded-lg border desktop:max-w-[40rem] ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
         >
-          <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure} />
+          <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure3} />
         </div>
-        <div className='hidden aspect-[3/2] w-[30rem] min-w-36 flex-col items-center justify-center self-stretch overflow-hidden rounded-lg border border-secondary-amber bg-cool-gray-10 desktop:flex'>
+        <div className='hidden aspect-[6/4] w-[20rem] min-w-36 flex-col items-center justify-center self-stretch overflow-hidden rounded-lg border border-secondary-amber bg-cool-gray-10 desktop:flex'>
           <div className='mb-2'>
             <Typography as='h3' weight='bold' size='3xl' align='center'>
               실전 면접 준비!
@@ -119,15 +120,15 @@ const SelectInterviewerBox = ({ session }: Props) => {
       <section className='hidden w-full flex-wrap items-center justify-center gap-5 mobile:flex'>
         <div
           onClick={() => setInterviewType(CALM)}
-          className={`h-36 w-52 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === CALM ? activeClass : deActiveClass}`}
+          className={`w-54 h-36 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === CALM ? activeClass : deActiveClass}`}
         >
-          <LottieAnimation active={interviewType === CALM} animationData={Sunset} />
+          <LottieAnimation active={interviewType === CALM} animationData={Sunset3} />
         </div>
         <div
           onClick={() => setInterviewType(PRESSURE)}
-          className={`h-36 w-52 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
+          className={`w-54 h-36 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
         >
-          <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure} />
+          <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure3} />
         </div>
       </section>
       <section className='hidden w-full flex-col items-center justify-center gap-2 mobile:flex'>

@@ -137,7 +137,7 @@ const SelectInterviewerBox = ({ session }: Props) => {
           {interviewType === 'calm' ? (
             <Typography weight='bold'>햇살 면접관</Typography>
           ) : (
-            <Typography weight='bold'>냉철한 면접관</Typography>
+            <Typography weight='bold'>불타는 면접관</Typography>
           )}
         </div>
         {resumeId && (

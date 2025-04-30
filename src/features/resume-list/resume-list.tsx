@@ -35,7 +35,7 @@ const ResumeList = () => {
           <ResumeItem
             key={resume.id}
             resume={resume}
-            hrOption={resumeList.length !== index + 1}
+            isLastChild={resumeList.length === index + 1}
             onClick={handleGetDetailList}
           />
         );

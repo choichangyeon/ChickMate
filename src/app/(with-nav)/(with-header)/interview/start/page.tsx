@@ -44,7 +44,7 @@ const InterviewStartPage = async () => {
             <span className='text-primary-orange-600'>ChickMate</span>를 선택해 주세요
           </Typography>
         </div>
-        <SelectInterviewerBox />
+        <SelectInterviewerBox session={session} />
       </div>
       <div className='mobile:mb-2'>
         <HydrationBoundary state={dehydrate(queryClient)}>

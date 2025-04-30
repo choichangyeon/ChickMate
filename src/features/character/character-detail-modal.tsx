@@ -46,7 +46,10 @@ const CharacterDetailModal = ({ session }: Props) => {
             selectedTab === 'info' ? 'border-b-2 border-primary-orange-600 font-bold' : 'text-cool-gray-500'
           }`}
         >
-          <Typography size='2xl' weight='bold' color={selectedTab === 'info' ? 'primary-600' : 'gray-500'}>
+          <Typography
+            color={selectedTab === 'info' ? 'primary-600' : 'gray-500'}
+            className='text-2xl font-bold mobile:text-lg'
+          >
             My Mate
           </Typography>
         </button>
@@ -59,7 +62,10 @@ const CharacterDetailModal = ({ session }: Props) => {
               : 'text-cool-gray-500'
           }`}
         >
-          <Typography size='2xl' weight='bold' color={selectedTab === 'history' ? 'primary-600' : 'gray-500'}>
+          <Typography
+            className='text-2xl font-bold mobile:text-lg'
+            color={selectedTab === 'history' ? 'primary-600' : 'gray-500'}
+          >
             History
           </Typography>
         </button>

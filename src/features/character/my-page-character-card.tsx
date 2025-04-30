@@ -47,7 +47,7 @@ const MyPageCharacterCard = ({
           </ScreenOverlay>
         )}
         <div className={`flex h-full justify-between ${isDefault && 'opacity-60'}`}>
-          <div className='flex items-center justify-center'>
+          <div className='mobile:w-[25vh] flex items-center justify-center'>
             <Image
               src={`/assets/character/card/${type}-level${level}.png`}
               width={242}
@@ -61,7 +61,7 @@ const MyPageCharacterCard = ({
               ChickMate
             </Typography>
             <div className='flex flex-col gap-1'>
-              <Typography size='3xl' weight='bold'>
+              <Typography className='mobile:text-lg mobile:whitespace-nowrap mobile:max-w-[150px] mobile:truncate text-3xl font-bold'>
                 {session && session.user.name}님
               </Typography>
               <Typography size='xs' color='gray-500'>
@@ -69,7 +69,11 @@ const MyPageCharacterCard = ({
               </Typography>
             </div>
             <div className='flex justify-end'>
-              <img src='/assets/character/card/card_assets.svg' alt='card-assets' className='w-[175px]' />
+              <img
+                src='/assets/character/card/card_assets.svg'
+                alt='card-assets'
+                className='mobile:w-[120px] w-[175px]'
+              />
             </div>
           </div>
         </div>

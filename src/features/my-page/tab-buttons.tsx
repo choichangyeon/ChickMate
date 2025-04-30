@@ -52,17 +52,19 @@ const TabButtons = ({ userId, initialTabCounts }: Props) => {
           <li
             key={`tab_${tab.id}`}
             className={clsx(
-              'text-md h-full w-1/3 px-4 py-[14px] text-center font-bold text-cool-gray-900',
+              'text-md mobile:text-sm h-full w-1/3 px-4 py-[14px] text-center font-bold text-cool-gray-900',
               isCurrentTab && 'border-b-2 border-b-primary-orange-600'
             )}
           >
-            <button className='w-full' onClick={() => handleChangeTab(tab.id)}>
+            <button className='flex w-full items-center justify-center' onClick={() => handleChangeTab(tab.id)}>
               {tab.title}
-              {tabCounts[tab.id] !== 0 && (
-                <Badge mx={1} size='small' color={isCurrentTab ? 'primary' : 'dark'}>
-                  {tabCounts[tab.id]}
-                </Badge>
-              )}
+              <div className='mobile:sr-only'>
+                {tabCounts[tab.id] !== 0 && (
+                  <Badge mx={1} size='small' color={isCurrentTab ? 'primary' : 'dark'}>
+                    {tabCounts[tab.id]}
+                  </Badge>
+                )}
+              </div>
             </button>
           </li>
         );

@@ -27,23 +27,28 @@ const fieldList: FieldList[] = [
 const MyInfoContent = ({ data }: Props) => {
   const toggleModal = useModalStore((state) => state.toggleModal);
   return (
-    <div>
-      <ul className='mb-4 border-b border-t p-4'>
+    <div className='w-full'>
+      <ul className='scrollbar-hidden mb-4 flex overflow-x-auto desktop:block desktop:border-b desktop:border-t desktop:p-4'>
         {fieldList.map(({ key, label }, index) => {
           const isLastChild = fieldList.length === index + 1;
+          if (!data[key]) return null;
           return (
-            <li key={`my_info_list_${key}`} className={clsx(isLastChild ? 'mb-0' : 'mb-4')}>
-              <dl className='flex items-center'>
-                <dt className='mr-10 w-[180px] font-bold'>{label}</dt>
-                <dd className='text-coolgray-500'>{data[key]}</dd>
+            <li key={`my_info_list_${key}`} className={clsx(isLastChild ? 'mr-0 desktop:mb-0' : 'mr-4 desktop:mb-4')}>
+              <dl className='flex items-center rounded-[8px] border p-4 desktop:border-0 desktop:p-0'>
+                <dt className='mr-5 whitespace-nowrap font-bold text-secondary-amber desktop:mr-10 desktop:w-[180px]'>
+                  {label}
+                </dt>
+                <dd className='text-coolgray-500 whitespace-nowrap font-bold'>{data[key]}</dd>
               </dl>
             </li>
           );
         })}
       </ul>
-      <Button size='fixed' onClick={() => toggleModal(USER_META_DATA)}>
-        수정하기
-      </Button>
+      <div className='hidden desktop:block'>
+        <Button size='fixed' onClick={() => toggleModal(USER_META_DATA)}>
+          수정하기
+        </Button>
+      </div>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { useFuncDebounce } from './use-func-debounce';
 
 export const DEVICE = {
   MOBILE: 'mobile',
@@ -14,20 +15,18 @@ const TABLET_MAX = 1279;
 const TABLET_MIN = 744;
 const MOBILE_MAX = 743;
 
+const getDeviceType = () => {
+  const width = window.innerWidth;
+  if (width <= MOBILE_MAX) return MOBILE;
+  if (width <= TABLET_MAX && width >= TABLET_MIN) return TABLET;
+  else return DESKTOP;
+};
+
 export const useDeviceType = (): DeviceType => {
   const [deviceType, setDeviceType] = useState<DeviceType>(DESKTOP);
 
   useEffect(() => {
-    const getDeviceType = () => {
-      const width = window.innerWidth;
-      if (width <= MOBILE_MAX) return MOBILE;
-      if (width <= TABLET_MAX && width >= TABLET_MIN) return TABLET;
-      else return DESKTOP;
-    };
-
-    const device = getDeviceType();
-    const handleResize = () => setDeviceType(device);
-    handleResize();
+    const handleResize = () => setDeviceType(getDeviceType());
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);

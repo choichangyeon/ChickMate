@@ -23,7 +23,9 @@ const ResumeCard = ({ type = 'resume', resume, isSelected, onSelect }: Props) =>
   const updatedAtDate = formatDate({ input: updatedAt });
   const createdAtDate = formatDate({ input: createdAt });
 
-  const selectedClassName = isSelected ? 'cursor-pointer outline-primary-orange-600 bg-cool-gray-10' : 'cursor-pointer';
+  const selectedClassName = isSelected
+    ? 'cursor-pointer border-2 border-primary-orange-600 bg-cool-gray-10 shadow-lg shadow-primary-orange-600/20'
+    : 'cursor-pointer';
   const handleClick = () => {
     if (type === 'interview') {
       onSelect && onSelect();
@@ -37,8 +39,8 @@ const ResumeCard = ({ type = 'resume', resume, isSelected, onSelect }: Props) =>
         <Typography size='sm' color='gray-500'>
           {updatedAt ? updatedAtDate : createdAtDate}
         </Typography>
-        <Typography as='h3' weight='bold' lineClamp='2'>
-          {title}
+        <Typography as='h3' weight='bold' lineClamp='1'>
+          <span className='break-words'>{title}</span>
         </Typography>
       </div>
       <div className={badgeClassName}>

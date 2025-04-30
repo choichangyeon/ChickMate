@@ -29,30 +29,44 @@ const InterviewStartPage = async () => {
   });
 
   return (
-    <>
+    <article className='mobile:flex-wrap mobile:pb-[56px]'>
       {session && <AlertInProgress session={session} />}
-      <article className='mb-8'>
-        <section className='mb-4 flex flex-row'>
+      <div className='mb-8'>
+        <div className='mb-4 flex flex-row mobile:hidden'>
           <Typography as='h2' size='2xl' weight='bold'>
             면접 볼&nbsp;
             <span className='text-primary-orange-600'>ChickMate</span>를 선택해 주세요
           </Typography>
-        </section>
+        </div>
+        <div className='mb-4 hidden mobile:flex'>
+          <Typography as='h2' size='xl' weight='bold'>
+            면접 볼&nbsp;
+            <span className='text-primary-orange-600'>ChickMate</span>를 선택해 주세요
+          </Typography>
+        </div>
         <SelectInterviewerBox session={session} />
-      </article>
-      <article>
+      </div>
+      <div className='mobile:mb-2'>
         <HydrationBoundary state={dehydrate(queryClient)}>
-          <section className='mb-4 flex flex-row justify-between'>
-            <Typography as='h2' size='2xl' weight='bold'>
-              면접 볼&nbsp;
-              <span className='text-primary-orange-600'>자소서</span>를 선택해 주세요
-            </Typography>
+          <div className='mb-4 flex flex-row gap-4 mobile:gap-2'>
+            <div className='mobile:hidden'>
+              <Typography as='h2' size='2xl' weight='bold'>
+                면접 볼&nbsp;
+                <span className='text-primary-orange-600'>자소서</span>를 선택해 주세요
+              </Typography>
+            </div>
+            <div className='hidden flex-col mobile:flex'>
+              <Typography as='h2' size='xl' weight='bold'>
+                면접 볼&nbsp;
+                <span className='text-primary-orange-600'>자소서</span>를 선택해 주세요
+              </Typography>
+            </div>
             <ResumeAllButton session={session} />
-          </section>
+          </div>
           <ResumeCardsBox session={session} />
         </HydrationBoundary>
-      </article>
-    </>
+      </div>
+    </article>
   );
 };
 

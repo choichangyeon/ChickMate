@@ -6,8 +6,8 @@ const JOB_SORT_OPTIONS: { name: string; value: SortOption }[] = [
   { name: '마감순', value: 'deadline' },
   { name: '최신순', value: 'latest' },
   { name: '오래된 순', value: 'oldest' },
-  { name: '기업명 순', value: 'company' },
-  { name: '북마크한 공고', value: 'bookmark' },
+  // { name: '기업명 순', value: 'company' },
+  // { name: '북마크한 공고', value: 'bookmark' },
 ];
 
 type Props = {

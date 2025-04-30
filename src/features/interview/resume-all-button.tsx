@@ -27,7 +27,16 @@ const ResumeAllButton = ({ session }: Props) => {
           toggleModal(ALL_RESUME_LIST);
         }}
       >
-        <Typography color='gray-500'>전체보기</Typography>
+        <span className='mobile:hidden'>
+          <Typography size='sm' color='gray-500'>
+            전체보기
+          </Typography>
+        </span>
+        <span className='hidden mobile:flex mobile:whitespace-nowrap'>
+          <Typography size='xs' color='gray-500'>
+            전체보기
+          </Typography>
+        </span>
       </button>
       {isModalOpen && (
         <Modal modalId={ALL_RESUME_LIST}>

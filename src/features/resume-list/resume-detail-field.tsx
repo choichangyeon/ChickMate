@@ -21,6 +21,7 @@ import { showNotiflixConfirm } from '@/utils/show-notiflix-confirm';
 import { RESUME_MESSAGE } from '@/constants/message-constants';
 import { Notify } from 'notiflix';
 import { getErrorMessage } from '@/utils/get-error-message';
+import { useQueryClient } from '@tanstack/react-query';
 
 const { DETAIL } = PATH.RESUME;
 const { RESUMES } = QUERY_KEY;
@@ -37,6 +38,7 @@ const ResumeDetailField = ({ resumeId, userId }: Props) => {
   const { data: resume, isPending, isError } = useResumeQuery(resumeId);
   const { mutateAsync: deleteResumeMutate } = useDeleteResumeMutation(RESUMES, userId);
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   if (isPending)
     return (
@@ -63,6 +65,7 @@ const ResumeDetailField = ({ resumeId, userId }: Props) => {
   const handleDeleteResume = async () => {
     try {
       await deleteResumeMutate(resumeId);
+      queryClient.invalidateQueries({ queryKey: [RESUMES] });
       Notify.success(DELETE_REQUEST_SUCCESS);
     } catch (error) {
       Notify.failure(getErrorMessage(error));

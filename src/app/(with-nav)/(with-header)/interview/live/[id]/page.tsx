@@ -14,16 +14,30 @@ export const metadata: Metadata = {
 
 const InterviewPage = async ({ params }: RouteParams) => {
   const session = await getServerSession(authOptions);
-  if (!session) return <InterviewBlockComponent type='unauthenticated' />;
+  if (!session)
+    return (
+      <section className='flex h-full items-center justify-center bg-[url("/assets/sub_background.png")] mobile:bg-[url("/assets/visual_assets.png")]'>
+        <InterviewBlockComponent type='unauthenticated' />
+      </section>
+    );
 
   const interviewId = Number(params.id);
   const interviewHistory = await getInterviewHistory(interviewId);
   const interviewQnAList = await getInterviewQnA(interviewId);
 
-  if (!interviewHistory) return <InterviewBlockComponent type='getInterviewHistoryError' />;
+  if (!interviewHistory)
+    return (
+      <section className='flex h-full items-center justify-center bg-[url("/assets/sub_background.png")] mobile:bg-[url("/assets/visual_assets.png")]'>
+        <InterviewBlockComponent type='getInterviewHistoryError' />
+      </section>
+    );
 
   if (interviewHistory.status === INTERVIEW_HISTORY_STATUS.COMPLETED) {
-    return <InterviewBlockComponent type='completedPageError' />;
+    return (
+      <section className='flex h-full items-center justify-center bg-[url("/assets/sub_background.png")] mobile:bg-[url("/assets/visual_assets.png")]'>
+        <InterviewBlockComponent type='completedPageError' />
+      </section>
+    );
   }
 
   return <InterviewClient interviewHistory={interviewHistory} interviewQnAList={interviewQnAList} />;

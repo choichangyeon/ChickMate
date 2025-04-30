@@ -3,7 +3,6 @@ import Typography from '@/components/ui/typography';
 import ResumeCardsBox from '@/features/interview/resume-cards-box';
 import { QUERY_KEY } from '@/constants/query-key';
 import { QueryClient, HydrationBoundary, dehydrate } from '@tanstack/react-query';
-
 import { RESUME_STATUS } from '@/constants/resume-constants';
 import AlertInProgress from '@/features/interview/alert-in-progress';
 import { getServerSession } from 'next-auth';
@@ -39,7 +38,7 @@ const InterviewStartPage = async () => {
             <span className='text-primary-orange-600'>ChickMate</span>를 선택해 주세요
           </Typography>
         </section>
-        <SelectInterviewerBox />
+        <SelectInterviewerBox session={session} />
       </article>
       <article>
         <HydrationBoundary state={dehydrate(queryClient)}>

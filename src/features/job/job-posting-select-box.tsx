@@ -17,17 +17,19 @@ type Props = {
 
 const JobPostingSelectBox = ({ sortOption, changeNewParams }: Props) => {
   return (
-    <select
-      value={sortOption}
-      onChange={changeNewParams}
-      className='mb-4 rounded-md border px-2 py-1 text-sm shadow-sm'
-    >
-      {JOB_SORT_OPTIONS.map(({ name, value }) => (
-        <option key={value} value={value}>
-          {name}
-        </option>
-      ))}
-    </select>
+    <div className='text-right'>
+      <select
+        value={sortOption}
+        onChange={changeNewParams}
+        className='mb-4 rounded-md border px-2 py-1 text-sm shadow-sm'
+      >
+        {JOB_SORT_OPTIONS.map(({ name, value }) => (
+          <option key={value} value={value}>
+            {name}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 };
 

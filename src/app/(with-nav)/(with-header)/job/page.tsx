@@ -10,7 +10,7 @@ const JobPage = async () => {
   return (
     <article className='flex h-full flex-col'>
       <div className='mb-4 flex justify-between'>
-        <div>
+        <div className='mobile:w-full'>
           <Typography
             as='h2'
             className='text-3xl font-bold text-primary-orange-600 mobile:hidden mobile:text-xl tablet:text-2xl'
@@ -18,13 +18,11 @@ const JobPage = async () => {
             맞춤형
             <span className='text-cool-gray-900'> 채용공고</span>
           </Typography>
-          <Typography
-            color='gray-500'
-            as='h3'
-            size='xl'
-            className='text-xl text-cool-gray-500 mobile:text-base mobile:text-primary-orange-600 tablet:text-lg'
-          >
-            프로필에 작성된 정보를 통해 맞춤형 채용공고를 추천해드립니다
+          <Typography as='h3' className='text-xl text-cool-gray-500 mobile:text-center mobile:text-base'>
+            프로필에 작성된 정보를 통해
+            <span className='mobile:block'>
+              <strong className='mobile:text-primary-orange-600'>맞춤형 채용공고</strong>를 추천해드립니다
+            </span>
           </Typography>
         </div>
 

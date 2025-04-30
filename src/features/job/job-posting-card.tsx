@@ -31,7 +31,7 @@ const JobPostingCard = ({ jobPosting, userId }: Props) => {
   const remainDay = formatRemainDay(expirationTimestamp);
 
   return (
-    <Card className='flex-shrink-1 flex h-full w-full min-w-0 flex-col justify-between p-8'>
+    <Card className='flex-shrink-1 flex h-full w-full min-w-[290px] flex-col justify-between p-8 mobile:min-w-0'>
       <dl>
         <div className='flex w-full justify-between'>
           <dt className='sr-only'>기업 명</dt>

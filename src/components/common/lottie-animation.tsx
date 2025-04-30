@@ -1,8 +1,10 @@
 'use client';
 
 import React, { forwardRef, useImperativeHandle, useRef, useEffect } from 'react';
-import Lottie, { LottieRefCurrentProps } from 'lottie-react';
+import { LottieRefCurrentProps } from 'lottie-react';
 import clsx from 'clsx';
+import dynamic from 'next/dynamic';
+const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 
 // 부모가 사용할 메서드 타입에 속도 제어 및 활성화 재생 추가
 export type LottieHandle = {

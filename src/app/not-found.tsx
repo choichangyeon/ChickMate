@@ -17,7 +17,7 @@ const NotFound = () => {
             thirdLine='괜찮아요. 우리는 언제나 길을 잃을 수 있어요.'
             buttonName='메인으로 돌아가기'
             href={ON_BOARDING}
-            className='h-[180px] mobile:h-[80px]'
+            className='h-[120px] mobile:h-[80px]'
           />
         </div>
       </section>

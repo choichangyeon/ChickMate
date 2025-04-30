@@ -19,7 +19,7 @@ const ResumeList = () => {
 
   if (isPending) {
     return (
-      <div className='flex h-[70dvh] items-center justify-center'>
+      <div className='flex items-center justify-center'>
         <LoadingAnimation />
       </div>
     );

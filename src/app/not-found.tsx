@@ -8,8 +8,8 @@ const { ON_BOARDING } = PATH;
 const NotFound = () => {
   return (
     <MainLayout>
-      <section className='flex h-full flex-col items-center justify-center bg-[url("/assets/sub_background.png")] mobile:bg-[url("/assets/visual_assets.png")]'>
-        <div>
+      <section className='flex h-screen flex-col items-center justify-center overflow-hidden bg-[url("/assets/sub_background.png")] mobile:bg-[url("/assets/visual_assets.png")]'>
+        <div className='flex flex-col items-center gap-0'>
           <Image src='/assets/notfound.png' width={480} height={310} alt='404 NOT FOUND' />
           <BlockComponent
             firstLine=''
@@ -17,7 +17,7 @@ const NotFound = () => {
             thirdLine='괜찮아요. 우리는 언제나 길을 잃을 수 있어요.'
             buttonName='메인으로 돌아가기'
             href={ON_BOARDING}
-            className='h-[120px] mobile:h-[80px]'
+            className='h-[100px] mobile:h-[80px]'
           />
         </div>
       </section>

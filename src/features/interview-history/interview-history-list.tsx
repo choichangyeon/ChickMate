@@ -32,7 +32,7 @@ const InterviewHistoryList = () => {
 
   if (isPending)
     return (
-      <div className='flex h-full items-center justify-center'>
+      <div className='flex items-center justify-center'>
         <LoadingAnimation />
       </div>
     );

@@ -9,6 +9,7 @@ import InterviewFullIcon from '@/components/icons/interview-full-icon';
 import JobFullIcon from '@/components/icons/job-full-icon';
 import MyPageFullIcon from '@/components/icons/my-page-full-icon';
 import ResumeFullIcon from '@/components/icons/resume-full-icon';
+import { ChickLogo } from '@/components/icons/chick-logo';
 
 export type NavItems = {
   path: string;
@@ -22,6 +23,14 @@ export type NavItems = {
 const { ON_BOARDING, AUTH, MY_PAGE, RESUME, INTERVIEW, JOB } = PATH;
 
 const Nav_Items = [
+  {
+    path: ON_BOARDING,
+    type: 'link',
+    name: 'HOME',
+    icon: <ChickLogo />,
+    fullIcon: <ChickLogo />,
+    class: 'hidden mobile:block',
+  },
   {
     path: RESUME.ROOT,
     type: 'link',

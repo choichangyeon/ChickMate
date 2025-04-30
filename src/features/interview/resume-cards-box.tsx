@@ -67,10 +67,14 @@ const ResumeCardsBox = ({ session }: Props) => {
       </section>
       <section className='hidden max-h-[200px] max-w-[100vw] flex-col gap-5 mobile:flex'>
         <ul className='flex w-full flex-col overflow-y-auto scrollbar-hide'>
-          {resumeList.map((resume) => {
+          {resumeList.map((resume, index) => {
             return (
               <div key={resume.id} className={`${resume.id === selectedId ? 'bg-primary-orange-600/20' : ''} `}>
-                <ResumeItem resume={resume} onClick={() => setResume(resume.id)} hrOption={false} />
+                <ResumeItem
+                  resume={resume}
+                  onClick={() => setResume(resume.id)}
+                  isLastChild={resumeList.length === index + 1}
+                />
               </div>
             );
           })}

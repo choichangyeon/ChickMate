@@ -118,13 +118,13 @@ const SelectInterviewerBox = ({ session }: Props) => {
       <section className='hidden w-full flex-wrap items-center justify-center gap-5 mobile:flex'>
         <div
           onClick={() => setInterviewType(CALM)}
-          className={`w-54 h-36 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === CALM ? activeClass : deActiveClass}`}
+          className={`aspect-[6/4] w-[220px] cursor-pointer overflow-hidden rounded-lg border ${interviewType === CALM ? activeClass : deActiveClass}`}
         >
           <LottieAnimation active={interviewType === CALM} animationData={Sunset} />
         </div>
         <div
           onClick={() => setInterviewType(PRESSURE)}
-          className={`w-54 h-36 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
+          className={`aspect-[6/4] w-[220px] cursor-pointer overflow-hidden rounded-lg border ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
         >
           <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure} />
         </div>

@@ -53,7 +53,7 @@ Chick Mate의 대표 캐릭터 칰칰이와 함께 AI 면접관을 통해 면접
       <td width="300px" align="center">
         <b>담당</b><br />
         렌딩/온보딩 페이지<br />
-        마이페이지 전반적인 관리<br />
+        마이페이지 면접 기록 및 탭 관리<br />
         middleware 관리
       </td>
     </tr>

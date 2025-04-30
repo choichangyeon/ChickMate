@@ -196,3 +196,33 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .main-bg-class {
+    @apply flex w-screen flex-col items-center justify-center;
+    background-image: url('/assets/background.png'), url('/assets/sub_background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  @screen tablet {
+    .tablet-bg-class {
+      @apply flex w-screen flex-col items-center justify-around;
+      background-image: url('/assets/tablet_chickchick.png'), url('/assets/sub_background.png');
+      background-repeat: no-repeat, repeat;
+      background-size: contain, contain;
+      background-position: center, center;
+    }
+  }
+
+  @screen mobile {
+    .mobile-bg-class {
+      @apply flex w-screen flex-col items-center justify-around;
+      background-image: url('/assets/tablet_chickchick.png'), url('/assets/sub_background.png'); /* 순서 변경 */
+      background-repeat: no-repeat, repeat;
+      background-size: contain, contain;
+      background-position: center, center;
+    }
+  }
+}

@@ -36,7 +36,7 @@ const MainCharacterCard = ({
     <>
       <button
         onClick={handleClickCard}
-        className='relative flex h-full min-w-72 cursor-pointer flex-col justify-between overflow-hidden rounded-lg border p-8'
+        className='tablet:min-w-50 relative flex h-full min-w-72 cursor-pointer flex-col justify-between overflow-hidden rounded-lg border p-8 mobile:w-1/3 mobile:p-2'
       >
         {isDefault && (
           <ScreenOverlay>
@@ -49,20 +49,24 @@ const MainCharacterCard = ({
             />
           </ScreenOverlay>
         )}
-        <div className={`${isDefault && 'opacity-60'} flex h-full flex-col justify-between`}>
-          <Image
-            src={`/assets/character/card/${type}-level${level}.png`}
-            width={242}
-            height={242}
-            alt='character-img'
-            priority
-          />
-          <div className='flex flex-col gap-2'>
-            <div className='flex justify-between gap-6'>
-              <Typography size='2xl' weight='black' color='primary-600'>
+        <div
+          className={`${isDefault && 'opacity-60'} flex h-full flex-col justify-between mobile:flex-row mobile:justify-start mobile:p-2`}
+        >
+          <div className='mobile:w-28'>
+            <Image
+              src={`/assets/character/card/${type}-level${level}.png`}
+              width={242}
+              height={242}
+              alt='character-img'
+              priority
+            />
+          </div>
+          <div className='flex flex-col gap-2 mobile:justify-center'>
+            <div className='flex justify-between gap-6 mobile:flex-col mobile:gap-3'>
+              <Typography as='span' className='mobile:xl wxl font-black text-primary-orange-600'>
                 LV {level}
               </Typography>
-              <Typography size='xl' weight='bold'>
+              <Typography as='span' className='mobile:lg xl font-bold'>
                 {characterName}
               </Typography>
             </div>

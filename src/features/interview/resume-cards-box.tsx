@@ -24,7 +24,12 @@ const ResumeCardsBox = ({ session }: Props) => {
     }
   }, [resumeList]);
 
-  if (!session) return <InterviewBlockComponent type='unauthenticated' />;
+  if (!session)
+    return (
+      <section className='flex min-h-44 items-center justify-center bg-[url("/assets/visual_assets.png")]'>
+        <InterviewBlockComponent type='unauthenticated' />
+      </section>
+    );
 
   if (isPending) {
     return (
@@ -35,14 +40,14 @@ const ResumeCardsBox = ({ session }: Props) => {
   }
   if (isError || !resumeList)
     return (
-      <section className='flex h-44 max-w-[100vw] flex-col items-center justify-center'>
+      <section className='flex min-h-44 items-center justify-center bg-[url("/assets/visual_assets.png")]'>
         <InterviewBlockComponent type='getResumeListError' />
       </section>
     );
 
   if (resumeList.length === 0)
     return (
-      <section className='flex h-44 max-w-[100vw] flex-col items-center justify-center'>
+      <section className='flex min-h-44 items-center justify-center bg-[url("/assets/visual_assets.png")]'>
         <InterviewBlockComponent type='emptyResumeError' />
       </section>
     );

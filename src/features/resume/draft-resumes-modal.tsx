@@ -9,7 +9,7 @@ import { MODAL_ID } from '@/constants/modal-id-constants';
 import { showNotiflixConfirm } from '@/utils/show-notiflix-confirm';
 import { useDeleteResumeMutation } from '@/features/resume/hooks/use-delete-resume-mutation';
 import DraftResumeItem from '@/features/resume/draft-resume-item';
-import type { Resume } from '@prisma/client';
+import type { ResumeType } from '@/types/DTO/resume-dto';
 
 const { CONFIRM } = RESUME_MESSAGE;
 const { DRAFT_RESUME } = MODAL_ID;
@@ -17,9 +17,9 @@ const { RESUME_DRAFT } = QUERY_KEY;
 const EMPTY_DRAFT_COUNT = 0;
 
 type Props = {
-  draftResumeList: Resume[] | undefined;
+  draftResumeList: ResumeType[] | undefined;
   isError: boolean;
-  onLoadDraft: (resume: Resume) => void;
+  onLoadDraft: (resume: ResumeType) => void;
   activeResumeId: number | null;
   setResumeId: Dispatch<SetStateAction<number | null>>;
 };
@@ -39,7 +39,7 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResume
     });
   };
 
-  const handleDraftResumeClick = (resume: Resume) => {
+  const handleDraftResumeClick = (resume: ResumeType) => {
     onLoadDraft(resume);
   };
 
@@ -56,7 +56,7 @@ const DraftResumesModal = ({ draftResumeList, isError, onLoadDraft, activeResume
       {!isError && draftResumeList?.length === EMPTY_DRAFT_COUNT ? (
         <Typography color='gray-500'>임시 저장된 자기소개서가 없습니다</Typography>
       ) : (
-        <ul className='flex flex-col gap-4'>
+        <ul className='flex flex-col gap-4 mobile:gap-2'>
           {draftResumeList?.map((resume) => {
             return (
               <DraftResumeItem

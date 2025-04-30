@@ -1,7 +1,7 @@
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/utils/auth-option';
 import TabsField from '@/features/my-page/tabs-field';
 import ViewingField from '@/features/my-page/viewing-field';
+import { authOptions } from '@/utils/auth-option';
+import { getServerSession } from 'next-auth';
 
 const MyPage = async () => {
   const session = await getServerSession(authOptions);
@@ -9,7 +9,7 @@ const MyPage = async () => {
   if (!session) return null;
 
   return (
-    <article className='flex w-full items-center justify-between gap-2 px-12 py-8'>
+    <article className='flex h-full w-full flex-col items-stretch justify-evenly gap-5 mobile:h-[calc(100%-65px)] mobile:gap-2 desktop:flex-row'>
       <ViewingField session={session} />
       <TabsField userId={session?.user.id} />
     </article>

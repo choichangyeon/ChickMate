@@ -1,4 +1,15 @@
-import { USER_META_DATA_KEY } from './user-meta-data-constants';
+import { EXPERIENCE_AMOUNT } from '@/constants/character-constants';
+import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
+
+const {
+  RESUME_SUBMISSION_EXP,
+  CREATE_CHARACTER_EXP,
+  INTERVIEW_COMPLETION_EXP,
+  FILL_OUT_META_DATA_EXP,
+  BOOKMARK_JOB_POSTING_EXP,
+} = EXPERIENCE_AMOUNT;
+
+const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME } = USER_META_DATA_KEY;
 
 export const AUTH_MESSAGE = {
   VALIDATION: {
@@ -7,18 +18,19 @@ export const AUTH_MESSAGE = {
     EMAIL_INVALID: '올바른 이메일 형식이어야 합니다.',
     PASSWORD_LENGTH: '비밀번호는 6자 이상이어야 합니다.',
     PASSWORD_SPECIAL_CHAR: '비밀번호는 최소 하나의 특수 문자를 포함해야 합니다.',
+    PASSWORD_ASCII_ONLY: '비밀번호는 영문, 숫자, 특수문자만 사용할 수 있습니다.',
     PASSWORD_CHECK: '비밀번호가 일치하지 않습니다.',
     EMAIL_EMPTY_FIELD: '이메일을 입력해주세요.',
     PASSWORD_EMPTY_FIELD: '비밀번호를 입력해주세요.',
   },
   RESULT: {
     SIGN_UP_SUCCESS: '회원 가입에 성공했습니다.',
-    SIGN_UP_FAILED: '회원 가입에 실패했습니다.',
+    SIGN_UP_FAILED: '회원 가입에 실패했습니다. 다시 시도해 주세요.',
     SIGN_UP_EXIST_ERROR: '이미 존재하는 이메일입니다.',
     SIGN_UP_EMPTY_FIELD: '모든 값을 입력해주세요.',
-    SIGN_IN_FAILED: '이메일 혹은 비밀번호를 확인해주세요.',
+    SIGN_IN_FAILED: '이메일 또는 비밀번호가 잘못 되었습니다.',
     SOCIAL_SIGN_IN_EXIST_ERROR: '다른 로그인 방식으로 이미 가입된 계정입니다.',
-    SOCIAL_SIGN_IN_FAILED: '소셜 로그인에 실패했어요. 다시 시도해 주세요.',
+    SOCIAL_SIGN_IN_FAILED: '소셜 로그인에 실패했습니다. 다시 시도해 주세요.',
     AUTH_REQUIRED: '사용자 인증이 필요합니다.',
   },
   ERROR: {
@@ -46,6 +58,8 @@ export const RESUME_MESSAGE = {
   SUBMIT: {
     REQUEST_FAILURE: '유효하지 않은 자소서 양식입니다.',
     SUBMIT_SERVER_ERROR: '자소서 생성에 실패했습니다.',
+    SUCCESS_WITH_EXP: `자기소개서 작성이 완료되었습니다. ${RESUME_SUBMISSION_EXP} 경험치 획득 완료!`,
+    SUCCESS: '자기소개서 작성이 완료되었습니다.',
   },
   DRAFT: {
     NOT_FOUND: '해당 자소서를 찾을 수 없습니다.',
@@ -61,16 +75,11 @@ export const RESUME_MESSAGE = {
   DELETE_SERVER_ERROR: '자소서를 삭제하는데 실패했습니다.',
   DELETE_FORBIDDEN: '해당 자소서를 삭제할 권한이 없습니다.',
   GET_COUNT_ERROR: '경험치 지급을 위해 오늘 작성한 자소서를 확인하는데 실패했습니다.',
-  LIMIT: {
-    MAX_RESUME_FIELD: '자소서 항목은 최대 5개까지 추가할 수 있습니다.',
-    MIN_RESUME_FIELD: '자소서 항목은 최소 1개 이상 작성해야됩니다.',
-  },
   CONFIRM: {
     DELETE: '자소서를 정말로 삭제하시겠습니까?',
   },
 };
 
-const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME } = USER_META_DATA_KEY;
 export const USER_META_DATA_FORM_MESSAGE = {
   VALIDATION: {
     [EXPERIENCE_NAME]: '경력을 선택해 주세요.',
@@ -79,11 +88,10 @@ export const USER_META_DATA_FORM_MESSAGE = {
     [LOCATION_NAME]: '지역을 선택해 주세요.',
   } as const,
   API: {
-    GET_REGIONS_ERROR: '지역 정보를 가져오는데 실패했습니다.',
     GET_DATA_ERROR: '유저 정보를 가져오는데 실패했습니다.',
     POST_DATA_ERROR: '유저 정보를 저장하는데 실패했습니다.',
     POST_DATA_SUCCESS: '주요 이력이 저장되었습니다.',
-    CHARACTER_POST_SUCCESS: '500 경험치 획득!\n주요 이력이 저장되었습니다.',
+    CHARACTER_POST_SUCCESS_WITH_EXP: `주요 이력이 저장되었습니다. ${FILL_OUT_META_DATA_EXP} 경험치 획득 완료!`,
   },
 };
 
@@ -108,7 +116,7 @@ export const CHARACTER_MESSAGE = {
   },
   POST: {
     POST_DATA_FAILED: '캐릭터를 생성하는 데 실패했습니다.',
-    POST_DATA_SUCCESS: `캐릭터 생성 1,000 경험치 획득!\n캐릭터가 생성되었습니다.`, //TODO: alert 붙일 때 수정할 수도..?
+    POST_DATA_SUCCESS_WITH_EXP: `캐릭터가 생성되었습니다. ${CREATE_CHARACTER_EXP} 경험치 획득 완료!`,
   },
   PATCH: {
     PATCH_DATA_FAILED: '경험치 획득에 실패했습니다.',
@@ -121,7 +129,8 @@ export const HISTORY_MESSAGE = {
   VALIDATION: {
     QUERY_PARAMS_TYPE: 'page 또는 limit이 유효하지 않습니다.',
   },
-  DELETE_SUCCEESS: '인터뷰 기록을 삭제했습니다.',
+  DELETE_SUCCESS: '면접 기록을 삭제했습니다.',
+  DELETE_FAIL: '면접 기록 삭제에 실패했습니다.',
   GET_SERVER_ERROR: '히스토리를 불러올 수 없습니다.',
 };
 
@@ -136,6 +145,7 @@ export const INTERVIEW_HISTORY = {
     PATCH_SERVER_ERROR: '면접 기록 수정에 실패했습니다.',
     NOT_FOUND: '해당 면접 기록을 찾을 수 없습니다.',
     FORBIDDEN: '해당 면접 기록을 수정할 권한이 없습니다.',
+    SUCCESS_WITH_EXP: `면접이 완료되었습니다. ${INTERVIEW_COMPLETION_EXP} 경험치 획득 완료!`,
   },
 };
 
@@ -156,4 +166,6 @@ export const BOOKMARK_MESSAGE = {
   REMOVE: '북마크가 취소되었습니다.',
   ADD_ERROR: '북마크 등록에 실패했습니다.',
   REMOVE_ERROR: '북마크 취소에 실패했습니다.',
+  GET_COUNT_ERROR: '경험치 지급을 위해 오늘 등록한 북마크를 확인하는데 실패했습니다.',
+  SUCCESS_WITH_EXP: `북마크에 추가되었습니다. ${BOOKMARK_JOB_POSTING_EXP} 경험치 획득 완료!`,
 };

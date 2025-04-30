@@ -2,25 +2,27 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { Notify } from 'notiflix';
 import { useQueryClient } from '@tanstack/react-query';
-import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
-import { postCreateCharacter } from '@/features/character/api/client-services';
-import { useModalStore } from '@/store/use-modal-store';
 import { useCharacterStore } from '@/store/use-character-store';
+import { useModalStore } from '@/store/use-modal-store';
 import Modal from '@/components/ui/modal';
+import Typography from '@/components/ui/typography';
+import Button from '@/components/ui/button';
+import { QUERY_KEY } from '@/constants/query-key';
 import { CHARACTER_HISTORY_KEY, CHARACTER_INFORMATION } from '@/constants/character-constants';
 import { CHARACTER_MESSAGE } from '@/constants/message-constants';
 import { MODAL_ID } from '@/constants/modal-id-constants';
-import { QUERY_KEY } from '@/constants/query-key';
-import Typography from '@/components/ui/typography';
-import Button from '@/components/ui/button';
-import RightArrowIcon from '@/components/icons/right-arrow-icon';
+import { postCreateCharacter } from '@/features/character/api/client-services';
+import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
 import LeftArrowIcon from '@/components/icons/left-arrow-icon';
+import RightArrowIcon from '@/components/icons/right-arrow-icon';
 
 const { CHARACTER } = QUERY_KEY;
-const { POST_DATA_SUCCESS } = CHARACTER_MESSAGE.POST;
+const { POST_DATA_SUCCESS_WITH_EXP } = CHARACTER_MESSAGE.POST;
 const { CHARACTER_CREATE } = MODAL_ID;
 const { CREATE_CHARACTER } = CHARACTER_HISTORY_KEY;
+
 const CreateCharacterModal = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const queryClient = useQueryClient();
@@ -29,21 +31,26 @@ const CreateCharacterModal = () => {
   const type = characterTypes[currentIndex];
   const selectedCharacter = CHARACTER_INFORMATION[type][1];
   const { handleExperienceUp } = useExperienceUp();
+
   const setCharacterId = useCharacterStore((state) => state.setCharacterId);
   const toggleModal = useModalStore((state) => state.toggleModal);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await postCreateCharacter({ type });
-      const characterId = res.id ?? null;
+      const character = await postCreateCharacter({ type });
+      const characterId = character.id ?? null;
       setCharacterId(characterId);
+
       handleExperienceUp(CREATE_CHARACTER);
       queryClient.invalidateQueries({ queryKey: [CHARACTER] });
-      alert(POST_DATA_SUCCESS);
+
+      Notify.info(POST_DATA_SUCCESS_WITH_EXP);
       toggleModal(CHARACTER_CREATE);
     } catch (error) {
-      alert((error as Error).message);
+      if (error instanceof Error) {
+        Notify.failure(error.message);
+      }
     }
   };
 
@@ -71,7 +78,7 @@ const CreateCharacterModal = () => {
               type='button'
               onClick={goToPrev}
               disabled={characterTypes.length <= 1}
-              className='text-3xl text-gray-500 transition'
+              className='text-3xl text-cool-gray-500 transition'
               aria-label='이전 캐릭터 보기'
             >
               <LeftArrowIcon />
@@ -86,7 +93,7 @@ const CreateCharacterModal = () => {
               type='button'
               onClick={goToNext}
               disabled={characterTypes.length <= 1}
-              className='text-3xl text-gray-500 transition'
+              className='text-3xl text-cool-gray-500 transition'
               aria-label='다음 캐릭터 보기'
             >
               <RightArrowIcon />
@@ -103,7 +110,7 @@ const CreateCharacterModal = () => {
               {selectedCharacter.name}
             </Typography>
           </div>
-          <Button type='submit' size='small' square variant='outline'>
+          <Button type='submit' size='small' square>
             캐릭터 생성
           </Button>
         </div>

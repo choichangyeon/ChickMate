@@ -1,18 +1,16 @@
 'use client';
 
 import Image from 'next/image';
-import { Character } from '@prisma/client';
-import { defaultCharacter } from '@/features/character/data/character-data';
-import Typography from '@/components/ui/typography';
 import { Session } from 'next-auth';
+import Typography from '@/components/ui/typography';
 import ScreenOverlay from '@/components/ui/screen-overlay';
-import { useCharacterCard } from '@/features/character/hooks/use-character-card';
-import CharacterDetailModal from '@/features/character/character-detail-modal';
-import CreateCharacterModal from '@/features/character/create-character-modal';
 import BlockComponent from '@/components/common/block-component';
+import { defaultCharacter } from '@/features/character/data/character-data';
+import { useCharacterCard } from '@/features/character/hooks/use-character-card';
+import type { CharacterType } from '@/types/DTO/character-dto';
 
 type Props = {
-  characterData?: Character;
+  characterData?: CharacterType;
   requiredModal?: boolean;
   overlayText?: string;
   session?: Session;
@@ -49,7 +47,7 @@ const MyPageCharacterCard = ({
           </ScreenOverlay>
         )}
         <div className={`flex h-full justify-between ${isDefault && 'opacity-60'}`}>
-          <div className='flex items-center justify-center'>
+          <div className='mobile:w-[25vh] flex items-center justify-center'>
             <Image
               src={`/assets/character/card/${type}-level${level}.png`}
               width={242}
@@ -59,19 +57,23 @@ const MyPageCharacterCard = ({
             />
           </div>
           <div className='flex flex-1 flex-col justify-between py-6 pr-9'>
-            <Typography size='sm' align='right'>
+            <Typography size='sm' align='right' as='span'>
               ChickMate
             </Typography>
             <div className='flex flex-col gap-1'>
-              <Typography size='3xl' weight='bold'>
-              {session && session.user.name}님
+              <Typography className='mobile:text-lg mobile:whitespace-nowrap mobile:max-w-[150px] mobile:truncate text-3xl font-bold'>
+                {session && session.user.name}님
               </Typography>
               <Typography size='xs' color='gray-500'>
                 {characterName}
               </Typography>
             </div>
             <div className='flex justify-end'>
-              <img src='/assets/character/card/card_assets.svg' alt='card-assets' className='w-[175px]' />
+              <img
+                src='/assets/character/card/card_assets.svg'
+                alt='card-assets'
+                className='mobile:w-[120px] w-[175px]'
+              />
             </div>
           </div>
         </div>

@@ -1,13 +1,13 @@
-import clsx from 'clsx';
-import { useBookmarkMutation } from '@/features/job/hooks/use-bookmark-mutation';
 import { Star } from '@/components/icons/star';
-import Button from '@/components/ui/button';
+import LinkButton from '@/components/ui/link-button';
 import Typography from '@/components/ui/typography';
-import { formatRemainDay } from '@/utils/format-remain-day';
-import { formatTimestamp } from '@/utils/format-timestamp';
+import { useBookmarkMutation } from '@/features/job/hooks/use-bookmark-mutation';
 import type { JobPostingType } from '@/types/DTO/job-posting-dto';
 import type { UserType } from '@/types/DTO/user-dto';
 import type { UserSelectedJobType } from '@/types/DTO/user-selected-job-dto';
+import { formatRemainDay } from '@/utils/format-remain-day';
+import { formatTimestamp } from '@/utils/format-timestamp';
+import clsx from 'clsx';
 
 const experienceType: Record<number, string> = {
   0: '경력무관',
@@ -47,16 +47,14 @@ const BookmarkTab = ({ bookmark, index, length, userId }: Props) => {
           <Typography size='sm' color='gray-500' weight='bold'>
             {companyName}
           </Typography>
-          <Typography weight='bold' size='lg' lineClamp='1'>
-            {positionTitle}
-          </Typography>
+          <Typography className='line-clamp-1 text-lg font-bold mobile:text-base'>{positionTitle}</Typography>
         </div>
         <button type='button' onClick={handleDeleteBookmark} aria-label='북마크 버튼'>
           <Star width='18' height='18' color='#FDE047' stroke='#FDE047' />
         </button>
       </div>
       <div className='flex w-full flex-row items-center justify-between'>
-        <div className='flex flex-row gap-6'>
+        <div className='flex flex-row gap-6 mobile:flex-col mobile:gap-2'>
           <Typography size='xs' color='gray-500'>
             {experienceType[experienceCode]}
           </Typography>
@@ -64,28 +62,16 @@ const BookmarkTab = ({ bookmark, index, length, userId }: Props) => {
             {postedAtDate}~{expiredAtDate}
           </Typography>
         </div>
-        <div className='flex flex-row items-center justify-between gap-3'>
+        <div className='flex flex-row items-center justify-between gap-3 mobile:flex-col mobile:gap-1'>
           {remainDay ? (
             <Typography color='primary-600'>D-{remainDay}</Typography>
           ) : (
-            <Typography color='primary-600'>날짜정보 오류</Typography>
+            <Typography className='text-primary-orange-600 mobile:text-sm'>날짜정보 오류</Typography>
           )}
-          {bookmark.jobPosting.url ? (
-            <Button
-              target='_blank'
-              size='small'
-              link
-              href={bookmark.jobPosting.url}
-              variant='outline'
-              color='dark'
-              square
-            >
+          {bookmark.jobPosting.url && (
+            <LinkButton target='_blank' size='small' href={bookmark.jobPosting.url} square>
               바로 가기
-            </Button>
-          ) : (
-            <Button disabled variant='outline' size='small' color='dark' square>
-              페이지 접근 불가
-            </Button>
+            </LinkButton>
           )}
         </div>
       </div>

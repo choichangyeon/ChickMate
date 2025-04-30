@@ -4,11 +4,11 @@ import EmptyList from '@/features/my-page/empty-list';
 import { useSession } from 'next-auth/react';
 import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
 import ErrorComponent from '@/components/common/error-component';
-import LoadingSpinner from '@/components/ui/loading-spinner';
+import LoadingAnimation from '@/components/common/loading-animation';
 import { useBookmarkSelectedInfiniteQuery } from '@/features/bookmark-selected/hook/use-bookmark-selected-infinite-query';
 import BookmarkTab from '@/features/bookmark-selected/bookmark-tab';
 
-const { BOOKMARK } = TABS;
+const { BOOKMARK_TAB } = TABS;
 
 const BookmarkSelectedList = () => {
   const { data: session, status } = useSession();
@@ -25,7 +25,7 @@ const BookmarkSelectedList = () => {
   if (isPending || status === 'loading') {
     return (
       <section className='flex h-[70dvh] flex-col items-center justify-center'>
-        <LoadingSpinner />
+        <LoadingAnimation />
       </section>
     );
   }
@@ -33,7 +33,7 @@ const BookmarkSelectedList = () => {
   if (isError) return <ErrorComponent />;
 
   const bookmarkList = data.pages.flatMap((page) => page.bookmarkList);
-  if (bookmarkList.length === 0) return <EmptyList tab={BOOKMARK} />;
+  if (bookmarkList.length === 0) return <EmptyList tab={BOOKMARK_TAB} />;
 
   return (
     <ul className='h-full overflow-y-auto scrollbar-hide'>
@@ -41,7 +41,7 @@ const BookmarkSelectedList = () => {
         <BookmarkTab key={bookmark.id} bookmark={bookmark} index={idx} length={arr.length} userId={userId} />
       ))}
       <div ref={targetRef} className='flex h-10 w-full items-center justify-center text-sm text-gray-400'>
-        {isFetchingNextPage && <LoadingSpinner size='sm' />}
+        {isFetchingNextPage && <LoadingAnimation />}
       </div>
     </ul>
   );

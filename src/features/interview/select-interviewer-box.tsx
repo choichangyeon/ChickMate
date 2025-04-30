@@ -3,89 +3,149 @@
 import Button from '@/components/ui/button';
 import Typography from '@/components/ui/typography';
 import { INTERVIEW_TYPE } from '@/constants/interview-constants';
-import Image from 'next/image';
-import { useState } from 'react';
-import useResumeStore from '@/features/interview/hooks/use-resume-store';
-import { postInterview } from '@/features/interview/api/client-services';
-import { useRouter } from 'next/navigation';
 import { PATH } from '@/constants/path-constant';
+import { postInterview } from '@/features/interview/api/client-services';
+import useResumeStore from '@/features/interview/hooks/use-resume-store';
 import { useInterviewStore } from '@/store/use-interview-store';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import Sunset from '@/lottie/sunset.json';
+import Pressure from '@/lottie/pressure.json';
+import LottieAnimation from '@/components/common/lottie-animation';
+import { Session } from 'next-auth';
+import { Notify } from 'notiflix';
+import { AUTH_MESSAGE } from '@/constants/message-constants';
 
 const { CALM, PRESSURE } = INTERVIEW_TYPE;
+const {
+  ERROR: { SESSION_NO_USER },
+} = AUTH_MESSAGE;
 const { LIVE } = PATH.INTERVIEW;
 
-const activeBgClass = 'outline-primary-orange-600 bg-cool-gray-10';
+const activeClass = 'border-primary-orange-600 bg-cool-gray-10 border-2 shadow-lg shadow-primary-orange-600/20';
+const deActiveClass = 'border-cool-gray-300';
 
-const SelectInterviewerBox = () => {
+type Props = {
+  session: Session | null;
+};
+
+const SelectInterviewerBox = ({ session }: Props) => {
   const [interviewType, setInterviewType] = useState<string>(CALM);
   const router = useRouter();
   const { resumeId } = useResumeStore();
   const resetQuestionIndex = useInterviewStore((state) => state.resetQuestionIndex);
 
-  {/** TODO: clay이냐 poly 타입이냐에 따라 수정해야됨 */}
-  const charterType = 'poly';
-  const imageBasePath = `/assets/character/interviewer/${charterType}-interviewer`;
-
   const handleClickSetInterviewType = async () => {
+    if (!session) {
+      Notify.warning(SESSION_NO_USER);
+      return;
+    }
     if (resumeId) {
-      const interviewId = await postInterview({ resumeId, interviewType });
-      resetQuestionIndex();
-      // 동적 라우팅 페이지 라우팅
-      router.push(`${LIVE(interviewId)}`);
+      try {
+        const interviewId = await postInterview({ resumeId, interviewType });
+        resetQuestionIndex();
+        // 동적 라우팅 페이지 라우팅
+        router.push(`${LIVE(interviewId)}`);
+      } catch (error) {
+        Notify.failure((error as Error).message);
+      }
     }
   };
-
   return (
-    <section className='flex flex-row'>
-      <aside className='mr-5 flex w-full items-start justify-start gap-5 self-stretch'>
+    <section className='flex w-full justify-center gap-5 mobile:flex-col tablet:flex-wrap'>
+      {/* desktop & tablet - 이전 w-88 h-72*/}
+      <section className='flex items-center justify-center gap-5 self-stretch mobile:hidden tablet:h-full tablet:w-full'>
         <div
           onClick={() => setInterviewType(CALM)}
-          className={`flex w-full cursor-pointer items-center justify-center self-stretch rounded-lg outline outline-1 outline-cool-gray-300 ${interviewType === CALM ? activeBgClass : ''}`}
+          className={`tablet:w-84 aspect-[6/4] cursor-pointer overflow-hidden rounded-lg border desktop:max-w-[40rem] ${interviewType === CALM ? activeClass : deActiveClass}`}
         >
-          <Image src={`${imageBasePath}-calm.png`} alt='햇살 면접관' width={220} height={220} />
+          <LottieAnimation active={interviewType === CALM} animationData={Sunset} />
         </div>
         <div
           onClick={() => setInterviewType(PRESSURE)}
-          className={`flex w-full cursor-pointer items-center justify-center self-stretch rounded-lg outline outline-1 outline-cool-gray-300 ${interviewType === PRESSURE ? activeBgClass : ''}`}
+          className={`tablet:w-84 aspect-[6/4] cursor-pointer overflow-hidden rounded-lg border desktop:max-w-[40rem] ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
         >
-          <Image src={`${imageBasePath}-pressure.png`} alt='불타는 면접관' width={220} height={220} />
+          <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure} />
         </div>
-      </aside>
-      <aside className='flex h-80 w-96 flex-shrink-0 flex-col items-center justify-center overflow-hidden rounded-lg bg-emerald-900/0 outline outline-1 outline-offset-[-1px] outline-yellow-500'>
+        <div className='hidden aspect-[6/4] w-[20rem] min-w-36 flex-col items-center justify-center self-stretch overflow-hidden rounded-lg border border-cool-gray-200 bg-cool-gray-10 desktop:flex'>
+          <div className='mb-2'>
+            <Typography as='h3' weight='bold' size='3xl' align='center'>
+              실전 면접 준비!
+            </Typography>
+          </div>
+          <div className='mb-2'>
+            <Typography color='gray-300' align='center'>
+              원하는 면접관과
+            </Typography>
+            <Typography color='gray-300' align='center'>
+              작성한 자소서를 선택한 뒤,
+            </Typography>
+            <Typography color='gray-300' align='center'>
+              면접을 시작하세요!
+            </Typography>
+          </div>
+          {resumeId && (
+            <Button onClick={handleClickSetInterviewType} fontWeight='bold'>
+              면접 시작하기
+            </Button>
+          )}
+        </div>
+      </section>
+      <section className='hidden h-48 w-full min-w-36 flex-col items-center justify-center overflow-hidden rounded-lg border border-cool-gray-200 bg-cool-gray-10 tablet:flex'>
         <div className='mb-4'>
-          {/* TODO: 이 부분은 면접관을 설명하는 부분, 추후 수정 가능 */}
+          <div className='mb-2'>
+            <Typography as='h3' weight='bold' size='3xl' align='center'>
+              실전 면접 준비!
+            </Typography>
+          </div>
+          <Typography color='gray-300' align='center'>
+            원하는 면접관과
+          </Typography>
+          <Typography color='gray-300' align='center'>
+            작성한 자소서를 선택한 뒤,
+          </Typography>
+          <Typography color='gray-300' align='center'>
+            면접을 시작하세요!
+          </Typography>
+        </div>
+        {resumeId && (
+          <Button onClick={handleClickSetInterviewType} fontWeight='bold'>
+            면접 시작하기
+          </Button>
+        )}
+      </section>
+      {/* mobile */}
+      <section className='hidden w-full flex-wrap items-center justify-center gap-5 mobile:flex'>
+        <div
+          onClick={() => setInterviewType(CALM)}
+          className={`w-54 h-36 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === CALM ? activeClass : deActiveClass}`}
+        >
+          <LottieAnimation active={interviewType === CALM} animationData={Sunset} />
+        </div>
+        <div
+          onClick={() => setInterviewType(PRESSURE)}
+          className={`w-54 h-36 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border ${interviewType === PRESSURE ? activeClass : deActiveClass}`}
+        >
+          <LottieAnimation active={interviewType === PRESSURE} animationData={Pressure} />
+        </div>
+      </section>
+      <section className='hidden w-full flex-col items-center justify-center gap-2 mobile:flex'>
+        <div className='flex flex-row'>
+          <Typography weight='black' color='primary-600'>
+            Chick Mate&nbsp;
+          </Typography>
           {interviewType === 'calm' ? (
-            <>
-              <Typography as='h3' size='3xl' weight='bold' align='center' className='mb-2'>
-                햇살 면접관
-              </Typography>
-              <Typography color='gray-300' align='center'>
-                이 면접관은 침착하고 편안한 느낌으로
-              </Typography>
-              <Typography color='gray-300' align='center'>
-                면접자를 평가합니다.
-              </Typography>
-            </>
+            <Typography weight='bold'>햇살 면접관</Typography>
           ) : (
-            <>
-              <Typography as='h3' size='3xl' weight='bold' align='center' className='mb-2'>
-                불타는 면접관
-              </Typography>
-              <Typography color='gray-300' align='center'>
-                이 면접관은 냉철하고 비판적인 사고를
-              </Typography>
-              <Typography color='gray-300' align='center'>
-                통해 면접자를 평가합니다.
-              </Typography>
-            </>
+            <Typography weight='bold'>불타는 면접관</Typography>
           )}
         </div>
         {resumeId && (
-          <Button color='dark' variant='outline' onClick={handleClickSetInterviewType}>
-            <Typography weight='bold'>면접 시작하기</Typography>
+          <Button onClick={handleClickSetInterviewType} fontWeight='bold'>
+            면접 시작하기
           </Button>
         )}
-      </aside>
+      </section>
     </section>
   );
 };

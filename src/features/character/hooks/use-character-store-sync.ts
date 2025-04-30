@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useCharacterStore } from '@/store/use-character-store';
-import { Character } from '@prisma/client';
+import type { CharacterType } from '@/types/DTO/character-dto';
 
-type Props = Character | undefined;
+type Props = CharacterType | undefined;
 
 export const useCharacterStoreSync = (characterData: Props) => {
   const setCharacterId = useCharacterStore((state) => state.setCharacterId);

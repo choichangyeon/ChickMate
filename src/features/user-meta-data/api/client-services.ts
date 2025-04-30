@@ -3,22 +3,12 @@ import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import type { UserType } from '@/types/DTO/user-dto';
 import type { UserMetaDataType } from '@/types/user-meta-data-type';
-import { MainRegion } from '@prisma/client';
+
 const {
   USER: { META_DATA },
-  REGIONS,
 } = ROUTE_HANDLER_PATH;
 const { POST } = API_METHOD;
 const { JSON_HEADER } = API_HEADER;
-
-/**
- * DB에 저장된 지역 데이터를 불러오는 함수
- * @returns 지역리스트
- */
-export const getRegions = async (): Promise<MainRegion[]> => {
-  const regions = await fetchWithSentry(REGIONS);
-  return regions;
-};
 
 /**
  * user의 meta data를 받아오는 함수

@@ -5,6 +5,7 @@ export const PATH = {
   AUTH: {
     SIGN_IN: '/auth/sign-in',
     SIGN_UP: '/auth/sign-up',
+    SIGN_IN_WITH_PREV_URL: (prevPath: string) => `/auth/sign-in?prevUrl=${prevPath}`,
     CHARACTER: '/auth/character',
   },
   ON_BOARDING: '/on-boarding',
@@ -16,6 +17,7 @@ export const PATH = {
   INTERVIEW: {
     ROOT: '/interview',
     START: '/interview/start',
+    LIVE_ROOT: '/interview/live',
     LIVE: (id: number) => `/interview/live/${id}`,
   },
   JOB: '/job',
@@ -35,6 +37,10 @@ export const ROUTE_HANDLER_PATH = {
     INTERVIEW_LIVE: (id: number) => `/api/ai/interview/${id}`,
     FEEDBACK: '/api/ai/feedback',
   },
+  INTERVIEW_HISTORY: {
+    ROOT: '/api/interview-history',
+    DETAIL: (userId: User['id']) => `/api/interview-history/${userId}`,
+  },
   RESUME: {
     ROOT: '/api/resume',
     DETAIL: (id: number) => `/api/resume/${id}`,
@@ -49,7 +55,6 @@ export const ROUTE_HANDLER_PATH = {
     INTERVIEW_HISTORY: '/api/interview-history',
     INTERVIEW_DETAIL: (id: number) => `/api/ai/interview/${id}`,
   },
-  REGIONS: '/api/regions',
   JOB: {
     POSTING: '/api/job/posting',
     BOOKMARK: '/api/job/bookmark',

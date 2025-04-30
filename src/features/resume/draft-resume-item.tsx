@@ -13,17 +13,19 @@ const DraftResumeItem = ({ resume, onDeleteClick, onDraftResumeClick }: Props) =
   const { id, title, createdAt } = resume;
 
   return (
-    <li className='flex flex-col'>
+    <li className='flex flex-col truncate'>
       <div className='flex justify-between'>
-        <Typography color='gray-500'>{formatDate({ input: createdAt })}</Typography>
+        <Typography color='gray-500'>
+          <span className='mobile:text-sm'>{formatDate({ input: createdAt })}</span>
+        </Typography>
         <button aria-label={`${title} 임시저장 자소서 삭제`} onClick={() => onDeleteClick(id)}>
-          <Trash />
+          <Trash className='mobile:h-4 mobile:w-4' />
         </button>
       </div>
       <button
         aria-label={`${title} 임시저장 자소서 불러오기`}
         onClick={() => onDraftResumeClick(resume)}
-        className='w-fit font-bold text-cool-gray-900'
+        className='w-fit font-bold text-cool-gray-900 mobile:text-sm'
       >
         {title}
       </button>

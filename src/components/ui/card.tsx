@@ -12,18 +12,17 @@ type Props = {
  */
 const Card = ({ children, className, onClick }: Props) => {
   return (
-    <section className={clsx(cardClassName, className)} onClick={onClick}>
+    <li className={clsx(cardClassName, className)} onClick={onClick}>
       {/* content area */}
       <div className={contentClassName}>{children}</div>
-    </section>
+    </li>
   );
 };
 
 export default Card;
-//TODO: bg-emerald-900/0 -> color 수정, outline-gray-200 -> color 수정
 const cardClassName = clsx(
-  'relative flex-shrink-0 items-start justify-between rounded-lg bg-emerald-900/0 outline outline-1 outline-offset-[-1px] outline-gray-200',
-  'min-w-[380px] min-h-[180px] p-6'
+  'relative flex-shrink-0 items-start justify-between rounded-lg bg-cool-gray-10 border border-1 border-cool-gray-200 list-none',
+  'min-w-[320px] min-h-[180px] p-6'
 );
 
-const contentClassName = clsx('flex h-full flex-col justify-between');
+const contentClassName = clsx('flex h-full w-full flex-col justify-between');

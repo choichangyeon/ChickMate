@@ -1,21 +1,23 @@
 'use client';
 
 import { TABS } from '@/constants/my-page-constants';
-import { useTabStore } from '@/store/use-tab-store';
-import InterviewHistoryList from '@/features/interview-history/interview-history-list';
 import BookmarkSelectedList from '@/features/bookmark-selected/bookmark-selected-list';
+import InterviewHistoryList from '@/features/interview-history/interview-history-list';
 import ResumeList from '@/features/resume-list/resume-list';
+import { useSearchParams } from 'next/navigation';
 
-const { HISTORY, BOOKMARK, RESUME } = TABS;
+const { INTERVIEW_HISTORY_TAB, BOOKMARK_TAB, RESUME_TAB } = TABS;
 
 const ListByTab = () => {
-  const { tab } = useTabStore();
-  switch (tab) {
-    case HISTORY:
+  const searchParams = useSearchParams();
+  const currentTab = searchParams.get('tab') ?? INTERVIEW_HISTORY_TAB;
+
+  switch (currentTab) {
+    case INTERVIEW_HISTORY_TAB:
       return <InterviewHistoryList />;
-    case BOOKMARK:
+    case BOOKMARK_TAB:
       return <BookmarkSelectedList />;
-    case RESUME:
+    case RESUME_TAB:
       return <ResumeList />;
     default:
       <InterviewHistoryList />;

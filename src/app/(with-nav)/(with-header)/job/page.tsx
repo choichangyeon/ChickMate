@@ -1,33 +1,38 @@
+import Typography from '@/components/ui/typography';
+import JobPostingSection from '@/features/job/job-posting-section';
+import SaraminButton from '@/features/job/saramin-button';
 import { authOptions } from '@/utils/auth-option';
 import { getServerSession } from 'next-auth';
-import Typography from '@/components/ui/typography';
-import Button from '@/components/ui/button';
-import JobPostingSection from '@/features/job/job-posting-section';
-
-const SARAMIN_URL = 'http://www.saramin.co.kr';
 
 const JobPage = async () => {
   const session = await getServerSession(authOptions);
 
   return (
-    <div className='flex h-full flex-col'>
-      <section className='mb-4'>
-        <Typography color='primary-600' as='h1' size='3xl' weight='bold'>
-          맞춤형
-          <span className='text-cool-gray-900'> 채용공고</span>
-        </Typography>
-        <Typography color='gray-500' size='xl'>
-          프로필에 작성된 정보를 통해 맞춤형 채용공고를 추천해드립니다
-        </Typography>
-      </section>
-      <div className='text-right'>
-        <Button link href={SARAMIN_URL} target='_blank'>
-          데이터 출처: 취업 사람인
-        </Button>
+    <article className='flex h-full flex-col'>
+      <div className='mb-4 flex justify-between'>
+        <div className='mobile:w-full'>
+          <Typography
+            as='h2'
+            className='text-3xl font-bold text-primary-orange-600 mobile:hidden mobile:text-xl tablet:text-2xl'
+          >
+            맞춤형
+            <span className='text-cool-gray-900'> 채용공고</span>
+          </Typography>
+          <Typography as='h3' className='text-xl text-cool-gray-500 mobile:text-center mobile:text-base'>
+            프로필에 작성된 정보를 통해
+            <span className='mobile:block'>
+              <strong className='mobile:text-primary-orange-600'>맞춤형 채용공고</strong>를 추천해드립니다
+            </span>
+          </Typography>
+        </div>
+
+        <div className='hidden desktop:block'>
+          <SaraminButton />
+        </div>
       </div>
 
       <JobPostingSection session={session} />
-    </div>
+    </article>
   );
 };
 

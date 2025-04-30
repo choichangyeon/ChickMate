@@ -9,13 +9,14 @@ import QuestionAnswerField from '@/features/resume/question-answer-field';
 import DraftResumesModal from '@/features/resume/draft-resumes-modal';
 import ResumeFormActionButton from '@/features/resume/resume-form-action-button';
 import type { Field } from '@/types/resume';
-import type { Resume } from '@prisma/client';
-
-const { DRAFT_RESUME } = MODAL_ID;
+import type { ResumeType } from '@/types/DTO/resume-dto';
 
 type Props = {
-  resume?: Resume;
+  resume?: ResumeType;
 };
+
+const { DRAFT_RESUME } = MODAL_ID;
+const MAX_RESIME_FIELD_COUNT = 5;
 
 const ResumeForm = ({ resume }: Props) => {
   const toggleModal = useModalStore((state) => state.toggleModal);
@@ -25,6 +26,7 @@ const ResumeForm = ({ resume }: Props) => {
   const {
     title,
     fieldList,
+    fieldListLen,
     autoSaveStatus,
     resumeId,
     setTitle,
@@ -45,7 +47,7 @@ const ResumeForm = ({ resume }: Props) => {
     refetch();
   };
 
-  const handleLoadDraft = (resume: Resume) => {
+  const handleLoadDraft = (resume: ResumeType) => {
     const { id, title, content } = resume;
 
     setTitle(title);
@@ -60,46 +62,53 @@ const ResumeForm = ({ resume }: Props) => {
 
   /** UI */
   return (
-    <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-      <div className='relative w-full'>
+    <form onSubmit={handleSubmit} className='flex flex-1 flex-col gap-4 pb-[50px]'>
+      {/* 상단 고정 영역 */}
+      <div className='relative w-full shrink-0'>
         <input
           type='text'
           value={title}
           onChange={handleTitleChange}
-          placeholder='자소서 제목을 작성해주세요.'
+          placeholder='자소서 제목을 작성해 주세요.'
           required
-          className='h-[64px] w-full rounded-lg border border-cool-gray-200 px-8 py-4 pr-52 text-xl font-bold placeholder-cool-gray-300 focus:outline-none'
+          className='h-[64px] w-full rounded-lg border border-cool-gray-200 px-8 py-4 pr-52 text-xl font-bold placeholder-cool-gray-300 focus:outline-none mobile:pr-32 mobile:text-lg'
         />
-        <button
-          type='button'
-          onClick={handleAddField}
-          className='absolute right-4 top-1/2 w-[174px] -translate-y-1/2 rounded-3xl border border-cool-gray-900 bg-transparent px-5 py-1 font-bold text-cool-gray-900'
-        >
-          질문 추가 +
-        </button>
+        {fieldListLen < MAX_RESIME_FIELD_COUNT && (
+          <button
+            type='button'
+            onClick={handleAddField}
+            className='button-hover-focus absolute right-4 top-1/2 w-[174px] -translate-y-1/2 rounded-3xl border border-cool-gray-900 bg-transparent px-5 py-1 font-bold text-cool-gray-900 mobile:w-[100px] mobile:px-1 mobile:text-sm'
+          >
+            질문 추가 +
+          </button>
+        )}
       </div>
 
-      {fieldList.map((field, idx) => {
-        return (
+      {/* 중간 스크롤 영역 */}
+      <div className='flex max-h-[467px] flex-1 flex-col gap-2 overflow-y-auto scrollbar-hide'>
+        {fieldList.map((field, idx) => (
           <QuestionAnswerField
             key={field.id}
             field={field}
+            fieldListLen={fieldListLen}
             idx={idx}
             onChange={handleFieldChange}
             onDelete={handleDeleteField}
           />
-        );
-      })}
+        ))}
+      </div>
 
-      {/** 버튼 */}
-      <ResumeFormActionButton
-        resume={resume}
-        draftResumeList={draftResumeList}
-        autoSaveStatus={autoSaveStatus}
-        onClick={handleDraftResumeListClick}
-      />
+      {/* 하단 고정 영역 */}
+      <div className='shrink-0'>
+        <ResumeFormActionButton
+          resume={resume}
+          draftResumeList={draftResumeList}
+          autoSaveStatus={autoSaveStatus}
+          onClick={handleDraftResumeListClick}
+        />
+      </div>
 
-      {/** 모달 */}
+      {/* 모달 */}
       {isModalOpen && (
         <DraftResumesModal
           draftResumeList={draftResumeList}

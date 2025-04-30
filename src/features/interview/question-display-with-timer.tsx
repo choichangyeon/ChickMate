@@ -3,10 +3,10 @@
 import Timer from '@/features/interview/timer';
 import { useAudioWithTimer } from '@/features/interview/hooks/use-audio-with-timer';
 import QuestionDisplay from '@/features/interview/question-display';
-import { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
-import { InterviewQnAType } from '@/types/DTO/interview-qna-dto';
-import LoadingSpinner from '@/components/ui/loading-spinner';
+import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
+import type { InterviewQnAType } from '@/types/DTO/interview-qna-dto';
 import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
+import LoadingAnimation from '@/components/common/loading-animation';
 
 const MINUTES_IN_MS = 1 * 60 * 1000;
 const { IN_PROGRESS } = INTERVIEW_HISTORY_STATUS;
@@ -22,7 +22,6 @@ const QuestionDisplayWithTimer = ({ interviewHistory, interviewQnAList }: Props)
     useAudioWithTimer({ duration: MINUTES_IN_MS, interviewHistory });
 
   let lastQuestion = interviewQnAList.at(CHECK_LAST_INDEX)?.question;
-
   if (interviewQnAList.at(CHECK_LAST_INDEX)?.answer) {
     lastQuestion = null;
   }
@@ -30,22 +29,35 @@ const QuestionDisplayWithTimer = ({ interviewHistory, interviewQnAList }: Props)
   if (!interviewQnAList && interviewHistory.status === IN_PROGRESS) {
     return (
       <section className='mt-20 flex items-center justify-center'>
-        <LoadingSpinner />
+        <LoadingAnimation />
       </section>
     );
   }
 
   return (
-    <section className='flex gap-5'>
-      <QuestionDisplay interviewHistory={interviewHistory} aiQuestion={aiQuestion || lastQuestion || '대기 중...'} />
-      <Timer
-        interviewHistory={interviewHistory}
-        isRecording={isRecording}
-        isAIVoicePlaying={isAIVoicePlaying}
-        formattedTime={formattedTime}
-        startRecordingWithTimer={startRecordingWithTimer}
-        stopRecordingWithTimer={stopRecordingWithTimer}
-      />
+    <section className='mobile:mb-2 mobile:pb-[56px]'>
+      <div className='flex gap-5 mobile:hidden'>
+        <QuestionDisplay interviewHistory={interviewHistory} aiQuestion={aiQuestion || lastQuestion || '대기 중...'} />
+        <Timer
+          interviewHistory={interviewHistory}
+          isRecording={isRecording}
+          isAIVoicePlaying={isAIVoicePlaying}
+          formattedTime={formattedTime}
+          startRecordingWithTimer={startRecordingWithTimer}
+          stopRecordingWithTimer={stopRecordingWithTimer}
+        />
+      </div>
+      <div className='mb-2 hidden flex-wrap gap-5 mobile:flex'>
+        <Timer
+          interviewHistory={interviewHistory}
+          isRecording={isRecording}
+          isAIVoicePlaying={isAIVoicePlaying}
+          formattedTime={formattedTime}
+          startRecordingWithTimer={startRecordingWithTimer}
+          stopRecordingWithTimer={stopRecordingWithTimer}
+        />
+        <QuestionDisplay interviewHistory={interviewHistory} aiQuestion={aiQuestion || lastQuestion || '대기 중...'} />
+      </div>
     </section>
   );
 };

@@ -2,13 +2,15 @@
 
 import Typography from '@/components/ui/typography';
 import { formatDate } from '@/utils/format-date';
-import { Character, CharacterHistory } from '@prisma/client';
 import { useCharacterHistoryInfiniteQuery } from '@/features/character/hooks/use-character-history-infinite-query';
 import { useInfiniteScroll } from '@/hooks/customs/use-infinite-scroll';
-import LoadingSpinner from '@/components/ui/loading-spinner';
+import type { CharacterType } from '@/types/DTO/character-dto';
+import type { CharacterHistoryType } from '@/types/DTO/character-history-dto';
+import LoadingAnimation from '@/components/common/loading-animation';
+import ErrorComponent from '@/components/common/error-component';
 
 type Props = {
-  characterData: Character;
+  characterData: CharacterType;
 };
 
 const CharacterHistoryList = ({ characterData }: Props) => {
@@ -24,15 +26,15 @@ const CharacterHistoryList = ({ characterData }: Props) => {
   if (isPending)
     return (
       <div className='flex h-[297px] items-center justify-center'>
-        <LoadingSpinner />
+        <LoadingAnimation />
       </div>
     );
-  if (isError) return <div>에러 발생</div>;
+  if (isError) return <ErrorComponent />;
 
   const characterHistories = data.pages.flatMap((page) => page.histories);
 
   return (
-    <div className='flex h-[297px] w-full flex-col gap-4'>
+    <div className='flex h-[330px] w-full flex-col gap-4'>
       <div className='flex h-full flex-col gap-4 overflow-y-auto scroll-smooth pr-2 scrollbar-hide'>
         {characterHistories.length === 0 ? (
           <div className='flex h-full flex-col items-center justify-center'>
@@ -43,8 +45,8 @@ const CharacterHistoryList = ({ characterData }: Props) => {
           </div>
         ) : (
           <>
-            <ul className='flex flex-col gap-4'>
-              {characterHistories.map((history: CharacterHistory) => (
+            <ul className='flex h-full flex-col gap-4'>
+              {characterHistories.map((history: CharacterHistoryType) => (
                 <li key={history.id} className='flex w-full items-end justify-between'>
                   <div className='flex flex-col justify-end'>
                     <Typography size='sm' color='gray-500'>

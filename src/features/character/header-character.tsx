@@ -1,10 +1,10 @@
 'use client';
 
+import { Session } from 'next-auth';
+import { CHARACTER_MESSAGE } from '@/constants/message-constants';
 import { useGetCharacterQuery } from '@/features/character/hooks/use-get-character-query';
 import { useCharacterStoreSync } from '@/features/character/hooks/use-character-store-sync';
 import HeaderCharacterCard from '@/features/character/header-character-card';
-import { Session } from 'next-auth';
-import { CHARACTER_MESSAGE } from '@/constants/message-constants';
 
 type Props = {
   session: Session | null;

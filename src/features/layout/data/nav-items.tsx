@@ -21,14 +21,14 @@ export type NavItems = {
 
 const { ON_BOARDING, AUTH, MY_PAGE, RESUME, INTERVIEW, JOB } = PATH;
 
-export const Private_Nav_Items: NavItems[] = [
+const Nav_Items = [
   {
     path: RESUME.ROOT,
     type: 'link',
     name: '자소서',
     icon: <ResumeIcon />,
     fullIcon: <ResumeFullIcon />,
-    class: 'mb-2',
+    class: 'mb-2 mobile:m-0',
   },
   {
     path: INTERVIEW.START,
@@ -36,7 +36,7 @@ export const Private_Nav_Items: NavItems[] = [
     name: 'AI 면접',
     icon: <InterviewIcon />,
     fullIcon: <InterviewFullIcon />,
-    class: 'mb-2',
+    class: 'mb-2 mobile:m-0',
   },
   {
     path: JOB,
@@ -44,9 +44,8 @@ export const Private_Nav_Items: NavItems[] = [
     name: '맞춤 채용 공고',
     icon: <JobIcon />,
     fullIcon: <JobFullIcon />,
-    class: 'mb-2',
+    class: 'mb-2 mobile:m-0',
   },
-
   {
     path: MY_PAGE,
     type: 'link',
@@ -54,21 +53,26 @@ export const Private_Nav_Items: NavItems[] = [
     icon: <MyPageIcon />,
     fullIcon: <MyPageFullIcon />,
   },
+] as const;
+
+export const Private_Nav_Items: NavItems[] = [
+  ...Nav_Items,
   {
     path: ON_BOARDING,
     type: 'button',
     name: '로그아웃',
-    class: 'mt-auto',
+    class: 'mt-auto mobile:m-0 h-[36px]',
     icon: <LogoutIcon />,
   },
 ];
 
 export const Public_Nav_Items: NavItems[] = [
+  ...Nav_Items,
   {
     path: AUTH.SIGN_IN,
     name: '로그인',
     type: 'link',
+    class: 'mt-auto mobile:m-0',
     icon: <SignInIcon />,
-    class: 'mb-2',
   },
 ];

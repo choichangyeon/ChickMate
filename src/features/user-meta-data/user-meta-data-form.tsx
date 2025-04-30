@@ -1,18 +1,17 @@
 'use client';
+import clsx from 'clsx';
 import { useSession } from 'next-auth/react';
-import { academicData, jobData, typeData } from '@/features/user-meta-data/data/user-meta-data';
-import useRegionsQuery from '@/features/user-meta-data/hooks/use-regions-query';
-import SingleSelectField from '@/features/user-meta-data/single-select-field';
+import { academicData, jobData, regions, typeData } from '@/features/user-meta-data/data/user-meta-data';
 import { useMetaDataForm } from '@/features/user-meta-data/hooks/use-meta-data-form';
+import SelectField from '@/features/user-meta-data/select-field';
 import ErrorComponent from '@/components/common/error-component';
 import Button from '@/components/ui/button';
-import LoadingSpinner from '@/components/ui/loading-spinner';
+import { EXPERIENCE_AMOUNT } from '@/constants/character-constants';
+import LoadingAnimation from '@/components/common/loading-animation';
 import { USER_META_DATA_KEY } from '@/constants/user-meta-data-constants';
-import { CHARACTER_HISTORY, CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 
 const { EXPERIENCE_NAME, REQUIRED_EDUCATION_NAME, JOB_MID_CODE_NAME, LOCATION_NAME, ETC } = USER_META_DATA_KEY;
-const { FILL_OUT_META_DATA } = CHARACTER_HISTORY_KEY;
-const EXP = CHARACTER_HISTORY[FILL_OUT_META_DATA].amount;
+const { FILL_OUT_META_DATA_EXP } = EXPERIENCE_AMOUNT;
 
 const UserMetaDataForm = () => {
   const { data } = useSession();
@@ -20,38 +19,36 @@ const UserMetaDataForm = () => {
 
   if (!userId) return <ErrorComponent />;
 
-  const { watch, register, errors, handleSubmit, handleOnSubmit, handleSelect, isMetaDataPending, isFirstTime } =
+  const { watch, register, errors, handleSubmit, handleOnSubmit, handleSelect, isPending, isFirstTime } =
     useMetaDataForm(userId);
 
-  const { data: regions = [], isPending } = useRegionsQuery();
-
-  if (isPending || isMetaDataPending) return <LoadingSpinner />;
+  if (isPending) return <LoadingAnimation />;
 
   return (
-    <div>
+    <div className={clsx('mobile:mt-4 mt-10', isFirstTime && 'mt-0')}>
       {isFirstTime && (
         <span className='mb-4 block text-center font-bold text-primary-orange-600'>
-          작성 완료 시 {EXP} 경험치 획득!
+          작성 완료 시 {FILL_OUT_META_DATA_EXP} 경험치 획득!
         </span>
       )}
       <form onSubmit={handleSubmit(handleOnSubmit)}>
-        <SingleSelectField
-          label='*경력'
+        <SelectField
+          label='*관련 경력'
           options={typeData}
           value={watch(EXPERIENCE_NAME)}
           fieldKey={EXPERIENCE_NAME}
           onSelect={handleSelect}
           error={errors[EXPERIENCE_NAME]?.message}
         />
-        <SingleSelectField
-          label='*학력'
+        <SelectField
+          label='*최종 학력'
           options={academicData}
           value={watch(REQUIRED_EDUCATION_NAME)}
           fieldKey={REQUIRED_EDUCATION_NAME}
           onSelect={handleSelect}
           error={errors[REQUIRED_EDUCATION_NAME]?.message}
         />
-        <SingleSelectField
+        <SelectField
           label='*직무'
           options={jobData}
           value={watch(JOB_MID_CODE_NAME)}
@@ -59,8 +56,8 @@ const UserMetaDataForm = () => {
           onSelect={handleSelect}
           error={errors[JOB_MID_CODE_NAME]?.message}
         />
-        <SingleSelectField
-          label='*지역'
+        <SelectField
+          label='*희망 근무 지역'
           options={regions}
           value={watch(LOCATION_NAME)}
           fieldKey={LOCATION_NAME}
@@ -77,9 +74,10 @@ const UserMetaDataForm = () => {
             {...register(ETC)}
           />
         </div>
+
         <div className='text-center'>
-          <Button variant='outline' color='dark' type='submit'>
-            <span className='font-bold'>설정을 완료헀어요!</span>
+          <Button type='submit' fontWeight='bold'>
+            설정을 완료헀어요!
           </Button>
         </div>
       </form>

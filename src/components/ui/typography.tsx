@@ -42,6 +42,10 @@ const typographyVariant = cva('', {
       '3': 'line-clamp-3',
       '4': 'line-clamp-4',
     },
+    srOnly: {
+      true: 'sr-only',
+      false: '',
+    },
   },
   defaultVariants: {
     size: 'md',
@@ -51,7 +55,7 @@ const typographyVariant = cva('', {
   },
 });
 
-type AllowedTags = 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+type AllowedTags = 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
 type TypographyProps<T extends AllowedTags = 'p'> = {
   as?: T;
@@ -67,9 +71,15 @@ const Typography = <T extends AllowedTags = 'p'>({
   align,
   lineClamp,
   children,
+  srOnly,
+  ...props
 }: TypographyProps<T>) => {
   const Component = as || 'p';
-  return <Component className={typographyVariant({ size, color, weight, align, lineClamp })}>{children}</Component>;
+  return (
+    <Component className={typographyVariant({ size, color, weight, align, lineClamp, srOnly })} {...props}>
+      {children}
+    </Component>
+  );
 };
 
 export default Typography;

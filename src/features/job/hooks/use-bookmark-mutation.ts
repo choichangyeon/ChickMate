@@ -3,7 +3,7 @@ import { postBookmarkWithJobPostingId } from '@/features/job/api/client-services
 import { QUERY_KEY } from '@/constants/query-key';
 import type { JobPostingType } from '@/types/DTO/job-posting-dto';
 
-const { JOB_POSTING, TABS_COUNT } = QUERY_KEY;
+const { JOB_POSTING, TABS_COUNT, BOOKMARK } = QUERY_KEY;
 
 type Props = {
   jobPostingId: number;
@@ -35,17 +35,16 @@ export const useBookmarkMutation = ({ jobPostingId, userId }: Props) => {
 
       return { previousJobPostings };
     },
-
     onError: (error, isBookmarked, context) => {
       if (context?.previousJobPostings) {
         queryClient.setQueryData([JOB_POSTING, userId], context.previousJobPostings);
       }
       throw error;
     },
-
     onSettled: () => {
       if (userId) {
         queryClient.invalidateQueries({ queryKey: [JOB_POSTING, userId] });
+        queryClient.invalidateQueries({ queryKey: [BOOKMARK, userId] });
         queryClient.invalidateQueries({ queryKey: [TABS_COUNT] });
       }
     },

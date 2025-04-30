@@ -1,34 +1,39 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Notify } from 'notiflix';
-import { PATH } from '@/constants/path-constant';
-import { DELAY_TIME } from '@/constants/time-constants';
-import { AUTO_SAVE_STATUS } from '@/constants/resume-constants';
+import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
 import { RESUME_MESSAGE } from '@/constants/message-constants';
-import useDebounce from '@/hooks/customs/use-debounce';
-import { autoSaveResume, getCheckToGetEXP } from '@/features/resume/api/client-services';
-import { usePreventPageUnload } from '@/features/resume/hooks/use-prevent-page-load';
-import { useCharacterStore } from '@/store/use-character-store';
+import { TABS } from '@/constants/my-page-constants';
+import { AUTO_SAVE_STATUS } from '@/constants/resume-constants';
+import { DELAY_TIME } from '@/constants/time-constants';
 import { useExperienceUp } from '@/features/character/hooks/use-experience-up';
+import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
+import { autoSaveResume, getCheckToGetEXP } from '@/features/resume/api/client-services';
 import { defaultQuestionList } from '@/features/resume/data/default-question-list';
 import { useAddResumeMutation } from '@/features/resume/hooks/use-add-resume-mutation';
-import { CHARACTER_HISTORY_KEY } from '@/constants/character-constants';
+import { usePreventPageUnload } from '@/features/resume/hooks/use-prevent-page-load';
+import useDebounce from '@/hooks/customs/use-debounce';
+import { useCharacterStore } from '@/store/use-character-store';
+import type { ResumeType } from '@/types/DTO/resume-dto';
 import type { Field } from '@/types/resume';
-import type { Resume } from '@prisma/client';
+import { getErrorMessage } from '@/utils/get-error-message';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { Notify } from 'notiflix';
+import { useEffect, useState } from 'react';
 
-const { MY_PAGE } = PATH;
 const { DEFAULT } = DELAY_TIME;
 const { SAVING, SAVED } = AUTO_SAVE_STATUS;
 const { RESUME_SUBMISSION } = CHARACTER_HISTORY_KEY;
-const { LIMIT } = RESUME_MESSAGE;
+const { RESUME_TAB } = TABS;
 
-export const useResumeForm = (resume?: Resume) => {
+export const useResumeForm = (resume?: ResumeType) => {
+  const session = useSession();
+  const userId = session.data?.user?.id ?? null;
   const router = useRouter();
   const characterId = useCharacterStore((state) => state.characterId);
+
   const { handleExperienceUp } = useExperienceUp();
 
-  const { mutateAsync: addResumeMutateAsync } = useAddResumeMutation();
+  const { mutateAsync: addResumeMutateAsync } = useAddResumeMutation(userId!);
 
   /** state */
   const [isDirty, setIsDirty] = useState<boolean>(false);
@@ -36,6 +41,10 @@ export const useResumeForm = (resume?: Resume) => {
   const [fieldList, setFieldList] = useState<Field[]>((resume?.content as Field[]) || defaultQuestionList);
   const [resumeId, setResumeId] = useState<number | null>(resume?.id || null);
   const [autoSaveStatus, setAutoSaveStatus] = useState<string>(SAVING);
+
+  const {
+    SUBMIT: { SUCCESS_WITH_EXP, SUCCESS },
+  } = RESUME_MESSAGE;
 
   /** function */
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLInputElement>) => {
@@ -46,25 +55,20 @@ export const useResumeForm = (resume?: Resume) => {
 
   const handleFieldChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const { id, name, value } = event.target;
-    setFieldList((prev) => prev.map((field) => (field.id === id ? { ...field, [name]: value } : field)));
+    const [, ...realId] = id.split('-');
+
+    setFieldList((prev) => prev.map((field) => (field.id === realId.join('-') ? { ...field, [name]: value } : field)));
     setIsDirty(true);
     setAutoSaveStatus(SAVING);
   };
 
-  const handleAddField = () => {
-    if (fieldList.length >= 5) {
-      Notify.warning(LIMIT.MAX_RESUME_FIELD);
-      return;
-    }
+  const handleAddField = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.currentTarget.blur();
     setFieldList((prev) => [...prev, { id: crypto.randomUUID(), question: '', answer: '' }]);
     setAutoSaveStatus(SAVING);
   };
 
   const handleDeleteField = (fieldId: string) => {
-    if (fieldList.length <= 1) {
-      Notify.warning(LIMIT.MIN_RESUME_FIELD);
-      return;
-    }
     setFieldList((prev) => prev.filter((field) => field.id !== fieldId));
     setAutoSaveStatus(SAVING);
   };
@@ -82,18 +86,10 @@ export const useResumeForm = (resume?: Resume) => {
         if (isAbleToGetEXP) handleExperienceUp(RESUME_SUBMISSION);
       }
 
-      // 수정해야되는 alert창
-      alert(
-        isReqExp && isAbleToGetEXP
-          ? `경험치 획득 완료!\n자기소개서 작성이 완료되었습니다.`
-          : '자기소개서 작성이 완료되었습니다.'
-      );
-
-      router.push(MY_PAGE);
+      Notify.success(isReqExp && isAbleToGetEXP ? SUCCESS_WITH_EXP : SUCCESS);
+      router.push(getMyPagePath(RESUME_TAB));
     } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
+      Notify.warning(getErrorMessage(error));
     }
   };
 
@@ -117,9 +113,12 @@ export const useResumeForm = (resume?: Resume) => {
     });
   }, [debouncedTitle, debouncedFieldList]);
 
+  const fieldListLen = fieldList.length;
+
   return {
     title,
     fieldList,
+    fieldListLen,
     autoSaveStatus,
     resumeId,
     setTitle,

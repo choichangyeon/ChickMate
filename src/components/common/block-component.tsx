@@ -1,6 +1,9 @@
+'use client';
+
 import clsx from 'clsx';
-import Typography from '@/components/ui/typography';
 import Button from '@/components/ui/button';
+import LinkButton from '@/components/ui/link-button';
+import Typography from '@/components/ui/typography';
 
 type Props = {
   className?: string;
@@ -18,7 +21,7 @@ const BlockComponent = (props: Props) => {
   const { className, firstLine, secondLine, thirdLine, buttonName, href, onClick } = props;
   return (
     <section className={clsx(className, defaultClassName)}>
-      <div className='flex flex-col items-center justify-center'>
+      <div className='flex flex-col items-center justify-center whitespace-nowrap'>
         <Typography color='primary-600' weight='bold'>
           {firstLine}
         </Typography>
@@ -27,19 +30,30 @@ const BlockComponent = (props: Props) => {
         </Typography>
         <Typography size='sm'>{thirdLine}</Typography>
       </div>
-      {buttonName ? (
-        href ? (
-          <Button variant='outline' color='dark' link href={href}>
-            <Typography weight='bold'>{buttonName}</Typography>
-          </Button>
-        ) : (
-          <Button variant='outline' color='dark' onClick={onClick}>
-            <Typography weight='bold'>{buttonName}</Typography>
-          </Button>
-        )
-      ) : null}
+      {buttonName && <RenderComponent onClick={onClick} buttonName={buttonName} href={href} />}
     </section>
   );
 };
 
 export default BlockComponent;
+
+type RenderComponentProps = {
+  onClick?: Props['onClick'];
+  buttonName?: Props['buttonName'];
+  href?: Props['href'];
+};
+const RenderComponent = ({ onClick, buttonName, href }: RenderComponentProps) => {
+  if (href)
+    return (
+      <LinkButton href={href} fontWeight='bold'>
+        {buttonName}
+      </LinkButton>
+    );
+
+  if (onClick)
+    return (
+      <Button onClick={onClick} fontWeight='bold'>
+        {buttonName}
+      </Button>
+    );
+};

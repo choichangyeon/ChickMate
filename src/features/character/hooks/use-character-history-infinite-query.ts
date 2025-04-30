@@ -1,9 +1,9 @@
-import { Character } from '@prisma/client';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getCharacterHistories } from '@/features/character/api/client-services';
 import { QUERY_KEY } from '@/constants/query-key';
+import type { CharacterType } from '@/types/DTO/character-dto';
 
-type Props = Character['id'];
+type Props = CharacterType['id'];
 
 const ITEMS_PER_PAGE = 5;
 const { CHARACTER_HISTORIES } = QUERY_KEY;

@@ -1,13 +1,14 @@
-import { prisma } from '@/lib/prisma';
-import type { User } from '@prisma/client';
+import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
+import { INIT_TAB_COUNTS, TABS } from '@/constants/my-page-constants';
+import { RESUME_STATUS } from '@/constants/resume-constants';
 import ListByTab from '@/features/my-page/list-by-tab';
 import TabButtons from '@/features/my-page/tab-buttons';
-import { INIT_TAB_COUNTS } from '@/constants/my-page-constants';
-import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
-import { RESUME_STATUS } from '@/constants/resume-constants';
+import { prisma } from '@/lib/prisma';
+import type { User } from '@prisma/client';
 
 const { COMPLETED } = INTERVIEW_HISTORY_STATUS;
 const { SUBMIT } = RESUME_STATUS;
+const { INTERVIEW_HISTORY_TAB, BOOKMARK_TAB, RESUME_TAB } = TABS;
 type Props = {
   userId: User['id'];
 };
@@ -17,17 +18,17 @@ const TabsField = async ({ userId }: Props) => {
     select: {
       _count: {
         select: {
-          resumes: {
+          [RESUME_TAB]: {
             where: {
               status: SUBMIT,
             },
           },
-          interviewHistories: {
+          [INTERVIEW_HISTORY_TAB]: {
             where: {
               status: COMPLETED,
             },
           },
-          userSelectedJobs: true,
+          [BOOKMARK_TAB]: true,
         },
       },
     },
@@ -36,9 +37,9 @@ const TabsField = async ({ userId }: Props) => {
   const initialTabCounts = result?._count ?? INIT_TAB_COUNTS;
 
   return (
-    <section className='h-[80dvh] max-h-[643px] w-1/2 max-w-[634px] overflow-hidden rounded-t-[8px] border bg-cool-gray-10'>
+    <section className='w-full overflow-hidden rounded-t-[8px] border desktop:w-1/2 desktop:min-w-[440px] desktop:max-w-[634px]'>
       <TabButtons userId={userId} initialTabCounts={initialTabCounts} />
-      <div className='h-full max-h-[595px] p-8'>
+      <div className='h-full p-8 mobile:p-4'>
         <ListByTab />
       </div>
     </section>

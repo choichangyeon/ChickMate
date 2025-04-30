@@ -1,12 +1,12 @@
+import { prisma } from '@/lib/prisma';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import GoogleProvider from 'next-auth/providers/google';
-import { prisma } from '@/lib/prisma';
-import type { NextAuthOptions } from 'next-auth';
 import NaverProvider from 'next-auth/providers/naver';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { ENV } from '@/constants/env-constants';
+import type { NextAuthOptions } from 'next-auth';
 
 const { POST } = API_METHOD;
 const { JSON_HEADER } = API_HEADER;
@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
       },
 
       async authorize(credentials, req) {
-        const res = await fetch(`${BASE_URL}/${SIGN_IN}`, {
+        const response = await fetch(`${BASE_URL}/${SIGN_IN}`, {
           method: POST,
           headers: JSON_HEADER,
           body: JSON.stringify({
@@ -42,9 +42,10 @@ export const authOptions: NextAuthOptions = {
             password: credentials?.password,
           }),
         });
-        const user = await res.json();
 
-        if (res.ok && user) {
+        const user = await response.json();
+
+        if (response.ok && user) {
           return { ...user };
         } else {
           return null;

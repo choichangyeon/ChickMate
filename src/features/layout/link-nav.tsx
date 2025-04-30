@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import type { NavItems } from '@/features/layout/data/nav-items';
-import { Dispatch, SetStateAction } from 'react';
 import { usePathname } from 'next/navigation';
 
 type Props = {
@@ -11,7 +10,11 @@ const LinkNav = ({ menu }: Props) => {
   const path = usePathname();
   const isActive = path.startsWith(menu.path);
 
-  return <Link href={menu.path}>{isActive ? menu?.fullIcon : menu?.icon}</Link>;
+  return (
+    <Link href={menu.path} aria-label={`${menu.name} 페이지로 이동하기`}>
+      {isActive ? menu?.fullIcon : menu?.icon}
+    </Link>
+  );
 };
 
 export default LinkNav;

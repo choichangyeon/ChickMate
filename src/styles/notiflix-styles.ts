@@ -5,8 +5,7 @@ import { Confirm, Notify } from 'notiflix';
 export const initNotiflix = () => {
   Confirm.init({
     className: 'notiflix-confirm',
-    width: '402px',
-    zindex: 4003,
+    width: '386px',
     position: 'center', // 'right-top' - 'right-bottom' - 'left-top' - 'left-bottom' - 'center-top' - 'center-bottom' - 'center-center'
     distance: '10px',
     backgroundColor: '#ffffff',
@@ -21,10 +20,10 @@ export const initNotiflix = () => {
     plainText: false,
     titleColor: '#E55A27',
     titleFontSize: '24px',
-    titleMaxLength: 34,
+    titleMaxLength: 10,
     messageColor: '#111827',
     messageFontSize: '16px',
-    messageMaxLength: 110,
+    messageMaxLength: 30,
     buttonsFontSize: '16px',
     buttonsMaxLength: 10,
     okButtonColor: '#ffffff',
@@ -41,7 +40,7 @@ export const initNotiflix = () => {
     borderRadius: '10px',
     rtl: false,
     timeout: 2000,
-    messageMaxLength: 110,
+    messageMaxLength: 100,
     backOverlay: false,
     backOverlayColor: 'rgba(0,0,0,0.5)',
     plainText: true,
@@ -51,9 +50,8 @@ export const initNotiflix = () => {
 
     ID: 'NotiflixNotify',
     className: 'notiflix-notify',
-    zindex: 4001,
-    fontFamily: 'Quicksand',
-    fontSize: '13px',
+    fontFamily: 'SUIT Variable',
+    fontSize: '12px',
     cssAnimation: true,
     cssAnimationDuration: 400,
     cssAnimationStyle: 'fade', // 'fade' - 'zoom' - 'from-right' - 'from-top' - 'from-bottom' - 'from-left'
@@ -64,22 +62,22 @@ export const initNotiflix = () => {
     fontAwesomeIconSize: '34px',
 
     success: {
-      background: '#32c682',
+      background: '#374151',
       textColor: '#ffffff',
       childClassName: 'notiflix-notify-success',
-      notiflixIconColor: 'rgba(0,0,0,0.2)',
+      notiflixIconColor: '#D1D5DB',
       fontAwesomeClassName: 'fas fa-check-circle',
-      fontAwesomeIconColor: 'rgba(0,0,0,0.2)',
-      backOverlayColor: 'rgba(50,198,130,0.2)',
+      fontAwesomeIconColor: '#D1D5DB',
+      backOverlayColor: 'rgba(55, 65, 81, 0.6)',
     },
 
     failure: {
-      background: '#C2410C',
+      background: '#E55A27',
       textColor: '#ffffff',
       childClassName: 'notiflix-notify-failure',
-      notiflixIconColor: 'rgba(0,0,0,0.2)',
+      notiflixIconColor: '#ffffff',
       fontAwesomeClassName: 'fas fa-times-circle',
-      fontAwesomeIconColor: 'rgba(0,0,0,0.2)',
+      fontAwesomeIconColor: '#ffffff',
       backOverlayColor: 'rgba(194, 65, 12, 0.2)',
     },
 
@@ -87,20 +85,20 @@ export const initNotiflix = () => {
       background: '#FBBF24',
       textColor: '#ffffff',
       childClassName: 'notiflix-notify-warning',
-      notiflixIconColor: 'rgba(0,0,0,0.2)',
+      notiflixIconColor: '#ffffff',
       fontAwesomeClassName: 'fas fa-exclamation-circle',
-      fontAwesomeIconColor: 'rgba(0,0,0,0.2)',
+      fontAwesomeIconColor: '#ffffff',
       backOverlayColor: 'rgba(251, 191, 36, 0.2)',
     },
 
     info: {
-      background: '#26c0d3',
+      background: '#374151',
       textColor: '#ffffff',
       childClassName: 'notiflix-notify-info',
-      notiflixIconColor: 'rgba(0,0,0,0.2)',
+      notiflixIconColor: '#D1D5DB',
       fontAwesomeClassName: 'fas fa-info-circle',
-      fontAwesomeIconColor: 'rgba(0,0,0,0.2)',
-      backOverlayColor: 'rgba(38,192,211,0.2)',
+      fontAwesomeIconColor: '#D1D5DB',
+      backOverlayColor: 'rgba(55, 65, 81, 0.6)',
     },
   });
 };

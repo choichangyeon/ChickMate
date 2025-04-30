@@ -38,11 +38,83 @@ export const showNotiflixConfirm = ({
     cancelButtonText,
     () => {
       document.body.classList.remove('confirm-open');
+      document.removeEventListener('keydown', handleKeyDown);
+      focusModalInside();
       okFunction();
     },
     () => {
       document.body.classList.remove('confirm-open');
+      document.removeEventListener('keydown', handleKeyDown);
+      focusModalInside();
       cancelFunction?.();
     }
   );
+
+  // confirm에서 Tab/Enter Key 동작하게 만들어 줌
+  const handleKeyDown = (event: KeyboardEvent) => {
+    const okButton = document.querySelector<HTMLAnchorElement>('.nx-confirm-button-ok');
+    const cancelButton = document.querySelector<HTMLAnchorElement>('.nx-confirm-button-cancel');
+    if (!okButton || !cancelButton) return;
+
+    const activeElement = document.activeElement;
+
+    if (event.key === 'Tab') {
+      if (activeElement !== okButton && activeElement !== cancelButton) {
+        event.preventDefault();
+        okButton.focus();
+        return;
+      }
+
+      if (event.shiftKey) {
+        // Shift + Tab
+        if (activeElement === okButton) {
+          event.preventDefault();
+          cancelButton.focus();
+        } else if (activeElement === cancelButton) {
+          event.preventDefault();
+          okButton.focus();
+        }
+      } else {
+        // Tab
+        if (activeElement === okButton) {
+          event.preventDefault();
+          cancelButton.focus();
+        } else if (activeElement === cancelButton) {
+          event.preventDefault();
+          okButton.focus();
+        }
+      }
+    }
+
+    if (event.key === 'Enter') {
+      if (activeElement === okButton || activeElement === cancelButton) {
+        event.preventDefault();
+        (activeElement as HTMLAnchorElement).click();
+      }
+    }
+  };
+
+  // 확인/취소 버튼 눌렀을 때 모달 내부로 focus하기
+  const focusModalInside = () => {
+    const modalContent = document.querySelector<HTMLElement>('[role="dialog"]');
+    if (!modalContent) return;
+
+    const focusableElements = modalContent.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+    );
+    const firstElement = focusableElements[0];
+    firstElement?.focus();
+  };
+
+  setTimeout(() => {
+    const okButton = document.querySelector<HTMLAnchorElement>('.nx-confirm-button-ok');
+    const cancelButton = document.querySelector<HTMLAnchorElement>('.nx-confirm-button-cancel');
+
+    if (okButton) okButton.setAttribute('tabindex', '0');
+    if (cancelButton) cancelButton.setAttribute('tabindex', '0');
+
+    (okButton || cancelButton)?.focus();
+
+    document.addEventListener('keydown', handleKeyDown);
+  }, 0);
 };

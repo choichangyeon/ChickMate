@@ -1,13 +1,12 @@
 'use client';
 
 import Card from '@/components/ui/card';
+import LinkButton from '@/components/ui/link-button';
 import Typography from '@/components/ui/typography';
 import Bookmark from '@/features/job/bookmark';
-import clsx from 'clsx';
-import Button from '@/components/ui/button';
+import type { JobPostingType } from '@/types/DTO/job-posting-dto';
 import { formatRemainDay } from '@/utils/format-remain-day';
 import { formatTimestamp } from '@/utils/format-timestamp';
-import type { JobPostingType } from '@/types/DTO/job-posting-dto';
 
 type Props = {
   jobPosting: JobPostingType & { isBookmarked: boolean };
@@ -15,60 +14,81 @@ type Props = {
 };
 
 const JobPostingCard = ({ jobPosting, userId }: Props) => {
-  const { companyName, positionTitle, experienceName, expirationTimestamp, openingTimestamp, id, url, isBookmarked } =
-    jobPosting;
+  const {
+    companyName,
+    positionTitle,
+    experienceName,
+    expirationTimestamp,
+    openingTimestamp,
+    keyword,
+    id,
+    url,
+    isBookmarked,
+  } = jobPosting;
+
   const postedAtDate = formatTimestamp({ input: openingTimestamp });
   const expiredAtDate = formatTimestamp({ input: expirationTimestamp });
   const remainDay = formatRemainDay(expirationTimestamp);
 
   return (
-    <Card className='h-full p-8'>
-      <article className='flex flex-col justify-between'>
-        <section className='h-24'>
-          <div className='flex flex-row justify-between'>
-            <Typography weight='bold' color='gray-500'>
-              {companyName}
-            </Typography>
-            {/* TODO: iconButton component 적용 */}
+    <Card className='flex-shrink-1 flex h-full w-full min-w-[290px] flex-col justify-between p-8 mobile:min-w-0'>
+      <dl>
+        <div className='flex w-full justify-between'>
+          <dt className='sr-only'>기업 명</dt>
+          <dd className='font-bold text-gray-500'>{companyName}</dd>
+          <dt className='sr-only'>북마크 {isBookmarked ? '추가' : '해제'}</dt>
+          <dd>
             <Bookmark jobPostingId={id} isBookmarked={isBookmarked} userId={userId} />
-          </div>
-          <Typography as='h3' weight='bold' lineClamp='2'>
-            {positionTitle}
-          </Typography>
-          <div className='flex flex-row items-center gap-4'>
-            <Typography size='sm' color='gray-500'>
-              {experienceName}
-            </Typography>
-            <Typography size='sm' color='gray-500'>
-              {postedAtDate}~{expiredAtDate}
-            </Typography>
-          </div>
-        </section>
-        <section className={badgeClassName}>
-          {remainDay ? (
-            <Typography color='primary-600' weight='bold' size='xl'>
-              D-{remainDay}
-            </Typography>
-          ) : (
+          </dd>
+        </div>
+        <dt className='sr-only'>공고 제목</dt>
+        <dd className='font-bold'>{positionTitle}</dd>
+        {keyword && (
+          <>
+            <dt className='sr-only'>채용 분야</dt>
+            <dd className='text-cool-gray-500'>{keyword}</dd>
+          </>
+        )}
+        <div>
+          <dt className='sr-only'>채용 조건</dt>
+          <dd className='text-sm text-cool-gray-500'> {experienceName}</dd>
+          <dt className='sr-only'>채용 기간</dt>
+          <dd className='text-sm text-cool-gray-500'>
+            {postedAtDate} ~ {expiredAtDate}
+          </dd>
+        </div>
+      </dl>
+
+      <dl className='mt-2 flex items-center justify-between'>
+        {remainDay ? (
+          <>
+            <dt className='sr-only'>마감 기한</dt>
+            <dd>
+              <Typography as='span' className='text-xl font-bold text-primary-orange-600 mobile:text-base'>
+                D-{remainDay}
+              </Typography>
+            </dd>
+          </>
+        ) : (
+          <dd>
             <Typography color='primary-600' weight='bold' size='xl'>
               날짜정보 오류
             </Typography>
-          )}
-          {url ? (
-            <Button target='_blank' link href={url} variant='outline' color='dark' square>
-              바로 가기
-            </Button>
-          ) : (
-            <Button disabled variant='outline' color='dark' square>
-              페이지 접근 불가
-            </Button>
-          )}
-        </section>
-      </article>
+          </dd>
+        )}
+        {url && (
+          <>
+            <dt className='sr-only'>채용 공고 페이지 이동</dt>
+            <dd>
+              <LinkButton target='_blank' href={url} square>
+                바로 가기
+              </LinkButton>
+            </dd>
+          </>
+        )}
+      </dl>
     </Card>
   );
 };
-
-const badgeClassName = clsx('flex justify-between');
 
 export default JobPostingCard;

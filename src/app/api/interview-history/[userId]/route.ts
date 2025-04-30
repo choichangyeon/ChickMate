@@ -7,6 +7,7 @@ import { ENV } from '@/constants/env-constants';
 import { AUTH_MESSAGE, HISTORY_MESSAGE, INTERVIEW_HISTORY } from '@/constants/message-constants';
 import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
 import type { UserType } from '@/types/DTO/user-dto';
+import type { InterviewHistoryType } from '@/types/DTO/interview-history-dto';
 
 type Props = {
   params: {
@@ -21,9 +22,9 @@ const {
   VALIDATION: { QUERY_PARAMS_TYPE },
 } = HISTORY_MESSAGE;
 const {
-  API: { GET_ERROR },
+  API: { GET_ERROR, NOT_FOUND },
 } = INTERVIEW_HISTORY;
-const { COMPLETED } = INTERVIEW_HISTORY_STATUS;
+const { COMPLETED, IN_PROGRESS } = INTERVIEW_HISTORY_STATUS;
 
 export const GET = async (request: NextRequest, { params }: Props) => {
   try {
@@ -34,7 +35,20 @@ export const GET = async (request: NextRequest, { params }: Props) => {
 
     const searchParams = request.nextUrl.searchParams;
 
-    const { page, limit } = sanitizeQueryParams(searchParams);
+    const { page = undefined, limit = undefined, status = undefined } = sanitizeQueryParams(searchParams);
+    if (status && Number(status) === IN_PROGRESS) {
+      const response: InterviewHistoryType[] = await prisma.interviewHistory.findMany({
+        where: {
+          userId,
+          status: IN_PROGRESS,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+      });
+
+      return NextResponse.json({ response: response[0] }, { status: 200 });
+    }
     const pageNumber = Number(page);
     const limitNumber = Number(limit);
     if (isNaN(pageNumber) || isNaN(limitNumber)) {

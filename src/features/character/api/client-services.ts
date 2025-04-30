@@ -1,7 +1,8 @@
 import { API_HEADER, API_METHOD } from '@/constants/api-method-constants';
 import { ROUTE_HANDLER_PATH } from '@/constants/path-constant';
 import { fetchWithSentry } from '@/utils/fetch-with-sentry';
-import { Character, CharacterHistory } from '@prisma/client';
+import type { CharacterType } from '@/types/DTO/character-dto';
+import type { CharacterHistoryType } from '@/types/DTO/character-history-dto';
 
 const { INFO, EXPERIENCE, HISTORY } = ROUTE_HANDLER_PATH.CHARACTER;
 const { GET, POST, PATCH } = API_METHOD;
@@ -11,10 +12,10 @@ const { JSON_HEADER } = API_HEADER;
  * 현재 로그인된 사용자의 캐릭터 정보를 가져옵니다.
  * @async
  * @function getCharacterByUserId
- * @returns {Promise<Character>} 캐릭터 정보와 관련된 히스토리가 담긴 Promise 객체
+ * @returns {Promise<CharacterType>} 캐릭터 정보와 관련된 히스토리가 담긴 Promise 객체
  * @throws {Error}
  */
-export const getCharacterByUserId = async (): Promise<Character> => {
+export const getCharacterByUserId = async (): Promise<CharacterType> => {
   const { response } = await fetchWithSentry(INFO, {
     method: GET,
     headers: JSON_HEADER,
@@ -23,17 +24,17 @@ export const getCharacterByUserId = async (): Promise<Character> => {
   return response;
 };
 
-type CreateCharacterProps = Pick<Character, 'type'>;
+type CreateCharacterProps = Pick<CharacterType, 'type'>;
 
 /**
  * 새로운 캐릭터를 생성합니다.
  * @async
  * @function postCreateCharacter
  * @param {Props} type - 생성할 캐릭터의 타입
- * @returns {Promise<Character>} 생성된 캐릭터 정보를 담은 Promise 객체
+ * @returns {Promise<CharacterType>} 생성된 캐릭터 정보를 담은 Promise 객체
  * @throws {Error}
  */
-export const postCreateCharacter = async ({ type }: CreateCharacterProps): Promise<Character> => {
+export const postCreateCharacter = async ({ type }: CreateCharacterProps): Promise<CharacterType> => {
   const { response } = await fetchWithSentry(INFO, {
     method: POST,
     headers: JSON_HEADER,
@@ -44,9 +45,9 @@ export const postCreateCharacter = async ({ type }: CreateCharacterProps): Promi
 };
 
 export type PatchCharacterProps = {
-  characterId: Character['id'];
-  amount: Character['experience'];
-  history: CharacterHistory['history'];
+  characterId: CharacterType['id'];
+  amount: CharacterType['experience'];
+  history: CharacterHistoryType['history'];
 };
 
 /**
@@ -57,14 +58,14 @@ export type PatchCharacterProps = {
  * @param {number} props.characterId - 경험치를 획득할 캐릭터의 ID
  * @param {number} props.amount - 증가시킬 경험치 양
  * @param {string} props.history - 경험치 획득 내역(히스토리)
- * @returns {Promise<Character>} 업데이트된 캐릭터 정보를 담은 Promise 객체
+ * @returns {Promise<CharacterType>} 업데이트된 캐릭터 정보를 담은 Promise 객체
  * @throws {Error} 요청 실패 시 에러를 던집니다
  */
 export const patchCharacterExperience = async ({
   characterId,
   amount,
   history,
-}: PatchCharacterProps): Promise<Character> => {
+}: PatchCharacterProps): Promise<CharacterType> => {
   const { response } = await fetchWithSentry(EXPERIENCE, {
     method: PATCH,
     headers: JSON_HEADER,
@@ -75,7 +76,7 @@ export const patchCharacterExperience = async ({
 };
 
 export type GetProps = {
-  characterId: Character['id'];
+  characterId: CharacterType['id'];
   pageParam: number;
   limit: number;
 };
@@ -95,7 +96,7 @@ export const getCharacterHistories = async ({
   characterId,
   pageParam,
   limit,
-}: GetProps): Promise<{ histories: CharacterHistory[]; nextPage: number | null }> => {
+}: GetProps): Promise<{ histories: CharacterHistoryType[]; nextPage: number | null }> => {
   const queryParams = new URLSearchParams({
     page: String(pageParam),
     limit: String(limit),

@@ -4,7 +4,7 @@ const HeaderLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Header />
-      <main className='max-w-screen-desktop mx-auto h-full min-h-screen px-12 pb-8 pt-28'>{children}</main>
+      <main className='mx-auto h-full min-h-screen max-w-max px-12 pb-8 pt-28 mobile:px-6'>{children}</main>
     </>
   );
 };

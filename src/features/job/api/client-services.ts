@@ -5,7 +5,7 @@ import { fetchWithSentry } from '@/utils/fetch-with-sentry';
 import type { SortOption } from '@/features/job/job-postings-box';
 import type { JobPostingType } from '@/types/DTO/job-posting-dto';
 
-const { POSTING, BOOKMARK_DETAIL } = ROUTE_HANDLER_PATH.JOB;
+const { POSTING, BOOKMARK, BOOKMARK_DETAIL } = ROUTE_HANDLER_PATH.JOB;
 const { JSON_HEADER } = API_HEADER;
 const { POST, DELETE, GET } = API_METHOD;
 const EMPTY_LIST_NUMBER = 0;
@@ -76,4 +76,15 @@ export const getBookmarkByJobPostingId = async ({ jobPostingId }: BookmarkDelete
   });
 
   return data.length !== EMPTY_LIST_NUMBER;
+};
+
+/**
+ * 북마크 채용 공고 등록 횟수 확인 요청 (경험치 제한)
+ * @returns {Boolean} isAbleToGetEXP 경험치 획득 가능 여부
+ */
+export const getCheckToGetEXP = async (): Promise<boolean> => {
+  const { response } = await fetchWithSentry(`${BOOKMARK}/count`, {
+    method: GET,
+  });
+  return response.isAbleToGetEXP;
 };

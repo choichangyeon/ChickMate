@@ -4,6 +4,7 @@ import { authOptions } from '@/utils/auth-option';
 import { getInterviewHistory, getInterviewQnA } from '@/features/interview/api/server-services';
 import type { RouteParams } from '@/types/route-params';
 import { INTERVIEW_HISTORY_STATUS } from '@/constants/interview-constants';
+import InterviewBlockComponent from '@/features/interview/interview-block-component';
 import InterviewClient from '@/features/interview/interview-client';
 
 export const metadata: Metadata = {
@@ -13,14 +14,30 @@ export const metadata: Metadata = {
 
 const InterviewPage = async ({ params }: RouteParams) => {
   const session = await getServerSession(authOptions);
+  if (!session)
+    return (
+      <section className='flex h-full items-center justify-center bg-[url("/assets/sub_background.png")] mobile:bg-[url("/assets/visual_assets.png")]'>
+        <InterviewBlockComponent type='unauthenticated' />
+      </section>
+    );
+
   const interviewId = Number(params.id);
   const interviewHistory = await getInterviewHistory(interviewId);
   const interviewQnAList = await getInterviewQnA(interviewId);
 
-  if (!session || !interviewHistory) return null;
+  if (!interviewHistory)
+    return (
+      <section className='flex h-full items-center justify-center bg-[url("/assets/sub_background.png")] mobile:bg-[url("/assets/visual_assets.png")]'>
+        <InterviewBlockComponent type='getInterviewHistoryError' />
+      </section>
+    );
 
   if (interviewHistory.status === INTERVIEW_HISTORY_STATUS.COMPLETED) {
-    return <div>이미 완료된 면접입니다.</div>;
+    return (
+      <section className='flex h-full items-center justify-center bg-[url("/assets/sub_background.png")] mobile:bg-[url("/assets/visual_assets.png")]'>
+        <InterviewBlockComponent type='completedPageError' />
+      </section>
+    );
   }
 
   return <InterviewClient interviewHistory={interviewHistory} interviewQnAList={interviewQnAList} />;

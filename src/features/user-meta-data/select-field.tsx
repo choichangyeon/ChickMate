@@ -1,5 +1,5 @@
 import React from 'react';
-import SelectBox from '@/features/user-meta-data/select-box';
+import SelectBox from '@/components/ui/select-box';
 import type { SelectBoxType } from '@/types/select-box';
 import type { UserMetaDataType } from '@/types/user-meta-data-type';
 
@@ -12,7 +12,7 @@ type Props = {
   error?: string;
 };
 
-const SingleSelectField = ({ label, options, value, fieldKey, onSelect, error }: Props) => {
+const SelectField = ({ label, options, value, fieldKey, onSelect, error }: Props) => {
   return (
     <div className='mb-1/2 flex min-h-14 flex-col justify-center'>
       <label className='font-bold'>{label}</label>
@@ -22,4 +22,4 @@ const SingleSelectField = ({ label, options, value, fieldKey, onSelect, error }:
   );
 };
 
-export default React.memo(SingleSelectField);
+export default React.memo(SelectField);

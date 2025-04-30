@@ -1,19 +1,18 @@
 'use client';
-
+import { Session } from 'next-auth';
 import Image from 'next/image';
-import { Character } from '@prisma/client';
 import { defaultCharacter } from '@/features/character/data/character-data';
 import CharacterExpBar from '@/features/character/character-exp-bar';
 import Typography from '@/components/ui/typography';
-import { Session } from 'next-auth';
 import ScreenOverlay from '@/components/ui/screen-overlay';
 import { useCharacterCard } from '@/features/character/hooks/use-character-card';
 import CharacterDetailModal from '@/features/character/character-detail-modal';
 import CreateCharacterModal from '@/features/character/create-character-modal';
+import type { CharacterType } from '@/types/DTO/character-dto';
 import BlockComponent from '@/components/common/block-component';
 
 type Props = {
-  characterData?: Character;
+  characterData?: CharacterType;
   requiredModal?: boolean;
   overlayText?: string;
   session?: Session;
@@ -35,9 +34,9 @@ const MainCharacterCard = ({
 
   return (
     <>
-      <div
+      <button
         onClick={handleClickCard}
-        className='relative flex h-full min-w-72 cursor-pointer flex-col justify-between overflow-hidden rounded-lg border-2 p-8'
+        className='tablet:min-w-50 relative flex h-full min-w-72 cursor-pointer flex-col justify-between overflow-hidden rounded-lg border p-8 mobile:w-1/3 mobile:p-2'
       >
         {isDefault && (
           <ScreenOverlay>
@@ -50,27 +49,31 @@ const MainCharacterCard = ({
             />
           </ScreenOverlay>
         )}
-        <div className={`${isDefault && 'opacity-60'} flex h-full flex-col justify-between`}>
-          <Image
-            src={`/assets/character/card/${type}-level${level}.png`}
-            width={242}
-            height={242}
-            alt='character-img'
-            priority
-          />
-          <div className='flex flex-col gap-2'>
-            <div className='flex justify-between gap-6'>
-              <Typography size='2xl' weight='black' color='primary-600'>
+        <div
+          className={`${isDefault && 'opacity-60'} flex h-full flex-col justify-between mobile:flex-row mobile:justify-start mobile:p-2`}
+        >
+          <div className='mobile:w-28'>
+            <Image
+              src={`/assets/character/card/${type}-level${level}.png`}
+              width={242}
+              height={242}
+              alt='character-img'
+              priority
+            />
+          </div>
+          <div className='flex flex-col gap-2 mobile:justify-center'>
+            <div className='flex justify-between gap-6 mobile:flex-col mobile:gap-3'>
+              <Typography as='span' className='mobile:xl wxl font-black text-primary-orange-600'>
                 LV {level}
               </Typography>
-              <Typography size='xl' weight='bold'>
+              <Typography as='span' className='mobile:lg xl font-bold'>
                 {characterName}
               </Typography>
             </div>
             <CharacterExpBar type='main' percent={percent} />
           </div>
         </div>
-      </div>
+      </button>
 
       {isCreateModalOpen && <CreateCharacterModal />}
       {isDetailModalOpen && session && <CharacterDetailModal session={session} />}

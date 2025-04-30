@@ -8,7 +8,7 @@ const { ON_BOARDING } = PATH;
 const NotFound = () => {
   return (
     <MainLayout>
-      <section className='flex h-full flex-col items-center justify-center'>
+      <section className='flex h-full flex-col items-center justify-center bg-[url("/assets/sub_background.png")] mobile:bg-[url("/assets/visual_assets.png")]'>
         <div>
           <Image src='/assets/notfound.png' width={480} height={310} alt='404 NOT FOUND' />
           <BlockComponent

@@ -6,15 +6,15 @@ import clsx from 'clsx';
 type Props = {
   resume: ResumeType;
   onClick: (resumeId: ResumeType['id']) => void;
-  hrOption?: boolean;
+  isLastChild?: boolean;
 };
 
-const ResumeItem = ({ resume, onClick, hrOption = true }: Props) => {
+const ResumeItem = ({ resume, onClick, isLastChild = true }: Props) => {
   const { id, title, createdAt, tryCount } = resume;
   const hasNotInterviewed = tryCount === 0;
 
   return (
-    <div className='flex flex-col mobile:p-2 gap-4'>
+    <div className={clsx('flex flex-col gap-4 py-2 mobile:p-2', isLastChild ? 'border-b-0' : 'border-b')}>
       <li onClick={() => onClick(id)} className='flex cursor-pointer flex-col'>
         <Typography size='sm' weight='normal' color='gray-500'>
           <span className='mobile:text-xs'>{formatDate({ input: createdAt })}</span>
@@ -34,7 +34,6 @@ const ResumeItem = ({ resume, onClick, hrOption = true }: Props) => {
           )}
         </div>
       </li>
-      {hrOption && <hr className='border-cool-gray-300' />}
     </div>
   );
 };

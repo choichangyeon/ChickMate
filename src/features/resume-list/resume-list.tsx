@@ -5,6 +5,7 @@ import ResumeItem from '@/features/resume-list/resume-item';
 import { useResumeListQuery } from '@/features/resume-list/hooks/use-resume-list-query';
 import { getMyPagePath } from '@/features/my-page/utils/get-my-page-path';
 import { TABS } from '@/constants/my-page-constants';
+import EmptyList from '../my-page/empty-list';
 
 const { RESUME_TAB } = TABS;
 
@@ -26,7 +27,7 @@ const ResumeList = () => {
   }
 
   if (isError) return <div>자소서 리스트를 불러오는데 실패하였습니다.</div>;
-
+  if (resumeList.length === 0) return <EmptyList tab={RESUME_TAB} />;
   return (
     <ul className='h-full overflow-y-auto scrollbar-hide'>
       {resumeList.map((resume, index) => {
@@ -34,7 +35,7 @@ const ResumeList = () => {
           <ResumeItem
             key={resume.id}
             resume={resume}
-            hrOption={resumeList.length !== index + 1}
+            isLastChild={resumeList.length === index + 1}
             onClick={handleGetDetailList}
           />
         );

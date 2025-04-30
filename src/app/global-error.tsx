@@ -3,6 +3,7 @@
 import { captureException } from '@sentry/nextjs';
 import NextError from 'next/error';
 import { useEffect } from 'react';
+import Image from 'next/image';
 
 export default function GlobalError({ error }: { error: Error & { digest?: string; statusCode?: number } }) {
   useEffect(() => {
@@ -18,6 +19,7 @@ export default function GlobalError({ error }: { error: Error & { digest?: strin
     <html>
       <body>
         {/* `NextError`는 기본 Next.js 오류 페이지 컴포넌트입니다. */}
+        <Image src='/assets/notfound.png' fill alt='404 NOT FOUND' />
         <NextError statusCode={0} />
       </body>
     </html>

@@ -1,7 +1,6 @@
 'use client';
 
 import LoadingAnimation from '@/components/common/loading-animation';
-import Typography from '@/components/ui/typography';
 import { PATH } from '@/constants/path-constant';
 import { QUERY_KEY } from '@/constants/query-key';
 import { useJobPostingQuery } from '@/features/job/hooks/use-job-posting-query';
@@ -14,7 +13,7 @@ import { sanitizeQueryParams } from '@/utils/sanitize-query-params';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
-import SaraminButton from './saramin-button';
+import SaraminButton from '@/features/job/saramin-button';
 
 type Props = {
   userId: string;
